@@ -179,7 +179,6 @@ uint8 SampleAppFlashCounter = 0;
 /*********************************************************************
 * LOCAL FUNCTIONS
 */
-void SampleApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg );
 void AfSendAddrInfo(void);
 void SampleApp_HandleKeys( uint8 shift, uint8 keys );
 void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pckt );
@@ -272,9 +271,6 @@ void SampleApp_Init( uint8 task_id )
   
   // 绑定按键事件到任务ID
   RegisterForKeys( SampleApp_TaskID );
-  // 将底层的一些事件消息引入到应用层的注册方法，自定义区解析一些消息
-  ZDO_RegisterForZDOMsg( SampleApp_TaskID, End_Device_Bind_rsp );
-  ZDO_RegisterForZDOMsg( SampleApp_TaskID, Match_Desc_rsp );
   
   // By default, all devices start out in Group 1
   SampleApp_Group.ID = 0x0001;
@@ -317,12 +313,6 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
     {      
       switch ( MSGpkt->hdr.event )
       {
-        // 系统任务事件里面的ZDO消息
-        case ZDO_CB_MSG:
-          myprintf("ZDO_CB_MSG\n");
-          SampleApp_ProcessZDOMsgs( (zdoIncomingMsg_t *)MSGpkt );   
-          break;
-          
         // 系统任务事件里面的接收数据确认消息
         case AF_DATA_CONFIRM_CMD:
           myprintf("AF_DATA_CONFIRM_CMD\n");
@@ -555,50 +545,5 @@ void AfSendAddrInfo(void) {
                       AF_DEFAULT_RADIUS ) != afStatus_SUCCESS ) // 传送跳数，通常设置为AF_DEFAULT_RADIUS
   {
     myprintf("EP AfSendAddrInfo() failed\n");
-  }
-}
-
-/*********************************************************************
- * @fn      SampleApp_ProcessZDOMsgs()
- *
- * @brief   Process response messages
- *
- * @param   none
- *
- * @return  none
- */
-void SampleApp_ProcessZDOMsgs( zdoIncomingMsg_t *inMsg )
-{
-  myprintf("inMsg->clusterID = 0x%x\n", inMsg->clusterID);
-  ZDO_ActiveEndpointRsp_t *pRsp = NULL;
-  
-  switch ( inMsg->clusterID )
-  {
-    case End_Device_Bind_rsp:
-      if ( ZDO_ParseBindRsp( inMsg ) == ZSuccess )
-      {
-        myprintf("End_Device_Bind_rsp ok\n");
-      } else {
-        myprintf("End_Device_Bind_rsp failed\n");
-      }
-      break;
-    case Match_Desc_rsp:
-      myprintf("Match_Desc_rsp\n");
-      pRsp = ZDO_ParseEPListRsp( inMsg );
-      if ( pRsp )
-      {
-        if ( pRsp->status == ZSuccess && pRsp->cnt )
-        {
-          GenericApp_DstAddr.addrMode = (afAddrMode_t)Addr16Bit;
-          GenericApp_DstAddr.addr.shortAddr = pRsp->nwkAddr;
-          // Take the first endpoint, Can be changed to search through endpoints
-          GenericApp_DstAddr.endPoint = pRsp->epList[0];
-          
-        }
-        osal_mem_free( pRsp );
-      }
-      break;
-    default:
-      break;
   }
 }
