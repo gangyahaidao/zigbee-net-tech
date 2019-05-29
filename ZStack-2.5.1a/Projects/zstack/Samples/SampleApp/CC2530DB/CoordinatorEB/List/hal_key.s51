@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        27/May/2019  11:13:55 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        29/May/2019  21:25:36 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -9,22 +9,19 @@
 //    Calling convention =  xdata reentrant                                   /
 //    Constant location  =  data_rom                                          /
 //    Dptr setup         =  1,16                                              /
-//    Source file        =  E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Com /
-//                          ponents\hal\target\CC2530EB\hal_key.c             /
-//    Command line       =  -f E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ /
-//                          ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\ /
-//                          Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ /
-//                          ..\Tools\CC2530DB\f8wCoord.cfg (-DCPU32MHZ        /
+//    Source file        =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Components\hal\target\CC2530EB\hal_key.c        /
+//    Command line       =  -f E:\Github_Repository\zigbee-net-tech\ZStack-2. /
+//                          5.1a\Projects\zstack\Samples\SampleApp\CC2530DB\. /
+//                          .\..\..\Tools\CC2530DB\f8wCoord.cfg (-DCPU32MHZ   /
 //                          -DROOT=__near_func -DMAC_CFG_APP_PENDING_QUEUE=TR /
 //                          UE -DMAC_CFG_TX_DATA_MAX=5 -DMAC_CFG_TX_MAX=8     /
 //                          -DMAC_CFG_RX_MAX=5 -DZDO_COORDINATOR -DRTR_NWK)   /
-//                          -f E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ /
-//                          ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\ /
-//                          Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ /
-//                          ..\Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO      /
-//                          -DSECURE=0 -DZG_SECURE_DYNAMIC=0 -DREFLECTOR      /
-//                          -DDEFAULT_CHANLIST=0x00000800                     /
+//                          -f E:\Github_Repository\zigbee-net-tech\ZStack-2. /
+//                          5.1a\Projects\zstack\Samples\SampleApp\CC2530DB\. /
+//                          .\..\..\Tools\CC2530DB\f8wConfig.cfg              /
+//                          (-DZIGBEEPRO -DSECURE=0 -DZG_SECURE_DYNAMIC=0     /
+//                          -DREFLECTOR -DDEFAULT_CHANLIST=0x00000800         /
 //                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                      /
 //                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_M /
 //                          ASK=0x007F -DBEACON_REQUEST_DELAY=100             /
@@ -45,113 +42,88 @@
 //                          __code" -DGENERIC=__generic                       /
 //                          -DRFD_RCVC_ALWAYS_ON=FALSE -DPOLL_RATE=1000       /
 //                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100)  /
-//                          -DREJOIN_POLL_RATE=440 E:\BaiduNetdiskDownload\CC /
-//                          2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µ /
-//                          Æ·çÉÈ\ZStack-2.5.1a\Components\hal\target\CC2530E /
-//                          B\hal_key.c -D ZTOOL_P1 -D xMT_TASK -D            /
+//                          -DREJOIN_POLL_RATE=440 E:\Github_Repository\zigbe /
+//                          e-net-tech\ZStack-2.5.1a\Components\hal\target\CC /
+//                          2530EB\hal_key.c -D ZTOOL_P1 -D xMT_TASK -D       /
 //                          xMT_SYS_FUNC -D xMT_ZDO_FUNC -lC                  /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\Coordinat /
-//                          orEB\List\ -lA E:\BaiduNetdiskDownload\CC2530-201 /
-//                          8\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZS /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\Coor /
+//                          dinatorEB\List\ -lA E:\Github_Repository\zigbee-n /
+//                          et-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sam /
+//                          pleApp\CC2530DB\CoordinatorEB\List\               /
+//                          --diag_suppress Pe001,Pa010 -o                    /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\Coor /
+//                          dinatorEB\Obj\ -e --no_code_motion --debug        /
+//                          --core=plain --dptr=16,1 --data_model=large       /
+//                          --code_model=banked --calling_convention=xdata_re /
+//                          entrant --place_constants=data_rom                /
+//                          --nr_virtual_regs 16 -I                           /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\ -I  /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\S /
+//                          ource\ -I E:\Github_Repository\zigbee-net-tech\ZS /
 //                          tack-2.5.1a\Projects\zstack\Samples\SampleApp\CC2 /
-//                          530DB\CoordinatorEB\List\ --diag_suppress         /
-//                          Pe001,Pa010 -o E:\BaiduNetdiskDownload\CC2530-201 /
-//                          8\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZS /
-//                          tack-2.5.1a\Projects\zstack\Samples\SampleApp\CC2 /
-//                          530DB\CoordinatorEB\Obj\ -e --no_code_motion      /
-//                          --debug --core=plain --dptr=16,1                  /
-//                          --data_model=large --code_model=banked            /
-//                          --calling_convention=xdata_reentrant              /
-//                          --place_constants=data_rom --nr_virtual_regs 16   /
-//                          -I E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ /
-//                          ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\ /
-//                          Projects\zstack\Samples\SampleApp\CC2530DB\ -I    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\Source /
-//                          \ -I E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ /
-//                          °æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1 /
+//                          530DB\..\..\..\ZMain\TI2530DB\ -I                 /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
 //                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
-//                          .\..\ZMain\TI2530DB\ -I                           /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\hal\include\ -I                  /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\hal\target\CC2530EB\ -I          /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\mac\include\ -I                  /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\mac\high_level\ -I               /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\mac\low_level\srf04\ -I          /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\mac\low_level\srf04\single_chip\ /
-//                           -I E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ° /
-//                          æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a /
-//                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\.. /
-//                          \..\..\..\Components\mt\ -I                       /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\osal\include\ -I                 /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\services\saddr\ -I               /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\services\sdata\ -I               /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\af\ -I                     /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\nwk\ -I                    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\sapi\ -I                   /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\sec\ -I                    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\sys\ -I                    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\zdo\ -I                    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\zmac\ -I                         /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\zmac\f8w\ -Ohz                   /
+//                          .\..\..\..\Components\hal\include\ -I             /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\hal\target\CC2530EB\ -I     /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\mac\include\ -I             /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\mac\high_level\ -I          /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\mac\low_level\srf04\ -I     /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\mac\low_level\srf04\single_ /
+//                          chip\ -I E:\Github_Repository\zigbee-net-tech\ZSt /
+//                          ack-2.5.1a\Projects\zstack\Samples\SampleApp\CC25 /
+//                          30DB\..\..\..\..\..\Components\mt\ -I             /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\osal\include\ -I            /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\services\saddr\ -I          /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\services\sdata\ -I          /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\af\ -I                /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\nwk\ -I               /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\sapi\ -I              /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\sec\ -I               /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\sys\ -I               /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\zdo\ -I               /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\zmac\ -I                    /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\zmac\f8w\ -Ohz              /
 //                          --require_prototypes                              /
-//    List file          =  E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\Coordinat /
-//                          orEB\List\hal_key.s51                             /
+//    List file          =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\Coor /
+//                          dinatorEB\List\hal_key.s51                        /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -180,8 +152,6 @@
         EXTERN ?BDISPATCH
         EXTERN ?BRET
         EXTERN ?CALL_IND
-        EXTERN ?INTERRUPT_ENTER_XSP
-        EXTERN ?INTERRUPT_LEAVE_XSP
         EXTERN __INIT_XDATA_Z
 
         PUBLIC ??HalKeyConfig?relay
@@ -196,10 +166,10 @@
         FUNCTION ??HalKeyPoll?relay,0203H
         PUBLIC ??HalKeyRead?relay
         FUNCTION ??HalKeyRead?relay,0203H
+        PUBLIC ??InitCoinInterrupt?relay
+        FUNCTION ??InitCoinInterrupt?relay,0203H
         PUBLIC ??halGetJoyKeyInput?relay
         FUNCTION ??halGetJoyKeyInput?relay,0203H
-        PUBWEAK `??halKeyPort0Isr??INTVEC 107`
-        PUBWEAK `??halKeyPort2Isr??INTVEC 51`
         PUBLIC ??halProcessKeyInterrupt?relay
         FUNCTION ??halProcessKeyInterrupt?relay,0203H
         PUBLIC HalKeyConfig
@@ -228,37 +198,34 @@
         ARGFRAME DOVERLAY, 0, STATIC
         PUBLIC Hal_KeyIntEnable
         PUBWEAK IEN2
+        PUBLIC InitCoinInterrupt
+        FUNCTION InitCoinInterrupt,0203H
+        ARGFRAME XSTACK, 0, STACK
         PUBWEAK P0DIR
         PUBWEAK P0IEN
         PUBWEAK P0IFG
         PUBWEAK P0SEL
+        PUBWEAK P1DIR
+        PUBWEAK P1IEN
+        PUBWEAK P1IFG
+        PUBWEAK P1SEL
         PUBWEAK P2DIR
         PUBWEAK P2IEN
         PUBWEAK P2IFG
+        PUBWEAK P2INP
         PUBWEAK P2SEL
         PUBWEAK PICTL
+        PUBWEAK _A_IEN0
         PUBWEAK _A_IEN1
-        PUBWEAK _A_IRCON
-        PUBWEAK _A_IRCON2
         PUBWEAK _A_P0
         PUBWEAK _A_P2
         PUBLIC halGetJoyKeyInput
         FUNCTION halGetJoyKeyInput,021203H
         ARGFRAME XSTACK, 0, STACK
         LOCFRAME XSTACK, 9, STACK
-        PUBLIC halKeyPort0Isr
-        FUNCTION halKeyPort0Isr,021233H
-        ARGFRAME XSTACK, 0, STACK
-        LOCFRAME XSTACK, 14, STACK
-        PUBLIC halKeyPort2Isr
-        FUNCTION halKeyPort2Isr,021233H
-        ARGFRAME XSTACK, 0, STACK
-        LOCFRAME XSTACK, 14, STACK
         PUBLIC halProcessKeyInterrupt
         FUNCTION halProcessKeyInterrupt,021203H
-        ARGFRAME XSTACK, 14, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
+        ARGFRAME XSTACK, 0, STACK
         LOCFRAME ISTACK, 2, STACK
         
         CFI Names cfiNames0
@@ -349,73 +316,6 @@
         CFI ?RET_LOW Frame(CFA_SP, 1)
         CFI EndCommon cfiCommon0
         
-        
-        CFI Common cfiCommon1 Using cfiNames0
-        CFI CodeAlign 1
-        CFI DataAlign -1
-        CFI ReturnAddress ?RET CODE
-        CFI CFA_DOVERLAY Used
-        CFI CFA_IOVERLAY Used
-        CFI CFA_SP SP+-2
-        CFI CFA_PSP16 PSP16+0
-        CFI CFA_XSP16 XSP16+0
-        CFI `PSW.CY` SameValue
-        CFI `B.BR0` SameValue
-        CFI `B.BR1` SameValue
-        CFI `B.BR2` SameValue
-        CFI `B.BR3` SameValue
-        CFI `B.BR4` SameValue
-        CFI `B.BR5` SameValue
-        CFI `B.BR6` SameValue
-        CFI `B.BR7` SameValue
-        CFI `VB.BR8` SameValue
-        CFI `VB.BR9` SameValue
-        CFI `VB.BR10` SameValue
-        CFI `VB.BR11` SameValue
-        CFI `VB.BR12` SameValue
-        CFI `VB.BR13` SameValue
-        CFI `VB.BR14` SameValue
-        CFI `VB.BR15` SameValue
-        CFI VB SameValue
-        CFI B SameValue
-        CFI A SameValue
-        CFI PSW SameValue
-        CFI DPL0 SameValue
-        CFI DPH0 SameValue
-        CFI R0 SameValue
-        CFI R1 SameValue
-        CFI R2 SameValue
-        CFI R3 SameValue
-        CFI R4 SameValue
-        CFI R5 SameValue
-        CFI R6 SameValue
-        CFI R7 SameValue
-        CFI V0 SameValue
-        CFI V1 SameValue
-        CFI V2 SameValue
-        CFI V3 SameValue
-        CFI V4 SameValue
-        CFI V5 SameValue
-        CFI V6 SameValue
-        CFI V7 SameValue
-        CFI V8 SameValue
-        CFI V9 SameValue
-        CFI V10 SameValue
-        CFI V11 SameValue
-        CFI V12 SameValue
-        CFI V13 SameValue
-        CFI V14 SameValue
-        CFI V15 SameValue
-        CFI PSPH Undefined
-        CFI PSPL Undefined
-        CFI XSPH Undefined
-        CFI XSPL Undefined
-        CFI ?RET Concat
-        CFI ?BRET_EXT SameValue
-        CFI ?RET_HIGH Frame(CFA_SP, 2)
-        CFI ?RET_LOW Frame(CFA_SP, 1)
-        CFI EndCommon cfiCommon1
-        
 osal_stop_timerEx   SYMBOL "osal_stop_timerEx"
 osal_start_timerEx  SYMBOL "osal_start_timerEx"
 HalAdcRead          SYMBOL "HalAdcRead"
@@ -434,12 +334,10 @@ HalKeyPoll          SYMBOL "HalKeyPoll"
 ??HalKeyPoll?relay  SYMBOL "?relay", HalKeyPoll
 HalKeyRead          SYMBOL "HalKeyRead"
 ??HalKeyRead?relay  SYMBOL "?relay", HalKeyRead
+InitCoinInterrupt   SYMBOL "InitCoinInterrupt"
+??InitCoinInterrupt?relay SYMBOL "?relay", InitCoinInterrupt
 halGetJoyKeyInput   SYMBOL "halGetJoyKeyInput"
 ??halGetJoyKeyInput?relay SYMBOL "?relay", halGetJoyKeyInput
-halKeyPort0Isr      SYMBOL "halKeyPort0Isr"
-`??halKeyPort0Isr??INTVEC 107` SYMBOL "??INTVEC 107", halKeyPort0Isr
-halKeyPort2Isr      SYMBOL "halKeyPort2Isr"
-`??halKeyPort2Isr??INTVEC 51` SYMBOL "??INTVEC 51", halKeyPort2Isr
 halProcessKeyInterrupt SYMBOL "halProcessKeyInterrupt"
 ??halProcessKeyInterrupt?relay SYMBOL "?relay", halProcessKeyInterrupt
 
@@ -472,7 +370,7 @@ halProcessKeyInterrupt SYMBOL "halProcessKeyInterrupt"
         FUNCTION ??osal_stop_timerEx?relay,00H
         EXTERN Hal_TaskID
 
-// E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Components\hal\target\CC2530EB\hal_key.c
+// E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530EB\hal_key.c
 //    1 /**************************************************************************************************
 //    2   Filename:       hal_key.c
 //    3   Revised:        $Date: 2009-12-16 17:44:49 -0800 (Wed, 16 Dec 2009) $
@@ -569,6 +467,12 @@ P0IFG:
         DATA8
         DS 1
 
+        ASEGN SFR_AN:DATA:NOROOT,08aH
+// unsigned char volatile __sfr P1IFG
+P1IFG:
+        DATA8
+        DS 1
+
         ASEGN SFR_AN:DATA:NOROOT,08bH
 // unsigned char volatile __sfr P2IFG
 P2IFG:
@@ -581,6 +485,12 @@ PICTL:
         DATA8
         DS 1
 
+        ASEGN SFR_AN:DATA:NOROOT,08dH
+// unsigned char volatile __sfr P1IEN
+P1IEN:
+        DATA8
+        DS 1
+
         ASEGN SFR_AN:DATA:NOROOT,09aH
 // unsigned char volatile __sfr IEN2
 IEN2:
@@ -590,6 +500,12 @@ IEN2:
         ASEGN SFR_AN:DATA:NOROOT,0a0H
 // union <unnamed> volatile __sfr _A_P2
 _A_P2:
+        DATA8
+        DS 1
+
+        ASEGN SFR_AN:DATA:NOROOT,0a8H
+// union <unnamed> volatile __sfr _A_IEN0
+_A_IEN0:
         DATA8
         DS 1
 
@@ -611,21 +527,15 @@ _A_IEN1:
         DATA8
         DS 1
 
-        ASEGN SFR_AN:DATA:NOROOT,0c0H
-// union <unnamed> volatile __sfr _A_IRCON
-_A_IRCON:
-        DATA8
-        DS 1
-
-        ASEGN SFR_AN:DATA:NOROOT,0e8H
-// union <unnamed> volatile __sfr _A_IRCON2
-_A_IRCON2:
-        DATA8
-        DS 1
-
         ASEGN SFR_AN:DATA:NOROOT,0f3H
 // unsigned char volatile __sfr P0SEL
 P0SEL:
+        DATA8
+        DS 1
+
+        ASEGN SFR_AN:DATA:NOROOT,0f4H
+// unsigned char volatile __sfr P1SEL
+P1SEL:
         DATA8
         DS 1
 
@@ -635,9 +545,21 @@ P2SEL:
         DATA8
         DS 1
 
+        ASEGN SFR_AN:DATA:NOROOT,0f7H
+// unsigned char volatile __sfr P2INP
+P2INP:
+        DATA8
+        DS 1
+
         ASEGN SFR_AN:DATA:NOROOT,0fdH
 // unsigned char volatile __sfr P0DIR
 P0DIR:
+        DATA8
+        DS 1
+
+        ASEGN SFR_AN:DATA:NOROOT,0feH
+// unsigned char volatile __sfr P1DIR
+P1DIR:
         DATA8
         DS 1
 
@@ -1493,184 +1415,93 @@ HalKeyExitSleep:
 //  483  *
 //  484  * @return
 //  485  **************************************************************************************************/
-
-        RSEG NEAR_CODE:CODE:NOROOT(0)
-//  486 HAL_ISR_FUNCTION( halKeyPort0Isr, P0INT_VECTOR )
-halKeyPort0Isr:
-        CFI Block cfiBlock9 Using cfiCommon1
-        CFI Function halKeyPort0Isr
-        CODE
-//  487 {
-        FUNCALL halKeyPort0Isr, halProcessKeyInterrupt
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 14, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 14, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        PUSH    A
-        CFI A Frame(CFA_SP, 3)
-        CFI CFA_SP SP+-3
-        MOV     A,#-0xe
-        LCALL   ?INTERRUPT_ENTER_XSP
-        CFI B load(1, XDATA, add(CFA_XSP16, literal(-1)))
-        CFI VB load(1, XDATA, add(CFA_XSP16, literal(-2)))
-        CFI PSW load(1, XDATA, add(CFA_XSP16, literal(-3)))
-        CFI DPL0 load(1, XDATA, add(CFA_XSP16, literal(-4)))
-        CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-5)))
-        CFI R7 load(1, XDATA, add(CFA_XSP16, literal(-6)))
-        CFI R6 load(1, XDATA, add(CFA_XSP16, literal(-7)))
-        CFI R5 load(1, XDATA, add(CFA_XSP16, literal(-8)))
-        CFI R4 load(1, XDATA, add(CFA_XSP16, literal(-9)))
-        CFI V0 load(1, XDATA, add(CFA_XSP16, literal(-10)))
-        CFI R3 load(1, XDATA, add(CFA_XSP16, literal(-11)))
-        CFI R2 load(1, XDATA, add(CFA_XSP16, literal(-12)))
-        CFI R1 load(1, XDATA, add(CFA_XSP16, literal(-13)))
-        CFI R0 load(1, XDATA, add(CFA_XSP16, literal(-14)))
-        CFI CFA_XSP16 add(XSP16, 14)
-        ; Saved register size: 14
-        ; Auto size: 0
-//  488   if (HAL_KEY_SW_6_PXIFG & HAL_KEY_SW_6_BIT)
-        MOV     A,0x89
-        MOV     C,0xE0 /* A   */.1
-        JNC     ??halKeyPort0Isr_0
-//  489   {
-//  490     halProcessKeyInterrupt();
-        ; Setup parameters for call to function halProcessKeyInterrupt
-        LCALL   ??halProcessKeyInterrupt?relay
-//  491   }
-//  492 
-//  493   /*
-//  494     Clear the CPU interrupt flag for Port_0
-//  495     PxIFG has to be cleared before PxIF
-//  496   */
-//  497   HAL_KEY_SW_6_PXIFG = 0;
-??halKeyPort0Isr_0:
-        MOV     0x89,#0x0
-//  498   HAL_KEY_CPU_PORT_0_IF = 0;
-        CLR     0xc0.5
-        CFI EndBlock cfiBlock9
-//  499 }
-        REQUIRE ?Subroutine1
-        REQUIRE P0IFG
-        REQUIRE _A_IRCON
-        ; // Fall through to label ?Subroutine1
-
-        RSEG NEAR_CODE:CODE:NOROOT(0)
-?Subroutine1:
-        CFI Block cfiBlock10 Using cfiCommon1
-        CFI NoFunction
-        CFI CFA_SP SP+-3
-        CFI CFA_XSP16 add(XSP16, 14)
-        CFI VB load(1, XDATA, add(CFA_XSP16, literal(-2)))
-        CFI B load(1, XDATA, add(CFA_XSP16, literal(-1)))
-        CFI A Frame(CFA_SP, 3)
-        CFI PSW load(1, XDATA, add(CFA_XSP16, literal(-3)))
-        CFI DPL0 load(1, XDATA, add(CFA_XSP16, literal(-4)))
-        CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-5)))
-        CFI R0 load(1, XDATA, add(CFA_XSP16, literal(-14)))
-        CFI R1 load(1, XDATA, add(CFA_XSP16, literal(-13)))
-        CFI R2 load(1, XDATA, add(CFA_XSP16, literal(-12)))
-        CFI R3 load(1, XDATA, add(CFA_XSP16, literal(-11)))
-        CFI R4 load(1, XDATA, add(CFA_XSP16, literal(-9)))
-        CFI R5 load(1, XDATA, add(CFA_XSP16, literal(-8)))
-        CFI R6 load(1, XDATA, add(CFA_XSP16, literal(-7)))
-        CFI R7 load(1, XDATA, add(CFA_XSP16, literal(-6)))
-        CFI V0 load(1, XDATA, add(CFA_XSP16, literal(-10)))
-        MOV     R7,#0x1
-        LJMP    ?INTERRUPT_LEAVE_XSP
-        CFI EndBlock cfiBlock10
-//  500 
-//  501 
-//  502 /**************************************************************************************************
-//  503  * @fn      halKeyPort2Isr
-//  504  *
-//  505  * @brief   Port2 ISR
-//  506  *
-//  507  * @param
-//  508  *
-//  509  * @return
-//  510  **************************************************************************************************/
-
-        RSEG NEAR_CODE:CODE:NOROOT(0)
+//  486 /*
+//  487 HAL_ISR_FUNCTION( halKeyPort0Isr, P0INT_VECTOR )
+//  488 {
+//  489   if (HAL_KEY_SW_6_PXIFG & HAL_KEY_SW_6_BIT)
+//  490   {
+//  491     halProcessKeyInterrupt();
+//  492   }
+//  493   HAL_KEY_SW_6_PXIFG = 0;
+//  494   HAL_KEY_CPU_PORT_0_IF = 0;
+//  495 }
+//  496 */
+//  497 
+//  498 /**************************************************************************************************
+//  499  * @fn      halKeyPort2Isr
+//  500  *
+//  501  * @brief   Port2 ISR
+//  502     Clear the CPU interrupt flag for Port_2
+//  503     PxIFG has to be cleared before PxIF
+//  504     Notes: P2_1 and P2_2 are debug lines.
+//  505  *
+//  506  * @param
+//  507  *
+//  508  * @return
+//  509  **************************************************************************************************/
+//  510 /*
 //  511 HAL_ISR_FUNCTION( halKeyPort2Isr, P2INT_VECTOR )
-halKeyPort2Isr:
-        CFI Block cfiBlock11 Using cfiCommon1
-        CFI Function halKeyPort2Isr
-        CODE
 //  512 {
-        FUNCALL halKeyPort2Isr, halProcessKeyInterrupt
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 14, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 14, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        PUSH    A
-        CFI A Frame(CFA_SP, 3)
-        CFI CFA_SP SP+-3
-        MOV     A,#-0xe
-        LCALL   ?INTERRUPT_ENTER_XSP
-        CFI B load(1, XDATA, add(CFA_XSP16, literal(-1)))
-        CFI VB load(1, XDATA, add(CFA_XSP16, literal(-2)))
-        CFI PSW load(1, XDATA, add(CFA_XSP16, literal(-3)))
-        CFI DPL0 load(1, XDATA, add(CFA_XSP16, literal(-4)))
-        CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-5)))
-        CFI R7 load(1, XDATA, add(CFA_XSP16, literal(-6)))
-        CFI R6 load(1, XDATA, add(CFA_XSP16, literal(-7)))
-        CFI R5 load(1, XDATA, add(CFA_XSP16, literal(-8)))
-        CFI R4 load(1, XDATA, add(CFA_XSP16, literal(-9)))
-        CFI V0 load(1, XDATA, add(CFA_XSP16, literal(-10)))
-        CFI R3 load(1, XDATA, add(CFA_XSP16, literal(-11)))
-        CFI R2 load(1, XDATA, add(CFA_XSP16, literal(-12)))
-        CFI R1 load(1, XDATA, add(CFA_XSP16, literal(-13)))
-        CFI R0 load(1, XDATA, add(CFA_XSP16, literal(-14)))
-        CFI CFA_XSP16 add(XSP16, 14)
-        ; Saved register size: 14
-        ; Auto size: 0
 //  513   if (HAL_KEY_JOY_MOVE_PXIFG & HAL_KEY_JOY_MOVE_BIT)
-        MOV     A,0x8b
-        MOV     C,0xE0 /* A   */.0
-        JNC     ??halKeyPort2Isr_0
 //  514   {
 //  515     halProcessKeyInterrupt();
-        ; Setup parameters for call to function halProcessKeyInterrupt
-        LCALL   ??halProcessKeyInterrupt?relay
 //  516   }
-//  517 
-//  518   /*
-//  519     Clear the CPU interrupt flag for Port_2
-//  520     PxIFG has to be cleared before PxIF
-//  521     Notes: P2_1 and P2_2 are debug lines.
-//  522   */
-//  523   HAL_KEY_JOY_MOVE_PXIFG = 0;
-??halKeyPort2Isr_0:
-        MOV     0x8b,#0x0
-//  524   HAL_KEY_CPU_PORT_2_IF = 0;
-        CLR     0xe8.0
-//  525 }
-        SJMP    ?Subroutine1
-        CFI EndBlock cfiBlock11
-        REQUIRE P2IFG
-        REQUIRE _A_IRCON2
+//  517   HAL_KEY_JOY_MOVE_PXIFG = 0;
+//  518   HAL_KEY_CPU_PORT_2_IF = 0;
+//  519 }
+//  520 */
+//  521 #else
+//  522 
+//  523 
+//  524 void HalKeyInit(void){}
+//  525 void HalKeyConfig(bool interruptEnable, halKeyCBack_t cback){}
+//  526 uint8 HalKeyRead(void){ return 0;}
+//  527 void HalKeyPoll(void){}
+//  528 
+//  529 #endif /* HAL_KEY */
+//  530 
+//  531 /**
+//  532   ³õÊ¼»¯ÖÐ¶ÏÒý½Å
+//  533   ÓÃÓÚ¼à¿ØÍ¶±Ò»úµÄÒý½ÅµçÆ½±ä»¯
+//  534   P0_2Òý½Å
+//  535 */
 
-        COMMON INTVEC:CODE:ROOT(0)
-        ORG 51
-`??halKeyPort2Isr??INTVEC 51`:
-        LJMP       (halKeyPort2Isr)
-
-        COMMON INTVEC:CODE:ROOT(0)
-        ORG 107
-`??halKeyPort0Isr??INTVEC 107`:
-        LJMP       (halKeyPort0Isr)
+        RSEG BANKED_CODE:CODE:NOROOT(0)
+//  536 void InitCoinInterrupt(void) {
+InitCoinInterrupt:
+        CFI Block cfiBlock9 Using cfiCommon0
+        CFI Function InitCoinInterrupt
+        CODE
+        ; Saved register size: 0
+        ; Auto size: 0
+//  537   P1SEL &= ~(0x1 << 2); // P1_2 ÉèÖÃÎªÒ»°ã¹¦ÄÜIO¿Ú
+        ANL     0xf4,#0xfb
+//  538   P1DIR &= ~(0x1<<2);  // ÉèÖÃÎªÊäÈë¹¦ÄÜ
+        ANL     0xfe,#0xfb
+//  539   P2INP &= ~(0x1<<2); // ÉèÖÃÎªÉÏÀ­
+        ANL     0xf7,#0xfb
+//  540   
+//  541   P1IEN |= (0x1 << 2); // P1_2ÖÐ¶ÏÊ¹ÄÜ
+        ORL     0x8d,#0x4
+//  542   PICTL &= ~(0x1 << 1); // ÉèÖÃÎª0±íÊ¾ÉÏÉýÑØÒýÆðÖÐ¶Ï
+        ANL     0x8c,#0xfd
+//  543   EA = 1; // ´ò¿ª×ÜÖÐ¶Ï
+        SETB    0xa8.7
+//  544   IEN2 |= (0x1 << 4); // ¶Ë¿Ú1ÖÐ¶ÏÊ¹ÄÜ
+        ORL     0x9a,#0x10
+//  545   P1IFG = 0; // ³õÊ¼»¯ÖÐ¶Ï±êÖ¾Î»  
+        MOV     0x8a,#0x0
+//  546 }
+        LJMP    ?BRET
+        CFI EndBlock cfiBlock9
+        REQUIRE P1SEL
+        REQUIRE P1DIR
+        REQUIRE P2INP
+        REQUIRE P1IEN
+        REQUIRE PICTL
+        REQUIRE _A_IEN0
+        REQUIRE IEN2
+        REQUIRE P1IFG
 
         RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
 ??HalKeyInit?relay:
@@ -1720,37 +1551,30 @@ halKeyPort2Isr:
         DATA
         DC24    HalKeyExitSleep
 
+        RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
+??InitCoinInterrupt?relay:
+        LCALL   ?BDISPATCH
+        DATA
+        DC24    InitCoinInterrupt
+
         END
-//  526 
-//  527 #else
-//  528 
-//  529 
-//  530 void HalKeyInit(void){}
-//  531 void HalKeyConfig(bool interruptEnable, halKeyCBack_t cback){}
-//  532 uint8 HalKeyRead(void){ return 0;}
-//  533 void HalKeyPoll(void){}
-//  534 
-//  535 #endif /* HAL_KEY */
-//  536 
-//  537 
-//  538 
-//  539 
-//  540 
-//  541 /**************************************************************************************************
-//  542 **************************************************************************************************/
-//  543 
-//  544 
-//  545 
+//  547 
+//  548 
+//  549 
+//  550 
+//  551 /**************************************************************************************************
+//  552 **************************************************************************************************/
+//  553 
+//  554 
+//  555 
 // 
-// 379 bytes in segment BANKED_CODE
-//  48 bytes in segment BANK_RELAYS
-//   6 bytes in segment INTVEC
-//  49 bytes in segment NEAR_CODE
-//  15 bytes in segment SFR_AN
+// 405 bytes in segment BANKED_CODE
+//  54 bytes in segment BANK_RELAYS
+//  19 bytes in segment SFR_AN
 //   5 bytes in segment XDATA_Z
 // 
-// 476 bytes of CODE  memory (+  6 bytes shared)
-//   0 bytes of DATA  memory (+ 15 bytes shared)
+// 459 bytes of CODE  memory
+//   0 bytes of DATA  memory (+ 19 bytes shared)
 //   5 bytes of XDATA memory
 //
 //Errors: none

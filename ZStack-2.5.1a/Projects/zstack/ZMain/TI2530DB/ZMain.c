@@ -341,14 +341,7 @@ static void zmain_dev_info(void)
   Color_BK = WHITE; //背景色
   HalLcdWriteString( "IEEE: ", HAL_LCD_LINE_3 );
   Color    = BLUE;                    
-  HalLcdWriteString( (char*)lcd_buf, HAL_LCD_LINE_4 );
-  
-  Color    = RED; 
-  LCD_write_CN_string(9, 95, "深圳市安联德科技");
-  Color    = BLACK; 
-  LCD_write_CN_string(9, 110, "诚信立足");
-  Color    = MAGENTA; 
-  LCD_write_CN_string(63,110, "创新致远");  
+  HalLcdWriteString( (char*)lcd_buf, HAL_LCD_LINE_4 );  
 #endif
 }
 

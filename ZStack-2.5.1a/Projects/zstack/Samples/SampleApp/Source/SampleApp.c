@@ -82,7 +82,8 @@ reception of the flash command.
 /*********************************************************************
 * MACROS
 */
-#define DATA_PIN P0_5            //定义P0.5口为继电器的控制端
+#define COIN_PIN P0_2            //定义P0.2口为中断方式接收投币器信号引脚
+#define SIMULATE_PIN P0_5        //定义P0.5口为替换投币器模拟信号发生引脚
 #define UART0        0x00
 
 // This list should be filled with Application specific Cluster IDs.
@@ -144,6 +145,17 @@ void SampleApp_SendHeartBeatMessageCoor(void);
 void SampleApp_SendHeartBeatMessageEnd(void);
 
 /**
+  P1端口中断处理函数
+*/
+HAL_ISR_FUNCTION( coinPort1Isr, P1INT_VECTOR ) // P1_2配置为投币器电平变化中断引脚，在HAL/Common/hal_drivers.c中进行的引脚初始化
+{
+  // ???????????????????????????????终端操作
+  myprintf("P0 interrupt\n");
+  P1IFG = 0;       //清中断标志
+  P1IF = 0;        //清中断标志
+}
+
+/**
 * 自定义任务初始化函数
 */
 void SampleApp_Init( uint8 task_id )
@@ -154,9 +166,9 @@ void SampleApp_Init( uint8 task_id )
   SampleApp_NwkState = DEV_INIT;
   SampleApp_TransID = 0;
   
-  P0SEL &= ~0x20;               //设置P0.5口为普通IO
-  P0DIR |= 0x20;                //设置P0.5口为输出
-  DATA_PIN = 0;                 //继电器默认断开 继电器默认是高电平触发可自行切换
+  P0SEL &= ~0x20;         //设置P0.5口为普通IO
+  P0DIR |= 0x20;          //设置P0.5口为输出
+  SIMULATE_PIN = 0;       // 投币器信号模拟输出引脚
   
 #if defined ( BUILD_ALL_DEVICES )
   // The "Demo" target is setup to have BUILD_ALL_DEVICES and HOLD_AUTO_START
@@ -257,7 +269,7 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
       {
         // 系统任务事件里面的接收数据确认消息
         case AF_DATA_CONFIRM_CMD:
-          myprintf("AF_DATA_CONFIRM_CMD\n");
+          // myprintf("AF_DATA_CONFIRM_CMD\n");
           
           afDataConfirm = (afDataConfirm_t *)MSGpkt;
           sentEP = afDataConfirm->endpoint;
@@ -405,9 +417,9 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
           myprintf("Insert new EP in list\n");
         } else { // 更新终端所在节点的在线时长，标记为在线状态
           updateListEleStatus(LL, ret, INIT_LEFT_SEC);
-          myprintf("Already In List, update()\n");
+          // myprintf("Already In List, update()\n");
         }
-        myprintf("length = %d\n", ListLength_L(LL));
+        // myprintf("length = %d\n", ListLength_L(LL));
       } else if(cmd == 0x72 && pkt->cmd.Data[10] == '@') { // 收到终端回复的确认收到投币命令
         mySendByteBuf(pkt->cmd.Data, 11); // 转发回复消息到上位机
       } else if(cmd == 0x51 && pkt->cmd.Data[12] == '@') { // 终端按键S1上传的长短地址信息
@@ -452,7 +464,7 @@ void SampleApp_SendPeriodicMessage( int8 key )
                         AF_DISCV_ROUTE,
                         AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )
     {
-      HalLedBlink(HAL_LED_2, 2, 25, 500);
+      HalLedBlink(HAL_LED_2, 2, 50, 500);
     }
   } else if(key == 2) { // 按键S2
     myprintf("press key S2\n");

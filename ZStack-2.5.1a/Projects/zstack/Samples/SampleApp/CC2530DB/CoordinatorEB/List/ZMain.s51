@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        28/May/2019  19:37:28 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        29/May/2019  20:14:20 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -1578,49 +1578,42 @@ zmain_ext_addr:
 //  341   Color_BK = WHITE; //背景色
 //  342   HalLcdWriteString( "IEEE: ", HAL_LCD_LINE_3 );
 //  343   Color    = BLUE;                    
-//  344   HalLcdWriteString( (char*)lcd_buf, HAL_LCD_LINE_4 );
-//  345   
-//  346   Color    = RED; 
-//  347   LCD_write_CN_string(9, 95, "深圳市安联德科技");
-//  348   Color    = BLACK; 
-//  349   LCD_write_CN_string(9, 110, "诚信立足");
-//  350   Color    = MAGENTA; 
-//  351   LCD_write_CN_string(63,110, "创新致远");  
-//  352 #endif
-//  353 }
-//  354 
-//  355 #ifdef LCD_SUPPORTED
-//  356 /*********************************************************************
-//  357  * @fn      zmain_lcd_init
-//  358  * @brief   Initialize LCD at start up.
-//  359  * @return  none
-//  360  *********************************************************************/
-//  361 static void zmain_lcd_init ( void )
-//  362 {
-//  363 #ifdef SERIAL_DEBUG_SUPPORTED
-//  364   {
-//  365     HalLcdWriteString( "TexasInstruments", HAL_LCD_LINE_1 );
-//  366 
-//  367 #if defined( MT_MAC_FUNC )
-//  368 #if defined( ZDO_COORDINATOR )
-//  369       HalLcdWriteString( "MAC-MT Coord", HAL_LCD_LINE_2 );
-//  370 #else
-//  371       HalLcdWriteString( "MAC-MT Device", HAL_LCD_LINE_2 );
-//  372 #endif // ZDO
-//  373 #elif defined( MT_NWK_FUNC )
-//  374 #if defined( ZDO_COORDINATOR )
-//  375       HalLcdWriteString( "NWK Coordinator", HAL_LCD_LINE_2 );
-//  376 #else
-//  377       HalLcdWriteString( "NWK Device", HAL_LCD_LINE_2 );
-//  378 #endif // ZDO
-//  379 #endif // MT_FUNC
-//  380   }
-//  381 #endif // SERIAL_DEBUG_SUPPORTED
-//  382 }
-//  383 #endif
-//  384 
-//  385 /*********************************************************************
-//  386 *********************************************************************/
+//  344   HalLcdWriteString( (char*)lcd_buf, HAL_LCD_LINE_4 );  
+//  345 #endif
+//  346 }
+//  347 
+//  348 #ifdef LCD_SUPPORTED
+//  349 /*********************************************************************
+//  350  * @fn      zmain_lcd_init
+//  351  * @brief   Initialize LCD at start up.
+//  352  * @return  none
+//  353  *********************************************************************/
+//  354 static void zmain_lcd_init ( void )
+//  355 {
+//  356 #ifdef SERIAL_DEBUG_SUPPORTED
+//  357   {
+//  358     HalLcdWriteString( "TexasInstruments", HAL_LCD_LINE_1 );
+//  359 
+//  360 #if defined( MT_MAC_FUNC )
+//  361 #if defined( ZDO_COORDINATOR )
+//  362       HalLcdWriteString( "MAC-MT Coord", HAL_LCD_LINE_2 );
+//  363 #else
+//  364       HalLcdWriteString( "MAC-MT Device", HAL_LCD_LINE_2 );
+//  365 #endif // ZDO
+//  366 #elif defined( MT_NWK_FUNC )
+//  367 #if defined( ZDO_COORDINATOR )
+//  368       HalLcdWriteString( "NWK Coordinator", HAL_LCD_LINE_2 );
+//  369 #else
+//  370       HalLcdWriteString( "NWK Device", HAL_LCD_LINE_2 );
+//  371 #endif // ZDO
+//  372 #endif // MT_FUNC
+//  373   }
+//  374 #endif // SERIAL_DEBUG_SUPPORTED
+//  375 }
+//  376 #endif
+//  377 
+//  378 /*********************************************************************
+//  379 *********************************************************************/
 // 
 // 523 bytes in segment BANKED_CODE
 //  12 bytes in segment BANK_RELAYS

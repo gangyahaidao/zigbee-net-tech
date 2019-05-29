@@ -483,47 +483,41 @@ uint8 HalKeyExitSleep ( void )
  *
  * @return
  **************************************************************************************************/
+/*
 HAL_ISR_FUNCTION( halKeyPort0Isr, P0INT_VECTOR )
 {
   if (HAL_KEY_SW_6_PXIFG & HAL_KEY_SW_6_BIT)
   {
     halProcessKeyInterrupt();
   }
-
-  /*
-    Clear the CPU interrupt flag for Port_0
-    PxIFG has to be cleared before PxIF
-  */
   HAL_KEY_SW_6_PXIFG = 0;
   HAL_KEY_CPU_PORT_0_IF = 0;
 }
-
+*/
 
 /**************************************************************************************************
  * @fn      halKeyPort2Isr
  *
  * @brief   Port2 ISR
+    Clear the CPU interrupt flag for Port_2
+    PxIFG has to be cleared before PxIF
+    Notes: P2_1 and P2_2 are debug lines.
  *
  * @param
  *
  * @return
  **************************************************************************************************/
+/*
 HAL_ISR_FUNCTION( halKeyPort2Isr, P2INT_VECTOR )
 {
   if (HAL_KEY_JOY_MOVE_PXIFG & HAL_KEY_JOY_MOVE_BIT)
   {
     halProcessKeyInterrupt();
   }
-
-  /*
-    Clear the CPU interrupt flag for Port_2
-    PxIFG has to be cleared before PxIF
-    Notes: P2_1 and P2_2 are debug lines.
-  */
   HAL_KEY_JOY_MOVE_PXIFG = 0;
   HAL_KEY_CPU_PORT_2_IF = 0;
 }
-
+*/
 #else
 
 
@@ -534,6 +528,22 @@ void HalKeyPoll(void){}
 
 #endif /* HAL_KEY */
 
+/**
+  初始化中断引脚
+  用于监控投币机的引脚电平变化
+  P0_2引脚
+*/
+void InitCoinInterrupt(void) {
+  P1SEL &= ~(0x1 << 2); // P1_2 设置为一般功能IO口
+  P1DIR &= ~(0x1<<2);  // 设置为输入功能
+  P2INP &= ~(0x1<<2); // 设置为上拉
+  
+  P1IEN |= (0x1 << 2); // P1_2中断使能
+  PICTL &= ~(0x1 << 1); // 设置为0表示上升沿引起中断
+  EA = 1; // 打开总中断
+  IEN2 |= (0x1 << 4); // 端口1中断使能
+  P1IFG = 0; // 初始化中断标志位  
+}
 
 
 
