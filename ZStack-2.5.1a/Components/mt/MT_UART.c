@@ -184,7 +184,7 @@ byte MT_UartCalcFCS( uint8 *msg_ptr, uint8 len )
   自定义串口接收程序
 */
 uint8 recv_index = 0;
-uint8 speed_buffer[3] = {0};
+uint8 speed_buffer[4] = {0};
 extern endPointDesc_t SampleApp_epDesc;
 extern afAddrType_t EndPoint_DstAddr;
 extern uint8 SampleApp_TransID;
@@ -199,25 +199,29 @@ void MT_MyUartProcessZToolData ( uint8 port, uint8 event )
     if(ch == '#') { // 一帧数据的开始字节
       recv_index = 0;
     } else if(ch == '@') { // 接收到一帧数据尾部
-      recv_index = 0;
-      myprintf("#R@"); // 返回数据，表示已经收到
+      recv_index = 0;     
       
-      uint16 addr = speed_buffer[0]; // 终端地址高字节
-      addr = (addr << 8) | speed_buffer[1];
-      EndPoint_DstAddr.addr.shortAddr = addr;
-      if ( AF_DataRequest( &EndPoint_DstAddr, // 以单播的形式发送数据到指定的终端
-                          &SampleApp_epDesc,
-                          SAMPLEAPP_PERIODIC_CLUSTERID,
-                          1,
-                          &speed_buffer[2], // 控制命令字
-                          &SampleApp_TransID,
-                          AF_DISCV_ROUTE,
-                          AF_DEFAULT_RADIUS ) != afStatus_SUCCESS )
-      {
-        myprintf("SendToEPFailed\n");
+      uint8 cmd = speed_buffer[0]; // 消息命令类型
+      uint16 addr = speed_buffer[1]; // 终端地址高字节
+      addr = (addr << 8) | speed_buffer[2];
+      if(cmd == 0x81) { // 让指定地址的游戏机开始游戏
+        uint8 sendEPBuf[4] = {'#', 0x81, 0, '@'};
+        sendEPBuf[2] = speed_buffer[3]; // 需要的投币个数
+        EndPoint_DstAddr.addr.shortAddr = addr;
+        if ( AF_DataRequest( &EndPoint_DstAddr, // 以单播的形式发送数据到指定的终端，终端收到投币命令之后，会回复一个0x72消息给协调器，协调器将此消息再转发到上位机
+                            &SampleApp_epDesc,
+                            SAMPLEAPP_PERIODIC_CLUSTERID,
+                            4,
+                            sendEPBuf,
+                            &SampleApp_TransID,
+                            AF_DISCV_ROUTE,
+                            AF_DEFAULT_RADIUS ) != afStatus_SUCCESS )
+        {
+          myprintf("SendToEPFailed\n");
+        }
       }
     } else {
-      if(recv_index >= 3){
+      if(recv_index >= 4){
         recv_index = 0;
       }else{
         speed_buffer[recv_index] = ch;
@@ -558,6 +562,9 @@ static int vsprintf(char *buf, const char *fmt, va_list args)
     return (p - buf);
 }
 
+/**
+  自定义串口打印函数
+*/
 void myprintf(char*fmt, ...)
 {
    char buf[256];
@@ -583,6 +590,25 @@ void myprintf(char*fmt, ...)
           wr =  HalUARTWrite(0, (uint8 *)buf + off, len);
       }
   
+      len -= wr;
+      off += wr;
+      if (!wr)
+      {
+          HalUARTPoll();
+      }
+   }
+}
+
+/**
+  自定义发送指定字节数组函数
+*/
+void mySendByteBuf(uint8* buf, int len) {
+   int wr = 0;
+   int off = 0;
+   
+   while (len)
+   {
+      wr =  HalUARTWrite(0, (uint8 *)buf + off, len);
       len -= wr;
       off += wr;
       if (!wr)

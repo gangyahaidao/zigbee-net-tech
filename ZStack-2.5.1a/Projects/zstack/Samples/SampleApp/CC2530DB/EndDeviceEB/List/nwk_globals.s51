@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        27/May/2019  16:02:59 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        28/May/2019  18:18:10 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -9,19 +9,16 @@
 //    Calling convention =  xdata reentrant                                   /
 //    Constant location  =  data_rom                                          /
 //    Dptr setup         =  1,16                                              /
-//    Source file        =  E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Com /
-//                          ponents\stack\nwk\nwk_globals.c                   /
-//    Command line       =  -f E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ /
-//                          ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\ /
-//                          Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ /
-//                          ..\Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ        /
+//    Source file        =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Components\stack\nwk\nwk_globals.c              /
+//    Command line       =  -f E:\Github_Repository\zigbee-net-tech\ZStack-2. /
+//                          5.1a\Projects\zstack\Samples\SampleApp\CC2530DB\. /
+//                          .\..\..\Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ   /
 //                          -DROOT=__near_func -DMAC_CFG_TX_DATA_MAX=3        /
 //                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3) -f         /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO         /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO    /
 //                          -DSECURE=0 -DZG_SECURE_DYNAMIC=0 -DREFLECTOR      /
 //                          -DDEFAULT_CHANLIST=0x00000800                     /
 //                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                      /
@@ -44,114 +41,87 @@
 //                          __code" -DGENERIC=__generic                       /
 //                          -DRFD_RCVC_ALWAYS_ON=FALSE -DPOLL_RATE=1000       /
 //                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100)  /
-//                          -DREJOIN_POLL_RATE=440 E:\BaiduNetdiskDownload\CC /
-//                          2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µ /
-//                          Æ·çÉÈ\ZStack-2.5.1a\Components\stack\nwk\nwk_glob /
-//                          als.c -D NWK_AUTO_POLL -D ZTOOL_P1 -D MT_TASK -D  /
-//                          MT_SYS_FUNC -D MT_ZDO_FUNC -D                     /
-//                          LCD_SUPPORTED=DEBUG -lC                           /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\EndDevice /
-//                          EB\List\ -lA E:\BaiduNetdiskDownload\CC2530-2018\ /
-//                          Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZSta /
-//                          ck-2.5.1a\Projects\zstack\Samples\SampleApp\CC253 /
-//                          0DB\EndDeviceEB\List\ --diag_suppress             /
-//                          Pe001,Pa010 -o E:\BaiduNetdiskDownload\CC2530-201 /
-//                          8\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZS /
-//                          tack-2.5.1a\Projects\zstack\Samples\SampleApp\CC2 /
-//                          530DB\EndDeviceEB\Obj\ -e --no_code_motion        /
+//                          -DREJOIN_POLL_RATE=440 E:\Github_Repository\zigbe /
+//                          e-net-tech\ZStack-2.5.1a\Components\stack\nwk\nwk /
+//                          _globals.c -D NWK_AUTO_POLL -D ZTOOL_P1 -D        /
+//                          MT_TASK -D MT_SYS_FUNC -D MT_ZDO_FUNC -lC         /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\EndD /
+//                          eviceEB\List\ -lA E:\Github_Repository\zigbee-net /
+//                          -tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl /
+//                          eApp\CC2530DB\EndDeviceEB\List\ --diag_suppress   /
+//                          Pe001,Pa010 -o E:\Github_Repository\zigbee-net-te /
+//                          ch\ZStack-2.5.1a\Projects\zstack\Samples\SampleAp /
+//                          p\CC2530DB\EndDeviceEB\Obj\ -e --no_code_motion   /
 //                          --debug --core=plain --dptr=16,1                  /
 //                          --data_model=large --code_model=banked            /
 //                          --calling_convention=xdata_reentrant              /
 //                          --place_constants=data_rom --nr_virtual_regs 16   /
-//                          -I E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ /
-//                          ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\ /
-//                          Projects\zstack\Samples\SampleApp\CC2530DB\ -I    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\Source /
-//                          \ -I E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ /
-//                          °æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1 /
+//                          -I E:\Github_Repository\zigbee-net-tech\ZStack-2. /
+//                          5.1a\Projects\zstack\Samples\SampleApp\CC2530DB\  /
+//                          -I E:\Github_Repository\zigbee-net-tech\ZStack-2. /
+//                          5.1a\Projects\zstack\Samples\SampleApp\CC2530DB\. /
+//                          .\Source\ -I E:\Github_Repository\zigbee-net-tech /
+//                          \ZStack-2.5.1a\Projects\zstack\Samples\SampleApp\ /
+//                          CC2530DB\..\..\..\ZMain\TI2530DB\ -I              /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
 //                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
-//                          .\..\ZMain\TI2530DB\ -I                           /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\hal\include\ -I                  /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\hal\target\CC2530EB\ -I          /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\mac\include\ -I                  /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\mac\high_level\ -I               /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\mac\low_level\srf04\ -I          /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\mac\low_level\srf04\single_chip\ /
-//                           -I E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ° /
-//                          æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a /
-//                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\.. /
-//                          \..\..\..\Components\mt\ -I                       /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\osal\include\ -I                 /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\services\saddr\ -I               /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\services\sdata\ -I               /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\af\ -I                     /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\nwk\ -I                    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\sapi\ -I                   /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\sec\ -I                    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\sys\ -I                    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\zdo\ -I                    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\zmac\ -I                         /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\zmac\f8w\ -Ohz                   /
+//                          .\..\..\..\Components\hal\include\ -I             /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\hal\target\CC2530EB\ -I     /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\mac\include\ -I             /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\mac\high_level\ -I          /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\mac\low_level\srf04\ -I     /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\mac\low_level\srf04\single_ /
+//                          chip\ -I E:\Github_Repository\zigbee-net-tech\ZSt /
+//                          ack-2.5.1a\Projects\zstack\Samples\SampleApp\CC25 /
+//                          30DB\..\..\..\..\..\Components\mt\ -I             /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\osal\include\ -I            /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\services\saddr\ -I          /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\services\sdata\ -I          /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\af\ -I                /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\nwk\ -I               /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\sapi\ -I              /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\sec\ -I               /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\sys\ -I               /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\zdo\ -I               /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\zmac\ -I                    /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\zmac\f8w\ -Ohz              /
 //                          --require_prototypes                              /
-//    List file          =  E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\EndDevice /
-//                          EB\List\nwk_globals.s51                           /
+//    List file          =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\EndD /
+//                          eviceEB\List\nwk_globals.s51                      /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -175,14 +145,8 @@
         RSEG PSTACK:XDATA:NOROOT(0)
         RSEG XSTACK:XDATA:NOROOT(0)
 
-        EXTERN ?BANKED_ENTER_XDATA
-        EXTERN ?BANKED_LEAVE_XDATA
         EXTERN ?BDISPATCH
         EXTERN ?BRET
-        EXTERN ?DEALLOC_XSTACK8
-        EXTERN ?PUSH_XSTACK_I_ONE
-        EXTERN ?US_SWITCH_SPARSE
-        EXTERN ?V0
         EXTERN __INIT_XDATA_I
         EXTERN __INIT_XDATA_Z
 
@@ -194,31 +158,15 @@
         FUNCTION ??nwk_UpdateStatistics?relay,0203H
         PUBLIC ??nwk_globals_init?relay
         FUNCTION ??nwk_globals_init?relay,0203H
-        PUBLIC AssocCnfFailStr
-        PUBLIC AssocCnfStr
-        PUBLIC AssocIndStr
-        PUBLIC AssocRspFailStr
         PUBLIC AssociatedDevList
         PUBLIC BindingTable
         PUBLIC Cskip
         PUBLIC CskipChldrn
         PUBLIC CskipRtrs
-        PUBLIC EndDeviceStr
-        PUBLIC EnergyLevelStr
-        PUBLIC FailedStr
         PUBLIC NIB_init
         FUNCTION NIB_init,021203H
         ARGFRAME XSTACK, 0, STACK
         LOCFRAME ISTACK, 2, STACK
-        PUBLIC NetworkIDStr
-        PUBLIC OrphanRspStr
-        PUBLIC ParentStr
-        PUBLIC PingStr
-        PUBLIC RouterStr
-        PUBLIC ScanFailedStr
-        PUBLIC SentStr
-        PUBLIC SuccessStr
-        PUBLIC ZigbeeCoordStr
         PUBLIC apsEndDeviceBroadcastTable
         PUBLIC bcastHoldAckMask
         PUBLIC bcastHoldHandle
@@ -259,9 +207,8 @@
         PUBLIC gNWK_TREE_ALLOCATE_ROUTERADDR_FOR_ENDDEVICE
         PUBLIC neighborTable
         PUBLIC nwk_Status
-        FUNCTION nwk_Status,0a1203H
+        FUNCTION nwk_Status,0203H
         ARGFRAME XSTACK, 0, STACK
-        LOCFRAME XSTACK, 13, STACK
         PUBLIC nwk_UpdateStatistics
         FUNCTION nwk_UpdateStatistics,0203H
         ARGFRAME XSTACK, 0, STACK
@@ -433,15 +380,7 @@ AddrMgrInit         SYMBOL "AddrMgrInit"
 osal_rand           SYMBOL "osal_rand"
 osal_memset         SYMBOL "osal_memset"
 sAddrExtCpy         SYMBOL "sAddrExtCpy"
-HalLcdWriteStringValue SYMBOL "HalLcdWriteStringValue"
-HalLcdWriteScreen   SYMBOL "HalLcdWriteScreen"
-HalLcdWriteString   SYMBOL "HalLcdWriteString"
-HalLcdWriteValue    SYMBOL "HalLcdWriteValue"
 ??AddrMgrInit?relay SYMBOL "?relay", AddrMgrInit
-??HalLcdWriteScreen?relay SYMBOL "?relay", HalLcdWriteScreen
-??HalLcdWriteString?relay SYMBOL "?relay", HalLcdWriteString
-??HalLcdWriteStringValue?relay SYMBOL "?relay", HalLcdWriteStringValue
-??HalLcdWriteValue?relay SYMBOL "?relay", HalLcdWriteValue
 ??osal_memset?relay SYMBOL "?relay", osal_memset
 ??osal_rand?relay   SYMBOL "?relay", osal_rand
 ??sAddrExtCpy?relay SYMBOL "?relay", sAddrExtCpy
@@ -482,44 +421,8 @@ nwk_globals_init    SYMBOL "nwk_globals_init"
         ARGFRAME XSTACK, 0, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalLcdWriteStringValue
-        FUNCTION HalLcdWriteStringValue,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 13, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalLcdWriteScreen
-        FUNCTION HalLcdWriteScreen,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 12, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalLcdWriteString
-        FUNCTION HalLcdWriteString,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 12, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalLcdWriteValue
-        FUNCTION HalLcdWriteValue,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 13, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         EXTERN ??AddrMgrInit?relay
         FUNCTION ??AddrMgrInit?relay,00H
-        EXTERN ??HalLcdWriteScreen?relay
-        FUNCTION ??HalLcdWriteScreen?relay,00H
-        EXTERN ??HalLcdWriteString?relay
-        FUNCTION ??HalLcdWriteString?relay,00H
-        EXTERN ??HalLcdWriteStringValue?relay
-        FUNCTION ??HalLcdWriteStringValue?relay,00H
-        EXTERN ??HalLcdWriteValue?relay
-        FUNCTION ??HalLcdWriteValue?relay,00H
         EXTERN ??osal_memset?relay
         FUNCTION ??osal_memset?relay,00H
         EXTERN ??osal_rand?relay
@@ -539,7 +442,7 @@ nwk_globals_init    SYMBOL "nwk_globals_init"
         EXTERN zgRouteDiscoveryTime
         EXTERN zgRouteExpiryTime
 
-// E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Components\stack\nwk\nwk_globals.c
+// E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\nwk\nwk_globals.c
 //    1 /**************************************************************************************************
 //    2   Filename:       nwk_globals.c
 //    3   Revised:        $Date: 2012-03-07 01:04:58 -0800 (Wed, 07 Mar 2012) $
@@ -1126,102 +1029,22 @@ defaultTCLinkKey:
 //  296  * STATUS STRINGS
 //  297  */
 //  298 #if defined ( LCD_SUPPORTED )
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  299   const char PingStr[]         = "Ping Rcvd from";
-PingStr:
-        DB "Ping Rcvd from"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  300   const char AssocCnfStr[]     = "Assoc Cnf";
-AssocCnfStr:
-        DB "Assoc Cnf"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  301   const char SuccessStr[]      = "Success";
-SuccessStr:
-        DB "Success"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  302   const char EndDeviceStr[]    = "EndDevice:";
-EndDeviceStr:
-        DB "EndDevice:"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  303   const char ParentStr[]       = "Parent:";
-ParentStr:
-        DB "Parent:"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  304   const char ZigbeeCoordStr[]  = "ZigBee Coord";
-ZigbeeCoordStr:
-        DB "ZigBee Coord"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  305   const char NetworkIDStr[]    = "Network ID:";
-NetworkIDStr:
-        DB "Network ID:"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  306   const char RouterStr[]       = "Router:";
-RouterStr:
-        DB "Router:"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  307   const char OrphanRspStr[]    = "Orphan Response";
-OrphanRspStr:
-        DB "Orphan Response"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  308   const char SentStr[]         = "Sent";
-SentStr:
-        DB "Sent"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  309   const char FailedStr[]       = "Failed";
-FailedStr:
-        DB "Failed"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  310   const char AssocRspFailStr[] = "Assoc Rsp fail";
-AssocRspFailStr:
-        DB "Assoc Rsp fail"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  311   const char AssocIndStr[]     = "Assoc Ind";
-AssocIndStr:
-        DB "Assoc Ind"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  312   const char AssocCnfFailStr[] = "Assoc Cnf fail";
-AssocCnfFailStr:
-        DB "Assoc Cnf fail"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  313   const char EnergyLevelStr[]  = "Energy Level";
-EnergyLevelStr:
-        DB "Energy Level"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
 //  314   const char ScanFailedStr[]   = "Scan Failed";
-ScanFailedStr:
-        DB "Scan Failed"
 //  315 #endif
 //  316 
 //  317 /*********************************************************************
@@ -1650,189 +1473,10 @@ nwk_Status:
         CFI Function nwk_Status
         CODE
 //  483 {
-        FUNCALL nwk_Status, HalLcdWriteStringValue
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 13, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 13, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL nwk_Status, HalLcdWriteStringValue
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 13, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 13, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL nwk_Status, HalLcdWriteScreen
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 12, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 12, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL nwk_Status, HalLcdWriteString
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 12, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 12, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL nwk_Status, HalLcdWriteValue
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 13, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 13, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL nwk_Status, HalLcdWriteScreen
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 12, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 12, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        MOV     A,#-0xc
-        LCALL   ?BANKED_ENTER_XDATA
-        CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-1)))
-        CFI DPL0 load(1, XDATA, add(CFA_XSP16, literal(-2)))
-        CFI ?BRET_EXT load(1, XDATA, add(CFA_XSP16, literal(-3)))
-        CFI ?RET_HIGH load(1, XDATA, add(CFA_XSP16, literal(-4)))
-        CFI ?RET_LOW load(1, XDATA, add(CFA_XSP16, literal(-5)))
-        CFI R7 load(1, XDATA, add(CFA_XSP16, literal(-6)))
-        CFI V3 load(1, XDATA, add(CFA_XSP16, literal(-7)))
-        CFI V2 load(1, XDATA, add(CFA_XSP16, literal(-8)))
-        CFI V1 load(1, XDATA, add(CFA_XSP16, literal(-9)))
-        CFI V0 load(1, XDATA, add(CFA_XSP16, literal(-10)))
-        CFI VB load(1, XDATA, add(CFA_XSP16, literal(-11)))
-        CFI R6 load(1, XDATA, add(CFA_XSP16, literal(-12)))
-        CFI CFA_SP SP+0
-        CFI CFA_XSP16 add(XSP16, 12)
-        ; Saved register size: 12
+        ; Saved register size: 0
         ; Auto size: 0
-        MOV     ?V0 + 2,R4
-        MOV     ?V0 + 3,R5
 //  484 #if defined ( LCD_SUPPORTED )
 //  485   switch ( statusCode )
-        MOV     ?V0 + 0,R2
-        MOV     ?V0 + 1,R3
-        MOV     R0,#?V0 + 0
-        LCALL   ?US_SWITCH_SPARSE
-`?<Jumptable for nwk_Status>_0`:
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DW        0
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DW        5
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DW        2
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DW        ??nwk_Status_0
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DW        3
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DW        ??nwk_Status_1
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DW        4
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DW        ??nwk_Status_2
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DW        4099
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DW        ??nwk_Status_3
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DW        4100
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DW        ??nwk_Status_4
-        DATA
-        DATA16
-        DATA
-        DATA16
-        DW        ??nwk_Status_5
-        CODE
 //  486   {
 //  487     case NWK_STATUS_COORD_ADDR:
 //  488       if ( ZSTACK_ROUTER_BUILD )
@@ -1872,93 +1516,29 @@ nwk_Status:
 //  522       if ( ZSTACK_END_DEVICE_BUILD )
 //  523       {
 //  524         HalLcdWriteStringValue( (char*)EndDeviceStr, statusValue, 16, HAL_LCD_LINE_1 );
-??nwk_Status_1:
-        ; Setup parameters for call to function HalLcdWriteStringValue
-        MOV     ?V0 + 0,#0x0
-        MOV     R0,#?V0 + 0
-        LCALL   ?PUSH_XSTACK_I_ONE
-        CFI CFA_XSP16 add(XSP16, 13)
-        MOV     R1,#0x10
-        MOV     R2,#EndDeviceStr & 0xff
-        MOV     R3,#(EndDeviceStr >> 8) & 0xff
-??nwk_Status_6:
-        LCALL   ??HalLcdWriteStringValue?relay
-??nwk_Status_7:
-        MOV     A,#0x1
-        LCALL   ?DEALLOC_XSTACK8
-        CFI CFA_XSP16 add(XSP16, 12)
 //  525       }
 //  526       break;
-        SJMP    ??nwk_Status_5
 //  527 
 //  528     case NWK_STATUS_PARENT_ADDR:
 //  529             HalLcdWriteStringValue( (char*)ParentStr, statusValue, 16, HAL_LCD_LINE_2 );
-??nwk_Status_2:
-        ; Setup parameters for call to function HalLcdWriteStringValue
-        MOV     ?V0 + 0,#0x1
-        MOV     R0,#?V0 + 0
-        LCALL   ?PUSH_XSTACK_I_ONE
-        CFI CFA_XSP16 add(XSP16, 13)
-        MOV     R1,#0x10
-        MOV     R2,#ParentStr & 0xff
-        MOV     R3,#(ParentStr >> 8) & 0xff
-        SJMP    ??nwk_Status_6
-        CFI CFA_XSP16 add(XSP16, 12)
 //  530       break;
 //  531 
 //  532     case NWK_STATUS_ASSOC_CNF:
 //  533       HalLcdWriteScreen( (char*)AssocCnfStr, (char*)SuccessStr );
-??nwk_Status_0:
-        ; Setup parameters for call to function HalLcdWriteScreen
-        MOV     R4,#SuccessStr & 0xff
-        MOV     R5,#(SuccessStr >> 8) & 0xff
-        MOV     R2,#AssocCnfStr & 0xff
-        MOV     R3,#(AssocCnfStr >> 8) & 0xff
-        SJMP    ??nwk_Status_8
 //  534       break;
 //  535 
 //  536     case NWK_ERROR_ASSOC_CNF_DENIED:
 //  537       HalLcdWriteString((char*)AssocCnfFailStr, HAL_LCD_LINE_1 );
-??nwk_Status_3:
-        ; Setup parameters for call to function HalLcdWriteString
-        MOV     R1,#0x0
-        MOV     R2,#AssocCnfFailStr & 0xff
-        MOV     R3,#(AssocCnfFailStr >> 8) & 0xff
-        LCALL   ??HalLcdWriteString?relay
 //  538       HalLcdWriteValue( (uint32)(statusValue), 16, HAL_LCD_LINE_2 );
-        ; Setup parameters for call to function HalLcdWriteValue
-        MOV     ?V0 + 0,#0x1
-        MOV     R0,#?V0 + 0
-        LCALL   ?PUSH_XSTACK_I_ONE
-        CFI CFA_XSP16 add(XSP16, 13)
-        MOV     R1,#0x10
-        MOV     R2,?V0 + 2
-        MOV     R3,?V0 + 3
-        CLR     A
-        MOV     R4,A
-        MOV     R5,A
-        LCALL   ??HalLcdWriteValue?relay
-        SJMP    ??nwk_Status_7
-        CFI CFA_XSP16 add(XSP16, 12)
 //  539       break;
 //  540 
 //  541     case NWK_ERROR_ENERGY_SCAN_FAILED:
 //  542       HalLcdWriteScreen( (char*)EnergyLevelStr, (char*)ScanFailedStr );
-??nwk_Status_4:
-        ; Setup parameters for call to function HalLcdWriteScreen
-        MOV     R4,#ScanFailedStr & 0xff
-        MOV     R5,#(ScanFailedStr >> 8) & 0xff
-        MOV     R2,#EnergyLevelStr & 0xff
-        MOV     R3,#(EnergyLevelStr >> 8) & 0xff
-??nwk_Status_8:
-        LCALL   ??HalLcdWriteScreen?relay
 //  543       break;
 //  544   }
 //  545 #endif
 //  546 }
-??nwk_Status_5:
-        MOV     R7,#0x4
-        LJMP    ?BANKED_LEAVE_XDATA
+        LJMP    ?BRET
         CFI EndBlock cfiBlock6
 //  547 
 //  548 /*********************************************************************
@@ -2044,16 +1624,14 @@ nwk_UpdateStatistics:
 //  582 /*********************************************************************
 //  583 *********************************************************************/
 // 
-//   397 bytes in segment BANKED_CODE
+//   259 bytes in segment BANKED_CODE
 //    24 bytes in segment BANK_RELAYS
 //    70 bytes in segment CODE_C
 //     2 bytes in segment XDATA_I
 //     2 bytes in segment XDATA_ID
-//   178 bytes in segment XDATA_ROM_C
 // 1 177 bytes in segment XDATA_Z
 // 
-//   493 bytes of CODE  memory
-//   178 bytes of CONST memory
+//   355 bytes of CODE  memory
 // 1 179 bytes of XDATA memory
 //
 //Errors: none

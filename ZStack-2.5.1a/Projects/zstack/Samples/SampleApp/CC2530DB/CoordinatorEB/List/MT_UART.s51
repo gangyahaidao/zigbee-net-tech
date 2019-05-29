@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        27/May/2019  17:41:18 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        29/May/2019  11:53:58 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -9,22 +9,19 @@
 //    Calling convention =  xdata reentrant                                   /
 //    Constant location  =  data_rom                                          /
 //    Dptr setup         =  1,16                                              /
-//    Source file        =  E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Com /
-//                          ponents\mt\MT_UART.c                              /
-//    Command line       =  -f E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ /
-//                          ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\ /
-//                          Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ /
-//                          ..\Tools\CC2530DB\f8wCoord.cfg (-DCPU32MHZ        /
+//    Source file        =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Components\mt\MT_UART.c                         /
+//    Command line       =  -f E:\Github_Repository\zigbee-net-tech\ZStack-2. /
+//                          5.1a\Projects\zstack\Samples\SampleApp\CC2530DB\. /
+//                          .\..\..\Tools\CC2530DB\f8wCoord.cfg (-DCPU32MHZ   /
 //                          -DROOT=__near_func -DMAC_CFG_APP_PENDING_QUEUE=TR /
 //                          UE -DMAC_CFG_TX_DATA_MAX=5 -DMAC_CFG_TX_MAX=8     /
 //                          -DMAC_CFG_RX_MAX=5 -DZDO_COORDINATOR -DRTR_NWK)   /
-//                          -f E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ /
-//                          ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\ /
-//                          Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ /
-//                          ..\Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO      /
-//                          -DSECURE=0 -DZG_SECURE_DYNAMIC=0 -DREFLECTOR      /
-//                          -DDEFAULT_CHANLIST=0x00000800                     /
+//                          -f E:\Github_Repository\zigbee-net-tech\ZStack-2. /
+//                          5.1a\Projects\zstack\Samples\SampleApp\CC2530DB\. /
+//                          .\..\..\Tools\CC2530DB\f8wConfig.cfg              /
+//                          (-DZIGBEEPRO -DSECURE=0 -DZG_SECURE_DYNAMIC=0     /
+//                          -DREFLECTOR -DDEFAULT_CHANLIST=0x00000800         /
 //                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                      /
 //                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_M /
 //                          ASK=0x007F -DBEACON_REQUEST_DELAY=100             /
@@ -45,113 +42,87 @@
 //                          __code" -DGENERIC=__generic                       /
 //                          -DRFD_RCVC_ALWAYS_ON=FALSE -DPOLL_RATE=1000       /
 //                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100)  /
-//                          -DREJOIN_POLL_RATE=440 E:\BaiduNetdiskDownload\CC /
-//                          2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µ /
-//                          Æ·çÉÈ\ZStack-2.5.1a\Components\mt\MT_UART.c -D    /
-//                          ZTOOL_P1 -D xMT_TASK -D xMT_SYS_FUNC -D           /
-//                          xMT_ZDO_FUNC -lC E:\BaiduNetdiskDownload\CC2530-2 /
-//                          018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ /
-//                          ZStack-2.5.1a\Projects\zstack\Samples\SampleApp\C /
-//                          C2530DB\CoordinatorEB\List\ -lA                   /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\Coordinat /
-//                          orEB\List\ --diag_suppress Pe001,Pa010 -o         /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\Coordinat /
-//                          orEB\Obj\ -e --no_code_motion --debug             /
+//                          -DREJOIN_POLL_RATE=440 E:\Github_Repository\zigbe /
+//                          e-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c  /
+//                          -D ZTOOL_P1 -D xMT_TASK -D xMT_SYS_FUNC -D        /
+//                          xMT_ZDO_FUNC -lC E:\Github_Repository\zigbee-net- /
+//                          tech\ZStack-2.5.1a\Projects\zstack\Samples\Sample /
+//                          App\CC2530DB\CoordinatorEB\List\ -lA              /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\Coor /
+//                          dinatorEB\List\ --diag_suppress Pe001,Pa010 -o    /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\Coor /
+//                          dinatorEB\Obj\ -e --no_code_motion --debug        /
 //                          --core=plain --dptr=16,1 --data_model=large       /
 //                          --code_model=banked --calling_convention=xdata_re /
 //                          entrant --place_constants=data_rom                /
 //                          --nr_virtual_regs 16 -I                           /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\ -I       /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\Source /
-//                          \ -I E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ /
-//                          °æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1 /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\ -I  /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\S /
+//                          ource\ -I E:\Github_Repository\zigbee-net-tech\ZS /
+//                          tack-2.5.1a\Projects\zstack\Samples\SampleApp\CC2 /
+//                          530DB\..\..\..\ZMain\TI2530DB\ -I                 /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
 //                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
-//                          .\..\ZMain\TI2530DB\ -I                           /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\hal\include\ -I                  /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\hal\target\CC2530EB\ -I          /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\mac\include\ -I                  /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\mac\high_level\ -I               /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\mac\low_level\srf04\ -I          /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\mac\low_level\srf04\single_chip\ /
-//                           -I E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ° /
-//                          æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a /
-//                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\.. /
-//                          \..\..\..\Components\mt\ -I                       /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\osal\include\ -I                 /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\services\saddr\ -I               /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\services\sdata\ -I               /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\af\ -I                     /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\nwk\ -I                    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\sapi\ -I                   /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\sec\ -I                    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\sys\ -I                    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\stack\zdo\ -I                    /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\zmac\ -I                         /
-//                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
-//                          ..\..\Components\zmac\f8w\ -Ohz                   /
+//                          .\..\..\..\Components\hal\include\ -I             /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\hal\target\CC2530EB\ -I     /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\mac\include\ -I             /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\mac\high_level\ -I          /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\mac\low_level\srf04\ -I     /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\mac\low_level\srf04\single_ /
+//                          chip\ -I E:\Github_Repository\zigbee-net-tech\ZSt /
+//                          ack-2.5.1a\Projects\zstack\Samples\SampleApp\CC25 /
+//                          30DB\..\..\..\..\..\Components\mt\ -I             /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\osal\include\ -I            /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\services\saddr\ -I          /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\services\sdata\ -I          /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\af\ -I                /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\nwk\ -I               /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\sapi\ -I              /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\sec\ -I               /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\sys\ -I               /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\stack\zdo\ -I               /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\zmac\ -I                    /
+//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
+//                          .\..\..\..\Components\zmac\f8w\ -Ohz              /
 //                          --require_prototypes                              /
-//    List file          =  E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£ /
-//                          º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pro /
-//                          jects\zstack\Samples\SampleApp\CC2530DB\Coordinat /
-//                          orEB\List\MT_UART.s51                             /
+//    List file          =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
+//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\Coor /
+//                          dinatorEB\List\MT_UART.s51                        /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -182,6 +153,7 @@
         EXTERN ?BDISPATCH
         EXTERN ?BRET
         EXTERN ?DEALLOC_XSTACK8
+        EXTERN ?MOVE_LONG8_XDATA_XDATA
         EXTERN ?PUSH_XSTACK_I_ONE
         EXTERN ?PUSH_XSTACK_I_TWO
         EXTERN ?US_DIV_MOD
@@ -201,6 +173,8 @@
         FUNCTION ??MT_UartProcessZToolData?relay,0203H
         PUBLIC ??MT_UartRegisterTaskID?relay
         FUNCTION ??MT_UartRegisterTaskID?relay,0203H
+        PUBLIC ??mySendByteBuf?relay
+        FUNCTION ??mySendByteBuf?relay,0203H
         PUBLIC ??myprintf?relay
         FUNCTION ??myprintf?relay,0203H
         FUNCTION ??vsprintf?relay,0203H
@@ -211,8 +185,8 @@
         PUBLIC MT_MyUartProcessZToolData
         FUNCTION MT_MyUartProcessZToolData,021603H
         ARGFRAME XSTACK, 0, STACK
-        LOCFRAME ISTACK, 1, STACK
-        LOCFRAME XSTACK, 20, STACK
+        LOCFRAME ISTACK, 2, STACK
+        LOCFRAME XSTACK, 24, STACK
         PUBLIC MT_UartCalcFCS
         FUNCTION MT_UartCalcFCS,0203H
         ARGFRAME XSTACK, 11, STACK
@@ -233,9 +207,13 @@
         FUNCTION MT_UartRegisterTaskID,0203H
         ARGFRAME XSTACK, 0, STACK
         LOCFRAME ISTACK, 2, STACK
+        PUBLIC mySendByteBuf
+        FUNCTION mySendByteBuf,021203H
+        ARGFRAME XSTACK, 0, STACK
+        LOCFRAME XSTACK, 14, STACK
         PUBLIC myprintf
         FUNCTION myprintf,021203H
-        ARGFRAME XSTACK, 11, STACK
+        ARGFRAME XSTACK, 15, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         LOCFRAME XSTACK, 272, STACK
@@ -438,6 +416,8 @@ MT_UartProcessZToolData SYMBOL "MT_UartProcessZToolData"
 ??MT_UartProcessZToolData?relay SYMBOL "?relay", MT_UartProcessZToolData
 MT_UartRegisterTaskID SYMBOL "MT_UartRegisterTaskID"
 ??MT_UartRegisterTaskID?relay SYMBOL "?relay", MT_UartRegisterTaskID
+mySendByteBuf       SYMBOL "mySendByteBuf"
+??mySendByteBuf?relay SYMBOL "?relay", mySendByteBuf
 myprintf            SYMBOL "myprintf"
 ??myprintf?relay    SYMBOL "?relay", myprintf
 
@@ -452,21 +432,21 @@ myprintf            SYMBOL "myprintf"
         FUNCTION Hal_UART_RxBufLen,0202H
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 11, STACK
+        ARGFRAME XSTACK, 15, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         EXTERN HalUARTRead
         FUNCTION HalUARTRead,0202H
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 11, STACK
+        ARGFRAME XSTACK, 15, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         EXTERN AF_DataRequest
         FUNCTION AF_DataRequest,0202H
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 20, STACK
+        ARGFRAME XSTACK, 24, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         EXTERN osal_msg_allocate
@@ -544,7 +524,7 @@ myprintf            SYMBOL "myprintf"
         EXTERN SampleApp_TransID
         EXTERN SampleApp_epDesc
 
-// E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Components\mt\MT_UART.c
+// E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
 //    1 /***************************************************************************************************
 //    2   Filename:       MT_UART.c
 //    3   Revised:        $Date: 2009-03-12 16:25:22 -0700 (Thu, 12 Mar 2009) $
@@ -940,10 +920,10 @@ recv_index:
         REQUIRE __INIT_XDATA_Z
 
         RSEG XDATA_Z:XDATA:NOROOT(0)
-        DATA8
-//  187 uint8 speed_buffer[3] = {0};
+        DATA32
+//  187 uint8 speed_buffer[4] = {0};
 speed_buffer:
-        DS 3
+        DS 4
         REQUIRE __INIT_XDATA_Z
 //  188 extern endPointDesc_t SampleApp_epDesc;
 //  189 extern afAddrType_t EndPoint_DstAddr;
@@ -959,56 +939,45 @@ MT_MyUartProcessZToolData:
         FUNCALL MT_MyUartProcessZToolData, Hal_UART_RxBufLen
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 11, STACK
+        LOCFRAME XSTACK, 15, STACK
         LOCFRAME IOVERLAY, 0, STATIC
         LOCFRAME DOVERLAY, 0, STATIC
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 11, STACK
+        ARGFRAME XSTACK, 15, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL MT_MyUartProcessZToolData, HalUARTRead
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 11, STACK
+        LOCFRAME XSTACK, 15, STACK
         LOCFRAME IOVERLAY, 0, STATIC
         LOCFRAME DOVERLAY, 0, STATIC
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 11, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL MT_MyUartProcessZToolData, myprintf
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 11, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 11, STACK
+        ARGFRAME XSTACK, 15, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL MT_MyUartProcessZToolData, AF_DataRequest
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 20, STACK
+        LOCFRAME XSTACK, 24, STACK
         LOCFRAME IOVERLAY, 0, STATIC
         LOCFRAME DOVERLAY, 0, STATIC
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 20, STACK
+        ARGFRAME XSTACK, 24, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL MT_MyUartProcessZToolData, myprintf
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 11, STACK
+        LOCFRAME XSTACK, 15, STACK
         LOCFRAME IOVERLAY, 0, STATIC
         LOCFRAME DOVERLAY, 0, STATIC
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 11, STACK
+        ARGFRAME XSTACK, 15, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         MOV     A,#-0xa
@@ -1026,10 +995,10 @@ MT_MyUartProcessZToolData:
         CFI CFA_SP SP+0
         CFI CFA_XSP16 add(XSP16, 10)
         ; Saved register size: 10
-        ; Auto size: 1
-        MOV     A,#-0x1
+        ; Auto size: 5
+        MOV     A,#-0x5
         LCALL   ?ALLOC_XSTACK8
-        CFI CFA_XSP16 add(XSP16, 11)
+        CFI CFA_XSP16 add(XSP16, 15)
         MOV     A,R1
         MOV     R6,A
 //  193   uint8  ch;
@@ -1071,60 +1040,86 @@ MT_MyUartProcessZToolData:
         MOVX    A,@DPTR
         XRL     A,#0x40
         MOV     DPTR,#recv_index
-        JNZ     ??MT_MyUartProcessZToolData_4
-//  202       recv_index = 0;
+        JZ      $+5
+        LJMP    ??MT_MyUartProcessZToolData_4 & 0xFFFF
+//  202       recv_index = 0;     
         CLR     A
         MOVX    @DPTR,A
-//  203       myprintf("#R@"); // ·µ»ØÊý¾Ý£¬±íÊ¾ÒÑ¾­ÊÕµ½
-        ; Setup parameters for call to function myprintf
-        MOV     R2,#`?<Constant "#R@">` & 0xff
-        MOV     R3,#(`?<Constant "#R@">` >> 8) & 0xff
-        LCALL   ??myprintf?relay
-//  204       
-//  205       uint16 addr = speed_buffer[0]; // ÖÕ¶ËµØÖ·¸ß×Ö½Ú
-//  206       addr = (addr << 8) | speed_buffer[1];
-//  207       EndPoint_DstAddr.addr.shortAddr = addr;
-        MOV     DPTR,#speed_buffer
+//  203       
+//  204       uint8 cmd = speed_buffer[0]; // ÏûÏ¢ÃüÁîÀàÐÍ
+//  205       uint16 addr = speed_buffer[1]; // ÖÕ¶ËµØÖ·¸ß×Ö½Ú
+//  206       addr = (addr << 8) | speed_buffer[2];
+        MOV     DPTR,#speed_buffer + 1
         MOVX    A,@DPTR
         MOV     R1,A
         INC     DPTR
         MOVX    A,@DPTR
+        MOV     R0,A
+//  207       if(cmd == 0x81) { // ÈÃÖ¸¶¨µØÖ·µÄÓÎÏ·»ú¿ªÊ¼ÓÎÏ·
+        MOV     DPTR,#speed_buffer
+        MOVX    A,@DPTR
+        XRL     A,#0x81
+        JNZ     ??MT_MyUartProcessZToolData_0
+//  208         uint8 sendEPBuf[4] = {'#', 0x81, 0, '@'};
+        MOV     A,#0x1
+        LCALL   ?XSTACK_DISP0_8
+        MOV     R4,DPL
+        MOV     R5,DPH
+        MOV     DPH,#(`?<Constant {35, 129, 0, 64}>` >> 8) & 0xff
+        MOV     DPL,#`?<Constant {35, 129, 0, 64}>` & 0xff
+        MOV     A,#0x4
+        LCALL   ?MOVE_LONG8_XDATA_XDATA
+//  209         sendEPBuf[2] = speed_buffer[3]; // ÐèÒªµÄÍ¶±Ò¸öÊý
+        MOV     DPTR,#speed_buffer + 3
+        MOVX    A,@DPTR
+        PUSH    A
+        CFI CFA_SP SP+-1
+        MOV     A,#0x3
+        LCALL   ?XSTACK_DISP0_8
+        POP     A
+        CFI CFA_SP SP+0
+        MOVX    @DPTR,A
+//  210         EndPoint_DstAddr.addr.shortAddr = addr;
         MOV     DPTR,#EndPoint_DstAddr
+        MOV     A,R0
         MOVX    @DPTR,A
         INC     DPTR
         MOV     A,R1
         MOVX    @DPTR,A
-//  208       if ( AF_DataRequest( &EndPoint_DstAddr, // ÒÔµ¥²¥µÄÐÎÊ½·¢ËÍÊý¾Ýµ½Ö¸¶¨µÄÖÕ¶Ë
-//  209                           &SampleApp_epDesc,
-//  210                           SAMPLEAPP_PERIODIC_CLUSTERID,
-//  211                           1,
-//  212                           &speed_buffer[2], // ¿ØÖÆÃüÁî×Ö
-//  213                           &SampleApp_TransID,
-//  214                           AF_DISCV_ROUTE,
-//  215                           AF_DEFAULT_RADIUS ) != afStatus_SUCCESS )
+//  211         if ( AF_DataRequest( &EndPoint_DstAddr, // ÒÔµ¥²¥µÄÐÎÊ½·¢ËÍÊý¾Ýµ½Ö¸¶¨µÄÖÕ¶Ë£¬ÖÕ¶ËÊÕµ½Í¶±ÒÃüÁîÖ®ºó£¬»á»Ø¸´Ò»¸ö0x72ÏûÏ¢¸øÐ­µ÷Æ÷£¬Ð­µ÷Æ÷½«´ËÏûÏ¢ÔÙ×ª·¢µ½ÉÏÎ»»ú
+//  212                             &SampleApp_epDesc,
+//  213                             SAMPLEAPP_PERIODIC_CLUSTERID,
+//  214                             4,
+//  215                             sendEPBuf,
+//  216                             &SampleApp_TransID,
+//  217                             AF_DISCV_ROUTE,
+//  218                             AF_DEFAULT_RADIUS ) != afStatus_SUCCESS )
         ; Setup parameters for call to function AF_DataRequest
         MOV     ?V0 + 0,#0x1e
         MOV     R0,#?V0 + 0
         LCALL   ?PUSH_XSTACK_I_ONE
-        CFI CFA_XSP16 add(XSP16, 12)
+        CFI CFA_XSP16 add(XSP16, 16)
         MOV     ?V0 + 0,#SampleApp_TransID & 0xff
         MOV     ?V0 + 1,#(SampleApp_TransID >> 8) & 0xff
         MOV     R0,#?V0 + 0
         LCALL   ?PUSH_XSTACK_I_TWO
-        CFI CFA_XSP16 add(XSP16, 14)
-        MOV     ?V0 + 0,#(speed_buffer + 2) & 0xff
-        MOV     ?V0 + 1,#((speed_buffer + 2) >> 8) & 0xff
-        MOV     R0,#?V0 + 0
-        LCALL   ?PUSH_XSTACK_I_TWO
-        CFI CFA_XSP16 add(XSP16, 16)
-        MOV     ?V0 + 0,#0x1
-        MOV     ?V0 + 1,#0x0
-        MOV     R0,#?V0 + 0
-        LCALL   ?PUSH_XSTACK_I_TWO
         CFI CFA_XSP16 add(XSP16, 18)
+        MOV     A,#0x4
+        LCALL   ?XSTACK_DISP0_8
+        MOV     ?V0 + 0,DPL
+        MOV     ?V0 + 1,DPH
         MOV     R0,#?V0 + 0
         LCALL   ?PUSH_XSTACK_I_TWO
         CFI CFA_XSP16 add(XSP16, 20)
+        MOV     ?V0 + 0,#0x4
+        MOV     ?V0 + 1,#0x0
+        MOV     R0,#?V0 + 0
+        LCALL   ?PUSH_XSTACK_I_TWO
+        CFI CFA_XSP16 add(XSP16, 22)
+        MOV     ?V0 + 0,#0x1
+        MOV     R0,#?V0 + 0
+        LCALL   ?PUSH_XSTACK_I_TWO
+        CFI CFA_XSP16 add(XSP16, 24)
         MOV     R1,#0x20
         MOV     R4,#SampleApp_epDesc & 0xff
         MOV     R5,#(SampleApp_epDesc >> 8) & 0xff
@@ -1133,29 +1128,30 @@ MT_MyUartProcessZToolData:
         LCALL   ??AF_DataRequest?relay
         MOV     A,#0x9
         LCALL   ?DEALLOC_XSTACK8
-        CFI CFA_XSP16 add(XSP16, 11)
+        CFI CFA_XSP16 add(XSP16, 15)
         MOV     A,R1
         JNZ     $+5
         LJMP    ??MT_MyUartProcessZToolData_0 & 0xFFFF
-//  216       {
-//  217         myprintf("SendToEPFailed\n");
+//  219         {
+//  220           myprintf("SendToEPFailed\n");
         ; Setup parameters for call to function myprintf
         MOV     R2,#`?<Constant "SendToEPFailed\\n">` & 0xff
         MOV     R3,#(`?<Constant "SendToEPFailed\\n">` >> 8) & 0xff
         LCALL   ??myprintf?relay
         LJMP    ??MT_MyUartProcessZToolData_0 & 0xFFFF
-//  218       }
-//  219     } else {
-//  220       if(recv_index >= 3){
+//  221         }
+//  222       }
+//  223     } else {
+//  224       if(recv_index >= 4){
 ??MT_MyUartProcessZToolData_4:
         MOVX    A,@DPTR
         CLR     C
-        SUBB    A,#0x3
+        SUBB    A,#0x4
         JC      $+5
         LJMP    ??MT_MyUartProcessZToolData_1 & 0xFFFF
-//  221         recv_index = 0;
-//  222       }else{
-//  223         speed_buffer[recv_index] = ch;
+//  225         recv_index = 0;
+//  226       }else{
+//  227         speed_buffer[recv_index] = ch;
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
         MOVX    A,@DPTR
@@ -1173,18 +1169,19 @@ MT_MyUartProcessZToolData:
         POP     A
         CFI CFA_SP SP+0
         MOVX    @DPTR,A
-//  224         recv_index++;  
+//  228         recv_index++;  
         MOV     DPTR,#recv_index
         MOVX    A,@DPTR
         INC     A
         LJMP    ??MT_MyUartProcessZToolData_2 & 0xFFFF
-        CFI EndBlock cfiBlock4
-//  225       }
-//  226     }
-//  227     
-//  228   }
-//  229 }
+//  229       }
+//  230     }
+//  231     
+//  232   }
+//  233 }
 ??MT_MyUartProcessZToolData_3:
+        MOV     A,#0x5
+        CFI EndBlock cfiBlock4
         REQUIRE ?Subroutine1
         ; // Fall through to label ?Subroutine1
 
@@ -1193,7 +1190,7 @@ MT_MyUartProcessZToolData:
         CFI Block cfiBlock5 Using cfiCommon0
         CFI NoFunction
         CFI CFA_SP SP+0
-        CFI CFA_XSP16 add(XSP16, 11)
+        CFI CFA_XSP16 add(XSP16, 15)
         CFI VB load(1, XDATA, add(CFA_XSP16, literal(-9)))
         CFI DPL0 load(1, XDATA, add(CFA_XSP16, literal(-2)))
         CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-1)))
@@ -1204,35 +1201,36 @@ MT_MyUartProcessZToolData:
         CFI ?BRET_EXT load(1, XDATA, add(CFA_XSP16, literal(-3)))
         CFI ?RET_HIGH load(1, XDATA, add(CFA_XSP16, literal(-4)))
         CFI ?RET_LOW load(1, XDATA, add(CFA_XSP16, literal(-5)))
-        MOV     A,#0x1
+        CFI Invalid
         LCALL   ?DEALLOC_XSTACK8
         CFI CFA_XSP16 add(XSP16, 10)
+        CFI Valid
         MOV     R7,#0x2
         LJMP    ?BANKED_LEAVE_XDATA
         CFI EndBlock cfiBlock5
-//  230 /***************************************************************************************************
-//  231  * @fn      MT_UartProcessZToolData
-//  232  *
-//  233  * @brief   | SOP | Data Length  |   CMD   |   Data   |  FCS  |
-//  234  *          |  1  |     1        |    2    |  0-Len   |   1   |
-//  235  *
-//  236  *          Parses the data and determine either is SPI or just simply serial data
-//  237  *          then send the data to correct place (MT or APP)
-//  238  *
-//  239  * @param   port     - UART port
-//  240  *          event    - Event that causes the callback
-//  241  *
+//  234 /***************************************************************************************************
+//  235  * @fn      MT_UartProcessZToolData
+//  236  *
+//  237  * @brief   | SOP | Data Length  |   CMD   |   Data   |  FCS  |
+//  238  *          |  1  |     1        |    2    |  0-Len   |   1   |
+//  239  *
+//  240  *          Parses the data and determine either is SPI or just simply serial data
+//  241  *          then send the data to correct place (MT or APP)
 //  242  *
-//  243  * @return  None
-//  244  ***************************************************************************************************/
+//  243  * @param   port     - UART port
+//  244  *          event    - Event that causes the callback
+//  245  *
+//  246  *
+//  247  * @return  None
+//  248  ***************************************************************************************************/
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  245 void MT_UartProcessZToolData ( uint8 port, uint8 event )
+//  249 void MT_UartProcessZToolData ( uint8 port, uint8 event )
 MT_UartProcessZToolData:
         CFI Block cfiBlock6 Using cfiCommon0
         CFI Function MT_UartProcessZToolData
         CODE
-//  246 {
+//  250 {
         FUNCALL MT_UartProcessZToolData, Hal_UART_RxBufLen
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -1353,42 +1351,42 @@ MT_UartProcessZToolData:
         CFI CFA_XSP16 add(XSP16, 11)
         MOV     A,R1
         MOV     R6,A
-//  247   uint8  ch;
-//  248   uint8  bytesInRxBuffer;
-//  249   
-//  250   (void)event;  // Intentionally unreferenced parameter
+//  251   uint8  ch;
+//  252   uint8  bytesInRxBuffer;
+//  253   
+//  254   (void)event;  // Intentionally unreferenced parameter
         SJMP    ??MT_UartProcessZToolData_0
-//  251 
-//  252   while (Hal_UART_RxBufLen(port))
-//  253   {
-//  254     HalUARTRead (port, &ch, 1);
-//  255     
-//  256     switch (state)
-//  257     {
-//  258       case SOP_STATE:
-//  259         if (ch == MT_UART_SOF)
-//  260           state = LEN_STATE;
-//  261         break;
-//  262 
-//  263       case LEN_STATE:
-//  264         LEN_Token = ch;
-//  265 
-//  266         tempDataLen = 0;
-//  267 
-//  268         /* Allocate memory for the data */
-//  269         pMsg = (mtOSALSerialData_t *)osal_msg_allocate( sizeof ( mtOSALSerialData_t ) +
-//  270                                                         MT_RPC_FRAME_HDR_SZ + LEN_Token );
+//  255 
+//  256   while (Hal_UART_RxBufLen(port))
+//  257   {
+//  258     HalUARTRead (port, &ch, 1);
+//  259     
+//  260     switch (state)
+//  261     {
+//  262       case SOP_STATE:
+//  263         if (ch == MT_UART_SOF)
+//  264           state = LEN_STATE;
+//  265         break;
+//  266 
+//  267       case LEN_STATE:
+//  268         LEN_Token = ch;
+//  269 
+//  270         tempDataLen = 0;
 //  271 
-//  272         if (pMsg)
-//  273         {
-//  274           /* Fill up what we can */
-//  275           pMsg->hdr.event = CMD_SERIAL_MSG;
+//  272         /* Allocate memory for the data */
+//  273         pMsg = (mtOSALSerialData_t *)osal_msg_allocate( sizeof ( mtOSALSerialData_t ) +
+//  274                                                         MT_RPC_FRAME_HDR_SZ + LEN_Token );
+//  275 
+//  276         if (pMsg)
+//  277         {
+//  278           /* Fill up what we can */
+//  279           pMsg->hdr.event = CMD_SERIAL_MSG;
 ??MT_UartProcessZToolData_1:
         LCALL   ??Subroutine16_0 & 0xFFFF
 ??CrossCallReturnLabel_27:
         MOV     A,#0x1
         MOVX    @DPTR,A
-//  276           pMsg->msg = (uint8*)(pMsg+1);
+//  280           pMsg->msg = (uint8*)(pMsg+1);
         MOV     DPTR,#pMsg
         MOVX    A,@DPTR
         ADD     A,#0x4
@@ -1404,7 +1402,7 @@ MT_UartProcessZToolData:
         INC     DPTR
         MOV     A,R1
         LCALL   ?Subroutine3 & 0xFFFF
-//  277           pMsg->msg[MT_RPC_POS_LEN] = LEN_Token;
+//  281           pMsg->msg[MT_RPC_POS_LEN] = LEN_Token;
 ??CrossCallReturnLabel_3:
         PUSH    A
         CFI CFA_SP SP+-1
@@ -1415,18 +1413,18 @@ MT_UartProcessZToolData:
         POP     A
         CFI CFA_SP SP+0
         MOVX    @DPTR,A
-//  278           state = CMD_STATE1;
+//  282           state = CMD_STATE1;
         MOV     DPTR,#state
         MOV     A,#0x1
 ??MT_UartProcessZToolData_2:
         MOVX    @DPTR,A
-//  279         }
-//  280         else
-//  281         {
-//  282           state = SOP_STATE;
-//  283           return;
-//  284         }
-//  285         break;
+//  283         }
+//  284         else
+//  285         {
+//  286           state = SOP_STATE;
+//  287           return;
+//  288         }
+//  289         break;
 ??MT_UartProcessZToolData_0:
         ; Setup parameters for call to function Hal_UART_RxBufLen
         LCALL   ?Subroutine9 & 0xFFFF
@@ -1503,10 +1501,11 @@ MT_UartProcessZToolData:
         CLR     A
         MOVX    @DPTR,A
 ??MT_UartProcessZToolData_3:
+        MOV     A,#0x1
         LJMP    ?Subroutine1 & 0xFFFF
-//  286 
-//  287       case CMD_STATE1:
-//  288         pMsg->msg[MT_RPC_POS_CMD0] = ch;
+//  290 
+//  291       case CMD_STATE1:
+//  292         pMsg->msg[MT_RPC_POS_CMD0] = ch;
 ??MT_UartProcessZToolData_5:
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
@@ -1518,14 +1517,14 @@ MT_UartProcessZToolData:
         POP     A
         CFI CFA_SP SP+0
         MOVX    @DPTR,A
-//  289         state = CMD_STATE2;
+//  293         state = CMD_STATE2;
         MOV     DPTR,#state
         MOV     A,#0x2
         LJMP    ??MT_UartProcessZToolData_2 & 0xFFFF
-//  290         break;
-//  291 
-//  292       case CMD_STATE2:
-//  293         pMsg->msg[MT_RPC_POS_CMD1] = ch;
+//  294         break;
+//  295 
+//  296       case CMD_STATE2:
+//  297         pMsg->msg[MT_RPC_POS_CMD1] = ch;
 ??MT_UartProcessZToolData_6:
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
@@ -1538,27 +1537,27 @@ MT_UartProcessZToolData:
         POP     A
         CFI CFA_SP SP+0
         LCALL   ?Subroutine3 & 0xFFFF
-//  294         /* If there is no data, skip to FCS state */
-//  295         if (LEN_Token)
+//  298         /* If there is no data, skip to FCS state */
+//  299         if (LEN_Token)
 ??CrossCallReturnLabel_5:
         JNZ     $+5
         LJMP    ??MT_UartProcessZToolData_10 & 0xFFFF
-//  296         {
-//  297           state = DATA_STATE;
+//  300         {
+//  301           state = DATA_STATE;
         MOV     DPTR,#state
         MOV     A,#0x4
         LJMP    ??MT_UartProcessZToolData_2 & 0xFFFF
-//  298         }
-//  299         else
-//  300         {
-//  301           state = FCS_STATE;
 //  302         }
-//  303         break;
-//  304 
-//  305       case DATA_STATE:
-//  306 
-//  307         /* Fill in the buffer the first byte of the data */
-//  308         pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen++] = ch;
+//  303         else
+//  304         {
+//  305           state = FCS_STATE;
+//  306         }
+//  307         break;
+//  308 
+//  309       case DATA_STATE:
+//  310 
+//  311         /* Fill in the buffer the first byte of the data */
+//  312         pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen++] = ch;
 ??MT_UartProcessZToolData_8:
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
@@ -1579,18 +1578,18 @@ MT_UartProcessZToolData:
         MOVX    A,@DPTR
         INC     A
         MOVX    @DPTR,A
-//  309 
-//  310         /* Check number of bytes left in the Rx buffer */
-//  311         bytesInRxBuffer = Hal_UART_RxBufLen(port);
+//  313 
+//  314         /* Check number of bytes left in the Rx buffer */
+//  315         bytesInRxBuffer = Hal_UART_RxBufLen(port);
         ; Setup parameters for call to function Hal_UART_RxBufLen
         MOV     A,R6
         MOV     R1,A
         LCALL   ??Hal_UART_RxBufLen?relay
         MOV     A,R2
         MOV     R7,A
-//  312 
-//  313         /* If the remain of the data is there, read them all, otherwise, just read enough */
-//  314         if (bytesInRxBuffer <= LEN_Token - tempDataLen)
+//  316 
+//  317         /* If the remain of the data is there, read them all, otherwise, just read enough */
+//  318         if (bytesInRxBuffer <= LEN_Token - tempDataLen)
         MOV     DPTR,#LEN_Token
         MOVX    A,@DPTR
         MOV     R0,A
@@ -1613,24 +1612,24 @@ MT_UartProcessZToolData:
         XRL     A,PSW
         RLC     A
         JC      ??MT_UartProcessZToolData_11
-//  315         {
-//  316           HalUARTRead (port, &pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen], bytesInRxBuffer);
+//  319         {
+//  320           HalUARTRead (port, &pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen], bytesInRxBuffer);
         ; Setup parameters for call to function HalUARTRead
         MOV     R4,?V0 + 0
         MOV     R5,#0x0
         MOVX    A,@DPTR
         MOV     R0,A
         LCALL   ?Subroutine4 & 0xFFFF
-//  317           tempDataLen += bytesInRxBuffer;
+//  321           tempDataLen += bytesInRxBuffer;
 ??CrossCallReturnLabel_7:
         MOV     DPTR,#tempDataLen
         MOVX    A,@DPTR
         ADD     A,R7
         SJMP    ??MT_UartProcessZToolData_12
-//  318         }
-//  319         else
-//  320         {
-//  321           HalUARTRead (port, &pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen], LEN_Token - tempDataLen);
+//  322         }
+//  323         else
+//  324         {
+//  325           HalUARTRead (port, &pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen], LEN_Token - tempDataLen);
 ??MT_UartProcessZToolData_11:
         MOVX    A,@DPTR
         MOV     R0,A
@@ -1643,17 +1642,17 @@ MT_UartProcessZToolData:
         SUBB    A,0xE0 /* A   */
         MOV     R5,A
         LCALL   ?Subroutine4 & 0xFFFF
-//  322           tempDataLen += (LEN_Token - tempDataLen);
+//  326           tempDataLen += (LEN_Token - tempDataLen);
 ??CrossCallReturnLabel_8:
         MOV     DPTR,#LEN_Token
         MOVX    A,@DPTR
         MOV     DPTR,#tempDataLen
 ??MT_UartProcessZToolData_12:
         MOVX    @DPTR,A
-//  323         }
-//  324 
-//  325         /* If number of bytes read is equal to data length, time to move on to FCS */
-//  326         if ( tempDataLen == LEN_Token )
+//  327         }
+//  328 
+//  329         /* If number of bytes read is equal to data length, time to move on to FCS */
+//  330         if ( tempDataLen == LEN_Token )
         MOVX    A,@DPTR
         MOV     R0,A
         MOV     DPTR,#LEN_Token
@@ -1665,22 +1664,22 @@ MT_UartProcessZToolData:
         MOV     DPTR,#state
         MOV     A,#0x5
         LJMP    ??MT_UartProcessZToolData_2 & 0xFFFF
-//  327             state = FCS_STATE;
-//  328 
-//  329         break;
-//  330 
-//  331       case FCS_STATE:
+//  331             state = FCS_STATE;
 //  332 
-//  333         FSC_Token = ch;
+//  333         break;
+//  334 
+//  335       case FCS_STATE:
+//  336 
+//  337         FSC_Token = ch;
 ??MT_UartProcessZToolData_9:
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
         MOVX    A,@DPTR
         MOV     DPTR,#FSC_Token
         LCALL   ?Subroutine3 & 0xFFFF
-//  334 
-//  335         /* Make sure it's correct */
-//  336         if ((MT_UartCalcFCS ((uint8*)&pMsg->msg[0], MT_RPC_FRAME_HDR_SZ + LEN_Token) == FSC_Token))
+//  338 
+//  339         /* Make sure it's correct */
+//  340         if ((MT_UartCalcFCS ((uint8*)&pMsg->msg[0], MT_RPC_FRAME_HDR_SZ + LEN_Token) == FSC_Token))
 ??CrossCallReturnLabel_6:
         ADD     A,#0x3
         MOV     R1,A
@@ -1698,8 +1697,8 @@ MT_UartProcessZToolData:
         XRL     A,R0
         MOV     DPTR,#pMsg
         JNZ     ??MT_UartProcessZToolData_13
-//  337         {
-//  338           osal_msg_send( App_TaskID, (byte *)pMsg );
+//  341         {
+//  342           osal_msg_send( App_TaskID, (byte *)pMsg );
         ; Setup parameters for call to function osal_msg_send
         MOVX    A,@DPTR
         MOV     R2,A
@@ -1711,11 +1710,11 @@ MT_UartProcessZToolData:
         MOV     R1,A
         LCALL   ??osal_msg_send?relay
         SJMP    ??MT_UartProcessZToolData_14
-//  339         }
-//  340         else
-//  341         {
-//  342           /* deallocate the msg */
-//  343           osal_msg_deallocate ( (uint8 *)pMsg );
+//  343         }
+//  344         else
+//  345         {
+//  346           /* deallocate the msg */
+//  347           osal_msg_deallocate ( (uint8 *)pMsg );
 ??MT_UartProcessZToolData_13:
         ; Setup parameters for call to function osal_msg_deallocate
         MOVX    A,@DPTR
@@ -1724,23 +1723,23 @@ MT_UartProcessZToolData:
         MOVX    A,@DPTR
         MOV     R3,A
         LCALL   ??osal_msg_deallocate?relay
-//  344         }
-//  345 
-//  346         /* Reset the state, send or discard the buffers at this point */
-//  347         state = SOP_STATE;
+//  348         }
+//  349 
+//  350         /* Reset the state, send or discard the buffers at this point */
+//  351         state = SOP_STATE;
 ??MT_UartProcessZToolData_14:
         MOV     DPTR,#state
         CLR     A
         LJMP    ??MT_UartProcessZToolData_2 & 0xFFFF
         CFI EndBlock cfiBlock6
-//  348 
-//  349         break;
-//  350 
-//  351       default:
-//  352        break;
-//  353     }
-//  354   }
-//  355 }
+//  352 
+//  353         break;
+//  354 
+//  355       default:
+//  356        break;
+//  357     }
+//  358   }
+//  359 }
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ?Subroutine9:
@@ -1758,7 +1757,7 @@ MT_UartProcessZToolData:
         CFI DPL0 load(1, XDATA, add(CFA_XSP16, literal(-2)))
         CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-1)))
         CFI CFA_SP SP+0
-        CFI CFA_XSP16 add(XSP16, 11)
+        CFI CFA_XSP16 add(XSP16, 15)
         CFI Block cfiCond8 Using cfiCommon0
         CFI (cfiCond8) NoFunction
         CFI (cfiCond8) Conditional ??CrossCallReturnLabel_18
@@ -2531,160 +2530,160 @@ MT_UartProcessZToolData:
         CFI EndBlock cfiCond55
         CFI EndBlock cfiCond56
         CFI EndBlock cfiPicker57
-//  356 
-//  357 #if defined (ZAPP_P1) || defined (ZAPP_P2)
-//  358 /***************************************************************************************************
-//  359  * @fn      MT_UartProcessZAppData
-//  360  *
-//  361  * @brief   | SOP | CMD  |   Data Length   | FSC  |
-//  362  *          |  1  |  2   |       1         |  1   |
-//  363  *
-//  364  *          Parses the data and determine either is SPI or just simply serial data
-//  365  *          then send the data to correct place (MT or APP)
-//  366  *
-//  367  * @param   port    - UART port
-//  368  *          event   - Event that causes the callback
-//  369  *
+//  360 
+//  361 #if defined (ZAPP_P1) || defined (ZAPP_P2)
+//  362 /***************************************************************************************************
+//  363  * @fn      MT_UartProcessZAppData
+//  364  *
+//  365  * @brief   | SOP | CMD  |   Data Length   | FSC  |
+//  366  *          |  1  |  2   |       1         |  1   |
+//  367  *
+//  368  *          Parses the data and determine either is SPI or just simply serial data
+//  369  *          then send the data to correct place (MT or APP)
 //  370  *
-//  371  * @return  None
-//  372  ***************************************************************************************************/
-//  373 void MT_UartProcessZAppData ( uint8 port, uint8 event )
-//  374 {
-//  375 
-//  376   osal_event_hdr_t  *msg_ptr;
-//  377   uint16 length = 0;
-//  378   uint16 rxBufLen  = Hal_UART_RxBufLen(MT_UART_DEFAULT_PORT);
+//  371  * @param   port    - UART port
+//  372  *          event   - Event that causes the callback
+//  373  *
+//  374  *
+//  375  * @return  None
+//  376  ***************************************************************************************************/
+//  377 void MT_UartProcessZAppData ( uint8 port, uint8 event )
+//  378 {
 //  379 
-//  380   /*
-//  381      If maxZAppBufferLength is 0 or larger than current length
-//  382      the entire length of the current buffer is returned.
-//  383   */
-//  384   if ((MT_UartMaxZAppBufLen != 0) && (MT_UartMaxZAppBufLen <= rxBufLen))
-//  385   {
-//  386     length = MT_UartMaxZAppBufLen;
-//  387   }
-//  388   else
+//  380   osal_event_hdr_t  *msg_ptr;
+//  381   uint16 length = 0;
+//  382   uint16 rxBufLen  = Hal_UART_RxBufLen(MT_UART_DEFAULT_PORT);
+//  383 
+//  384   /*
+//  385      If maxZAppBufferLength is 0 or larger than current length
+//  386      the entire length of the current buffer is returned.
+//  387   */
+//  388   if ((MT_UartMaxZAppBufLen != 0) && (MT_UartMaxZAppBufLen <= rxBufLen))
 //  389   {
-//  390     length = rxBufLen;
+//  390     length = MT_UartMaxZAppBufLen;
 //  391   }
-//  392 
-//  393   /* Verify events */
-//  394   if (event == HAL_UART_TX_FULL)
-//  395   {
-//  396     // Do something when TX if full
-//  397     return;
-//  398   }
-//  399 
-//  400   if (event & ( HAL_UART_RX_FULL | HAL_UART_RX_ABOUT_FULL | HAL_UART_RX_TIMEOUT))
-//  401   {
-//  402     if ( App_TaskID )
-//  403     {
-//  404       /*
-//  405          If Application is ready to receive and there is something
-//  406          in the Rx buffer then send it up
-//  407       */
-//  408       if ((MT_UartZAppRxStatus == MT_UART_ZAPP_RX_READY ) && (length != 0))
-//  409       {
-//  410         /* Disable App flow control until it processes the current data */
-//  411          MT_UartAppFlowControl (MT_UART_ZAPP_RX_NOT_READY);
-//  412 
-//  413         /* 2 more bytes are added, 1 for CMD type, other for length */
-//  414         msg_ptr = (osal_event_hdr_t *)osal_msg_allocate( length + sizeof(osal_event_hdr_t) );
-//  415         if ( msg_ptr )
-//  416         {
-//  417           msg_ptr->event = SPI_INCOMING_ZAPP_DATA;
-//  418           msg_ptr->status = length;
-//  419 
-//  420           /* Read the data of Rx buffer */
-//  421           HalUARTRead( MT_UART_DEFAULT_PORT, (uint8 *)(msg_ptr + 1), length );
-//  422 
-//  423           /* Send the raw data to application...or where ever */
-//  424           osal_msg_send( App_TaskID, (uint8 *)msg_ptr );
-//  425         }
-//  426       }
-//  427     }
-//  428   }
-//  429 }
-//  430 
-//  431 /***************************************************************************************************
-//  432  * @fn      SPIMgr_ZAppBufferLengthRegister
-//  433  *
-//  434  * @brief
-//  435  *
-//  436  * @param   maxLen - Max Length that the application wants at a time
+//  392   else
+//  393   {
+//  394     length = rxBufLen;
+//  395   }
+//  396 
+//  397   /* Verify events */
+//  398   if (event == HAL_UART_TX_FULL)
+//  399   {
+//  400     // Do something when TX if full
+//  401     return;
+//  402   }
+//  403 
+//  404   if (event & ( HAL_UART_RX_FULL | HAL_UART_RX_ABOUT_FULL | HAL_UART_RX_TIMEOUT))
+//  405   {
+//  406     if ( App_TaskID )
+//  407     {
+//  408       /*
+//  409          If Application is ready to receive and there is something
+//  410          in the Rx buffer then send it up
+//  411       */
+//  412       if ((MT_UartZAppRxStatus == MT_UART_ZAPP_RX_READY ) && (length != 0))
+//  413       {
+//  414         /* Disable App flow control until it processes the current data */
+//  415          MT_UartAppFlowControl (MT_UART_ZAPP_RX_NOT_READY);
+//  416 
+//  417         /* 2 more bytes are added, 1 for CMD type, other for length */
+//  418         msg_ptr = (osal_event_hdr_t *)osal_msg_allocate( length + sizeof(osal_event_hdr_t) );
+//  419         if ( msg_ptr )
+//  420         {
+//  421           msg_ptr->event = SPI_INCOMING_ZAPP_DATA;
+//  422           msg_ptr->status = length;
+//  423 
+//  424           /* Read the data of Rx buffer */
+//  425           HalUARTRead( MT_UART_DEFAULT_PORT, (uint8 *)(msg_ptr + 1), length );
+//  426 
+//  427           /* Send the raw data to application...or where ever */
+//  428           osal_msg_send( App_TaskID, (uint8 *)msg_ptr );
+//  429         }
+//  430       }
+//  431     }
+//  432   }
+//  433 }
+//  434 
+//  435 /***************************************************************************************************
+//  436  * @fn      SPIMgr_ZAppBufferLengthRegister
 //  437  *
-//  438  * @return  None
+//  438  * @brief
 //  439  *
-//  440  ***************************************************************************************************/
-//  441 void MT_UartZAppBufferLengthRegister ( uint16 maxLen )
-//  442 {
-//  443   /* If the maxLen is larger than the RX buff, something is not right */
-//  444   if (maxLen <= MT_UART_DEFAULT_MAX_RX_BUFF)
-//  445     MT_UartMaxZAppBufLen = maxLen;
-//  446   else
-//  447     MT_UartMaxZAppBufLen = 1; /* default is 1 byte */
-//  448 }
-//  449 
-//  450 /***************************************************************************************************
-//  451  * @fn      SPIMgr_AppFlowControl
-//  452  *
-//  453  * @brief
-//  454  *
-//  455  * @param   status - ready to send or not
+//  440  * @param   maxLen - Max Length that the application wants at a time
+//  441  *
+//  442  * @return  None
+//  443  *
+//  444  ***************************************************************************************************/
+//  445 void MT_UartZAppBufferLengthRegister ( uint16 maxLen )
+//  446 {
+//  447   /* If the maxLen is larger than the RX buff, something is not right */
+//  448   if (maxLen <= MT_UART_DEFAULT_MAX_RX_BUFF)
+//  449     MT_UartMaxZAppBufLen = maxLen;
+//  450   else
+//  451     MT_UartMaxZAppBufLen = 1; /* default is 1 byte */
+//  452 }
+//  453 
+//  454 /***************************************************************************************************
+//  455  * @fn      SPIMgr_AppFlowControl
 //  456  *
-//  457  * @return  None
+//  457  * @brief
 //  458  *
-//  459  ***************************************************************************************************/
-//  460 void MT_UartAppFlowControl ( bool status )
-//  461 {
-//  462 
-//  463   /* Make sure only update if needed */
-//  464   if (status != MT_UartZAppRxStatus )
-//  465   {
-//  466     MT_UartZAppRxStatus = status;
-//  467   }
-//  468 
-//  469   /* App is ready to read again, ProcessZAppData have to be triggered too */
-//  470   if (status == MT_UART_ZAPP_RX_READY)
-//  471   {
-//  472     MT_UartProcessZAppData (MT_UART_DEFAULT_PORT, HAL_UART_RX_TIMEOUT );
-//  473   }
-//  474 
-//  475 }
-//  476 
-//  477 #endif //ZAPP
+//  459  * @param   status - ready to send or not
+//  460  *
+//  461  * @return  None
+//  462  *
+//  463  ***************************************************************************************************/
+//  464 void MT_UartAppFlowControl ( bool status )
+//  465 {
+//  466 
+//  467   /* Make sure only update if needed */
+//  468   if (status != MT_UartZAppRxStatus )
+//  469   {
+//  470     MT_UartZAppRxStatus = status;
+//  471   }
+//  472 
+//  473   /* App is ready to read again, ProcessZAppData have to be triggered too */
+//  474   if (status == MT_UART_ZAPP_RX_READY)
+//  475   {
+//  476     MT_UartProcessZAppData (MT_UART_DEFAULT_PORT, HAL_UART_RX_TIMEOUT );
+//  477   }
 //  478 
-//  479 /**
-//  480   staticÀàÐÍÖ»ÔÚ±¾ÎÄ¼þÄÚÓÐÐ§
-//  481 */
-//  482 static void _itoa(uint16 num, uint8 *buf, uint8 radix)
-//  483 {
-//  484   char c,i;
-//  485   uint8 *p, rst[5];
-//  486  
-//  487   p = rst;
-//  488   for ( i=0; i<5; i++,p++ )
-//  489   {
-//  490     c = num % radix;  // Isolate a digit
-//  491     *p = c + (( c < 10 ) ? '0' : '7');  // Convert to Ascii
-//  492     num /= radix;
-//  493     if ( !num )
-//  494       break;
-//  495   }
-//  496  
-//  497   for ( c=0 ; c<=i; c++ )
-//  498     *buf++ = *p--;  // Reverse character order
-//  499  
-//  500   *buf = '\0';
-//  501 }
+//  479 }
+//  480 
+//  481 #endif //ZAPP
+//  482 
+//  483 /**
+//  484   staticÀàÐÍÖ»ÔÚ±¾ÎÄ¼þÄÚÓÐÐ§
+//  485 */
+//  486 static void _itoa(uint16 num, uint8 *buf, uint8 radix)
+//  487 {
+//  488   char c,i;
+//  489   uint8 *p, rst[5];
+//  490  
+//  491   p = rst;
+//  492   for ( i=0; i<5; i++,p++ )
+//  493   {
+//  494     c = num % radix;  // Isolate a digit
+//  495     *p = c + (( c < 10 ) ? '0' : '7');  // Convert to Ascii
+//  496     num /= radix;
+//  497     if ( !num )
+//  498       break;
+//  499   }
+//  500  
+//  501   for ( c=0 ; c<=i; c++ )
+//  502     *buf++ = *p--;  // Reverse character order
+//  503  
+//  504   *buf = '\0';
+//  505 }
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  502 static int vsprintf(char *buf, const char *fmt, va_list args) 
+//  506 static int vsprintf(char *buf, const char *fmt, va_list args) 
 vsprintf:
         CFI Block cfiBlock58 Using cfiCommon0
         CFI Function vsprintf
         CODE
-//  503 { 
+//  507 { 
         FUNCALL vsprintf, strncpy
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -2782,55 +2781,55 @@ vsprintf:
         INC     DPTR
         MOVX    A,@DPTR
         MOV     ?V0 + 5,A
-//  504     char* p;
-//  505     uint8 radix = 0;
-//  506     int num = 0;
-//  507  
-//  508     for (p = buf; *fmt; fmt++)
+//  508     char* p;
+//  509     uint8 radix = 0;
+//  510     int num = 0;
+//  511  
+//  512     for (p = buf; *fmt; fmt++)
         MOV     R6,?V0 + 12
         MOV     R7,?V0 + 13
         SJMP    ??vsprintf_0
-//  509     {
-//  510         if (*fmt != '%')
-//  511         {
-//  512             if (*fmt == '\n')
-//  513             {
-//  514                 *p++ = '\r';
-//  515             }
-//  516             *p++ = *fmt;
-//  517             continue;
-//  518         }
-//  519  
-//  520         fmt++;
-//  521         radix = 0;
-//  522         switch (*fmt)
-//  523         {
-//  524             case 'x':
-//  525                 radix += 6;
-//  526             case 'd':
-//  527                 radix += 2;
-//  528             case 'o':
-//  529                 {
-//  530                     char tmp[10];
-//  531                     radix += 8;
-//  532                     num = va_arg(args, int);
-//  533                     _itoa(num, (uint8 *)tmp, radix);
-//  534                     num = strlen(tmp);
-//  535                     strncpy(p, tmp, num);
-//  536                     p += num;
-//  537                 }
-//  538                 break;
-//  539             case 's':
-//  540                 {
-//  541                     char *s = va_arg(args, char *);
-//  542                     num = strlen(s);
-//  543                     strncpy(p, s, num);
-//  544                     p += num;
-//  545                 }
-//  546                 break;
-//  547             default:
-//  548                 ///unsupport
-//  549                 va_arg(args, char *);
+//  513     {
+//  514         if (*fmt != '%')
+//  515         {
+//  516             if (*fmt == '\n')
+//  517             {
+//  518                 *p++ = '\r';
+//  519             }
+//  520             *p++ = *fmt;
+//  521             continue;
+//  522         }
+//  523  
+//  524         fmt++;
+//  525         radix = 0;
+//  526         switch (*fmt)
+//  527         {
+//  528             case 'x':
+//  529                 radix += 6;
+//  530             case 'd':
+//  531                 radix += 2;
+//  532             case 'o':
+//  533                 {
+//  534                     char tmp[10];
+//  535                     radix += 8;
+//  536                     num = va_arg(args, int);
+//  537                     _itoa(num, (uint8 *)tmp, radix);
+//  538                     num = strlen(tmp);
+//  539                     strncpy(p, tmp, num);
+//  540                     p += num;
+//  541                 }
+//  542                 break;
+//  543             case 's':
+//  544                 {
+//  545                     char *s = va_arg(args, char *);
+//  546                     num = strlen(s);
+//  547                     strncpy(p, s, num);
+//  548                     p += num;
+//  549                 }
+//  550                 break;
+//  551             default:
+//  552                 ///unsupport
+//  553                 va_arg(args, char *);
 ??vsprintf_1:
         MOV     DPL,?V0 + 4
         MOV     DPH,?V0 + 5
@@ -2840,8 +2839,8 @@ vsprintf:
         INC     DPTR
         MOVX    A,@DPTR
         LCALL   ??Subroutine17_0 & 0xFFFF
-//  550                 num = strlen(" unknow type %  ");
-//  551                 strncpy(p, " unknow type %  ", num);
+//  554                 num = strlen(" unknow type %  ");
+//  555                 strncpy(p, " unknow type %  ", num);
 ??CrossCallReturnLabel_31:
         ; Setup parameters for call to function strncpy
         MOV     ?V0 + 2,#0x10
@@ -2859,14 +2858,14 @@ vsprintf:
         MOV     A,#0x2
         LCALL   ?DEALLOC_XSTACK8
         CFI CFA_XSP16 add(XSP16, 37)
-//  552                 p += num;
+//  556                 p += num;
         MOV     A,R6
         ADD     A,#0x10
         MOV     R6,A
         MOV     A,R7
         ADDC    A,#0x0
         MOV     R7,A
-//  553                 *(p - 2) = *fmt;
+//  557                 *(p - 2) = *fmt;
         MOV     DPL,?V0 + 0
         MOV     DPH,?V0 + 1
         MOVX    A,@DPTR
@@ -2881,7 +2880,7 @@ vsprintf:
         POP     A
         CFI CFA_SP SP+0
         MOVX    @DPTR,A
-//  554                 break;
+//  558                 break;
 ??vsprintf_2:
         MOV     DPL,?V0 + 0
         MOV     DPH,?V0 + 1
@@ -3070,8 +3069,8 @@ vsprintf:
         MOV     R2,?V0 + 6
         MOV     R3,?V0 + 7
         LCALL   ?Subroutine11 & 0xFFFF
-//  555         }
-//  556     }
+//  559         }
+//  560     }
 ??CrossCallReturnLabel_20:
         LCALL   ?PUSH_XSTACK_I_TWO
         CFI CFA_XSP16 add(XSP16, 39)
@@ -3079,8 +3078,8 @@ vsprintf:
         MOV     R5,?V0 + 7
         SJMP    ??vsprintf_14
         CFI CFA_XSP16 add(XSP16, 37)
-//  557  
-//  558     return (p - buf);
+//  561  
+//  562     return (p - buf);
 ??vsprintf_3:
         MOV     A,R6
         CLR     C
@@ -3095,7 +3094,7 @@ vsprintf:
         MOV     R7,#0xe
         LJMP    ?BANKED_LEAVE_XDATA
         CFI EndBlock cfiBlock58
-//  559 }
+//  563 }
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ?Subroutine11:
@@ -3411,15 +3410,18 @@ vsprintf:
         CFI EndBlock cfiCond69
         CFI EndBlock cfiCond70
         CFI EndBlock cfiPicker71
-//  560 
+//  564 
+//  565 /**
+//  566   ×Ô¶¨Òå´®¿Ú´òÓ¡º¯Êý
+//  567 */
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  561 void myprintf(char*fmt, ...)
+//  568 void myprintf(char*fmt, ...)
 myprintf:
         CFI Block cfiBlock72 Using cfiCommon0
         CFI Function myprintf
         CODE
-//  562 {
+//  569 {
         FUNCALL myprintf, vsprintf
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -3486,15 +3488,15 @@ myprintf:
         MOV     DPH,#-0x2
         LCALL   ?ADD_XSTACK_DISP0_16
         CFI CFA_XSP16 add(XSP16, 270)
-//  563    char buf[256];
-//  564    va_list arg;
-//  565    int len = 0;
-//  566    int wr = 0;
-//  567    int off = 0;
+//  570    char buf[256];
+//  571    va_list arg;
+//  572    int len = 0;
+//  573    int wr = 0;
+//  574    int off = 0;
         MOV     ?V0 + 0,#0x0
         MOV     ?V0 + 1,#0x0
-//  568    
-//  569    va_start(arg, fmt);
+//  575    
+//  576    va_start(arg, fmt);
         MOV     DPL,#0xe
         MOV     DPH,#0x1
         LCALL   ?XSTACK_DISP0_16
@@ -3507,7 +3509,7 @@ myprintf:
         INC     DPTR
         MOV     A,R1
         LCALL   ?Subroutine2 & 0xFFFF
-//  570    len = vsprintf(buf, fmt, arg); 
+//  577    len = vsprintf(buf, fmt, arg); 
 ??CrossCallReturnLabel_2:
         MOV     ?V0 + 2,DPL
         MOV     ?V0 + 3,DPH
@@ -3530,20 +3532,20 @@ myprintf:
         MOV     ?V0 + 3,R3
         MOV     R6,?V0 + 2
         MOV     R7,?V0 + 3
-//  571    va_end(arg);
+//  578    va_end(arg);
         SJMP    ??myprintf_0
-//  572   
-//  573    while (len)
-//  574    {
-//  575   #if (HAL_UART_DMA)
-//  576       if (len >= 128)
-//  577       {
-//  578           wr =  HalUARTWrite(0, (uint8 *)buf + off, 64);
-//  579       }
-//  580       else
-//  581   #endif
-//  582       {
-//  583           wr =  HalUARTWrite(0, (uint8 *)buf + off, len);
+//  579   
+//  580    while (len)
+//  581    {
+//  582   #if (HAL_UART_DMA)
+//  583       if (len >= 128)
+//  584       {
+//  585           wr =  HalUARTWrite(0, (uint8 *)buf + off, 64);
+//  586       }
+//  587       else
+//  588   #endif
+//  589       {
+//  590           wr =  HalUARTWrite(0, (uint8 *)buf + off, len);
 ??myprintf_1:
         ; Setup parameters for call to function HalUARTWrite
         MOV     A,R6
@@ -3565,9 +3567,9 @@ myprintf:
         MOV     ?V0 + 3,R3
         MOV     R0,?V0 + 2
         MOV     R1,?V0 + 3
-//  584       }
-//  585   
-//  586       len -= wr;
+//  591       }
+//  592   
+//  593       len -= wr;
         CLR     C
         MOV     A,R6
         SUBB    A,R0
@@ -3575,22 +3577,22 @@ myprintf:
         MOV     A,R7
         SUBB    A,R1
         MOV     R7,A
-//  587       off += wr;
+//  594       off += wr;
         MOV     A,?V0 + 0
         ADD     A,R0
         MOV     ?V0 + 0,A
         MOV     A,?V0 + 1
         ADDC    A,R1
         MOV     ?V0 + 1,A
-//  588       if (!wr)
+//  595       if (!wr)
         MOV     A,R0
         ORL     A,R1
         JNZ     ??myprintf_0
-//  589       {
-//  590           HalUARTPoll();
+//  596       {
+//  597           HalUARTPoll();
         ; Setup parameters for call to function HalUARTPoll
         LCALL   ??HalUARTPoll?relay
-//  591       }
+//  598       }
 ??myprintf_0:
         MOV     A,R6
         ORL     A,R7
@@ -3608,8 +3610,8 @@ myprintf:
         MOV     R4,#0x40
         MOV     R5,#0x0
         SJMP    ??myprintf_2
-//  592    }
-//  593 }
+//  599    }
+//  600 }
 ??myprintf_3:
         MOV     DPL,#0x2
         MOV     DPH,#0x1
@@ -3665,6 +3667,121 @@ myprintf:
         CFI EndBlock cfiCond74
         CFI EndBlock cfiCond75
         CFI EndBlock cfiPicker76
+//  601 
+//  602 /**
+//  603   ×Ô¶¨Òå·¢ËÍÖ¸¶¨×Ö½ÚÊý×éº¯Êý
+//  604 */
+
+        RSEG BANKED_CODE:CODE:NOROOT(0)
+//  605 void mySendByteBuf(uint8* buf, int len) {
+mySendByteBuf:
+        CFI Block cfiBlock77 Using cfiCommon0
+        CFI Function mySendByteBuf
+        CODE
+        FUNCALL mySendByteBuf, HalUARTWrite
+        LOCFRAME ISTACK, 0, STACK
+        LOCFRAME PSTACK, 0, STACK
+        LOCFRAME XSTACK, 14, STACK
+        LOCFRAME IOVERLAY, 0, STATIC
+        LOCFRAME DOVERLAY, 0, STATIC
+        ARGFRAME ISTACK, 0, STACK
+        ARGFRAME PSTACK, 0, STACK
+        ARGFRAME XSTACK, 14, STACK
+        ARGFRAME IOVERLAY, 0, STATIC
+        ARGFRAME DOVERLAY, 0, STATIC
+        FUNCALL mySendByteBuf, HalUARTPoll
+        LOCFRAME ISTACK, 0, STACK
+        LOCFRAME PSTACK, 0, STACK
+        LOCFRAME XSTACK, 14, STACK
+        LOCFRAME IOVERLAY, 0, STATIC
+        LOCFRAME DOVERLAY, 0, STATIC
+        ARGFRAME ISTACK, 0, STACK
+        ARGFRAME PSTACK, 0, STACK
+        ARGFRAME XSTACK, 14, STACK
+        ARGFRAME IOVERLAY, 0, STATIC
+        ARGFRAME DOVERLAY, 0, STATIC
+        MOV     A,#-0xe
+        LCALL   ?BANKED_ENTER_XDATA
+        CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-1)))
+        CFI DPL0 load(1, XDATA, add(CFA_XSP16, literal(-2)))
+        CFI ?BRET_EXT load(1, XDATA, add(CFA_XSP16, literal(-3)))
+        CFI ?RET_HIGH load(1, XDATA, add(CFA_XSP16, literal(-4)))
+        CFI ?RET_LOW load(1, XDATA, add(CFA_XSP16, literal(-5)))
+        CFI R7 load(1, XDATA, add(CFA_XSP16, literal(-6)))
+        CFI V5 load(1, XDATA, add(CFA_XSP16, literal(-7)))
+        CFI V4 load(1, XDATA, add(CFA_XSP16, literal(-8)))
+        CFI V3 load(1, XDATA, add(CFA_XSP16, literal(-9)))
+        CFI V2 load(1, XDATA, add(CFA_XSP16, literal(-10)))
+        CFI V1 load(1, XDATA, add(CFA_XSP16, literal(-11)))
+        CFI V0 load(1, XDATA, add(CFA_XSP16, literal(-12)))
+        CFI VB load(1, XDATA, add(CFA_XSP16, literal(-13)))
+        CFI R6 load(1, XDATA, add(CFA_XSP16, literal(-14)))
+        CFI CFA_SP SP+0
+        CFI CFA_XSP16 add(XSP16, 14)
+        ; Saved register size: 14
+        ; Auto size: 0
+        MOV     ?V0 + 2,R2
+        MOV     ?V0 + 3,R3
+        MOV     ?V0 + 0,R4
+        MOV     ?V0 + 1,R5
+//  606    int wr = 0;
+//  607    int off = 0;
+        MOV     R6,#0x0
+        MOV     R7,#0x0
+        SJMP    ??mySendByteBuf_0
+//  608    
+//  609    while (len)
+//  610    {
+//  611       wr =  HalUARTWrite(0, (uint8 *)buf + off, len);
+??mySendByteBuf_1:
+        ; Setup parameters for call to function HalUARTWrite
+        MOV     R4,?V0 + 0
+        MOV     R5,?V0 + 1
+        MOV     A,?V0 + 2
+        ADD     A,R6
+        MOV     R2,A
+        MOV     A,?V0 + 3
+        ADDC    A,R7
+        MOV     R3,A
+        MOV     R1,#0x0
+        LCALL   ??HalUARTWrite?relay
+        MOV     ?V0 + 4,R2
+        MOV     ?V0 + 5,R3
+        MOV     R0,?V0 + 4
+        MOV     R1,?V0 + 5
+//  612       len -= wr;
+        CLR     C
+        MOV     A,?V0 + 0
+        SUBB    A,R0
+        MOV     ?V0 + 0,A
+        MOV     A,?V0 + 1
+        SUBB    A,R1
+        MOV     ?V0 + 1,A
+//  613       off += wr;
+        MOV     A,R6
+        ADD     A,R0
+        MOV     R6,A
+        MOV     A,R7
+        ADDC    A,R1
+        MOV     R7,A
+//  614       if (!wr)
+        MOV     A,R0
+        ORL     A,R1
+        JNZ     ??mySendByteBuf_0
+//  615       {
+//  616           HalUARTPoll();
+        ; Setup parameters for call to function HalUARTPoll
+        LCALL   ??HalUARTPoll?relay
+//  617       }
+//  618    }
+??mySendByteBuf_0:
+        MOV     A,?V0 + 0
+        ORL     A,?V0 + 1
+        JNZ     ??mySendByteBuf_1
+//  619 }
+        MOV     R7,#0x6
+        LJMP    ?BANKED_LEAVE_XDATA
+        CFI EndBlock cfiBlock77
 
         RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
 ??MT_UartInit?relay:
@@ -3708,10 +3825,20 @@ myprintf:
         DATA
         DC24    myprintf
 
+        RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
+??mySendByteBuf?relay:
+        LCALL   ?BDISPATCH
+        DATA
+        DC24    mySendByteBuf
+
         RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
         DATA32
-`?<Constant "#R@">`:
-        DB "#R@"
+`?<Constant {35, 129, 0, 64}>`:
+        DATA8
+        DB 35
+        DB 129
+        DB 0
+        DB 64
 
         RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
         DATA8
@@ -3724,18 +3851,18 @@ myprintf:
         DB " unknow type %  "
 
         END
-//  594 
-//  595 /***************************************************************************************************
-//  596 ***************************************************************************************************/
+//  620 
+//  621 /***************************************************************************************************
+//  622 ***************************************************************************************************/
 // 
-// 1 621 bytes in segment BANKED_CODE
-//    42 bytes in segment BANK_RELAYS
+// 1 750 bytes in segment BANKED_CODE
+//    48 bytes in segment BANK_RELAYS
 //    37 bytes in segment XDATA_ROM_C
-//    13 bytes in segment XDATA_Z
+//    14 bytes in segment XDATA_Z
 // 
-// 1 663 bytes of CODE  memory
+// 1 798 bytes of CODE  memory
 //    37 bytes of CONST memory
-//    13 bytes of XDATA memory
+//    14 bytes of XDATA memory
 //
 //Errors: none
 //Warnings: none

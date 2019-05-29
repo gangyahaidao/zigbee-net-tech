@@ -66,6 +66,7 @@ reception of the flash command.
 
 #include "SampleApp.h"
 #include "SampleAppHw.h"
+#include "SinglyLinkedList.h"
 
 #include "OnBoard.h"
 
@@ -82,47 +83,7 @@ reception of the flash command.
 * MACROS
 */
 #define DATA_PIN P0_5            //定义P0.5口为继电器的控制端
-
-// When the Rx buf space is less than this threshold, invoke the Rx callback.
-#if !defined( SAMPLEAPP_APP_THRESH )
-#define SAMPLE_APP_THRESH  64
-#endif
-
-#if !defined( SAMPLEAPP_APP_RX_SZ )
-#define SAMPLE_APP_RX_SZ  128
-#endif
-
-#if !defined( SAMPLEAPP_APP_TX_SZ )
-#define SAMPLE_APP_TX_SZ  128
-#endif
-
-// Millisecs of idle time after a byte is received before invoking Rx callback.
-#if !defined( SERIAL_APP_IDLE )
-#define SAMPLE_APP_IDLE  6
-#endif
-
-// This is the max byte count per OTA message.
-#if !defined( SAMPLE_APP_TX_MAX )
-#define SAMPLE_APP_TX_MAX  10
-#endif
-
-
 #define UART0        0x00
-
-/*********************************************************************
-* CONSTANTS
-*/
-
-/*********************************************************************
-* TYPEDEFS
-*/
-
-/*********************************************************************
-* GLOBAL VARIABLES
-*/
-uint8 AppTitle[] = "ALD relay&LED"; //应用程序名称
-
-uint8 LedState = 0x30;
 
 // This list should be filled with Application specific Cluster IDs.
 const cId_t SampleApp_ClusterList[SAMPLEAPP_MAX_CLUSTERS] =
@@ -153,14 +114,6 @@ afAddrType_t GenericApp_DstAddr;
 afAddrType_t EndPoint_DstAddr;
 
 /*********************************************************************
-* EXTERNAL VARIABLES
-*/
-
-/*********************************************************************
-* EXTERNAL FUNCTIONS
-*/
-
-/*********************************************************************
 * LOCAL VARIABLES
 */
 uint8 SampleApp_TaskID;   // Task ID for internal task/event processing
@@ -176,35 +129,22 @@ afAddrType_t SampleApp_TxAddr; // 用于终端设备向协调器报告短地址信息
 aps_Group_t SampleApp_Group;
 uint8 SampleAppPeriodicCounter = 0;
 uint8 SampleAppFlashCounter = 0;
+
+LinkList LL; // 定义线性链表存储终端地址以及心跳信息
+
 /*********************************************************************
 * LOCAL FUNCTIONS
 */
-void AfSendAddrInfo(void);
+void AfSendAddrInfo(uint8 cmd);
+void AfReplyGetCoinCmd(void);
 void SampleApp_HandleKeys( uint8 shift, uint8 keys );
 void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pckt );
-void SampleApp_SendPeriodicMessage( void );
-void SampleApp_SendHeartBeatMessage(void);
-/*********************************************************************
-* NETWORK LAYER CALLBACKS
-*/
+void SampleApp_SendPeriodicMessage( int8 whichKey );
+void SampleApp_SendHeartBeatMessageCoor(void);
+void SampleApp_SendHeartBeatMessageEnd(void);
 
-/*********************************************************************
-* PUBLIC FUNCTIONS
-*/
-
-/*********************************************************************
-* @fn      SampleApp_Init
-*
-* @brief   Initialization function for the Generic App Task.
-*          This is called during initialization and should contain
-*          any application specific initialization (ie. hardware
-*          initialization/setup, table initialization, power up
-*          notificaiton ... ).
-*
-* @param   task_id - the ID assigned by OSAL.  This ID should be
-*                    used to send messages and set timers.
-*
-* @return  none
+/**
+* 自定义任务初始化函数
 */
 void SampleApp_Init( uint8 task_id )
 {
@@ -217,10 +157,6 @@ void SampleApp_Init( uint8 task_id )
   P0SEL &= ~0x20;               //设置P0.5口为普通IO
   P0DIR |= 0x20;                //设置P0.5口为输出
   DATA_PIN = 0;                 //继电器默认断开 继电器默认是高电平触发可自行切换
-  
-  // Device hardware initialization can be added here or in main() (Zmain.c).
-  // If the hardware is application specific - add it here.
-  // If the hardware is other parts of the device add it in main().
   
 #if defined ( BUILD_ALL_DEVICES )
   // The "Demo" target is setup to have BUILD_ALL_DEVICES and HOLD_AUTO_START
@@ -280,7 +216,12 @@ void SampleApp_Init( uint8 task_id )
   // 初始化串口
   MT_UartInit();                    //串口初始化
   MT_UartRegisterTaskID(task_id);   //注册串口任务
-  HalUARTWrite(0,"UartInit OK\n", sizeof("UartInit OK\n"));
+  myprintf("UartInit OK\n");
+  
+  int ret = InitList_L(&LL); // 单链表初始化
+  if(ret == OVERFLOW) {
+    myprintf("InitList_L OVERFLOW\n");
+  }
 }
 
 /*********************************************************************
@@ -309,6 +250,7 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
   if ( events & SYS_EVENT_MSG )
   {
     MSGpkt = (afIncomingMSGPacket_t *)osal_msg_receive( SampleApp_TaskID ); // 接收一个用户自定义任务的消息
+    uint8 coodStarted[3] = {'#', 0x45, '@'};
     while ( MSGpkt )
     {      
       switch ( MSGpkt->hdr.event )
@@ -348,14 +290,16 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
           
           if(SampleApp_NwkState == DEV_ZB_COORD) {
             myprintf("COORD device started\n");
+            // 向上位机发送已经启动消息
+            mySendByteBuf(coodStarted, 3);
           } else if(SampleApp_NwkState == DEV_ROUTER) {
             myprintf("ROUTER device started\n");
           } else if(SampleApp_NwkState == DEV_END_DEVICE) {
-            myprintf("END device started\n");
+            myprintf("END device started\n");            
+            AfSendAddrInfo(0x71); // 向协调器发送入网消息
+            HalLedBlink(HAL_LED_1, 1, 50, 500);
           }
-          if ((SampleApp_NwkState == DEV_ZB_COORD) || (SampleApp_NwkState == DEV_ROUTER) || (SampleApp_NwkState == DEV_END_DEVICE)) { // 不同的终端都开启定时任务，协调器通过串口上传心跳信息，终端通过AF无线发送包含当前节点短地址的心跳信息
-            // osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SEND_PERIODIC_MSG_EVT, SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT );
-          }
+          osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SEND_PERIODIC_MSG_EVT, SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT ); // 开启定时器
           break;
           
         default:
@@ -375,8 +319,13 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
   // 接收到一个定时器事件
   if ( events & SAMPLEAPP_SEND_PERIODIC_MSG_EVT )
   {
-    SampleApp_SendHeartBeatMessage(); // 心跳功能函数
-    osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SEND_PERIODIC_MSG_EVT, SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT*3); // 3000ms再次开启定时器
+#ifdef ZDO_COORDINATOR
+    SampleApp_SendHeartBeatMessageCoor(); // 协调器心跳功能函数
+    osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SEND_PERIODIC_MSG_EVT, SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT); // 1000ms再次开启定时器
+#else
+    SampleApp_SendHeartBeatMessageEnd(); // 终端心跳功能函数
+    osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SEND_PERIODIC_MSG_EVT, SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT*2); // 2000ms再次开启定时器
+#endif
     return (events ^ SAMPLEAPP_SEND_PERIODIC_MSG_EVT); // 清除此已经处理事件标志位
   }
   
@@ -402,21 +351,19 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
 void SampleApp_HandleKeys( uint8 shift, uint8 keys )
 {
   (void)shift;  // Intentionally unreferenced parameter
-#if defined(ZDO_COORDINATOR)       //按协调器S1才发数据  
+#ifdef ZDO_COORDINATOR       //按协调器S1才发数据  
   if ( keys & HAL_KEY_SW_6 ){ // 按键S1,以广播方式发数据    
-    myprintf("S1\n");
-    SampleApp_SendPeriodicMessage();
+    SampleApp_SendPeriodicMessage(1);
   } else if(keys & HAL_KEY_SW_1) { // 按键S2
-    myprintf("S2\n");
+    SampleApp_SendPeriodicMessage(2);
   }
 #endif
 
 #ifndef ZDO_COORDINATOR
   if ( keys & HAL_KEY_SW_6 ){
-    myprintf("S1\n");
+    AfSendAddrInfo(0x51); // 只用在路由和终端设备上，向协调器上传自身地址，协调器收到此消息后打印出地址
   }else if ( keys & HAL_KEY_SW_1 ){ // 按键S2
-    myprintf("S2\n");
-    AfSendAddrInfo(); // 只用在路由和终端设备上，向协调器上传自身地址
+    myprintf("S2\n");    
   }
 #endif
 }
@@ -436,41 +383,51 @@ void SampleApp_HandleKeys( uint8 shift, uint8 keys )
 *
 * @return  none
 */
+#define INIT_LEFT_SEC 5
 void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
 {
   uint8 data;
+  uint8 cmd;
+  int ret = 0;
   
   switch ( pkt->clusterId )
   {    
   case SAMPLEAPP_PERIODIC_CLUSTERID: // 协调器在发送数据的时候指定的此消息对应的命令字，即表示哪种类型的控制命令
-#ifdef ZDO_COORDINATOR //协调器接收到终端的无线数据 
-    // 使用串口打印终端上传的地址
-    data = (uint8)pkt->cmd.Data[0];
-    if(data == 0x38) { // // 接收到终端上传的短地址和IEEE地址
-      int i = 0;
-      myprintf("RX net addr = ");
-      myprintf("0x%x", pkt->cmd.Data[1]);
-      myprintf("%x", pkt->cmd.Data[2]);
-      myprintf("; IEEE addr = ");
-      for(i = 3; i < pkt->cmd.DataLength; i++) {
-        myprintf("0x%x,", pkt->cmd.Data[i]);
+//协调器接收到终端的无线数据 
+#ifdef ZDO_COORDINATOR
+    data = pkt->cmd.Data[0];
+    cmd = pkt->cmd.Data[1];
+    if(data == '#') {
+      if(cmd == 0x71 && pkt->cmd.Data[12] == '@') { // 接收到终端上传的短地址和IEEE地址
+        ret = checkEPInList(LL, pkt->cmd.Data + 4); // 使用IEEE地址检查终端是否已经在链表中
+        if(ret == -1) { // 如果当前终端没有在列表中        
+          ListInsert_L(LL, ListLength_L(LL)+1, pkt->cmd.Data[2], pkt->cmd.Data[3], &(pkt->cmd.Data[4]), INIT_LEFT_SEC); // 添加一个线性列表元素到链表尾部 
+          myprintf("Insert new EP in list\n");
+        } else { // 更新终端所在节点的在线时长，标记为在线状态
+          updateListEleStatus(LL, ret, INIT_LEFT_SEC);
+          myprintf("Already In List, update()\n");
+        }
+        myprintf("length = %d\n", ListLength_L(LL));
+      } else if(cmd == 0x72 && pkt->cmd.Data[10] == '@') { // 收到终端回复的确认收到投币命令
+        mySendByteBuf(pkt->cmd.Data, 11); // 转发回复消息到上位机
+      } else if(cmd == 0x51 && pkt->cmd.Data[12] == '@') { // 终端按键S1上传的长短地址信息
+        mySendByteBuf(pkt->cmd.Data, 13);
+        myprintf("\nRECV EP Key S1 addr info\n");
       }
-      myprintf("\n");
     }
-#else //路由器和终端接收数据处理 
-    data = (uint8)pkt->cmd.Data[0];
-    //继电器默认高电平触发 1吸合  0断开
-    if(data == 0x30) 
+//路由器和终端接收数据处理     
+#else
+    data = pkt->cmd.Data[0];
+    cmd = pkt->cmd.Data[1];
+    if(data == '#')
     {
-      DATA_PIN = 0;        //继电器断开 继电器默认是高电平触发可自行切换
-      HalLedSet(HAL_LED_1, LED_ON);  
-    } else if(data == 0x31) 
-    {
-      DATA_PIN = 1;        //继电器吸合
-      HalLedSet(HAL_LED_1, LED_OFF); 
-    } else if(data == 'K') {
-      HalLedBlink(HAL_LED_2, 0, 50, 500);
-    }
+      if(cmd == 0x81 && pkt->cmd.Data[3] == '@') { // 收到投递指定币数的消息        
+        myprintf("begin add coin = %d\n", pkt->cmd.Data[2]); // 进行投币动作
+        AfReplyGetCoinCmd(); // 回复已经收到投币命令0x72
+      } else if(cmd == 0x31 && pkt->cmd.Data[3] == '@') { // LED2闪灯测试命令
+        HalLedBlink(HAL_LED_2, 2, 25, 500);
+      }
+    }        
 #endif    
     break;
     
@@ -482,59 +439,83 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
 /**
 * 协调器向终端发送广播类型消息
 */
-void SampleApp_SendPeriodicMessage( void )
+void SampleApp_SendPeriodicMessage( int8 key )
 {
-  if(LedState == 0x30) {
-    LedState = 0x31;
-  } else {
-    LedState = 0x30;
-  }  
-  if ( AF_DataRequest( &SampleApp_Periodic_DstAddr, &SampleApp_epDesc,
-                      SAMPLEAPP_PERIODIC_CLUSTERID,
-                      1,
-                      &LedState,
-                      &SampleApp_TransID,
-                      AF_DISCV_ROUTE,
-                      AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )
-  {
-    if(LedState == 0x31) {
-      HalLedSet(HAL_LED_1, LED_ON);  
-    } else {
-      HalLedSet(HAL_LED_1, LED_OFF); 
+  if(key == 1) { // 按键S1
+    uint8 sendKeyS1Buf[4] = {'#', 0x31, 0, '@'};
+    
+    if ( AF_DataRequest( &SampleApp_Periodic_DstAddr, &SampleApp_epDesc,
+                        SAMPLEAPP_PERIODIC_CLUSTERID,
+                        4,
+                        sendKeyS1Buf,
+                        &SampleApp_TransID,
+                        AF_DISCV_ROUTE,
+                        AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )
+    {
+      HalLedBlink(HAL_LED_2, 2, 25, 500);
     }
-  }
-  else
-  {
-    // Error occurred in request to send.
+  } else if(key == 2) { // 按键S2
+    myprintf("press key S2\n");
   }
 }
 
 /**
-  心跳功能函数
+  协调器心跳功能函数，使用串口向树莓派发送心跳信息
 */
-void SampleApp_SendHeartBeatMessage(void) {
-#ifdef ZDO_COORDINATOR // 如果是协调器，使用串口向树莓派发送心跳信息
-  myprintf("#HB@\n");
+void SampleApp_SendHeartBeatMessageCoor(void) {
+  // 遍历终端列表，将所有节点剩余时间-1，如果小于0，则置0
+  uint8 heartBeatBuf[3] = {'#', 0x46, '@'};
+  
+  decAllListEPLeftSec(LL); // 将终端列表中元素在线时长-1，如果检测到超时则将IEEE发送到上位机
+  mySendByteBuf(heartBeatBuf, 3);
   HalLedBlink(HAL_LED_1, 1, 50, 500);
-#endif    
-#ifndef ZDO_COORDINATOR // 如果是终端，使用AF向协调器发送包含短地址的心跳消息
-  AfSendAddrInfo();
+}
+
+/**
+  终端心跳函数，用于定时向协调器发送本机地址信息
+*/
+void SampleApp_SendHeartBeatMessageEnd(void) { 
+  AfSendAddrInfo(0x71);
   HalLedBlink(HAL_LED_1, 1, 50, 500);
-#endif
 }
 
 /**
   发送终端地址信息到协调器
 */
-void AfSendAddrInfo(void) {
+void AfSendAddrInfo(uint8 cmd) {
   uint16 shortAddr;
-  uint8 strBuf[11] = {0};  
+  uint8 strBuf[13] = {0};  
   
   shortAddr = NLME_GetShortAddr();
-  strBuf[0] = 0x38;  // 发送数据的标识，便于协调器解析
-  strBuf[1] = HI_UINT16(shortAddr); // 存放地址的高8位
-  strBuf[2] = LO_UINT16(shortAddr); // 存放低8位
-  osal_memcpy(&strBuf[3], NLME_GetExtAddr(), 8); // 获取IEEE地址    
+  strBuf[0] = '#';  // 发送数据的标识，便于协调器解析
+  strBuf[1] = cmd; // 消息类型标识
+  strBuf[2] = HI_UINT16(shortAddr); // 存放地址的高8位
+  strBuf[3] = LO_UINT16(shortAddr); // 存放低8位
+  osal_memcpy(&strBuf[4], NLME_GetExtAddr(), 8); // 复制IEEE地址
+  strBuf[12] = '@'; // 尾部字节
+  if ( AF_DataRequest( &SampleApp_TxAddr,                  // 发送的目的地址+端点地址+传送模式
+                      (endPointDesc_t *)&SampleApp_epDesc, // 源终端的描述
+                      SAMPLEAPP_PERIODIC_CLUSTERID,        // 被profile指定的有效的集群号
+                      13,                                  // 发送数据长度
+                      strBuf,                              // 发送数据缓冲区
+                      &SampleApp_TransID,                  // 消息发送ID
+                      AF_DISCV_ROUTE,                      // 有效位掩码的发送选项
+                      AF_DEFAULT_RADIUS ) != afStatus_SUCCESS ) // 传送跳数，通常设置为AF_DEFAULT_RADIUS
+  {
+    myprintf("EP AfSendAddrInfo() failed\n");
+  }
+}
+
+/**
+  终端发送已经收到投币开始游戏命令
+*/
+void AfReplyGetCoinCmd(void) {
+  uint8 strBuf[11] = {0};  
+  
+  strBuf[0] = '#';  // 发送数据的标识，便于协调器解析
+  strBuf[1] = 0x72; // 消息类型标识
+  osal_memcpy(&strBuf[2], NLME_GetExtAddr(), 8); // 复制IEEE地址
+  strBuf[10] = '@'; // 尾部字节
   if ( AF_DataRequest( &SampleApp_TxAddr,                  // 发送的目的地址+端点地址+传送模式
                       (endPointDesc_t *)&SampleApp_epDesc, // 源终端的描述
                       SAMPLEAPP_PERIODIC_CLUSTERID,        // 被profile指定的有效的集群号
@@ -544,6 +525,6 @@ void AfSendAddrInfo(void) {
                       AF_DISCV_ROUTE,                      // 有效位掩码的发送选项
                       AF_DEFAULT_RADIUS ) != afStatus_SUCCESS ) // 传送跳数，通常设置为AF_DEFAULT_RADIUS
   {
-    myprintf("EP AfSendAddrInfo() failed\n");
+    myprintf("EP AfReplyGetCoinCmd() failed\n");
   }
 }

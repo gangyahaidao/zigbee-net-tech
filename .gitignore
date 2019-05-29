@@ -5,3 +5,6 @@
 *.r51
 *.dep
 *.wsdt
+*.hex
+*.map
+*.s51

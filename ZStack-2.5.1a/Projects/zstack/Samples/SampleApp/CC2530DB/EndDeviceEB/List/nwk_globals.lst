@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         27/May/2019  16:02:59 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         28/May/2019  18:18:10 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -9,20 +9,17 @@
 #    Calling convention =  xdata reentrant                                    #
 #    Constant location  =  data_rom                                           #
 #    Dptr setup         =  1,16                                               #
-#    Source file        =  E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Compo #
-#                          nents\stack\nwk\nwk_globals.c                      #
-#    Command line       =  -f E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ± #
-#                          ¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pr #
-#                          ojects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ #
-#                          Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ            #
+#    Source file        =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Components\stack\nwk\nwk_globals.c                #
+#    Command line       =  -f E:\Github_Repository\zigbee-net-tech\ZStack-2.5 #
+#                          .1a\Projects\zstack\Samples\SampleApp\CC2530DB\..\ #
+#                          ..\..\Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ      #
 #                          -DROOT=__near_func -DMAC_CFG_TX_DATA_MAX=3         #
 #                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3) -f          #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\Too #
-#                          ls\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO -DSECURE=0  #
-#                          -DZG_SECURE_DYNAMIC=0 -DREFLECTOR                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO       #
+#                          -DSECURE=0 -DZG_SECURE_DYNAMIC=0 -DREFLECTOR       #
 #                          -DDEFAULT_CHANLIST=0x00000800                      #
 #                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                       #
 #                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_MA #
@@ -44,119 +41,95 @@
 #                          __code" -DGENERIC=__generic                        #
 #                          -DRFD_RCVC_ALWAYS_ON=FALSE -DPOLL_RATE=1000        #
 #                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100)   #
-#                          -DREJOIN_POLL_RATE=440 E:\BaiduNetdiskDownload\CC2 #
-#                          530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ· #
-#                          çÉÈ\ZStack-2.5.1a\Components\stack\nwk\nwk_globals #
-#                          .c -D NWK_AUTO_POLL -D ZTOOL_P1 -D MT_TASK -D      #
-#                          MT_SYS_FUNC -D MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG  #
-#                          -lC E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ #
-#                          ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\P #
-#                          rojects\zstack\Samples\SampleApp\CC2530DB\EndDevic #
-#                          eEB\List\ -lA E:\BaiduNetdiskDownload\CC2530-2018\ #
-#                          Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStac #
-#                          k-2.5.1a\Projects\zstack\Samples\SampleApp\CC2530D #
-#                          B\EndDeviceEB\List\ --diag_suppress Pe001,Pa010    #
-#                          -o E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ± #
-#                          ¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pr #
-#                          ojects\zstack\Samples\SampleApp\CC2530DB\EndDevice #
-#                          EB\Obj\ -e --no_code_motion --debug --core=plain   #
-#                          --dptr=16,1 --data_model=large                     #
-#                          --code_model=banked --calling_convention=xdata_ree #
-#                          ntrant --place_constants=data_rom                  #
-#                          --nr_virtual_regs 16 -I E:\BaiduNetdiskDownload\CC #
-#                          2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ #
-#                          ·çÉÈ\ZStack-2.5.1a\Projects\zstack\Samples\SampleA #
-#                          pp\CC2530DB\ -I E:\BaiduNetdiskDownload\CC2530-201 #
-#                          8\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZSt #
-#                          ack-2.5.1a\Projects\zstack\Samples\SampleApp\CC253 #
-#                          0DB\..\Source\ -I E:\BaiduNetdiskDownload\CC2530-2 #
-#                          018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\Z #
-#                          Stack-2.5.1a\Projects\zstack\Samples\SampleApp\CC2 #
-#                          530DB\..\..\..\ZMain\TI2530DB\ -I                  #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\hal\include\ -I                      #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\hal\target\CC2530EB\ -I              #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\mac\include\ -I                      #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\mac\high_level\ -I                   #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\mac\low_level\srf04\ -I              #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\mac\low_level\srf04\single_chip\ -I  #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\mt\ -I E:\BaiduNetdiskDownload\CC253 #
-#                          0-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉ #
-#                          È\ZStack-2.5.1a\Projects\zstack\Samples\SampleApp\ #
-#                          CC2530DB\..\..\..\..\..\Components\osal\include\   #
-#                          -I E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ± #
-#                          ¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pr #
-#                          ojects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ #
-#                          ..\..\Components\services\saddr\ -I                #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\services\sdata\ -I                   #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\stack\af\ -I                         #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\stack\nwk\ -I                        #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\stack\sapi\ -I                       #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\stack\sec\ -I                        #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\stack\sys\ -I                        #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\stack\zdo\ -I                        #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\zmac\ -I E:\BaiduNetdiskDownload\CC2 #
-#                          530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ· #
-#                          çÉÈ\ZStack-2.5.1a\Projects\zstack\Samples\SampleAp #
-#                          p\CC2530DB\..\..\..\..\..\Components\zmac\f8w\     #
-#                          -Ohz --require_prototypes                          #
-#    List file          =  E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\EndDeviceEB\ #
-#                          List\nwk_globals.lst                               #
-#    Object file        =  E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\EndDeviceEB\ #
-#                          Obj\nwk_globals.r51                                #
+#                          -DREJOIN_POLL_RATE=440 E:\Github_Repository\zigbee #
+#                          -net-tech\ZStack-2.5.1a\Components\stack\nwk\nwk_g #
+#                          lobals.c -D NWK_AUTO_POLL -D ZTOOL_P1 -D MT_TASK   #
+#                          -D MT_SYS_FUNC -D MT_ZDO_FUNC -lC                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\EndDev #
+#                          iceEB\List\ -lA E:\Github_Repository\zigbee-net-te #
+#                          ch\ZStack-2.5.1a\Projects\zstack\Samples\SampleApp #
+#                          \CC2530DB\EndDeviceEB\List\ --diag_suppress        #
+#                          Pe001,Pa010 -o E:\Github_Repository\zigbee-net-tec #
+#                          h\ZStack-2.5.1a\Projects\zstack\Samples\SampleApp\ #
+#                          CC2530DB\EndDeviceEB\Obj\ -e --no_code_motion      #
+#                          --debug --core=plain --dptr=16,1                   #
+#                          --data_model=large --code_model=banked             #
+#                          --calling_convention=xdata_reentrant               #
+#                          --place_constants=data_rom --nr_virtual_regs 16    #
+#                          -I E:\Github_Repository\zigbee-net-tech\ZStack-2.5 #
+#                          .1a\Projects\zstack\Samples\SampleApp\CC2530DB\    #
+#                          -I E:\Github_Repository\zigbee-net-tech\ZStack-2.5 #
+#                          .1a\Projects\zstack\Samples\SampleApp\CC2530DB\..\ #
+#                          Source\ -I E:\Github_Repository\zigbee-net-tech\ZS #
+#                          tack-2.5.1a\Projects\zstack\Samples\SampleApp\CC25 #
+#                          30DB\..\..\..\ZMain\TI2530DB\ -I                   #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\hal\include\ -I                #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\hal\target\CC2530EB\ -I        #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\mac\include\ -I                #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\mac\high_level\ -I             #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\mac\low_level\srf04\ -I        #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\mac\low_level\srf04\single_chi #
+#                          p\ -I E:\Github_Repository\zigbee-net-tech\ZStack- #
+#                          2.5.1a\Projects\zstack\Samples\SampleApp\CC2530DB\ #
+#                          ..\..\..\..\..\Components\mt\ -I                   #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\osal\include\ -I               #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\services\saddr\ -I             #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\services\sdata\ -I             #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\af\ -I                   #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\nwk\ -I                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\sapi\ -I                 #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\sec\ -I                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\sys\ -I                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\zdo\ -I                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\zmac\ -I                       #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\zmac\f8w\ -Ohz                 #
+#                          --require_prototypes                               #
+#    List file          =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\EndDev #
+#                          iceEB\List\nwk_globals.lst                         #
+#    Object file        =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\EndDev #
+#                          iceEB\Obj\nwk_globals.r51                          #
 #                                                                             #
 #                                                                             #
 ###############################################################################
 
-E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Components\stack\nwk\nwk_globals.c
+E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\nwk\nwk_globals.c
       1          /**************************************************************************************************
       2            Filename:       nwk_globals.c
       3            Revised:        $Date: 2012-03-07 01:04:58 -0800 (Wed, 07 Mar 2012) $
@@ -695,119 +668,22 @@ E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ
     296           * STATUS STRINGS
     297           */
     298          #if defined ( LCD_SUPPORTED )
-
-   \                                 In  segment XDATA_ROM_C, align 1
     299            const char PingStr[]         = "Ping Rcvd from";
-   \                     PingStr:
-   \   000000   50696E67     DB "Ping Rcvd from"
-   \            20526376
-   \            64206672
-   \            6F6D00  
-
-   \                                 In  segment XDATA_ROM_C, align 1
     300            const char AssocCnfStr[]     = "Assoc Cnf";
-   \                     AssocCnfStr:
-   \   000000   4173736F     DB "Assoc Cnf"
-   \            6320436E
-   \            6600    
-
-   \                                 In  segment XDATA_ROM_C, align 1
     301            const char SuccessStr[]      = "Success";
-   \                     SuccessStr:
-   \   000000   53756363     DB "Success"
-   \            65737300
-
-   \                                 In  segment XDATA_ROM_C, align 1
     302            const char EndDeviceStr[]    = "EndDevice:";
-   \                     EndDeviceStr:
-   \   000000   456E6444     DB "EndDevice:"
-   \            65766963
-   \            653A00  
-
-   \                                 In  segment XDATA_ROM_C, align 1
     303            const char ParentStr[]       = "Parent:";
-   \                     ParentStr:
-   \   000000   50617265     DB "Parent:"
-   \            6E743A00
-
-   \                                 In  segment XDATA_ROM_C, align 1
     304            const char ZigbeeCoordStr[]  = "ZigBee Coord";
-   \                     ZigbeeCoordStr:
-   \   000000   5A696742     DB "ZigBee Coord"
-   \            65652043
-   \            6F6F7264
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
     305            const char NetworkIDStr[]    = "Network ID:";
-   \                     NetworkIDStr:
-   \   000000   4E657477     DB "Network ID:"
-   \            6F726B20
-   \            49443A00
-
-   \                                 In  segment XDATA_ROM_C, align 1
     306            const char RouterStr[]       = "Router:";
-   \                     RouterStr:
-   \   000000   526F7574     DB "Router:"
-   \            65723A00
-
-   \                                 In  segment XDATA_ROM_C, align 1
     307            const char OrphanRspStr[]    = "Orphan Response";
-   \                     OrphanRspStr:
-   \   000000   4F727068     DB "Orphan Response"
-   \            616E2052
-   \            6573706F
-   \            6E736500
-
-   \                                 In  segment XDATA_ROM_C, align 1
     308            const char SentStr[]         = "Sent";
-   \                     SentStr:
-   \   000000   53656E74     DB "Sent"
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
     309            const char FailedStr[]       = "Failed";
-   \                     FailedStr:
-   \   000000   4661696C     DB "Failed"
-   \            656400  
-
-   \                                 In  segment XDATA_ROM_C, align 1
     310            const char AssocRspFailStr[] = "Assoc Rsp fail";
-   \                     AssocRspFailStr:
-   \   000000   4173736F     DB "Assoc Rsp fail"
-   \            63205273
-   \            70206661
-   \            696C00  
-
-   \                                 In  segment XDATA_ROM_C, align 1
     311            const char AssocIndStr[]     = "Assoc Ind";
-   \                     AssocIndStr:
-   \   000000   4173736F     DB "Assoc Ind"
-   \            6320496E
-   \            6400    
-
-   \                                 In  segment XDATA_ROM_C, align 1
     312            const char AssocCnfFailStr[] = "Assoc Cnf fail";
-   \                     AssocCnfFailStr:
-   \   000000   4173736F     DB "Assoc Cnf fail"
-   \            6320436E
-   \            66206661
-   \            696C00  
-
-   \                                 In  segment XDATA_ROM_C, align 1
     313            const char EnergyLevelStr[]  = "Energy Level";
-   \                     EnergyLevelStr:
-   \   000000   456E6572     DB "Energy Level"
-   \            6779204C
-   \            6576656C
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
     314            const char ScanFailedStr[]   = "Scan Failed";
-   \                     ScanFailedStr:
-   \   000000   5363616E     DB "Scan Failed"
-   \            20466169
-   \            6C656400
     315          #endif
     316          
     317          /*********************************************************************
@@ -1145,32 +1021,10 @@ E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ
     482          void nwk_Status( uint16 statusCode, uint16 statusValue )
    \                     nwk_Status:
     483          {
-   \   000000   74F4         MOV     A,#-0xc
-   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
-   \   000005                ; Saved register size: 12
-   \   000005                ; Auto size: 0
-   \   000005   8C..         MOV     ?V0 + 2,R4
-   \   000007   8D..         MOV     ?V0 + 3,R5
+   \   000000                ; Saved register size: 0
+   \   000000                ; Auto size: 0
     484          #if defined ( LCD_SUPPORTED )
     485            switch ( statusCode )
-   \   000009   8A..         MOV     ?V0 + 0,R2
-   \   00000B   8B..         MOV     ?V0 + 1,R3
-   \   00000D   78..         MOV     R0,#?V0 + 0
-   \   00000F   12....       LCALL   ?US_SWITCH_SPARSE
-   \                     `?<Jumptable for nwk_Status>_0`:
-   \   000012   0000         DW        0
-   \   000014   0500         DW        5
-   \   000016   0200         DW        2
-   \   000018   ....         DW        ??nwk_Status_0
-   \   00001A   0300         DW        3
-   \   00001C   ....         DW        ??nwk_Status_1
-   \   00001E   0400         DW        4
-   \   000020   ....         DW        ??nwk_Status_2
-   \   000022   0310         DW        4099
-   \   000024   ....         DW        ??nwk_Status_3
-   \   000026   0410         DW        4100
-   \   000028   ....         DW        ??nwk_Status_4
-   \   00002A   ....         DW        ??nwk_Status_5
     486            {
     487              case NWK_STATUS_COORD_ADDR:
     488                if ( ZSTACK_ROUTER_BUILD )
@@ -1210,87 +1064,29 @@ E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ
     522                if ( ZSTACK_END_DEVICE_BUILD )
     523                {
     524                  HalLcdWriteStringValue( (char*)EndDeviceStr, statusValue, 16, HAL_LCD_LINE_1 );
-   \                     ??nwk_Status_1:
-   \   00002C                ; Setup parameters for call to function HalLcdWriteStringValue
-   \   00002C   75..00       MOV     ?V0 + 0,#0x0
-   \   00002F   78..         MOV     R0,#?V0 + 0
-   \   000031   12....       LCALL   ?PUSH_XSTACK_I_ONE
-   \   000034   7910         MOV     R1,#0x10
-   \   000036   7A..         MOV     R2,#EndDeviceStr & 0xff
-   \   000038   7B..         MOV     R3,#(EndDeviceStr >> 8) & 0xff
-   \                     ??nwk_Status_6:
-   \   00003A   12....       LCALL   ??HalLcdWriteStringValue?relay
-   \                     ??nwk_Status_7:
-   \   00003D   7401         MOV     A,#0x1
-   \   00003F   12....       LCALL   ?DEALLOC_XSTACK8
     525                }
     526                break;
-   \   000042   8044         SJMP    ??nwk_Status_5
     527          
     528              case NWK_STATUS_PARENT_ADDR:
     529                      HalLcdWriteStringValue( (char*)ParentStr, statusValue, 16, HAL_LCD_LINE_2 );
-   \                     ??nwk_Status_2:
-   \   000044                ; Setup parameters for call to function HalLcdWriteStringValue
-   \   000044   75..01       MOV     ?V0 + 0,#0x1
-   \   000047   78..         MOV     R0,#?V0 + 0
-   \   000049   12....       LCALL   ?PUSH_XSTACK_I_ONE
-   \   00004C   7910         MOV     R1,#0x10
-   \   00004E   7A..         MOV     R2,#ParentStr & 0xff
-   \   000050   7B..         MOV     R3,#(ParentStr >> 8) & 0xff
-   \   000052   80E6         SJMP    ??nwk_Status_6
     530                break;
     531          
     532              case NWK_STATUS_ASSOC_CNF:
     533                HalLcdWriteScreen( (char*)AssocCnfStr, (char*)SuccessStr );
-   \                     ??nwk_Status_0:
-   \   000054                ; Setup parameters for call to function HalLcdWriteScreen
-   \   000054   7C..         MOV     R4,#SuccessStr & 0xff
-   \   000056   7D..         MOV     R5,#(SuccessStr >> 8) & 0xff
-   \   000058   7A..         MOV     R2,#AssocCnfStr & 0xff
-   \   00005A   7B..         MOV     R3,#(AssocCnfStr >> 8) & 0xff
-   \   00005C   8027         SJMP    ??nwk_Status_8
     534                break;
     535          
     536              case NWK_ERROR_ASSOC_CNF_DENIED:
     537                HalLcdWriteString((char*)AssocCnfFailStr, HAL_LCD_LINE_1 );
-   \                     ??nwk_Status_3:
-   \   00005E                ; Setup parameters for call to function HalLcdWriteString
-   \   00005E   7900         MOV     R1,#0x0
-   \   000060   7A..         MOV     R2,#AssocCnfFailStr & 0xff
-   \   000062   7B..         MOV     R3,#(AssocCnfFailStr >> 8) & 0xff
-   \   000064   12....       LCALL   ??HalLcdWriteString?relay
     538                HalLcdWriteValue( (uint32)(statusValue), 16, HAL_LCD_LINE_2 );
-   \   000067                ; Setup parameters for call to function HalLcdWriteValue
-   \   000067   75..01       MOV     ?V0 + 0,#0x1
-   \   00006A   78..         MOV     R0,#?V0 + 0
-   \   00006C   12....       LCALL   ?PUSH_XSTACK_I_ONE
-   \   00006F   7910         MOV     R1,#0x10
-   \   000071   AA..         MOV     R2,?V0 + 2
-   \   000073   AB..         MOV     R3,?V0 + 3
-   \   000075   E4           CLR     A
-   \   000076   FC           MOV     R4,A
-   \   000077   FD           MOV     R5,A
-   \   000078   12....       LCALL   ??HalLcdWriteValue?relay
-   \   00007B   80C0         SJMP    ??nwk_Status_7
     539                break;
     540          
     541              case NWK_ERROR_ENERGY_SCAN_FAILED:
     542                HalLcdWriteScreen( (char*)EnergyLevelStr, (char*)ScanFailedStr );
-   \                     ??nwk_Status_4:
-   \   00007D                ; Setup parameters for call to function HalLcdWriteScreen
-   \   00007D   7C..         MOV     R4,#ScanFailedStr & 0xff
-   \   00007F   7D..         MOV     R5,#(ScanFailedStr >> 8) & 0xff
-   \   000081   7A..         MOV     R2,#EnergyLevelStr & 0xff
-   \   000083   7B..         MOV     R3,#(EnergyLevelStr >> 8) & 0xff
-   \                     ??nwk_Status_8:
-   \   000085   12....       LCALL   ??HalLcdWriteScreen?relay
     543                break;
     544            }
     545          #endif
     546          }
-   \                     ??nwk_Status_5:
-   \   000088   7F04         MOV     R7,#0x4
-   \   00008A   02....       LJMP    ?BANKED_LEAVE_XDATA
+   \   000000   02....       LJMP    ?BRET
     547          
     548          /*********************************************************************
     549           * @fn       nwk_UpdateStatistics()
@@ -1365,22 +1161,16 @@ E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ
 
    Maximum stack usage in bytes:
 
-     Function                    ISTACK PSTACK XSTACK
-     --------                    ------ ------ ------
-     NIB_init                        2      0      0
-       -> osal_rand                  4      0      0
-       -> osal_memset                4      0      0
-       -> sAddrExtCpy                4      0      0
-     nwk_Status                      0      0     13
-       -> HalLcdWriteStringValue     0      0     26
-       -> HalLcdWriteStringValue     0      0     26
-       -> HalLcdWriteScreen          0      0     24
-       -> HalLcdWriteString          0      0     24
-       -> HalLcdWriteValue           0      0     26
-       -> HalLcdWriteScreen          0      0     24
-     nwk_UpdateStatistics            0      0      0
-     nwk_globals_init                2      0      0
-       -> AddrMgrInit                4      0      0
+     Function             ISTACK PSTACK XSTACK
+     --------             ------ ------ ------
+     NIB_init                 2      0      0
+       -> osal_rand           4      0      0
+       -> osal_memset         4      0      0
+       -> sAddrExtCpy         4      0      0
+     nwk_Status               0      0      0
+     nwk_UpdateStatistics     0      0      0
+     nwk_globals_init         2      0      0
+       -> AddrMgrInit         4      0      0
 
 
    Segment part sizes:
@@ -1438,27 +1228,11 @@ E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ
                                                        1
      defaultKey                                       16
      defaultTCLinkKey                                 16
-     PingStr                                          15
-     AssocCnfStr                                      10
-     SuccessStr                                        8
-     EndDeviceStr                                     11
-     ParentStr                                         8
-     ZigbeeCoordStr                                   13
-     NetworkIDStr                                     12
-     RouterStr                                         8
-     OrphanRspStr                                     16
-     SentStr                                           5
-     FailedStr                                         7
-     AssocRspFailStr                                  15
-     AssocIndStr                                      10
-     AssocCnfFailStr                                  15
-     EnergyLevelStr                                   13
-     ScanFailedStr                                    12
      nwk_globals_init                                 11
      ?Subroutine0                                      7
      NIB_init                                        226
      ?Subroutine1                                      9
-     nwk_Status                                      141
+     nwk_Status                                        3
      nwk_UpdateStatistics                              3
      ?<Initializer for gMIN_TREE_LINK_COST>            1
      ?<Initializer for gAPS_MAX_ENDDEVICE_BROADCAST    1
@@ -1468,16 +1242,14 @@ E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ
      ??nwk_UpdateStatistics?relay                      6
 
  
-   397 bytes in segment BANKED_CODE
+   259 bytes in segment BANKED_CODE
     24 bytes in segment BANK_RELAYS
     70 bytes in segment CODE_C
      2 bytes in segment XDATA_I
      2 bytes in segment XDATA_ID
-   178 bytes in segment XDATA_ROM_C
  1 177 bytes in segment XDATA_Z
  
-   493 bytes of CODE  memory
-   178 bytes of CONST memory
+   355 bytes of CODE  memory
  1 179 bytes of XDATA memory
 
 Errors: none

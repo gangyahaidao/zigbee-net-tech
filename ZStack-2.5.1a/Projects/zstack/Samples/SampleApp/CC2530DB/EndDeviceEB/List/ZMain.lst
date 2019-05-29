@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         27/May/2019  16:02:53 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         28/May/2019  18:18:05 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -9,20 +9,17 @@
 #    Calling convention =  xdata reentrant                                    #
 #    Constant location  =  data_rom                                           #
 #    Dptr setup         =  1,16                                               #
-#    Source file        =  E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\ZMain\TI2530DB\ZMain.c                  #
-#    Command line       =  -f E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ± #
-#                          ¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pr #
-#                          ojects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ #
-#                          Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ            #
+#    Source file        =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\ZMain\TI2530DB\ZMain.c            #
+#    Command line       =  -f E:\Github_Repository\zigbee-net-tech\ZStack-2.5 #
+#                          .1a\Projects\zstack\Samples\SampleApp\CC2530DB\..\ #
+#                          ..\..\Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ      #
 #                          -DROOT=__near_func -DMAC_CFG_TX_DATA_MAX=3         #
 #                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3) -f          #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\Too #
-#                          ls\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO -DSECURE=0  #
-#                          -DZG_SECURE_DYNAMIC=0 -DREFLECTOR                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO       #
+#                          -DSECURE=0 -DZG_SECURE_DYNAMIC=0 -DREFLECTOR       #
 #                          -DDEFAULT_CHANLIST=0x00000800                      #
 #                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                       #
 #                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_MA #
@@ -44,119 +41,95 @@
 #                          __code" -DGENERIC=__generic                        #
 #                          -DRFD_RCVC_ALWAYS_ON=FALSE -DPOLL_RATE=1000        #
 #                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100)   #
-#                          -DREJOIN_POLL_RATE=440 E:\BaiduNetdiskDownload\CC2 #
-#                          530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ· #
-#                          çÉÈ\ZStack-2.5.1a\Projects\zstack\ZMain\TI2530DB\Z #
-#                          Main.c -D NWK_AUTO_POLL -D ZTOOL_P1 -D MT_TASK -D  #
-#                          MT_SYS_FUNC -D MT_ZDO_FUNC -D LCD_SUPPORTED=DEBUG  #
-#                          -lC E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ #
-#                          ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\P #
-#                          rojects\zstack\Samples\SampleApp\CC2530DB\EndDevic #
-#                          eEB\List\ -lA E:\BaiduNetdiskDownload\CC2530-2018\ #
-#                          Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStac #
-#                          k-2.5.1a\Projects\zstack\Samples\SampleApp\CC2530D #
-#                          B\EndDeviceEB\List\ --diag_suppress Pe001,Pa010    #
-#                          -o E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ± #
-#                          ¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pr #
-#                          ojects\zstack\Samples\SampleApp\CC2530DB\EndDevice #
-#                          EB\Obj\ -e --no_code_motion --debug --core=plain   #
-#                          --dptr=16,1 --data_model=large                     #
-#                          --code_model=banked --calling_convention=xdata_ree #
-#                          ntrant --place_constants=data_rom                  #
-#                          --nr_virtual_regs 16 -I E:\BaiduNetdiskDownload\CC #
-#                          2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ #
-#                          ·çÉÈ\ZStack-2.5.1a\Projects\zstack\Samples\SampleA #
-#                          pp\CC2530DB\ -I E:\BaiduNetdiskDownload\CC2530-201 #
-#                          8\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZSt #
-#                          ack-2.5.1a\Projects\zstack\Samples\SampleApp\CC253 #
-#                          0DB\..\Source\ -I E:\BaiduNetdiskDownload\CC2530-2 #
-#                          018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\Z #
-#                          Stack-2.5.1a\Projects\zstack\Samples\SampleApp\CC2 #
-#                          530DB\..\..\..\ZMain\TI2530DB\ -I                  #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\hal\include\ -I                      #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\hal\target\CC2530EB\ -I              #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\mac\include\ -I                      #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\mac\high_level\ -I                   #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\mac\low_level\srf04\ -I              #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\mac\low_level\srf04\single_chip\ -I  #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\mt\ -I E:\BaiduNetdiskDownload\CC253 #
-#                          0-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉ #
-#                          È\ZStack-2.5.1a\Projects\zstack\Samples\SampleApp\ #
-#                          CC2530DB\..\..\..\..\..\Components\osal\include\   #
-#                          -I E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ± #
-#                          ¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Pr #
-#                          ojects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ #
-#                          ..\..\Components\services\saddr\ -I                #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\services\sdata\ -I                   #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\stack\af\ -I                         #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\stack\nwk\ -I                        #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\stack\sapi\ -I                       #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\stack\sec\ -I                        #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\stack\sys\ -I                        #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\stack\zdo\ -I                        #
-#                          E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\..\ #
-#                          ..\Components\zmac\ -I E:\BaiduNetdiskDownload\CC2 #
-#                          530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ· #
-#                          çÉÈ\ZStack-2.5.1a\Projects\zstack\Samples\SampleAp #
-#                          p\CC2530DB\..\..\..\..\..\Components\zmac\f8w\     #
-#                          -Ohz --require_prototypes                          #
-#    List file          =  E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\EndDeviceEB\ #
-#                          List\ZMain.lst                                     #
-#    Object file        =  E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º #
-#                          11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Proje #
-#                          cts\zstack\Samples\SampleApp\CC2530DB\EndDeviceEB\ #
-#                          Obj\ZMain.r51                                      #
+#                          -DREJOIN_POLL_RATE=440 E:\Github_Repository\zigbee #
+#                          -net-tech\ZStack-2.5.1a\Projects\zstack\ZMain\TI25 #
+#                          30DB\ZMain.c -D NWK_AUTO_POLL -D ZTOOL_P1 -D       #
+#                          MT_TASK -D MT_SYS_FUNC -D MT_ZDO_FUNC -lC          #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\EndDev #
+#                          iceEB\List\ -lA E:\Github_Repository\zigbee-net-te #
+#                          ch\ZStack-2.5.1a\Projects\zstack\Samples\SampleApp #
+#                          \CC2530DB\EndDeviceEB\List\ --diag_suppress        #
+#                          Pe001,Pa010 -o E:\Github_Repository\zigbee-net-tec #
+#                          h\ZStack-2.5.1a\Projects\zstack\Samples\SampleApp\ #
+#                          CC2530DB\EndDeviceEB\Obj\ -e --no_code_motion      #
+#                          --debug --core=plain --dptr=16,1                   #
+#                          --data_model=large --code_model=banked             #
+#                          --calling_convention=xdata_reentrant               #
+#                          --place_constants=data_rom --nr_virtual_regs 16    #
+#                          -I E:\Github_Repository\zigbee-net-tech\ZStack-2.5 #
+#                          .1a\Projects\zstack\Samples\SampleApp\CC2530DB\    #
+#                          -I E:\Github_Repository\zigbee-net-tech\ZStack-2.5 #
+#                          .1a\Projects\zstack\Samples\SampleApp\CC2530DB\..\ #
+#                          Source\ -I E:\Github_Repository\zigbee-net-tech\ZS #
+#                          tack-2.5.1a\Projects\zstack\Samples\SampleApp\CC25 #
+#                          30DB\..\..\..\ZMain\TI2530DB\ -I                   #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\hal\include\ -I                #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\hal\target\CC2530EB\ -I        #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\mac\include\ -I                #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\mac\high_level\ -I             #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\mac\low_level\srf04\ -I        #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\mac\low_level\srf04\single_chi #
+#                          p\ -I E:\Github_Repository\zigbee-net-tech\ZStack- #
+#                          2.5.1a\Projects\zstack\Samples\SampleApp\CC2530DB\ #
+#                          ..\..\..\..\..\Components\mt\ -I                   #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\osal\include\ -I               #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\services\saddr\ -I             #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\services\sdata\ -I             #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\af\ -I                   #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\nwk\ -I                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\sapi\ -I                 #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\sec\ -I                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\sys\ -I                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\zdo\ -I                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\zmac\ -I                       #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\zmac\f8w\ -Ohz                 #
+#                          --require_prototypes                               #
+#    List file          =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\EndDev #
+#                          iceEB\List\ZMain.lst                               #
+#    Object file        =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\EndDev #
+#                          iceEB\Obj\ZMain.r51                                #
 #                                                                             #
 #                                                                             #
 ###############################################################################
 
-E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ\ZStack-2.5.1a\Projects\zstack\ZMain\TI2530DB\ZMain.c
+E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\ZMain\TI2530DB\ZMain.c
       1          /**************************************************************************************************
       2            Filename:       ZMain.c
       3            Revised:        $Date: 2010-09-17 16:25:30 -0700 (Fri, 17 Sep 2010) $
@@ -396,17 +369,10 @@ E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ
     128          
     129            // Display information about this device
     130            zmain_dev_info();
-   \   000075                ; Setup parameters for call to function zmain_dev_info
-   \   000075   12....       LCALL   ??zmain_dev_info?relay
     131          
     132            /* Display the device info on the LCD */
     133          #ifdef LCD_SUPPORTED
     134            zmain_lcd_init();
-   \   000078                ; Setup parameters for call to function HalLcdWriteString
-   \   000078   7900         MOV     R1,#0x0
-   \   00007A   7A..         MOV     R2,#`?<Constant "TexasInstruments">` & 0xff
-   \   00007C   7B..         MOV     R3,#(`?<Constant "TexasInstruments">` >> 8) & 0xff
-   \   00007E   12....       LCALL   ??HalLcdWriteString?relay
     135          #endif
     136          
     137          #ifdef WDT_IN_PM1
@@ -415,20 +381,20 @@ E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ
     140          #endif
     141          
     142            osal_start_system(); // Ñ­»·´¦ÀíÏµÍ³ÊÂ¼þ
-   \   000081                ; Setup parameters for call to function osal_start_system
-   \   000081   12....       LCALL   ??osal_start_system?relay
+   \   000075                ; Setup parameters for call to function osal_start_system
+   \   000075   12....       LCALL   ??osal_start_system?relay
     143          
     144            return 0;  // Shouldn't get here.
-   \   000084   7A00         MOV     R2,#0x0
-   \   000086   7B00         MOV     R3,#0x0
-   \   000088   02....       LJMP    ?BRET
-   \   00008B                REQUIRE SLEEPCMD
-   \   00008B                REQUIRE SLEEPSTA
-   \   00008B                REQUIRE CLKCONCMD
-   \   00008B                REQUIRE CLKCONSTA
-   \   00008B                REQUIRE _A_P1
-   \   00008B                REQUIRE P1DIR
-   \   00008B                REQUIRE P0INP
+   \   000078   7A00         MOV     R2,#0x0
+   \   00007A   7B00         MOV     R3,#0x0
+   \   00007C   02....       LJMP    ?BRET
+   \   00007F                REQUIRE SLEEPCMD
+   \   00007F                REQUIRE SLEEPSTA
+   \   00007F                REQUIRE CLKCONCMD
+   \   00007F                REQUIRE CLKCONSTA
+   \   00007F                REQUIRE _A_P1
+   \   00007F                REQUIRE P1DIR
+   \   00007F                REQUIRE P0INP
     145          } // main()
     146          
     147          /*********************************************************************
@@ -727,6 +693,27 @@ E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ
    \   00000A   3400         ADDC    A,#0x0
    \   00000C   F583         MOV     DPH,A
    \   00000E   22           RET
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??main?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    main
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??zmain_ext_addr?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    zmain_ext_addr
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     `?<Constant {255, 255, 255, 255, 255, 255, 255,`:
+   \   000000   FF           DB 255
+   \   000001   FF           DB 255
+   \   000002   FF           DB 255
+   \   000003   FF           DB 255
+   \   000004   FF           DB 255
+   \   000005   FF           DB 255
+   \   000006   FF           DB 255
+   \   000007   FF           DB 255
     239          
     240          #if defined ZCL_KEY_ESTABLISH
     241          /**************************************************************************************************
@@ -801,17 +788,8 @@ E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ
     310           * @return      None.
     311           **************************************************************************************************
     312           */
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     313          static void zmain_dev_info(void)
-   \                     zmain_dev_info:
     314          {
-   \   000000   74F4         MOV     A,#-0xc
-   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
-   \   000005                ; Saved register size: 12
-   \   000005                ; Auto size: 17
-   \   000005   74EF         MOV     A,#-0x11
-   \   000007   12....       LCALL   ?ALLOC_XSTACK8
     315          #ifdef LCD_SUPPORTED
     316            uint8 i;
     317            uint8 *xad;
@@ -819,306 +797,38 @@ E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ
     319          
     320            // Display the extended address.
     321            xad = aExtendedAddress + Z_EXTADDR_LEN - 1;
-   \   00000A   78..         MOV     R0,#(aExtendedAddress + 7) & 0xff
-   \   00000C   79..         MOV     R1,#((aExtendedAddress + 7) >> 8) & 0xff
     322          
     323            for (i = 0; i < Z_EXTADDR_LEN*2; xad--)
-   \   00000E   7C00         MOV     R4,#0x0
     324            {
     325              uint8 ch;
     326              ch = (*xad >> 4) & 0x0F;
-   \                     ??zmain_dev_info_0:
-   \   000010   8882         MOV     DPL,R0
-   \   000012   8983         MOV     DPH,R1
-   \   000014   E0           MOVX    A,@DPTR
-   \   000015   C4           SWAP    A
-   \   000016   540F         ANL     A,#0xf
-   \   000018   FD           MOV     R5,A
     327              lcd_buf[i++] = ch + (( ch < 10 ) ? '0' : '7');
-   \   000019   8C..         MOV     ?V0 + 0,R4
-   \   00001B   0C           INC     R4
-   \   00001C   C3           CLR     C
-   \   00001D   940A         SUBB    A,#0xa
-   \   00001F   5004         JNC     ??zmain_dev_info_1
-   \   000021   7A30         MOV     R2,#0x30
-   \   000023   8002         SJMP    ??zmain_dev_info_2
-   \                     ??zmain_dev_info_1:
-   \   000025   7A37         MOV     R2,#0x37
-   \                     ??zmain_dev_info_2:
-   \   000027   EA           MOV     A,R2
-   \   000028   2D           ADD     A,R5
-   \   000029   C0E0         PUSH    A
-   \   00002B   85....       MOV     ?V0 + 2,?V0 + 0
-   \   00002E   12....       LCALL   ?Subroutine1 & 0xFFFF
-   \                     ??CrossCallReturnLabel_3:
-   \   000031   D0E0         POP     A
-   \   000033   F0           MOVX    @DPTR,A
     328              ch = *xad & 0x0F;
-   \   000034   8882         MOV     DPL,R0
-   \   000036   8983         MOV     DPH,R1
-   \   000038   E0           MOVX    A,@DPTR
-   \   000039   540F         ANL     A,#0xf
-   \   00003B   FD           MOV     R5,A
     329              lcd_buf[i++] = ch + (( ch < 10 ) ? '0' : '7');
-   \   00003C   8C..         MOV     ?V0 + 1,R4
-   \   00003E   0C           INC     R4
-   \   00003F   C3           CLR     C
-   \   000040   940A         SUBB    A,#0xa
-   \   000042   5004         JNC     ??zmain_dev_info_3
-   \   000044   7A30         MOV     R2,#0x30
-   \   000046   8002         SJMP    ??zmain_dev_info_4
-   \                     ??zmain_dev_info_3:
-   \   000048   7A37         MOV     R2,#0x37
-   \                     ??zmain_dev_info_4:
-   \   00004A   EA           MOV     A,R2
-   \   00004B   2D           ADD     A,R5
-   \   00004C   C0E0         PUSH    A
-   \   00004E   85....       MOV     ?V0 + 2,?V0 + 1
-   \   000051   12....       LCALL   ?Subroutine1 & 0xFFFF
     330            }
-   \                     ??CrossCallReturnLabel_4:
-   \   000054   D0E0         POP     A
-   \   000056   F0           MOVX    @DPTR,A
-   \   000057   E8           MOV     A,R0
-   \   000058   24FF         ADD     A,#-0x1
-   \   00005A   18           DEC     R0
-   \   00005B   E9           MOV     A,R1
-   \   00005C   34FF         ADDC    A,#-0x1
-   \   00005E   F9           MOV     R1,A
-   \   00005F   EC           MOV     A,R4
-   \   000060   C3           CLR     C
-   \   000061   9410         SUBB    A,#0x10
-   \   000063   40AB         JC      ??zmain_dev_info_0
     331            lcd_buf[Z_EXTADDR_LEN*2] = '\0';
-   \   000065   7410         MOV     A,#0x10
-   \   000067   12....       LCALL   ?XSTACK_DISP0_8
-   \   00006A   E4           CLR     A
-   \   00006B   F0           MOVX    @DPTR,A
     332            
     333            //DrawRectFill(0 ,0 ,128,128,GREEN);//±³¾°É«
     334            DrawRectFill(3 ,20 ,122,106,WHITE); //ÏÔÊ¾´°¿Ú
-   \   00006C                ; Setup parameters for call to function DrawRectFill
-   \   00006C   75..FF       MOV     ?V0 + 2,#-0x1
-   \   00006F   75..FF       MOV     ?V0 + 3,#-0x1
-   \   000072   78..         MOV     R0,#?V0 + 2
-   \   000074   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   000077   75..6A       MOV     ?V0 + 2,#0x6a
-   \   00007A   75..00       MOV     ?V0 + 3,#0x0
-   \   00007D   78..         MOV     R0,#?V0 + 2
-   \   00007F   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   000082   75..7A       MOV     ?V0 + 2,#0x7a
-   \   000085   78..         MOV     R0,#?V0 + 2
-   \   000087   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   00008A   7C14         MOV     R4,#0x14
-   \   00008C   7D00         MOV     R5,#0x0
-   \   00008E   7A03         MOV     R2,#0x3
-   \   000090   7B00         MOV     R3,#0x0
-   \   000092   12....       LCALL   ??DrawRectFill?relay
-   \   000095   7406         MOV     A,#0x6
-   \   000097   12....       LCALL   ?DEALLOC_XSTACK8
     335             
     336            Color    = BLACK; //Ç°¾°É«
-   \   00009A   90....       MOV     DPTR,#Color
-   \   00009D   E4           CLR     A
-   \   00009E   F0           MOVX    @DPTR,A
-   \   00009F   A3           INC     DPTR
-   \   0000A0   F0           MOVX    @DPTR,A
     337            Color_BK = GREEN; //±³¾°É«
-   \   0000A1   90....       MOV     DPTR,#Color_BK
-   \   0000A4   74E0         MOV     A,#-0x20
-   \   0000A6   F0           MOVX    @DPTR,A
-   \   0000A7   A3           INC     DPTR
-   \   0000A8   7407         MOV     A,#0x7
-   \   0000AA   F0           MOVX    @DPTR,A
     338            LCD_write_EN_string(64-7*osal_strlen((char *)AppTitle)/2,3,AppTitle); //ÏÔÊ¾±êÌâ
-   \   0000AB                ; Setup parameters for call to function LCD_write_EN_string
-   \   0000AB   7A03         MOV     R2,#0x3
-   \   0000AD   EA           MOV     A,R2
-   \   0000AE   C0E0         PUSH    A
-   \   0000B0                ; Setup parameters for call to function osal_strlen
-   \   0000B0   7A..         MOV     R2,#AppTitle & 0xff
-   \   0000B2   7B..         MOV     R3,#(AppTitle >> 8) & 0xff
-   \   0000B4   12....       LCALL   ??osal_strlen?relay
-   \   0000B7   EA           MOV     A,R2
-   \   0000B8   75F007       MOV     B,#0x7
-   \   0000BB   A4           MUL     AB
-   \   0000BC   FA           MOV     R2,A
-   \   0000BD   A8F0         MOV     R0,B
-   \   0000BF   75F007       MOV     B,#0x7
-   \   0000C2   EB           MOV     A,R3
-   \   0000C3   A4           MUL     AB
-   \   0000C4   28           ADD     A,R0
-   \   0000C5   FB           MOV     R3,A
-   \   0000C6   EA           MOV     A,R2
-   \   0000C7   F8           MOV     R0,A
-   \   0000C8   EB           MOV     A,R3
-   \   0000C9   F9           MOV     R1,A
-   \   0000CA   7A02         MOV     R2,#0x2
-   \   0000CC   7B00         MOV     R3,#0x0
-   \   0000CE   12....       LCALL   ?S_DIV_MOD
-   \   0000D1   7440         MOV     A,#0x40
-   \   0000D3   C3           CLR     C
-   \   0000D4   98           SUBB    A,R0
-   \   0000D5   F9           MOV     R1,A
-   \   0000D6   7C..         MOV     R4,#AppTitle & 0xff
-   \   0000D8   74..         MOV     A,#(AppTitle >> 8) & 0xff
-   \   0000DA   FD           MOV     R5,A
-   \   0000DB   D0E0         POP     A
-   \   0000DD   FA           MOV     R2,A
-   \   0000DE   12....       LCALL   ??LCD_write_EN_string?relay
     339            
     340            Color    = BLACK; //Ç°¾°É«
-   \   0000E1   90....       MOV     DPTR,#Color
-   \   0000E4   E4           CLR     A
-   \   0000E5   F0           MOVX    @DPTR,A
-   \   0000E6   A3           INC     DPTR
-   \   0000E7   F0           MOVX    @DPTR,A
     341            Color_BK = WHITE; //±³¾°É«
-   \   0000E8   90....       MOV     DPTR,#Color_BK
-   \   0000EB   74FF         MOV     A,#-0x1
-   \   0000ED   F0           MOVX    @DPTR,A
-   \   0000EE   A3           INC     DPTR
-   \   0000EF   F0           MOVX    @DPTR,A
     342            HalLcdWriteString( "IEEE: ", HAL_LCD_LINE_3 );
-   \   0000F0                ; Setup parameters for call to function HalLcdWriteString
-   \   0000F0   7902         MOV     R1,#0x2
-   \   0000F2   7A..         MOV     R2,#`?<Constant "IEEE: ">` & 0xff
-   \   0000F4   7B..         MOV     R3,#(`?<Constant "IEEE: ">` >> 8) & 0xff
-   \   0000F6   12....       LCALL   ??HalLcdWriteString?relay
     343            Color    = BLUE;                    
-   \   0000F9   90....       MOV     DPTR,#Color
-   \   0000FC   741F         MOV     A,#0x1f
-   \   0000FE   F0           MOVX    @DPTR,A
-   \   0000FF   A3           INC     DPTR
-   \   000100   E4           CLR     A
-   \   000101   F0           MOVX    @DPTR,A
     344            HalLcdWriteString( (char*)lcd_buf, HAL_LCD_LINE_4 );
-   \   000102                ; Setup parameters for call to function HalLcdWriteString
-   \   000102   7903         MOV     R1,#0x3
-   \   000104   85..82       MOV     DPL,?XSP + 0
-   \   000107   85..83       MOV     DPH,?XSP + 1
-   \   00010A   AA82         MOV     R2,DPL
-   \   00010C   AB83         MOV     R3,DPH
-   \   00010E   12....       LCALL   ??HalLcdWriteString?relay
     345            
     346            Color    = RED; 
-   \   000111   90....       MOV     DPTR,#Color
-   \   000114   E4           CLR     A
-   \   000115   F0           MOVX    @DPTR,A
-   \   000116   A3           INC     DPTR
-   \   000117   74F8         MOV     A,#-0x8
-   \   000119   F0           MOVX    @DPTR,A
     347            LCD_write_CN_string(9, 95, "ÉîÛÚÊÐ°²ÁªµÂ¿Æ¼¼");
-   \   00011A                ; Setup parameters for call to function LCD_write_CN_string
-   \   00011A   7C..         MOV     R4,#`?<Constant "\\311\\356\\333\\332\\312\\320\\260\\262\\3` & 0xff
-   \   00011C   7D..         MOV     R5,#(`?<Constant "\\311\\356\\333\\332\\312\\320\\260\\262\\3` >> 8) & 0xff
-   \   00011E   7A5F         MOV     R2,#0x5f
-   \   000120   7909         MOV     R1,#0x9
-   \   000122   12....       LCALL   ??LCD_write_CN_string?relay
     348            Color    = BLACK; 
-   \   000125   90....       MOV     DPTR,#Color
-   \   000128   E4           CLR     A
-   \   000129   F0           MOVX    @DPTR,A
-   \   00012A   A3           INC     DPTR
-   \   00012B   F0           MOVX    @DPTR,A
     349            LCD_write_CN_string(9, 110, "³ÏÐÅÁ¢×ã");
-   \   00012C                ; Setup parameters for call to function LCD_write_CN_string
-   \   00012C   7C..         MOV     R4,#`?<Constant "\\263\\317\\320\\305\\301\\242\\327\\343">` & 0xff
-   \   00012E   7D..         MOV     R5,#(`?<Constant "\\263\\317\\320\\305\\301\\242\\327\\343">` >> 8) & 0xff
-   \   000130   7A6E         MOV     R2,#0x6e
-   \   000132   7909         MOV     R1,#0x9
-   \   000134   12....       LCALL   ??LCD_write_CN_string?relay
     350            Color    = MAGENTA; 
-   \   000137   90....       MOV     DPTR,#Color
-   \   00013A   741F         MOV     A,#0x1f
-   \   00013C   F0           MOVX    @DPTR,A
-   \   00013D   A3           INC     DPTR
-   \   00013E   74F8         MOV     A,#-0x8
-   \   000140   F0           MOVX    @DPTR,A
     351            LCD_write_CN_string(63,110, "´´ÐÂÖÂÔ¶");  
-   \   000141                ; Setup parameters for call to function LCD_write_CN_string
-   \   000141   7C..         MOV     R4,#`?<Constant "\\264\\264\\320\\302\\326\\302\\324\\266">` & 0xff
-   \   000143   7D..         MOV     R5,#(`?<Constant "\\264\\264\\320\\302\\326\\302\\324\\266">` >> 8) & 0xff
-   \   000145   7A6E         MOV     R2,#0x6e
-   \   000147   793F         MOV     R1,#0x3f
-   \   000149   12....       LCALL   ??LCD_write_CN_string?relay
     352          #endif
     353          }
-   \   00014C   7411         MOV     A,#0x11
-   \   00014E   12....       LCALL   ?DEALLOC_XSTACK8
-   \   000151   7F04         MOV     R7,#0x4
-   \   000153   02....       LJMP    ?BANKED_LEAVE_XDATA
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
-   \                     ?Subroutine1:
-   \   000000   85..82       MOV     DPL,?XSP + 0
-   \   000003   85..83       MOV     DPH,?XSP + 1
-   \   000006   E582         MOV     A,DPL
-   \   000008   25..         ADD     A,?V0 + 2
-   \   00000A   F582         MOV     DPL,A
-   \   00000C   E583         MOV     A,DPH
-   \   00000E   3400         ADDC    A,#0x0
-   \   000010   F583         MOV     DPH,A
-   \   000012   22           RET
-
-   \                                 In  segment BANK_RELAYS, align 1
-   \                     ??main?relay:
-   \   000000   12....       LCALL   ?BDISPATCH
-   \   000003   ......       DC24    main
-
-   \                                 In  segment BANK_RELAYS, align 1
-   \                     ??zmain_ext_addr?relay:
-   \   000000   12....       LCALL   ?BDISPATCH
-   \   000003   ......       DC24    zmain_ext_addr
-
-   \                                 In  segment BANK_RELAYS, align 1
-   \                     ??zmain_dev_info?relay:
-   \   000000   12....       LCALL   ?BDISPATCH
-   \   000003   ......       DC24    zmain_dev_info
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant {255, 255, 255, 255, 255, 255, 255,`:
-   \   000000   FF           DB 255
-   \   000001   FF           DB 255
-   \   000002   FF           DB 255
-   \   000003   FF           DB 255
-   \   000004   FF           DB 255
-   \   000005   FF           DB 255
-   \   000006   FF           DB 255
-   \   000007   FF           DB 255
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "IEEE: ">`:
-   \   000000   49454545     DB "IEEE: "
-   \            3A2000  
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "\\311\\356\\333\\332\\312\\320\\260\\262\\3`:
-   \   000000   C9EEDBDA     DB "\311\356\333\332\312\320\260\262\301\252\265\302\277\306\274\274"
-   \            CAD0B0B2
-   \            C1AAB5C2
-   \            BFC6BCBC
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "\\263\\317\\320\\305\\301\\242\\327\\343">`:
-   \   000000   B3CFD0C5     DB "\263\317\320\305\301\242\327\343"
-   \            C1A2D7E3
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "\\264\\264\\320\\302\\326\\302\\324\\266">`:
-   \   000000   B4B4D0C2     DB "\264\264\320\302\326\302\324\266"
-   \            D6C2D4B6
-   \            00      
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "TexasInstruments">`:
-   \   000000   54657861     DB "TexasInstruments"
-   \            73496E73
-   \            7472756D
-   \            656E7473
-   \            00      
     354          
     355          #ifdef LCD_SUPPORTED
     356          /*********************************************************************
@@ -1155,43 +865,32 @@ E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ
 
    Maximum stack usage in bytes:
 
-     Function                 ISTACK PSTACK XSTACK
-     --------                 ------ ------ ------
-     main                         0      0      0
-       -> osal_int_disable        0      0      0
-       -> HalAdcCheckVdd          0      0      0
-       -> InitBoard               0      0      0
-       -> HalDriverInit           0      0      0
-       -> osal_nv_init            0      0      0
-       -> ZMacInit                0      0      0
-       -> zmain_ext_addr          0      0      0
-       -> zgInit                  0      0      0
-       -> osal_init_system        0      0      0
-       -> osal_int_enable         0      0      0
-       -> InitBoard               0      0      0
-       -> zmain_dev_info          0      0      0
-       -> HalLcdWriteString       0      0      0
-       -> osal_start_system       0      0      0
-     zmain_dev_info               1      0     35
-       -> DrawRectFill            0      0     70
-       -> osal_strlen             2      0     58
-       -> LCD_write_EN_string     0      0     58
-       -> HalLcdWriteString       0      0     58
-       -> HalLcdWriteString       0      0     58
-       -> LCD_write_CN_string     0      0     58
-       -> LCD_write_CN_string     0      0     58
-       -> LCD_write_CN_string     0      0     58
-     zmain_ext_addr               2      0     23
-       -> osal_nv_item_init       0      0     42
-       -> osal_nv_read            0      0     46
-       -> osal_memcmp             0      0     44
-       -> HalFlashRead            0      0     42
-       -> osal_memcmp             0      0     44
-       -> osal_memcmp             0      0     44
-       -> osal_memcpy             0      0     44
-       -> osal_nv_write           0      0     46
-       -> ZMacSetReq              0      0     38
-       -> osal_rand               0      0     38
+     Function               ISTACK PSTACK XSTACK
+     --------               ------ ------ ------
+     main                       0      0      0
+       -> osal_int_disable      0      0      0
+       -> HalAdcCheckVdd        0      0      0
+       -> InitBoard             0      0      0
+       -> HalDriverInit         0      0      0
+       -> osal_nv_init          0      0      0
+       -> ZMacInit              0      0      0
+       -> zmain_ext_addr        0      0      0
+       -> zgInit                0      0      0
+       -> osal_init_system      0      0      0
+       -> osal_int_enable       0      0      0
+       -> InitBoard             0      0      0
+       -> osal_start_system     0      0      0
+     zmain_ext_addr             2      0     23
+       -> osal_nv_item_init     0      0     42
+       -> osal_nv_read          0      0     46
+       -> osal_memcmp           0      0     44
+       -> HalFlashRead          0      0     42
+       -> osal_memcmp           0      0     44
+       -> osal_memcmp           0      0     44
+       -> osal_memcpy           0      0     44
+       -> osal_nv_write         0      0     46
+       -> ZMacSetReq            0      0     38
+       -> osal_rand             0      0     38
 
 
    Segment part sizes:
@@ -1205,29 +904,21 @@ E:\BaiduNetdiskDownload\CC2530-2018\Á÷³Ì×¢ÊÍ°æ±¾£º11.°´¼üÎÞÏß¿ª¹Ø¼ÌµçÆ÷-Ì¨µÆ·çÉÈ
      SLEEPCMD                                          1
      CLKCONCMD                                         1
      P1DIR                                             1
-     main                                            139
+     main                                            127
      zmain_ext_addr                                  381
      ?Subroutine0                                     15
-     zmain_dev_info                                  342
-     ?Subroutine1                                     19
      ??main?relay                                      6
      ??zmain_ext_addr?relay                            6
-     ??zmain_dev_info?relay                            6
      ?<Constant {255, 255, 255, 255, 255, 255, 255,    8
-     ?<Constant "IEEE: ">                              7
-     ?<Constant "\311\356\333\332\312\320\260\262\3   17
-     ?<Constant "\263\317\320\305\301\242\327\343">    9
-     ?<Constant "\264\264\320\302\326\302\324\266">    9
-     ?<Constant "TexasInstruments">                   17
 
  
- 896 bytes in segment BANKED_CODE
-  18 bytes in segment BANK_RELAYS
+ 523 bytes in segment BANKED_CODE
+  12 bytes in segment BANK_RELAYS
    7 bytes in segment SFR_AN
-  67 bytes in segment XDATA_ROM_C
+   8 bytes in segment XDATA_ROM_C
  
- 914 bytes of CODE  memory
-  67 bytes of CONST memory
+ 535 bytes of CODE  memory
+   8 bytes of CONST memory
    0 bytes of DATA  memory (+ 7 bytes shared)
 
 Errors: none
