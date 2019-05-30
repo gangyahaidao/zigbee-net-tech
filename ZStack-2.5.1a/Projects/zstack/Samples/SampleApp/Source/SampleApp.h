@@ -82,6 +82,7 @@ extern "C"
 
 // Application Events (OSAL) - These are bit weighted definitions.
 #define SAMPLEAPP_SEND_PERIODIC_MSG_EVT       0x0001
+#define SAMPLEAPP_SIMULATE_COIN_MSG_EVT       0x0003  // 用于模拟引脚电平变化的事件标识
   
 // Group ID for Flash Command
 #define SAMPLEAPP_FLASH_GROUP                 0x0001

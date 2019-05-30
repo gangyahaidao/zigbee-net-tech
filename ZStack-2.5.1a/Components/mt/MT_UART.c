@@ -66,6 +66,8 @@
 #define DATA_STATE     0x04
 #define FCS_STATE      0x05
 
+void MT_MyUartProcessZToolData ( uint8 port, uint8 event );
+void rxCB( uint8 port, uint8 event );
 /***************************************************************************************************
  *                                         GLOBAL VARIABLES
  ***************************************************************************************************/
@@ -117,6 +119,7 @@ void MT_UartInit ()
   uartConfig.intEnable            = TRUE;
 #if defined (ZTOOL_P1) || defined (ZTOOL_P2)
   uartConfig.callBackFunc         = MT_MyUartProcessZToolData; // 绑定ZTOOL串口的回调函数
+  //uartConfig.callBackFunc         = rxCB; // 绑定ZTOOL串口的回调函数
 #elif defined (ZAPP_P1) || defined (ZAPP_P2)
   uartConfig.callBackFunc         = MT_UartProcessZAppData;
 #else
@@ -179,6 +182,18 @@ byte MT_UartCalcFCS( uint8 *msg_ptr, uint8 len )
   return ( xorResult );
 }
 
+void rxCB( uint8 port, uint8 event )
+{
+    unsigned char buf[30];
+    unsigned char len;
+    
+    len = HalUARTRead(0,  buf, 30);//读取串口数据，返回数据长度
+    if(len)
+    {
+        HalUARTWrite(0, buf, len);//通过串口原样返回数据 也可以修改数据返回用于区分数据
+        len = 0;
+    }
+}
 
 /**
   自定义串口接收程序
@@ -192,7 +207,7 @@ void MT_MyUartProcessZToolData ( uint8 port, uint8 event )
 {
   uint8  ch;
   (void)event;  // Intentionally unreferenced parameter
-
+  
   while (Hal_UART_RxBufLen(port))
   {
     HalUARTRead (port, &ch, 1); // 数据格式：头部 + 地址高字节 + 地址低字节 + 命令字节 + 尾部
@@ -200,7 +215,7 @@ void MT_MyUartProcessZToolData ( uint8 port, uint8 event )
       recv_index = 0;
     } else if(ch == '@') { // 接收到一帧数据尾部
       recv_index = 0;     
-      
+        
       uint8 cmd = speed_buffer[0]; // 消息命令类型
       uint16 addr = speed_buffer[1]; // 终端地址高字节
       addr = (addr << 8) | speed_buffer[2];

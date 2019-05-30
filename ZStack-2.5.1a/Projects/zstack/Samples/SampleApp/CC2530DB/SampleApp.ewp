@@ -274,6 +274,7 @@
         </option>
         <option>
           <name>CCDefines</name>
+          <state>ZIGBEEPRO</state>
           <state>ZTOOL_P1</state>
           <state>xMT_TASK</state>
           <state>xMT_SYS_FUNC</state>

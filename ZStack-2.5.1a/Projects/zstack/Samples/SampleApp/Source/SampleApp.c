@@ -143,6 +143,11 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pckt );
 void SampleApp_SendPeriodicMessage( int8 whichKey );
 void SampleApp_SendHeartBeatMessageCoor(void);
 void SampleApp_SendHeartBeatMessageEnd(void);
+void printAddrInfoHex(uint8* buf, uint8 dataLen);
+
+#ifndef ZDO_COORDINATOR
+int8 NeedCoinDelivered = 0; // 定义终端需要处理的投币个数
+#endif
 
 /**
   P1端口中断处理函数
@@ -207,8 +212,7 @@ void SampleApp_Init( uint8 task_id )
   // 协调器单播发送到指定地址的终端上  
   EndPoint_DstAddr.addrMode = (afAddrMode_t)Addr16Bit;
   EndPoint_DstAddr.endPoint = SAMPLEAPP_ENDPOINT;
-  EndPoint_DstAddr.addr.shortAddr = 0x00; // 在发送的时候修改终端地址
-    
+  EndPoint_DstAddr.addr.shortAddr = 0x00; // 在发送的时候修改终端地址    
   
   // Fill out the endpoint description.
   SampleApp_epDesc.endPoint = SAMPLEAPP_ENDPOINT; // 端点号
@@ -291,7 +295,7 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
           
           // 无线网络收到数据
         case AF_INCOMING_MSG_CMD:
-          myprintf("AF_INCOMING_MSG_CMD\n");
+          // myprintf("AF_INCOMING_MSG_CMD\n");
           SampleApp_MessageMSGCB( MSGpkt );
           break;
           
@@ -340,8 +344,22 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
 #endif
     return (events ^ SAMPLEAPP_SEND_PERIODIC_MSG_EVT); // 清除此已经处理事件标志位
   }
-  
-  // Discard unknown events
+#ifndef ZDO_COORDINATOR  // 只在终端设备中进行处理
+  else if(events & SAMPLEAPP_SIMULATE_COIN_MSG_EVT) { // 模拟电平变化定时器事件
+    myprintf("Get COIN_MSG_EVT, NeedCoinDelivered = %d\n", NeedCoinDelivered);
+    if(SIMULATE_PIN == 0) {
+      SIMULATE_PIN = 1; // 产生一个上升沿
+    } else if(SIMULATE_PIN == 1) {
+      SIMULATE_PIN = 0; // 完整产生了一个脉冲
+      NeedCoinDelivered--;
+    }
+    if(NeedCoinDelivered > 0) { // 还需要开启定时器
+      osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SIMULATE_COIN_MSG_EVT, 10);
+    }    
+    return (events ^ SAMPLEAPP_SIMULATE_COIN_MSG_EVT);
+  }
+#endif  
+  myprintf("Discard unknown events = %d\n", events);
   return 0;
 }
 
@@ -400,7 +418,9 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
 {
   uint8 data;
   uint8 cmd;
-  int ret = 0;
+#ifdef ZDO_COORDINATOR  
+  int8 ret = 0;
+#endif  
   
   switch ( pkt->clusterId )
   {    
@@ -423,8 +443,8 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
       } else if(cmd == 0x72 && pkt->cmd.Data[10] == '@') { // 收到终端回复的确认收到投币命令
         mySendByteBuf(pkt->cmd.Data, 11); // 转发回复消息到上位机
       } else if(cmd == 0x51 && pkt->cmd.Data[12] == '@') { // 终端按键S1上传的长短地址信息
-        mySendByteBuf(pkt->cmd.Data, 13);
-        myprintf("\nRECV EP Key S1 addr info\n");
+        printAddrInfoHex(pkt->cmd.Data+2, 10);
+        mySendByteBuf(pkt->cmd.Data, 13);        
       }
     }
 //路由器和终端接收数据处理     
@@ -433,9 +453,13 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
     cmd = pkt->cmd.Data[1];
     if(data == '#')
     {
-      if(cmd == 0x81 && pkt->cmd.Data[3] == '@') { // 收到投递指定币数的消息        
-        myprintf("begin add coin = %d\n", pkt->cmd.Data[2]); // 进行投币动作
+      if(cmd == 0x81 && pkt->cmd.Data[3] == '@') { // 收到投递指定币数的消息
         AfReplyGetCoinCmd(); // 回复已经收到投币命令0x72
+        
+        myprintf("begin add coin = %d\n", pkt->cmd.Data[2]); // 进行投币动作
+        NeedCoinDelivered = pkt->cmd.Data[2];
+        SIMULATE_PIN = 0; // 初始低电平
+        osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SIMULATE_COIN_MSG_EVT, 10); // 产生定时器事件
       } else if(cmd == 0x31 && pkt->cmd.Data[3] == '@') { // LED2闪灯测试命令
         HalLedBlink(HAL_LED_2, 2, 25, 500);
       }
@@ -539,4 +563,20 @@ void AfReplyGetCoinCmd(void) {
   {
     myprintf("EP AfReplyGetCoinCmd() failed\n");
   }
+}
+
+/**
+  协调器打印终端上传的长短地址
+*/
+void printAddrInfoHex(uint8* buf, uint8 dataLen) {
+  int i = 0;
+  
+  myprintf("\n");
+  for(i = 0; i < dataLen; i++) {
+    if(i == 2) {
+      myprintf("; IEEE = ");
+    }
+    myprintf("0x%x,", buf[i]);
+  }
+  myprintf("\n");
 }

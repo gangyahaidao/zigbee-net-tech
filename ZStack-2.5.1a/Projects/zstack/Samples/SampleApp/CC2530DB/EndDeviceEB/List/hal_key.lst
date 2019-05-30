@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         28/May/2019  18:18:06 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         30/May/2019  09:42:49 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -224,6 +224,11 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                     P0IFG:
    \   000000                DS 1
 
+   \                                 In  segment SFR_AN, at 0x8a
+   \   unsigned char volatile __sfr P1IFG
+   \                     P1IFG:
+   \   000000                DS 1
+
    \                                 In  segment SFR_AN, at 0x8b
    \   unsigned char volatile __sfr P2IFG
    \                     P2IFG:
@@ -234,6 +239,11 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                     PICTL:
    \   000000                DS 1
 
+   \                                 In  segment SFR_AN, at 0x8d
+   \   unsigned char volatile __sfr P1IEN
+   \                     P1IEN:
+   \   000000                DS 1
+
    \                                 In  segment SFR_AN, at 0x9a
    \   unsigned char volatile __sfr IEN2
    \                     IEN2:
@@ -242,6 +252,11 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                                 In  segment SFR_AN, at 0xa0
    \   union <unnamed> volatile __sfr _A_P2
    \                     _A_P2:
+   \   000000                DS 1
+
+   \                                 In  segment SFR_AN, at 0xa8
+   \   union <unnamed> volatile __sfr _A_IEN0
+   \                     _A_IEN0:
    \   000000                DS 1
 
    \                                 In  segment SFR_AN, at 0xab
@@ -259,19 +274,14 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                     _A_IEN1:
    \   000000                DS 1
 
-   \                                 In  segment SFR_AN, at 0xc0
-   \   union <unnamed> volatile __sfr _A_IRCON
-   \                     _A_IRCON:
-   \   000000                DS 1
-
-   \                                 In  segment SFR_AN, at 0xe8
-   \   union <unnamed> volatile __sfr _A_IRCON2
-   \                     _A_IRCON2:
-   \   000000                DS 1
-
    \                                 In  segment SFR_AN, at 0xf3
    \   unsigned char volatile __sfr P0SEL
    \                     P0SEL:
+   \   000000                DS 1
+
+   \                                 In  segment SFR_AN, at 0xf4
+   \   unsigned char volatile __sfr P1SEL
+   \                     P1SEL:
    \   000000                DS 1
 
    \                                 In  segment SFR_AN, at 0xf5
@@ -279,9 +289,19 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                     P2SEL:
    \   000000                DS 1
 
+   \                                 In  segment SFR_AN, at 0xf7
+   \   unsigned char volatile __sfr P2INP
+   \                     P2INP:
+   \   000000                DS 1
+
    \                                 In  segment SFR_AN, at 0xfd
    \   unsigned char volatile __sfr P0DIR
    \                     P0DIR:
+   \   000000                DS 1
+
+   \                                 In  segment SFR_AN, at 0xfe
+   \   unsigned char volatile __sfr P1DIR
+   \                     P1DIR:
    \   000000                DS 1
 
    \                                 In  segment SFR_AN, at 0xff
@@ -996,98 +1016,89 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     483           *
     484           * @return
     485           **************************************************************************************************/
-
-   \                                 In  segment NEAR_CODE, align 1, keep-with-next
-    486          HAL_ISR_FUNCTION( halKeyPort0Isr, P0INT_VECTOR )
-   \                     halKeyPort0Isr:
-    487          {
-   \   000000   C0E0         PUSH    A
-   \   000002   74F2         MOV     A,#-0xe
-   \   000004   12....       LCALL   ?INTERRUPT_ENTER_XSP
-   \   000007                ; Saved register size: 14
-   \   000007                ; Auto size: 0
-    488            if (HAL_KEY_SW_6_PXIFG & HAL_KEY_SW_6_BIT)
-   \   000007   E589         MOV     A,0x89
-   \   000009   A2E1         MOV     C,0xE0 /* A   */.1
-   \   00000B   5003         JNC     ??halKeyPort0Isr_0
-    489            {
-    490              halProcessKeyInterrupt();
-   \   00000D                ; Setup parameters for call to function halProcessKeyInterrupt
-   \   00000D   12....       LCALL   ??halProcessKeyInterrupt?relay
-    491            }
-    492          
-    493            /*
-    494              Clear the CPU interrupt flag for Port_0
-    495              PxIFG has to be cleared before PxIF
-    496            */
-    497            HAL_KEY_SW_6_PXIFG = 0;
-   \                     ??halKeyPort0Isr_0:
-   \   000010   758900       MOV     0x89,#0x0
-    498            HAL_KEY_CPU_PORT_0_IF = 0;
-   \   000013   C2C5         CLR     0xc0.5
-    499          }
-   \   000015                REQUIRE ?Subroutine1
-   \   000015                REQUIRE P0IFG
-   \   000015                REQUIRE _A_IRCON
-   \   000015                ; // Fall through to label ?Subroutine1
-
-   \                                 In  segment NEAR_CODE, align 1, keep-with-next
-   \                     ?Subroutine1:
-   \   000000   7F01         MOV     R7,#0x1
-   \   000002   02....       LJMP    ?INTERRUPT_LEAVE_XSP
-    500          
-    501          
-    502          /**************************************************************************************************
-    503           * @fn      halKeyPort2Isr
-    504           *
-    505           * @brief   Port2 ISR
-    506           *
-    507           * @param
-    508           *
-    509           * @return
-    510           **************************************************************************************************/
-
-   \                                 In  segment NEAR_CODE, align 1, keep-with-next
+    486          /*
+    487          HAL_ISR_FUNCTION( halKeyPort0Isr, P0INT_VECTOR )
+    488          {
+    489            if (HAL_KEY_SW_6_PXIFG & HAL_KEY_SW_6_BIT)
+    490            {
+    491              halProcessKeyInterrupt();
+    492            }
+    493            HAL_KEY_SW_6_PXIFG = 0;
+    494            HAL_KEY_CPU_PORT_0_IF = 0;
+    495          }
+    496          */
+    497          
+    498          /**************************************************************************************************
+    499           * @fn      halKeyPort2Isr
+    500           *
+    501           * @brief   Port2 ISR
+    502              Clear the CPU interrupt flag for Port_2
+    503              PxIFG has to be cleared before PxIF
+    504              Notes: P2_1 and P2_2 are debug lines.
+    505           *
+    506           * @param
+    507           *
+    508           * @return
+    509           **************************************************************************************************/
+    510          /*
     511          HAL_ISR_FUNCTION( halKeyPort2Isr, P2INT_VECTOR )
-   \                     halKeyPort2Isr:
     512          {
-   \   000000   C0E0         PUSH    A
-   \   000002   74F2         MOV     A,#-0xe
-   \   000004   12....       LCALL   ?INTERRUPT_ENTER_XSP
-   \   000007                ; Saved register size: 14
-   \   000007                ; Auto size: 0
     513            if (HAL_KEY_JOY_MOVE_PXIFG & HAL_KEY_JOY_MOVE_BIT)
-   \   000007   E58B         MOV     A,0x8b
-   \   000009   A2E0         MOV     C,0xE0 /* A   */.0
-   \   00000B   5003         JNC     ??halKeyPort2Isr_0
     514            {
     515              halProcessKeyInterrupt();
-   \   00000D                ; Setup parameters for call to function halProcessKeyInterrupt
-   \   00000D   12....       LCALL   ??halProcessKeyInterrupt?relay
     516            }
-    517          
-    518            /*
-    519              Clear the CPU interrupt flag for Port_2
-    520              PxIFG has to be cleared before PxIF
-    521              Notes: P2_1 and P2_2 are debug lines.
-    522            */
-    523            HAL_KEY_JOY_MOVE_PXIFG = 0;
-   \                     ??halKeyPort2Isr_0:
-   \   000010   758B00       MOV     0x8b,#0x0
-    524            HAL_KEY_CPU_PORT_2_IF = 0;
-   \   000013   C2E8         CLR     0xe8.0
-    525          }
-   \   000015   80..         SJMP    ?Subroutine1
-   \   000017                REQUIRE P2IFG
-   \   000017                REQUIRE _A_IRCON2
+    517            HAL_KEY_JOY_MOVE_PXIFG = 0;
+    518            HAL_KEY_CPU_PORT_2_IF = 0;
+    519          }
+    520          */
+    521          #else
+    522          
+    523          
+    524          void HalKeyInit(void){}
+    525          void HalKeyConfig(bool interruptEnable, halKeyCBack_t cback){}
+    526          uint8 HalKeyRead(void){ return 0;}
+    527          void HalKeyPoll(void){}
+    528          
+    529          #endif /* HAL_KEY */
+    530          
+    531          /**
+    532            初始化中断引脚
+    533            用于监控投币机的引脚电平变化
+    534            P0_2引脚
+    535          */
 
-   \                                 In  segment INTVEC, offset 0x33, root
-   \                     `??halKeyPort2Isr??INTVEC 51`:
-   \   000033   02....       LJMP       (halKeyPort2Isr)
-
-   \                                 In  segment INTVEC, offset 0x6b, root
-   \                     `??halKeyPort0Isr??INTVEC 107`:
-   \   00006B   02....       LJMP       (halKeyPort0Isr)
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+    536          void InitCoinInterrupt(void) {
+   \                     InitCoinInterrupt:
+   \   000000                ; Saved register size: 0
+   \   000000                ; Auto size: 0
+    537            P1SEL &= ~(0x1 << 2); // P1_2 设置为一般功能IO口
+   \   000000   53F4FB       ANL     0xf4,#0xfb
+    538            P1DIR &= ~(0x1<<2);  // 设置为输入功能
+   \   000003   53FEFB       ANL     0xfe,#0xfb
+    539            P2INP &= ~(0x1<<2); // 设置为上拉
+   \   000006   53F7FB       ANL     0xf7,#0xfb
+    540            
+    541            P1IEN |= (0x1 << 2); // P1_2中断使能
+   \   000009   438D04       ORL     0x8d,#0x4
+    542            PICTL &= ~(0x1 << 1); // 设置为0表示上升沿引起中断
+   \   00000C   538CFD       ANL     0x8c,#0xfd
+    543            EA = 1; // 打开总中断
+   \   00000F   D2AF         SETB    0xa8.7
+    544            IEN2 |= (0x1 << 4); // 端口1中断使能
+   \   000011   439A10       ORL     0x9a,#0x10
+    545            P1IFG = 0; // 初始化中断标志位  
+   \   000014   758A00       MOV     0x8a,#0x0
+    546          }
+   \   000017   02....       LJMP    ?BRET
+   \   00001A                REQUIRE P1SEL
+   \   00001A                REQUIRE P1DIR
+   \   00001A                REQUIRE P2INP
+   \   00001A                REQUIRE P1IEN
+   \   00001A                REQUIRE PICTL
+   \   00001A                REQUIRE _A_IEN0
+   \   00001A                REQUIRE IEN2
+   \   00001A                REQUIRE P1IFG
 
    \                                 In  segment BANK_RELAYS, align 1
    \                     ??HalKeyInit?relay:
@@ -1128,48 +1139,39 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                     ??HalKeyExitSleep?relay:
    \   000000   12....       LCALL   ?BDISPATCH
    \   000003   ......       DC24    HalKeyExitSleep
-    526          
-    527          #else
-    528          
-    529          
-    530          void HalKeyInit(void){}
-    531          void HalKeyConfig(bool interruptEnable, halKeyCBack_t cback){}
-    532          uint8 HalKeyRead(void){ return 0;}
-    533          void HalKeyPoll(void){}
-    534          
-    535          #endif /* HAL_KEY */
-    536          
-    537          
-    538          
-    539          
-    540          
-    541          /**************************************************************************************************
-    542          **************************************************************************************************/
-    543          
-    544          
-    545          
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??InitCoinInterrupt?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    InitCoinInterrupt
+    547          
+    548          
+    549          
+    550          
+    551          /**************************************************************************************************
+    552          **************************************************************************************************/
+    553          
+    554          
+    555          
 
    Maximum stack usage in bytes:
 
-     Function                    ISTACK PSTACK XSTACK
-     --------                    ------ ------ ------
-     HalKeyConfig                    0      0      9
-       -> osal_stop_timerEx          0      0     18
-       -> osal_start_timerEx         0      0     18
-     HalKeyEnterSleep                0      0      0
-     HalKeyExitSleep                 2      0      0
-       -> HalKeyRead                 4      0      0
-     HalKeyInit                      2      0      0
-     HalKeyPoll                      2      0      0
-     HalKeyRead                      0      0      0
-     halGetJoyKeyInput               0      0      9
-       -> HalAdcRead                 0      0     18
-     halKeyPort0Isr                  0      0     14
-       -> halProcessKeyInterrupt     0      0     28
-     halKeyPort2Isr                  0      0     14
-       -> halProcessKeyInterrupt     0      0     28
-     halProcessKeyInterrupt          2      0     14
-       -> osal_start_timerEx         4      0      0
+     Function                ISTACK PSTACK XSTACK
+     --------                ------ ------ ------
+     HalKeyConfig                0      0      9
+       -> osal_stop_timerEx      0      0     18
+       -> osal_start_timerEx     0      0     18
+     HalKeyEnterSleep            0      0      0
+     HalKeyExitSleep             2      0      0
+       -> HalKeyRead             4      0      0
+     HalKeyInit                  2      0      0
+     HalKeyPoll                  2      0      0
+     HalKeyRead                  0      0      0
+     InitCoinInterrupt           0      0      0
+     halGetJoyKeyInput           0      0      9
+       -> HalAdcRead             0      0     18
+     halProcessKeyInterrupt      2      0      0
+       -> osal_start_timerEx     4      0      0
 
 
    Segment part sizes:
@@ -1178,18 +1180,22 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
      --------------                 -----
      _A_P0                             1
      P0IFG                             1
+     P1IFG                             1
      P2IFG                             1
      PICTL                             1
+     P1IEN                             1
      IEN2                              1
      _A_P2                             1
+     _A_IEN0                           1
      P0IEN                             1
      P2IEN                             1
      _A_IEN1                           1
-     _A_IRCON                          1
-     _A_IRCON2                         1
      P0SEL                             1
+     P1SEL                             1
      P2SEL                             1
+     P2INP                             1
      P0DIR                             1
+     P1DIR                             1
      P2DIR                             1
      halKeySavedKeys                   1
      pHalKeyProcessFunction            2
@@ -1204,11 +1210,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
      halProcessKeyInterrupt           48
      HalKeyEnterSleep                  3
      HalKeyExitSleep                   9
-     halKeyPort0Isr                   21
-     ?Subroutine1                      5
-     halKeyPort2Isr                   23
-     ??halKeyPort2Isr??INTVEC 51       3
-     ??halKeyPort0Isr??INTVEC 107      3
+     InitCoinInterrupt                26
      ??HalKeyInit?relay                6
      ??HalKeyConfig?relay              6
      ??HalKeyRead?relay                6
@@ -1217,17 +1219,16 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
      ??halProcessKeyInterrupt?relay    6
      ??HalKeyEnterSleep?relay          6
      ??HalKeyExitSleep?relay           6
+     ??InitCoinInterrupt?relay         6
 
  
- 379 bytes in segment BANKED_CODE
-  48 bytes in segment BANK_RELAYS
-   6 bytes in segment INTVEC
-  49 bytes in segment NEAR_CODE
-  15 bytes in segment SFR_AN
+ 405 bytes in segment BANKED_CODE
+  54 bytes in segment BANK_RELAYS
+  19 bytes in segment SFR_AN
    5 bytes in segment XDATA_Z
  
- 476 bytes of CODE  memory (+  6 bytes shared)
-   0 bytes of DATA  memory (+ 15 bytes shared)
+ 459 bytes of CODE  memory
+   0 bytes of DATA  memory (+ 19 bytes shared)
    5 bytes of XDATA memory
 
 Errors: none
