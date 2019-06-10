@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         10/Jun/2019  15:02:35 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         10/Jun/2019  16:18:08 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -354,7 +354,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\ZMain\TI2530D
     114          #endif
     115          
     116            // Initialize the operating system
-    117            osal_init_system(); // 操作系统资源初始化
+    117            osal_init_system(); // 操作系统资源初始化，调用SampleApp_init()函数
    \   000068                ; Setup parameters for call to function osal_init_system
    \   000068   12....       LCALL   ??osal_init_system?relay
     118          
