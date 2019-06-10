@@ -67,11 +67,7 @@ static void zmain_cert_init( void );
 static void zmain_dev_info( void );
 static void zmain_vdd_check( void );
 
-#ifdef LCD_SUPPORTED
-static void zmain_lcd_init( void );
-#endif
-
-extern uint8 AppTitle[]; //应用程序名称
+uint8* AppTitle = "QingPu"; //应用程序名称
 
 /*********************************************************************
  * @fn      main
@@ -118,7 +114,7 @@ int main( void )
 #endif
 
   // Initialize the operating system
-  osal_init_system(); // 操作系统资源初始化
+  osal_init_system(); // 操作系统资源初始化，调用SampleApp_init()函数
 
   // Allow interrupts
   osal_int_enable( INTS_ALL );
@@ -128,11 +124,6 @@ int main( void )
 
   // Display information about this device
   zmain_dev_info();
-
-  /* Display the device info on the LCD */
-#ifdef LCD_SUPPORTED
-  zmain_lcd_init();
-#endif
 
 #ifdef WDT_IN_PM1
   /* If WDT is used, this is a good place to enable it. */
@@ -324,7 +315,7 @@ static void zmain_dev_info(void)
   {
     uint8 ch;
     ch = (*xad >> 4) & 0x0F;
-    lcd_buf[i++] = ch + (( ch < 10 ) ? '0' : '7');
+    lcd_buf[i++] = ch + (( ch < 10 ) ? '0' : '7'); // +7可以转变成大写字符ABCDEF
     ch = *xad & 0x0F;
     lcd_buf[i++] = ch + (( ch < 10 ) ? '0' : '7');
   }
@@ -335,45 +326,13 @@ static void zmain_dev_info(void)
    
   Color    = BLACK; //前景色
   Color_BK = GREEN; //背景色
-  LCD_write_EN_string(64-7*osal_strlen((char *)AppTitle)/2,3,AppTitle); //显示标题
+  LCD_write_EN_string(64-7*osal_strlen((char*)AppTitle)/2,3,AppTitle); //显示标题
   
   Color    = BLACK; //前景色
-  Color_BK = WHITE; //背景色
-  HalLcdWriteString( "IEEE: ", HAL_LCD_LINE_3 );
-  Color    = BLUE;                    
-  HalLcdWriteString( (char*)lcd_buf, HAL_LCD_LINE_4 );  
+  Color_BK = WHITE; //背景色          
+  HalLcdWriteString( (char*)lcd_buf, HAL_LCD_LINE_7);
 #endif
 }
-
-#ifdef LCD_SUPPORTED
-/*********************************************************************
- * @fn      zmain_lcd_init
- * @brief   Initialize LCD at start up.
- * @return  none
- *********************************************************************/
-static void zmain_lcd_init ( void )
-{
-#ifdef SERIAL_DEBUG_SUPPORTED
-  {
-    HalLcdWriteString( "TexasInstruments", HAL_LCD_LINE_1 );
-
-#if defined( MT_MAC_FUNC )
-#if defined( ZDO_COORDINATOR )
-      HalLcdWriteString( "MAC-MT Coord", HAL_LCD_LINE_2 );
-#else
-      HalLcdWriteString( "MAC-MT Device", HAL_LCD_LINE_2 );
-#endif // ZDO
-#elif defined( MT_NWK_FUNC )
-#if defined( ZDO_COORDINATOR )
-      HalLcdWriteString( "NWK Coordinator", HAL_LCD_LINE_2 );
-#else
-      HalLcdWriteString( "NWK Device", HAL_LCD_LINE_2 );
-#endif // ZDO
-#endif // MT_FUNC
-  }
-#endif // SERIAL_DEBUG_SUPPORTED
-}
-#endif
 
 /*********************************************************************
 *********************************************************************/

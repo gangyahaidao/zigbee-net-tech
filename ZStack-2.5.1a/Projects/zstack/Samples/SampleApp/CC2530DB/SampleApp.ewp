@@ -274,6 +274,7 @@
         </option>
         <option>
           <name>CCDefines</name>
+          <state>NWK_AUTO_POLL</state>
           <state>ZIGBEEPRO</state>
           <state>ZTOOL_P1</state>
           <state>xMT_TASK</state>
@@ -1332,11 +1333,11 @@
         </option>
         <option>
           <name>CCDefines</name>
+          <state>NWK_AUTO_POLL</state>
           <state>ZTOOL_P1</state>
           <state>MT_TASK</state>
           <state>MT_SYS_FUNC</state>
           <state>MT_ZDO_FUNC</state>
-          <state>LCD_SUPPORTED=DEBUG</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1967,24 +1968,24 @@
         </option>
         <option>
           <name>AllowExtraOutput</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GenerateExtraOutput</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>XExtraOutOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>ExtraOutputFile</name>
-          <state>SampleApp.sim</state>
+          <state>Router.hex</state>
         </option>
         <option>
           <name>ExtraOutputFormat</name>
           <version>11</version>
-          <state>60</state>
+          <state>23</state>
         </option>
         <option>
           <name>ExtraFormatVariant</name>

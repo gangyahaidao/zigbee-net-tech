@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        30/May/2019  09:42:49 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        10/Jun/2019  11:30:46 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -15,11 +15,12 @@
 //                          5.1a\Projects\zstack\Samples\SampleApp\CC2530DB\. /
 //                          .\..\..\Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ   /
 //                          -DROOT=__near_func -DMAC_CFG_TX_DATA_MAX=3        /
-//                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3) -f         /
-//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
-//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
-//                          .\..\Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO    /
-//                          -DSECURE=0 -DZG_SECURE_DYNAMIC=0 -DREFLECTOR      /
+//                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3             /
+//                          -DLCD_SUPPORTED) -f E:\Github_Repository\zigbee-n /
+//                          et-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sam /
+//                          pleApp\CC2530DB\..\..\..\Tools\CC2530DB\f8wConfig /
+//                          .cfg (-DZIGBEEPRO -DSECURE=0                      /
+//                          -DZG_SECURE_DYNAMIC=0 -DREFLECTOR                 /
 //                          -DDEFAULT_CHANLIST=0x00000800                     /
 //                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                      /
 //                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_M /
@@ -202,11 +203,8 @@
         PUBWEAK P0DIR
         PUBWEAK P0IEN
         PUBWEAK P0IFG
+        PUBWEAK P0INP
         PUBWEAK P0SEL
-        PUBWEAK P1DIR
-        PUBWEAK P1IEN
-        PUBWEAK P1IFG
-        PUBWEAK P1SEL
         PUBWEAK P2DIR
         PUBWEAK P2IEN
         PUBWEAK P2IFG
@@ -465,12 +463,6 @@ P0IFG:
         DATA8
         DS 1
 
-        ASEGN SFR_AN:DATA:NOROOT,08aH
-// unsigned char volatile __sfr P1IFG
-P1IFG:
-        DATA8
-        DS 1
-
         ASEGN SFR_AN:DATA:NOROOT,08bH
 // unsigned char volatile __sfr P2IFG
 P2IFG:
@@ -483,9 +475,9 @@ PICTL:
         DATA8
         DS 1
 
-        ASEGN SFR_AN:DATA:NOROOT,08dH
-// unsigned char volatile __sfr P1IEN
-P1IEN:
+        ASEGN SFR_AN:DATA:NOROOT,08fH
+// unsigned char volatile __sfr P0INP
+P0INP:
         DATA8
         DS 1
 
@@ -531,12 +523,6 @@ P0SEL:
         DATA8
         DS 1
 
-        ASEGN SFR_AN:DATA:NOROOT,0f4H
-// unsigned char volatile __sfr P1SEL
-P1SEL:
-        DATA8
-        DS 1
-
         ASEGN SFR_AN:DATA:NOROOT,0f5H
 // unsigned char volatile __sfr P2SEL
 P2SEL:
@@ -552,12 +538,6 @@ P2INP:
         ASEGN SFR_AN:DATA:NOROOT,0fdH
 // unsigned char volatile __sfr P0DIR
 P0DIR:
-        DATA8
-        DS 1
-
-        ASEGN SFR_AN:DATA:NOROOT,0feH
-// unsigned char volatile __sfr P1DIR
-P1DIR:
         DATA8
         DS 1
 
@@ -1461,7 +1441,7 @@ HalKeyExitSleep:
 //  531 /**
 //  532   初始化中断引脚
 //  533   用于监控投币机的引脚电平变化
-//  534   P0_2引脚
+//  534   P0_5引脚
 //  535 */
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
@@ -1472,34 +1452,37 @@ InitCoinInterrupt:
         CODE
         ; Saved register size: 0
         ; Auto size: 0
-//  537   P1SEL &= ~(0x1 << 2); // P1_2 设置为一般功能IO口
-        ANL     0xf4,#0xfb
-//  538   P1DIR &= ~(0x1<<2);  // 设置为输入功能
-        ANL     0xfe,#0xfb
-//  539   P2INP &= ~(0x1<<2); // 设置为上拉
-        ANL     0xf7,#0xfb
-//  540   
-//  541   P1IEN |= (0x1 << 2); // P1_2中断使能
-        ORL     0x8d,#0x4
-//  542   PICTL &= ~(0x1 << 1); // 设置为0表示上升沿引起中断
-        ANL     0x8c,#0xfd
-//  543   EA = 1; // 打开总中断
+//  537   P0SEL &= ~(0x1 << 5); // P0_5 设置为0一般功能IO口，通用IO
+        ANL     0xf3,#0xdf
+//  538   P0DIR &= ~(0x1<<5);  // 设置为输入功能
+        ANL     0xfd,#0xdf
+//  539   P0INP &= ~(0x1<<5); // 上拉/下拉模式
+        ANL     0x8f,#0xdf
+//  540   P2INP &= ~(0x1<<5); // 所有端口0设置为0上拉
+        ANL     0xf7,#0xdf
+//  541   
+//  542   P0IEN |= (0x1 << 5); //  P0_5中断使能
+        ORL     0xab,#0x20
+//  543   PICTL &= ~(0x1 << 0); // 端口0设置为0表示上升沿引起中断
+        ANL     0x8c,#0xfe
+//  544   EA = 1; // 打开总中断
         SETB    0xa8.7
-//  544   IEN2 |= (0x1 << 4); // 端口1中断使能
-        ORL     0x9a,#0x10
-//  545   P1IFG = 0; // 初始化中断标志位  
-        MOV     0x8a,#0x0
-//  546 }
+//  545   P0IE = 1; // 端口0中断使能
+        SETB    0xb8.5
+//  546   P0IFG = 0; // 初始化中断标志位
+        MOV     0x89,#0x0
+//  547 }
         LJMP    ?BRET
         CFI EndBlock cfiBlock9
-        REQUIRE P1SEL
-        REQUIRE P1DIR
+        REQUIRE P0SEL
+        REQUIRE P0DIR
+        REQUIRE P0INP
         REQUIRE P2INP
-        REQUIRE P1IEN
+        REQUIRE P0IEN
         REQUIRE PICTL
         REQUIRE _A_IEN0
-        REQUIRE IEN2
-        REQUIRE P1IFG
+        REQUIRE _A_IEN1
+        REQUIRE P0IFG
 
         RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
 ??HalKeyInit?relay:
@@ -1556,23 +1539,20 @@ InitCoinInterrupt:
         DC24    InitCoinInterrupt
 
         END
-//  547 
 //  548 
 //  549 
 //  550 
-//  551 /**************************************************************************************************
-//  552 **************************************************************************************************/
-//  553 
-//  554 
-//  555 
+//  551 
+//  552 /**************************************************************************************************
+//  553 **************************************************************************************************/
 // 
-// 405 bytes in segment BANKED_CODE
+// 407 bytes in segment BANKED_CODE
 //  54 bytes in segment BANK_RELAYS
-//  19 bytes in segment SFR_AN
+//  16 bytes in segment SFR_AN
 //   5 bytes in segment XDATA_Z
 // 
-// 459 bytes of CODE  memory
-//   0 bytes of DATA  memory (+ 19 bytes shared)
+// 461 bytes of CODE  memory
+//   0 bytes of DATA  memory (+ 16 bytes shared)
 //   5 bytes of XDATA memory
 //
 //Errors: none

@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         30/May/2019  09:42:48 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         10/Jun/2019  11:30:40 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -15,12 +15,12 @@
 #                          .1a\Projects\zstack\Samples\SampleApp\CC2530DB\..\ #
 #                          ..\..\Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ      #
 #                          -DROOT=__near_func -DMAC_CFG_TX_DATA_MAX=3         #
-#                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3) -f          #
-#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
-#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
-#                          ..\Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO       #
-#                          -DSECURE=0 -DZG_SECURE_DYNAMIC=0 -DREFLECTOR       #
-#                          -DDEFAULT_CHANLIST=0x00000800                      #
+#                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3              #
+#                          -DLCD_SUPPORTED) -f E:\Github_Repository\zigbee-ne #
+#                          t-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl #
+#                          eApp\CC2530DB\..\..\..\Tools\CC2530DB\f8wConfig.cf #
+#                          g (-DZIGBEEPRO -DSECURE=0 -DZG_SECURE_DYNAMIC=0    #
+#                          -DREFLECTOR -DDEFAULT_CHANLIST=0x00000800          #
 #                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                       #
 #                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_MA #
 #                          SK=0x007F -DBEACON_REQUEST_DELAY=100               #
@@ -274,7 +274,12 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
     142           */
     143          
     144          #if defined( LCD_SUPPORTED )
+
+   \                                 In  segment XDATA_Z, align 1, keep-with-next
     145            uint8 MatchRsps = 0;
+   \                     MatchRsps:
+   \   000000                DS 1
+   \   000001                REQUIRE __INIT_XDATA_Z
     146          #endif
     147          
 
@@ -7659,6 +7664,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
 
      Function/Label                              Bytes
      --------------                              -----
+     MatchRsps                                      1
      zdoDiscCounter                                 1
      ZDAppNwkAddr                                   9
      zdappMgmtNwkDiscRspTransSeq                    1
@@ -7888,11 +7894,11 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
     11 bytes in segment XDATA_I
     11 bytes in segment XDATA_ID
      8 bytes in segment XDATA_ROM_C
-    54 bytes in segment XDATA_Z
+    55 bytes in segment XDATA_Z
  
  5 615 bytes of CODE  memory
      0 bytes of CONST memory (+ 8 bytes shared)
-    65 bytes of XDATA memory
+    66 bytes of XDATA memory
 
 Errors: none
 Warnings: none

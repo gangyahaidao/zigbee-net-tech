@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         30/May/2019  10:29:22 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         10/Jun/2019  14:30:45 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -44,36 +44,36 @@
 #                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100)   #
 #                          -DREJOIN_POLL_RATE=440 E:\Github_Repository\zigbee #
 #                          -net-tech\ZStack-2.5.1a\Components\hal\target\CC25 #
-#                          30EB\hal_key.c -D ZIGBEEPRO -D ZTOOL_P1 -D         #
-#                          xMT_TASK -D xMT_SYS_FUNC -D xMT_ZDO_FUNC -lC       #
+#                          30EB\hal_key.c -D NWK_AUTO_POLL -D ZIGBEEPRO -D    #
+#                          ZTOOL_P1 -D xMT_TASK -D xMT_SYS_FUNC -D            #
+#                          xMT_ZDO_FUNC -lC E:\Github_Repository\zigbee-net-t #
+#                          ech\ZStack-2.5.1a\Projects\zstack\Samples\SampleAp #
+#                          p\CC2530DB\CoordinatorEB\List\ -lA                 #
 #                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
 #                          \Projects\zstack\Samples\SampleApp\CC2530DB\Coordi #
-#                          natorEB\List\ -lA E:\Github_Repository\zigbee-net- #
-#                          tech\ZStack-2.5.1a\Projects\zstack\Samples\SampleA #
-#                          pp\CC2530DB\CoordinatorEB\List\ --diag_suppress    #
-#                          Pe001,Pa010 -o E:\Github_Repository\zigbee-net-tec #
-#                          h\ZStack-2.5.1a\Projects\zstack\Samples\SampleApp\ #
-#                          CC2530DB\CoordinatorEB\Obj\ -e --no_code_motion    #
-#                          --debug --core=plain --dptr=16,1                   #
-#                          --data_model=large --code_model=banked             #
-#                          --calling_convention=xdata_reentrant               #
-#                          --place_constants=data_rom --nr_virtual_regs 16    #
-#                          -I E:\Github_Repository\zigbee-net-tech\ZStack-2.5 #
-#                          .1a\Projects\zstack\Samples\SampleApp\CC2530DB\    #
+#                          natorEB\List\ --diag_suppress Pe001,Pa010 -o       #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\Coordi #
+#                          natorEB\Obj\ -e --no_code_motion --debug           #
+#                          --core=plain --dptr=16,1 --data_model=large        #
+#                          --code_model=banked --calling_convention=xdata_ree #
+#                          ntrant --place_constants=data_rom                  #
+#                          --nr_virtual_regs 16 -I E:\Github_Repository\zigbe #
+#                          e-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\S #
+#                          ampleApp\CC2530DB\ -I E:\Github_Repository\zigbee- #
+#                          net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sam #
+#                          pleApp\CC2530DB\..\Source\ -I                      #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\ZMain\TI2530DB\ -I E:\Github_Repository\zigbee- #
+#                          net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sam #
+#                          pleApp\CC2530DB\..\..\..\..\..\Components\hal\incl #
+#                          ude\ -I E:\Github_Repository\zigbee-net-tech\ZStac #
+#                          k-2.5.1a\Projects\zstack\Samples\SampleApp\CC2530D #
+#                          B\..\..\..\..\..\Components\hal\target\CC2530EB\   #
 #                          -I E:\Github_Repository\zigbee-net-tech\ZStack-2.5 #
 #                          .1a\Projects\zstack\Samples\SampleApp\CC2530DB\..\ #
-#                          Source\ -I E:\Github_Repository\zigbee-net-tech\ZS #
-#                          tack-2.5.1a\Projects\zstack\Samples\SampleApp\CC25 #
-#                          30DB\..\..\..\ZMain\TI2530DB\ -I                   #
-#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
-#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
-#                          ..\..\..\Components\hal\include\ -I                #
-#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
-#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
-#                          ..\..\..\Components\hal\target\CC2530EB\ -I        #
-#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
-#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
-#                          ..\..\..\Components\mac\include\ -I                #
+#                          ..\..\..\..\Components\mac\include\ -I             #
 #                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
 #                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
 #                          ..\..\..\Components\mac\high_level\ -I             #
@@ -225,11 +225,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                     P0IFG:
    \   000000                DS 1
 
-   \                                 In  segment SFR_AN, at 0x8a
-   \   unsigned char volatile __sfr P1IFG
-   \                     P1IFG:
-   \   000000                DS 1
-
    \                                 In  segment SFR_AN, at 0x8b
    \   unsigned char volatile __sfr P2IFG
    \                     P2IFG:
@@ -240,9 +235,9 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                     PICTL:
    \   000000                DS 1
 
-   \                                 In  segment SFR_AN, at 0x8d
-   \   unsigned char volatile __sfr P1IEN
-   \                     P1IEN:
+   \                                 In  segment SFR_AN, at 0x8f
+   \   unsigned char volatile __sfr P0INP
+   \                     P0INP:
    \   000000                DS 1
 
    \                                 In  segment SFR_AN, at 0x9a
@@ -280,11 +275,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                     P0SEL:
    \   000000                DS 1
 
-   \                                 In  segment SFR_AN, at 0xf4
-   \   unsigned char volatile __sfr P1SEL
-   \                     P1SEL:
-   \   000000                DS 1
-
    \                                 In  segment SFR_AN, at 0xf5
    \   unsigned char volatile __sfr P2SEL
    \                     P2SEL:
@@ -298,11 +288,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                                 In  segment SFR_AN, at 0xfd
    \   unsigned char volatile __sfr P0DIR
    \                     P0DIR:
-   \   000000                DS 1
-
-   \                                 In  segment SFR_AN, at 0xfe
-   \   unsigned char volatile __sfr P1DIR
-   \                     P1DIR:
    \   000000                DS 1
 
    \                                 In  segment SFR_AN, at 0xff
@@ -1065,7 +1050,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     531          /**
     532            初始化中断引脚
     533            用于监控投币机的引脚电平变化
-    534            P0_2引脚
+    534            P0_5引脚
     535          */
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
@@ -1073,33 +1058,36 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                     InitCoinInterrupt:
    \   000000                ; Saved register size: 0
    \   000000                ; Auto size: 0
-    537            P1SEL &= ~(0x1 << 2); // P1_2 设置为一般功能IO口
-   \   000000   53F4FB       ANL     0xf4,#0xfb
-    538            P1DIR &= ~(0x1<<2);  // 设置为输入功能
-   \   000003   53FEFB       ANL     0xfe,#0xfb
-    539            P2INP &= ~(0x1<<2); // 设置为上拉
-   \   000006   53F7FB       ANL     0xf7,#0xfb
-    540            
-    541            P1IEN |= (0x1 << 2); // P1_2中断使能
-   \   000009   438D04       ORL     0x8d,#0x4
-    542            PICTL &= ~(0x1 << 1); // 设置为0表示上升沿引起中断
-   \   00000C   538CFD       ANL     0x8c,#0xfd
-    543            EA = 1; // 打开总中断
-   \   00000F   D2AF         SETB    0xa8.7
-    544            IEN2 |= (0x1 << 4); // 端口1中断使能
-   \   000011   439A10       ORL     0x9a,#0x10
-    545            P1IFG = 0; // 初始化中断标志位  
-   \   000014   758A00       MOV     0x8a,#0x0
-    546          }
-   \   000017   02....       LJMP    ?BRET
-   \   00001A                REQUIRE P1SEL
-   \   00001A                REQUIRE P1DIR
-   \   00001A                REQUIRE P2INP
-   \   00001A                REQUIRE P1IEN
-   \   00001A                REQUIRE PICTL
-   \   00001A                REQUIRE _A_IEN0
-   \   00001A                REQUIRE IEN2
-   \   00001A                REQUIRE P1IFG
+    537            P0SEL &= ~(0x1 << 5); // P0_5 设置为0一般功能IO口，通用IO
+   \   000000   53F3DF       ANL     0xf3,#0xdf
+    538            P0DIR &= ~(0x1<<5);  // 设置为输入功能
+   \   000003   53FDDF       ANL     0xfd,#0xdf
+    539            P0INP &= ~(0x1<<5); // 上拉/下拉模式
+   \   000006   538FDF       ANL     0x8f,#0xdf
+    540            P2INP &= ~(0x1<<5); // 所有端口0设置为0上拉
+   \   000009   53F7DF       ANL     0xf7,#0xdf
+    541            
+    542            P0IEN |= (0x1 << 5); //  P0_5中断使能
+   \   00000C   43AB20       ORL     0xab,#0x20
+    543            PICTL &= ~(0x1 << 0); // 端口0设置为0表示上升沿引起中断
+   \   00000F   538CFE       ANL     0x8c,#0xfe
+    544            EA = 1; // 打开总中断
+   \   000012   D2AF         SETB    0xa8.7
+    545            P0IE = 1; // 端口0中断使能
+   \   000014   D2BD         SETB    0xb8.5
+    546            P0IFG = 0; // 初始化中断标志位
+   \   000016   758900       MOV     0x89,#0x0
+    547          }
+   \   000019   02....       LJMP    ?BRET
+   \   00001C                REQUIRE P0SEL
+   \   00001C                REQUIRE P0DIR
+   \   00001C                REQUIRE P0INP
+   \   00001C                REQUIRE P2INP
+   \   00001C                REQUIRE P0IEN
+   \   00001C                REQUIRE PICTL
+   \   00001C                REQUIRE _A_IEN0
+   \   00001C                REQUIRE _A_IEN1
+   \   00001C                REQUIRE P0IFG
 
    \                                 In  segment BANK_RELAYS, align 1
    \                     ??HalKeyInit?relay:
@@ -1145,15 +1133,12 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                     ??InitCoinInterrupt?relay:
    \   000000   12....       LCALL   ?BDISPATCH
    \   000003   ......       DC24    InitCoinInterrupt
-    547          
     548          
     549          
     550          
-    551          /**************************************************************************************************
-    552          **************************************************************************************************/
-    553          
-    554          
-    555          
+    551          
+    552          /**************************************************************************************************
+    553          **************************************************************************************************/
 
    Maximum stack usage in bytes:
 
@@ -1181,10 +1166,9 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
      --------------                 -----
      _A_P0                             1
      P0IFG                             1
-     P1IFG                             1
      P2IFG                             1
      PICTL                             1
-     P1IEN                             1
+     P0INP                             1
      IEN2                              1
      _A_P2                             1
      _A_IEN0                           1
@@ -1192,11 +1176,9 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
      P2IEN                             1
      _A_IEN1                           1
      P0SEL                             1
-     P1SEL                             1
      P2SEL                             1
      P2INP                             1
      P0DIR                             1
-     P1DIR                             1
      P2DIR                             1
      halKeySavedKeys                   1
      pHalKeyProcessFunction            2
@@ -1211,7 +1193,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
      halProcessKeyInterrupt           48
      HalKeyEnterSleep                  3
      HalKeyExitSleep                   9
-     InitCoinInterrupt                26
+     InitCoinInterrupt                28
      ??HalKeyInit?relay                6
      ??HalKeyConfig?relay              6
      ??HalKeyRead?relay                6
@@ -1223,13 +1205,13 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
      ??InitCoinInterrupt?relay         6
 
  
- 405 bytes in segment BANKED_CODE
+ 407 bytes in segment BANKED_CODE
   54 bytes in segment BANK_RELAYS
-  19 bytes in segment SFR_AN
+  16 bytes in segment SFR_AN
    5 bytes in segment XDATA_Z
  
- 459 bytes of CODE  memory
-   0 bytes of DATA  memory (+ 19 bytes shared)
+ 461 bytes of CODE  memory
+   0 bytes of DATA  memory (+ 16 bytes shared)
    5 bytes of XDATA memory
 
 Errors: none

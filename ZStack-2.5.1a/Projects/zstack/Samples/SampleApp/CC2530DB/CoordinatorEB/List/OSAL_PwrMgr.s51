@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        30/May/2019  10:29:32 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        10/Jun/2019  10:12:16 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -44,14 +44,14 @@
 //                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100)  /
 //                          -DREJOIN_POLL_RATE=440 E:\Github_Repository\zigbe /
 //                          e-net-tech\ZStack-2.5.1a\Components\osal\common\O /
-//                          SAL_PwrMgr.c -D ZIGBEEPRO -D ZTOOL_P1 -D          /
-//                          xMT_TASK -D xMT_SYS_FUNC -D xMT_ZDO_FUNC -lC      /
+//                          SAL_PwrMgr.c -D NWK_AUTO_POLL -D ZIGBEEPRO -D     /
+//                          ZTOOL_P1 -D xMT_TASK -D xMT_SYS_FUNC -D           /
+//                          xMT_ZDO_FUNC -lC E:\Github_Repository\zigbee-net- /
+//                          tech\ZStack-2.5.1a\Projects\zstack\Samples\Sample /
+//                          App\CC2530DB\CoordinatorEB\List\ -lA              /
 //                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
 //                          a\Projects\zstack\Samples\SampleApp\CC2530DB\Coor /
-//                          dinatorEB\List\ -lA E:\Github_Repository\zigbee-n /
-//                          et-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sam /
-//                          pleApp\CC2530DB\CoordinatorEB\List\               /
-//                          --diag_suppress Pe001,Pa010 -o                    /
+//                          dinatorEB\List\ --diag_suppress Pe001,Pa010 -o    /
 //                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
 //                          a\Projects\zstack\Samples\SampleApp\CC2530DB\Coor /
 //                          dinatorEB\Obj\ -e --no_code_motion --debug        /

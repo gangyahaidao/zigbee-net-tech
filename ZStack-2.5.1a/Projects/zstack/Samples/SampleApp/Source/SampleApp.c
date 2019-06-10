@@ -51,6 +51,15 @@ SW1:  Sends a flash command to all devices in Group 1.
 SW2:  Adds/Removes (toggles) this device in and out
 of Group 1.  This will enable and disable the
 reception of the flash command.
+**************************************************************************************************/
+
+/*********************************************************************
+需要修改的文件包含功能如下：
+ZMain/ZMain.c是主函数
+HAL/hal_drivers.c进行外部中断的初始化
+MT/MT_UART.c中进行串口消息的接收
+SampleApp.c中定义中断响应函数，以及事件消息处理函数等
+SingleLinkedList.c中定义了单链表的实现
 *********************************************************************/
 
 /*********************************************************************
@@ -82,8 +91,8 @@ reception of the flash command.
 /*********************************************************************
 * MACROS
 */
-#define COIN_PIN P0_2            //定义P0.2口为中断方式接收投币器信号引脚
-#define SIMULATE_PIN P0_5        //定义P0.5口为替换投币器模拟信号发生引脚
+#define COIN_PIN P0_5            //定义P0.5口为中断方式接收投币器信号引脚
+#define SIMULATE_PIN P0_7        //定义P0.7口为替换投币器模拟信号发生引脚
 #define UART0        0x00
 
 // This list should be filled with Application specific Cluster IDs.
@@ -144,21 +153,24 @@ void SampleApp_SendPeriodicMessage( int8 whichKey );
 void SampleApp_SendHeartBeatMessageCoor(void);
 void SampleApp_SendHeartBeatMessageEnd(void);
 void printAddrInfoHex(uint8* buf, uint8 dataLen);
+void convertHexToStr(uint16 addr, uint8 lcdLineNum);
 
 #ifndef ZDO_COORDINATOR
 int8 NeedCoinDelivered = 0; // 定义终端需要处理的投币个数
 #endif
 
 /**
-  P1端口中断处理函数
+  终端设备P1端口中断处理函数，用来接收投币器的信号
 */
-HAL_ISR_FUNCTION( coinPort1Isr, P1INT_VECTOR ) // P1_2配置为投币器电平变化中断引脚，在HAL/Common/hal_drivers.c中进行的引脚初始化
+#ifndef ZDO_COORDINATOR
+HAL_ISR_FUNCTION( coinPort1Isr, P0INT_VECTOR ) // P1_2配置为投币器电平变化中断引脚，在HAL/Common/hal_drivers.c中进行的引脚初始化
 {
   // ???????????????????????????????终端操作
   myprintf("P0 interrupt\n");
-  P1IFG = 0;       //清中断标志
-  P1IF = 0;        //清中断标志
+  P0IFG = 0;       //清中断标志
+  P0IF = 0;        //清中断标志
 }
+#endif
 
 /**
 * 自定义任务初始化函数
@@ -171,8 +183,8 @@ void SampleApp_Init( uint8 task_id )
   SampleApp_NwkState = DEV_INIT;
   SampleApp_TransID = 0;
   
-  P0SEL &= ~0x20;         //设置P0.5口为普通IO
-  P0DIR |= 0x20;          //设置P0.5口为输出
+  P0SEL &= ~(0x01 << 7);         //设置P0.7口为普通IO
+  P0DIR |= (0x01 << 7);          //设置P0.7口为输出
   SIMULATE_PIN = 0;       // 投币器信号模拟输出引脚
   
 #if defined ( BUILD_ALL_DEVICES )
@@ -212,7 +224,7 @@ void SampleApp_Init( uint8 task_id )
   // 协调器单播发送到指定地址的终端上  
   EndPoint_DstAddr.addrMode = (afAddrMode_t)Addr16Bit;
   EndPoint_DstAddr.endPoint = SAMPLEAPP_ENDPOINT;
-  EndPoint_DstAddr.addr.shortAddr = 0x00; // 在发送的时候修改终端地址    
+  EndPoint_DstAddr.addr.shortAddr = 0x00; // 在发送的时候动态修改终端地址
   
   // Fill out the endpoint description.
   SampleApp_epDesc.endPoint = SAMPLEAPP_ENDPOINT; // 端点号
@@ -232,12 +244,15 @@ void SampleApp_Init( uint8 task_id )
   // 初始化串口
   MT_UartInit();                    //串口初始化
   MT_UartRegisterTaskID(task_id);   //注册串口任务
+  
+#ifdef ZDO_COORDINATOR  
   myprintf("UartInit OK\n");
   
   int ret = InitList_L(&LL); // 单链表初始化
   if(ret == OVERFLOW) {
     myprintf("InitList_L OVERFLOW\n");
   }
+#endif  
 }
 
 /*********************************************************************
@@ -265,7 +280,7 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
   
   if ( events & SYS_EVENT_MSG )
   {
-    MSGpkt = (afIncomingMSGPacket_t *)osal_msg_receive( SampleApp_TaskID ); // 接收一个用户自定义任务的消息
+    MSGpkt = (afIncomingMSGPacket_t *)osal_msg_receive( SampleApp_TaskID );
     uint8 coodStarted[3] = {'#', 0x45, '@'};
     while ( MSGpkt )
     {      
@@ -308,14 +323,15 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
             myprintf("COORD device started\n");
             // 向上位机发送已经启动消息
             mySendByteBuf(coodStarted, 3);
+            osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SEND_PERIODIC_MSG_EVT, SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT ); // 开启定时器
           } else if(SampleApp_NwkState == DEV_ROUTER) {
             myprintf("ROUTER device started\n");
           } else if(SampleApp_NwkState == DEV_END_DEVICE) {
             myprintf("END device started\n");            
             AfSendAddrInfo(0x71); // 向协调器发送入网消息
             HalLedBlink(HAL_LED_1, 1, 50, 500);
+            osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SEND_PERIODIC_MSG_EVT, SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT ); // 开启定时器
           }
-          osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SEND_PERIODIC_MSG_EVT, SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT ); // 开启定时器
           break;
           
         default:
@@ -414,6 +430,7 @@ void SampleApp_HandleKeys( uint8 shift, uint8 keys )
 * @return  none
 */
 #define INIT_LEFT_SEC 5
+uint16 recvTestMsgCount = 0;
 void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
 {
   uint8 data;
@@ -462,6 +479,9 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
         osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SIMULATE_COIN_MSG_EVT, 10); // 产生定时器事件
       } else if(cmd == 0x31 && pkt->cmd.Data[3] == '@') { // LED2闪灯测试命令
         HalLedBlink(HAL_LED_2, 2, 25, 500);
+        recvTestMsgCount++;
+        HalLcdWriteString("Recv:", HAL_LCD_LINE_5);
+        convertHexToStr(recvTestMsgCount, HAL_LCD_LINE_6);
       }
     }        
 #endif    
@@ -498,6 +518,7 @@ void SampleApp_SendPeriodicMessage( int8 key )
 /**
   协调器心跳功能函数，使用串口向树莓派发送心跳信息
 */
+uint16 totalSendTestCount = 0;
 void SampleApp_SendHeartBeatMessageCoor(void) {
   // 遍历终端列表，将所有节点剩余时间-1，如果小于0，则置0
   uint8 heartBeatBuf[3] = {'#', 0x46, '@'};
@@ -505,6 +526,11 @@ void SampleApp_SendHeartBeatMessageCoor(void) {
   decAllListEPLeftSec(LL); // 将终端列表中元素在线时长-1，如果检测到超时则将IEEE发送到上位机
   mySendByteBuf(heartBeatBuf, 3);
   HalLedBlink(HAL_LED_1, 1, 50, 500);
+  
+  totalSendTestCount++;
+  if(totalSendTestCount % 2 == 0) {
+    SampleApp_SendPeriodicMessage(1);
+  }
 }
 
 /**
@@ -522,7 +548,7 @@ void AfSendAddrInfo(uint8 cmd) {
   uint16 shortAddr;
   uint8 strBuf[13] = {0};  
   
-  shortAddr = NLME_GetShortAddr();
+  shortAddr = NLME_GetShortAddr(); // 获取自身网络设备地址，获取父设备网络地址：uint16 NLME_GetCoordShortAddr( void );
   strBuf[0] = '#';  // 发送数据的标识，便于协调器解析
   strBuf[1] = cmd; // 消息类型标识
   strBuf[2] = HI_UINT16(shortAddr); // 存放地址的高8位
@@ -579,4 +605,27 @@ void printAddrInfoHex(uint8* buf, uint8 dataLen) {
     myprintf("0x%x,", buf[i]);
   }
   myprintf("\n");
+}
+
+/**
+  将十六进制数转变成字符
+*/
+void convertHexToStr(uint16 addr, uint8 lcdLineNum) {
+  uint8 i;
+  uint8 *xad;
+  uint8 lcd_buf[2*2+1];
+
+  // Display the extended address.
+  xad = (uint8*)&addr + 2 - 1;
+
+  for (i = 0; i < 2*2; xad--)
+  {
+    uint8 ch;
+    ch = (*xad >> 4) & 0x0F;
+    lcd_buf[i++] = ch + (( ch < 10 ) ? '0' : '7'); // +7可以转变成大写字符ABCDEF
+    ch = *xad & 0x0F;
+    lcd_buf[i++] = ch + (( ch < 10 ) ? '0' : '7');
+  }
+  lcd_buf[2*2] = '\0';
+  HalLcdWriteString( (char*)lcd_buf, lcdLineNum);
 }

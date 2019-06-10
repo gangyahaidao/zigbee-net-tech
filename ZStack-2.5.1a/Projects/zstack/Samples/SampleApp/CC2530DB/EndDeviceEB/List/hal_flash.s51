@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        28/May/2019  18:18:06 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        10/Jun/2019  11:30:46 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -15,11 +15,12 @@
 //                          5.1a\Projects\zstack\Samples\SampleApp\CC2530DB\. /
 //                          .\..\..\Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ   /
 //                          -DROOT=__near_func -DMAC_CFG_TX_DATA_MAX=3        /
-//                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3) -f         /
-//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
-//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
-//                          .\..\Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO    /
-//                          -DSECURE=0 -DZG_SECURE_DYNAMIC=0 -DREFLECTOR      /
+//                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3             /
+//                          -DLCD_SUPPORTED) -f E:\Github_Repository\zigbee-n /
+//                          et-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sam /
+//                          pleApp\CC2530DB\..\..\..\Tools\CC2530DB\f8wConfig /
+//                          .cfg (-DZIGBEEPRO -DSECURE=0                      /
+//                          -DZG_SECURE_DYNAMIC=0 -DREFLECTOR                 /
 //                          -DDEFAULT_CHANLIST=0x00000800                     /
 //                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                      /
 //                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_M /

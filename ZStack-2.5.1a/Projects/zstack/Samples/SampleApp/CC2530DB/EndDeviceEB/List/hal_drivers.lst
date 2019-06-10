@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         30/May/2019  09:42:48 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         10/Jun/2019  11:30:46 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -15,12 +15,12 @@
 #                          .1a\Projects\zstack\Samples\SampleApp\CC2530DB\..\ #
 #                          ..\..\Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ      #
 #                          -DROOT=__near_func -DMAC_CFG_TX_DATA_MAX=3         #
-#                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3) -f          #
-#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
-#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
-#                          ..\Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO       #
-#                          -DSECURE=0 -DZG_SECURE_DYNAMIC=0 -DREFLECTOR       #
-#                          -DDEFAULT_CHANLIST=0x00000800                      #
+#                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3              #
+#                          -DLCD_SUPPORTED) -f E:\Github_Repository\zigbee-ne #
+#                          t-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl #
+#                          eApp\CC2530DB\..\..\..\Tools\CC2530DB\f8wConfig.cf #
+#                          g (-DZIGBEEPRO -DSECURE=0 -DZG_SECURE_DYNAMIC=0    #
+#                          -DREFLECTOR -DDEFAULT_CHANLIST=0x00000800          #
 #                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                       #
 #                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_MA #
 #                          SK=0x007F -DBEACON_REQUEST_DELAY=100               #
@@ -352,29 +352,31 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
     176          #if (defined HAL_HID) && (HAL_HID == TRUE)
     177            usbHidInit();
     178          #endif
-    179            
-    180            InitCoinInterrupt();
+    179          
+    180          #ifndef ZDO_COORDINATOR
+    181            InitCoinInterrupt();
    \   000019                ; Setup parameters for call to function InitCoinInterrupt
    \   000019   12....       LCALL   ??InitCoinInterrupt?relay
-    181          }
+    182          #endif
+    183          }
    \   00001C   80..         SJMP    ?Subroutine0
-    182          
-    183          
-    184          /**************************************************************************************************
-    185           * @fn      Hal_ProcessEvent
-    186           *
-    187           * @brief   Hal Process Event
+    184          
+    185          
+    186          /**************************************************************************************************
+    187           * @fn      Hal_ProcessEvent
     188           *
-    189           * @param   task_id - Hal TaskId
-    190           *          events - events
-    191           *
-    192           * @return  None
-    193           **************************************************************************************************/
+    189           * @brief   Hal Process Event
+    190           *
+    191           * @param   task_id - Hal TaskId
+    192           *          events - events
+    193           *
+    194           * @return  None
+    195           **************************************************************************************************/
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    194          uint16 Hal_ProcessEvent( uint8 task_id, uint16 events )
+    196          uint16 Hal_ProcessEvent( uint8 task_id, uint16 events )
    \                     Hal_ProcessEvent:
-    195          {
+    197          {
    \   000000   74F6         MOV     A,#-0xa
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 10
@@ -383,40 +385,40 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
    \   000006   FE           MOV     R6,A
    \   000007   EB           MOV     A,R3
    \   000008   FF           MOV     R7,A
-    196            uint8 *msgPtr;
-    197            
-    198            (void)task_id;  // Intentionally unreferenced parameter
-    199          
-    200            if ( events & SYS_EVENT_MSG )
+    198            uint8 *msgPtr;
+    199            
+    200            (void)task_id;  // Intentionally unreferenced parameter
+    201          
+    202            if ( events & SYS_EVENT_MSG )
    \   000009   5480         ANL     A,#0x80
    \   00000B   6019         JZ      ??Hal_ProcessEvent_0
-    201            {
-    202              msgPtr = osal_msg_receive(Hal_TaskID);
+    203            {
+    204              msgPtr = osal_msg_receive(Hal_TaskID);
    \   00000D                ; Setup parameters for call to function osal_msg_receive
    \   00000D   8003         SJMP    ??Hal_ProcessEvent_1
-    203          
-    204              while (msgPtr)
-    205              {
-    206                /* Do something here - for now, just deallocate the msg and move on */
-    207          
-    208                /* De-allocate */
-    209                osal_msg_deallocate( msgPtr );
+    205          
+    206              while (msgPtr)
+    207              {
+    208                /* Do something here - for now, just deallocate the msg and move on */
+    209          
+    210                /* De-allocate */
+    211                osal_msg_deallocate( msgPtr );
    \                     ??Hal_ProcessEvent_2:
    \   00000F                ; Setup parameters for call to function osal_msg_deallocate
    \   00000F   12....       LCALL   ??osal_msg_deallocate?relay
-    210                /* Next */
-    211                msgPtr = osal_msg_receive( Hal_TaskID );
+    212                /* Next */
+    213                msgPtr = osal_msg_receive( Hal_TaskID );
    \   000012                ; Setup parameters for call to function osal_msg_receive
    \                     ??Hal_ProcessEvent_1:
    \   000012   90....       MOV     DPTR,#Hal_TaskID
    \   000015   E0           MOVX    A,@DPTR
    \   000016   F9           MOV     R1,A
    \   000017   12....       LCALL   ??osal_msg_receive?relay
-    212              }
+    214              }
    \   00001A   EA           MOV     A,R2
    \   00001B   4B           ORL     A,R3
    \   00001C   70F1         JNZ     ??Hal_ProcessEvent_2
-    213              return events ^ SYS_EVENT_MSG;
+    215              return events ^ SYS_EVENT_MSG;
    \   00001E   EE           MOV     A,R6
    \   00001F   FA           MOV     R2,A
    \   000020   EF           MOV     A,R7
@@ -424,48 +426,48 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
    \                     ??Hal_ProcessEvent_3:
    \   000023   FB           MOV     R3,A
    \   000024   8036         SJMP    ??Hal_ProcessEvent_4
-    214            }
-    215          
-    216            if ( events & HAL_LED_BLINK_EVENT )
+    216            }
+    217          
+    218            if ( events & HAL_LED_BLINK_EVENT )
    \                     ??Hal_ProcessEvent_0:
    \   000026   EE           MOV     A,R6
    \   000027   5402         ANL     A,#0x2
    \   000029   600A         JZ      ??Hal_ProcessEvent_5
-    217            {
-    218          #if (defined (BLINK_LEDS)) && (HAL_LED == TRUE)
-    219              HalLedUpdate();
+    219            {
+    220          #if (defined (BLINK_LEDS)) && (HAL_LED == TRUE)
+    221              HalLedUpdate();
    \   00002B                ; Setup parameters for call to function HalLedUpdate
    \   00002B   12....       LCALL   ??HalLedUpdate?relay
-    220          #endif /* BLINK_LEDS && HAL_LED */
-    221              return events ^ HAL_LED_BLINK_EVENT;
+    222          #endif /* BLINK_LEDS && HAL_LED */
+    223              return events ^ HAL_LED_BLINK_EVENT;
    \   00002E   EE           MOV     A,R6
    \   00002F   6402         XRL     A,#0x2
    \                     ??Hal_ProcessEvent_6:
    \   000031   FA           MOV     R2,A
    \   000032   EF           MOV     A,R7
    \   000033   80EE         SJMP    ??Hal_ProcessEvent_3
-    222            }
-    223          
-    224            if (events & HAL_KEY_EVENT)
+    224            }
+    225          
+    226            if (events & HAL_KEY_EVENT)
    \                     ??Hal_ProcessEvent_5:
    \   000035   EE           MOV     A,R6
    \   000036   A2E0         MOV     C,0xE0 /* A   */.0
    \   000038   501E         JNC     ??Hal_ProcessEvent_7
-    225            {
-    226          
-    227          #if (defined HAL_KEY) && (HAL_KEY == TRUE)
-    228              /* Check for keys */
-    229              HalKeyPoll();
+    227            {
+    228          
+    229          #if (defined HAL_KEY) && (HAL_KEY == TRUE)
+    230              /* Check for keys */
+    231              HalKeyPoll();
    \   00003A                ; Setup parameters for call to function HalKeyPoll
    \   00003A   12....       LCALL   ??HalKeyPoll?relay
-    230          
-    231              /* if interrupt disabled, do next polling */
-    232              if (!Hal_KeyIntEnable)
+    232          
+    233              /* if interrupt disabled, do next polling */
+    234              if (!Hal_KeyIntEnable)
    \   00003D   90....       MOV     DPTR,#Hal_KeyIntEnable
    \   000040   E0           MOVX    A,@DPTR
    \   000041   7010         JNZ     ??Hal_ProcessEvent_8
-    233              {
-    234                osal_start_timerEx( Hal_TaskID, HAL_KEY_EVENT, 100);
+    235              {
+    236                osal_start_timerEx( Hal_TaskID, HAL_KEY_EVENT, 100);
    \   000043                ; Setup parameters for call to function osal_start_timerEx
    \   000043   7C64         MOV     R4,#0x64
    \   000045   7D00         MOV     R5,#0x0
@@ -475,90 +477,90 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
    \   00004E   E0           MOVX    A,@DPTR
    \   00004F   F9           MOV     R1,A
    \   000050   12....       LCALL   ??osal_start_timerEx?relay
-    235              }
-    236          #endif // HAL_KEY
-    237          
-    238              return events ^ HAL_KEY_EVENT;
+    237              }
+    238          #endif // HAL_KEY
+    239          
+    240              return events ^ HAL_KEY_EVENT;
    \                     ??Hal_ProcessEvent_8:
    \   000053   EE           MOV     A,R6
    \   000054   6401         XRL     A,#0x1
    \   000056   80D9         SJMP    ??Hal_ProcessEvent_6
-    239            }
-    240          
-    241          #ifdef POWER_SAVING
-    242            if ( events & HAL_SLEEP_TIMER_EVENT )
-    243            {
-    244              halRestoreSleepLevel();
-    245              return events ^ HAL_SLEEP_TIMER_EVENT;
-    246            }
-    247          #endif
-    248          
-    249          #ifdef CC2591_COMPRESSION_WORKAROUND
-    250            if ( events & PERIOD_RSSI_RESET_EVT )
-    251            {
-    252              macRxResetRssi();
-    253              return (events ^ PERIOD_RSSI_RESET_EVT);
-    254            }
-    255          #endif  
-    256            
-    257            /* Nothing interested, discard the message */
-    258            return 0;
+    241            }
+    242          
+    243          #ifdef POWER_SAVING
+    244            if ( events & HAL_SLEEP_TIMER_EVENT )
+    245            {
+    246              halRestoreSleepLevel();
+    247              return events ^ HAL_SLEEP_TIMER_EVENT;
+    248            }
+    249          #endif
+    250          
+    251          #ifdef CC2591_COMPRESSION_WORKAROUND
+    252            if ( events & PERIOD_RSSI_RESET_EVT )
+    253            {
+    254              macRxResetRssi();
+    255              return (events ^ PERIOD_RSSI_RESET_EVT);
+    256            }
+    257          #endif  
+    258            
+    259            /* Nothing interested, discard the message */
+    260            return 0;
    \                     ??Hal_ProcessEvent_7:
    \   000058   7A00         MOV     R2,#0x0
    \   00005A   7B00         MOV     R3,#0x0
    \                     ??Hal_ProcessEvent_4:
    \   00005C   7F02         MOV     R7,#0x2
    \   00005E   02....       LJMP    ?BANKED_LEAVE_XDATA
-    259          
-    260          }
     261          
-    262          /**************************************************************************************************
-    263           * @fn      Hal_ProcessPoll
-    264           *
-    265           * @brief   This routine will be called by OSAL to poll UART, TIMER...
+    262          }
+    263          
+    264          /**************************************************************************************************
+    265           * @fn      Hal_ProcessPoll
     266           *
-    267           * @param   task_id - Hal TaskId
+    267           * @brief   This routine will be called by OSAL to poll UART, TIMER...
     268           *
-    269           * @return  None
-    270           **************************************************************************************************/
+    269           * @param   task_id - Hal TaskId
+    270           *
+    271           * @return  None
+    272           **************************************************************************************************/
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    271          void Hal_ProcessPoll ()
+    273          void Hal_ProcessPoll ()
    \                     Hal_ProcessPoll:
-    272          {
+    274          {
    \   000000   C082         PUSH    DPL
    \   000002   C083         PUSH    DPH
    \   000004                ; Saved register size: 2
    \   000004                ; Auto size: 0
-    273          
-    274            /* Timer Poll */
-    275          #if (defined HAL_TIMER) && (HAL_TIMER == TRUE)
-    276            #error "The hal timer driver module is removed."
-    277          #endif
-    278          
-    279            /* UART Poll */
-    280          #if (defined HAL_UART) && (HAL_UART == TRUE)
-    281            HalUARTPoll();
+    275          
+    276            /* Timer Poll */
+    277          #if (defined HAL_TIMER) && (HAL_TIMER == TRUE)
+    278            #error "The hal timer driver module is removed."
+    279          #endif
+    280          
+    281            /* UART Poll */
+    282          #if (defined HAL_UART) && (HAL_UART == TRUE)
+    283            HalUARTPoll();
    \   000004                ; Setup parameters for call to function HalUARTPoll
    \   000004   12....       LCALL   ??HalUARTPoll?relay
-    282          #endif  
-    283          
-    284            /* SPI Poll */
-    285          #if (defined HAL_SPI) && (HAL_SPI == TRUE)
-    286            HalSpiPoll();
-    287          #endif
-    288          
-    289            /* HID poll */
-    290          #if (defined HAL_HID) && (HAL_HID == TRUE)
-    291            usbHidProcessEvents();
-    292          #endif
-    293            
-    294          #if defined( POWER_SAVING )
-    295            /* Allow sleep before the next OSAL event loop */
-    296            ALLOW_SLEEP_MODE();
-    297          #endif
-    298          
-    299          }
+    284          #endif  
+    285          
+    286            /* SPI Poll */
+    287          #if (defined HAL_SPI) && (HAL_SPI == TRUE)
+    288            HalSpiPoll();
+    289          #endif
+    290          
+    291            /* HID poll */
+    292          #if (defined HAL_HID) && (HAL_HID == TRUE)
+    293            usbHidProcessEvents();
+    294          #endif
+    295            
+    296          #if defined( POWER_SAVING )
+    297            /* Allow sleep before the next OSAL event loop */
+    298            ALLOW_SLEEP_MODE();
+    299          #endif
+    300          
+    301          }
    \   000007   02....       LJMP    ?Subroutine0 & 0xFFFF
 
    \                                 In  segment BANK_RELAYS, align 1
@@ -580,11 +582,11 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
    \                     ??Hal_ProcessPoll?relay:
    \   000000   12....       LCALL   ?BDISPATCH
    \   000003   ......       DC24    Hal_ProcessPoll
-    300          
-    301          
-    302          /**************************************************************************************************
-    303          **************************************************************************************************/
-    304          
+    302          
+    303          
+    304          /**************************************************************************************************
+    305          **************************************************************************************************/
+    306          
 
    Maximum stack usage in bytes:
 

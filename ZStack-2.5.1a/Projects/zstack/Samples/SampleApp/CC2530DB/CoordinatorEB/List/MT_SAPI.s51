@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        30/May/2019  10:29:31 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        10/Jun/2019  10:12:14 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -44,8 +44,8 @@
 //                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100)  /
 //                          -DREJOIN_POLL_RATE=440 E:\Github_Repository\zigbe /
 //                          e-net-tech\ZStack-2.5.1a\Components\mt\MT_SAPI.c  /
-//                          -D ZIGBEEPRO -D ZTOOL_P1 -D xMT_TASK -D           /
-//                          xMT_SYS_FUNC -D xMT_ZDO_FUNC -lC                  /
+//                          -D NWK_AUTO_POLL -D ZIGBEEPRO -D ZTOOL_P1 -D      /
+//                          xMT_TASK -D xMT_SYS_FUNC -D xMT_ZDO_FUNC -lC      /
 //                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
 //                          a\Projects\zstack\Samples\SampleApp\CC2530DB\Coor /
 //                          dinatorEB\List\ -lA E:\Github_Repository\zigbee-n /
