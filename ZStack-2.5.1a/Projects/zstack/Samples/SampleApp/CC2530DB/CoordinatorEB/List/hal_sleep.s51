@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        10/Jun/2019  10:12:19 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        14/Jun/2019  17:35:36 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -391,14 +391,10 @@
 MAC_PwrNextTimeout  SYMBOL "MAC_PwrNextTimeout"
 halAssertHandler    SYMBOL "halAssertHandler"
 MAC_PwrOffReq       SYMBOL "MAC_PwrOffReq"
-HalKeyEnterSleep    SYMBOL "HalKeyEnterSleep"
 HalLedEnterSleep    SYMBOL "HalLedEnterSleep"
 HalLedExitSleep     SYMBOL "HalLedExitSleep"
-HalKeyExitSleep     SYMBOL "HalKeyExitSleep"
 MAC_PwrOnReq        SYMBOL "MAC_PwrOnReq"
 macMcuTimer2OverflowWorkaround SYMBOL "macMcuTimer2OverflowWorkaround"
-??HalKeyEnterSleep?relay SYMBOL "?relay", HalKeyEnterSleep
-??HalKeyExitSleep?relay SYMBOL "?relay", HalKeyExitSleep
 ??HalLedEnterSleep?relay SYMBOL "?relay", HalLedEnterSleep
 ??HalLedExitSleep?relay SYMBOL "?relay", HalLedExitSleep
 ??MAC_PwrNextTimeout?relay SYMBOL "?relay", MAC_PwrNextTimeout
@@ -442,13 +438,6 @@ halSleepTimerIsr    SYMBOL "halSleepTimerIsr"
         ARGFRAME XSTACK, 16, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalKeyEnterSleep
-        FUNCTION HalKeyEnterSleep,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 16, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         EXTERN HalLedEnterSleep
         FUNCTION HalLedEnterSleep,0202H
         ARGFRAME ISTACK, 0, STACK
@@ -458,13 +447,6 @@ halSleepTimerIsr    SYMBOL "halSleepTimerIsr"
         ARGFRAME DOVERLAY, 0, STATIC
         EXTERN HalLedExitSleep
         FUNCTION HalLedExitSleep,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 16, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalKeyExitSleep
-        FUNCTION HalKeyExitSleep,0202H
         ARGFRAME ISTACK, 0, STACK
         ARGFRAME PSTACK, 0, STACK
         ARGFRAME XSTACK, 16, STACK
@@ -484,10 +466,6 @@ halSleepTimerIsr    SYMBOL "halSleepTimerIsr"
         ARGFRAME XSTACK, 16, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN ??HalKeyEnterSleep?relay
-        FUNCTION ??HalKeyEnterSleep?relay,00H
-        EXTERN ??HalKeyExitSleep?relay
-        FUNCTION ??HalKeyExitSleep?relay,00H
         EXTERN ??HalLedEnterSleep?relay
         FUNCTION ??HalLedEnterSleep?relay,00H
         EXTERN ??HalLedExitSleep?relay
@@ -966,17 +944,6 @@ halSleep:
         ARGFRAME XSTACK, 16, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL halSleep, HalKeyEnterSleep
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 16, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 16, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL halSleep, HalLedEnterSleep
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -1022,17 +989,6 @@ halSleep:
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL halSleep, HalLedExitSleep
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 16, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 16, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL halSleep, HalKeyExitSleep
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
         LOCFRAME XSTACK, 16, STACK
@@ -1212,8 +1168,7 @@ halSleep:
         MOV     R1,#0x2
         LCALL   ??MAC_PwrOffReq?relay
         MOV     A,R1
-        JZ      $+5
-        LJMP    ??halSleep_5 & 0xFFFF
+        JNZ     ??halSleep_5
 //  327     {
 //  328       /* The PCON value is not zero. There is no interrupt overriding the 
 //  329        * sleep decision. Also, the radio granted the sleep request.
@@ -1222,8 +1177,6 @@ halSleep:
 //  332 #if ((defined HAL_KEY) && (HAL_KEY == TRUE))
 //  333       /* get peripherals ready for sleep */
 //  334       HalKeyEnterSleep();
-        ; Setup parameters for call to function HalKeyEnterSleep
-        LCALL   ??HalKeyEnterSleep?relay
 //  335 #endif
 //  336 
 //  337 #ifdef HAL_SLEEP_DEBUG_LED
@@ -1360,8 +1313,6 @@ halSleep:
 //  409 #if ((defined HAL_KEY) && (HAL_KEY == TRUE))
 //  410       /* handle peripherals */
 //  411       (void)HalKeyExitSleep();
-        ; Setup parameters for call to function HalKeyExitSleep
-        LCALL   ??HalKeyExitSleep?relay
 //  412 #endif
 //  413 
 //  414       /* power on the MAC; blocks until completion */
@@ -1977,7 +1928,7 @@ __Constant_ffffffe9:
         END
 //  555 
 // 
-// 487 bytes in segment BANKED_CODE
+// 478 bytes in segment BANKED_CODE
 //  36 bytes in segment BANK_RELAYS
 //   1 byte  in segment DATA_I
 //   1 byte  in segment DATA_ID
@@ -1990,7 +1941,7 @@ __Constant_ffffffe9:
 //  32 bytes in segment XDATA_ROM_C
 //   1 byte  in segment XDATA_Z
 // 
-// 561 bytes of CODE  memory (+  3 bytes shared)
+// 552 bytes of CODE  memory (+  3 bytes shared)
 //   0 bytes of CONST memory (+ 32 bytes shared)
 //   1 byte  of DATA  memory (+ 10 bytes shared)
 //   5 bytes of XDATA memory

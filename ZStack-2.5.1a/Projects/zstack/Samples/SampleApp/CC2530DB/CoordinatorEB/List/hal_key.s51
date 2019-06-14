@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        14/Jun/2019  11:09:59 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        14/Jun/2019  17:35:46 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -147,19 +147,11 @@
         RSEG PSTACK:XDATA:NOROOT(0)
         RSEG XSTACK:XDATA:NOROOT(0)
 
-        EXTERN ?BANKED_ENTER_XDATA
-        EXTERN ?BANKED_LEAVE_XDATA
         EXTERN ?BDISPATCH
         EXTERN ?BRET
-        EXTERN ?CALL_IND
-        EXTERN __INIT_XDATA_Z
 
         PUBLIC ??HalKeyConfig?relay
         FUNCTION ??HalKeyConfig?relay,0203H
-        PUBLIC ??HalKeyEnterSleep?relay
-        FUNCTION ??HalKeyEnterSleep?relay,0203H
-        PUBLIC ??HalKeyExitSleep?relay
-        FUNCTION ??HalKeyExitSleep?relay,0203H
         PUBLIC ??HalKeyInit?relay
         FUNCTION ??HalKeyInit?relay,0203H
         PUBLIC ??HalKeyPoll?relay
@@ -168,36 +160,18 @@
         FUNCTION ??HalKeyRead?relay,0203H
         PUBLIC ??InitCoinInterrupt?relay
         FUNCTION ??InitCoinInterrupt?relay,0203H
-        PUBLIC ??halGetJoyKeyInput?relay
-        FUNCTION ??halGetJoyKeyInput?relay,0203H
-        PUBLIC ??halProcessKeyInterrupt?relay
-        FUNCTION ??halProcessKeyInterrupt?relay,0203H
         PUBLIC HalKeyConfig
-        FUNCTION HalKeyConfig,021203H
+        FUNCTION HalKeyConfig,0203H
         ARGFRAME XSTACK, 0, STACK
-        LOCFRAME XSTACK, 9, STACK
-        PUBLIC HalKeyEnterSleep
-        FUNCTION HalKeyEnterSleep,0203H
-        ARGFRAME XSTACK, 0, STACK
-        PUBLIC HalKeyExitSleep
-        FUNCTION HalKeyExitSleep,021203H
-        ARGFRAME XSTACK, 0, STACK
-        LOCFRAME ISTACK, 2, STACK
         PUBLIC HalKeyInit
         FUNCTION HalKeyInit,0203H
         ARGFRAME XSTACK, 0, STACK
-        LOCFRAME ISTACK, 2, STACK
         PUBLIC HalKeyPoll
         FUNCTION HalKeyPoll,0203H
         ARGFRAME XSTACK, 0, STACK
-        LOCFRAME ISTACK, 2, STACK
         PUBLIC HalKeyRead
         FUNCTION HalKeyRead,0203H
         ARGFRAME XSTACK, 0, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        PUBLIC Hal_KeyIntEnable
-        PUBWEAK IEN2
         PUBLIC InitCoinInterrupt
         FUNCTION InitCoinInterrupt,0203H
         ARGFRAME XSTACK, 0, STACK
@@ -206,24 +180,10 @@
         PUBWEAK P0IFG
         PUBWEAK P0INP
         PUBWEAK P0SEL
-        PUBWEAK P2DIR
-        PUBWEAK P2IEN
-        PUBWEAK P2IFG
         PUBWEAK P2INP
-        PUBWEAK P2SEL
         PUBWEAK PICTL
         PUBWEAK _A_IEN0
         PUBWEAK _A_IEN1
-        PUBWEAK _A_P0
-        PUBWEAK _A_P2
-        PUBLIC halGetJoyKeyInput
-        FUNCTION halGetJoyKeyInput,021203H
-        ARGFRAME XSTACK, 0, STACK
-        LOCFRAME XSTACK, 9, STACK
-        PUBLIC halProcessKeyInterrupt
-        FUNCTION halProcessKeyInterrupt,021203H
-        ARGFRAME XSTACK, 0, STACK
-        LOCFRAME ISTACK, 2, STACK
         
         CFI Names cfiNames0
         CFI StackFrame CFA_SP SP IDATA
@@ -313,18 +273,8 @@
         CFI ?RET_LOW Frame(CFA_SP, 1)
         CFI EndCommon cfiCommon0
         
-osal_stop_timerEx   SYMBOL "osal_stop_timerEx"
-osal_start_timerEx  SYMBOL "osal_start_timerEx"
-HalAdcRead          SYMBOL "HalAdcRead"
-??HalAdcRead?relay  SYMBOL "?relay", HalAdcRead
-??osal_start_timerEx?relay SYMBOL "?relay", osal_start_timerEx
-??osal_stop_timerEx?relay SYMBOL "?relay", osal_stop_timerEx
 HalKeyConfig        SYMBOL "HalKeyConfig"
 ??HalKeyConfig?relay SYMBOL "?relay", HalKeyConfig
-HalKeyEnterSleep    SYMBOL "HalKeyEnterSleep"
-??HalKeyEnterSleep?relay SYMBOL "?relay", HalKeyEnterSleep
-HalKeyExitSleep     SYMBOL "HalKeyExitSleep"
-??HalKeyExitSleep?relay SYMBOL "?relay", HalKeyExitSleep
 HalKeyInit          SYMBOL "HalKeyInit"
 ??HalKeyInit?relay  SYMBOL "?relay", HalKeyInit
 HalKeyPoll          SYMBOL "HalKeyPoll"
@@ -333,39 +283,6 @@ HalKeyRead          SYMBOL "HalKeyRead"
 ??HalKeyRead?relay  SYMBOL "?relay", HalKeyRead
 InitCoinInterrupt   SYMBOL "InitCoinInterrupt"
 ??InitCoinInterrupt?relay SYMBOL "?relay", InitCoinInterrupt
-halGetJoyKeyInput   SYMBOL "halGetJoyKeyInput"
-??halGetJoyKeyInput?relay SYMBOL "?relay", halGetJoyKeyInput
-halProcessKeyInterrupt SYMBOL "halProcessKeyInterrupt"
-??halProcessKeyInterrupt?relay SYMBOL "?relay", halProcessKeyInterrupt
-
-        EXTERN osal_stop_timerEx
-        FUNCTION osal_stop_timerEx,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 9, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN osal_start_timerEx
-        FUNCTION osal_start_timerEx,0202H
-        ARGFRAME ISTACK, 2, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 9, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalAdcRead
-        FUNCTION HalAdcRead,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 9, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN ??HalAdcRead?relay
-        FUNCTION ??HalAdcRead?relay,00H
-        EXTERN ??osal_start_timerEx?relay
-        FUNCTION ??osal_start_timerEx?relay,00H
-        EXTERN ??osal_stop_timerEx?relay
-        FUNCTION ??osal_stop_timerEx?relay,00H
-        EXTERN Hal_TaskID
 
 // E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530EB\hal_key.c
 //    1 /**************************************************************************************************
@@ -452,21 +369,9 @@ halProcessKeyInterrupt SYMBOL "halProcessKeyInterrupt"
 //   82  **************************************************************************************************/
 //   83 #include "hal_mcu.h"
 
-        ASEGN SFR_AN:DATA:NOROOT,080H
-// union <unnamed> volatile __sfr _A_P0
-_A_P0:
-        DATA8
-        DS 1
-
         ASEGN SFR_AN:DATA:NOROOT,089H
 // unsigned char volatile __sfr P0IFG
 P0IFG:
-        DATA8
-        DS 1
-
-        ASEGN SFR_AN:DATA:NOROOT,08bH
-// unsigned char volatile __sfr P2IFG
-P2IFG:
         DATA8
         DS 1
 
@@ -482,18 +387,6 @@ P0INP:
         DATA8
         DS 1
 
-        ASEGN SFR_AN:DATA:NOROOT,09aH
-// unsigned char volatile __sfr IEN2
-IEN2:
-        DATA8
-        DS 1
-
-        ASEGN SFR_AN:DATA:NOROOT,0a0H
-// union <unnamed> volatile __sfr _A_P2
-_A_P2:
-        DATA8
-        DS 1
-
         ASEGN SFR_AN:DATA:NOROOT,0a8H
 // union <unnamed> volatile __sfr _A_IEN0
 _A_IEN0:
@@ -503,12 +396,6 @@ _A_IEN0:
         ASEGN SFR_AN:DATA:NOROOT,0abH
 // unsigned char volatile __sfr P0IEN
 P0IEN:
-        DATA8
-        DS 1
-
-        ASEGN SFR_AN:DATA:NOROOT,0acH
-// unsigned char volatile __sfr P2IEN
-P2IEN:
         DATA8
         DS 1
 
@@ -524,12 +411,6 @@ P0SEL:
         DATA8
         DS 1
 
-        ASEGN SFR_AN:DATA:NOROOT,0f5H
-// unsigned char volatile __sfr P2SEL
-P2SEL:
-        DATA8
-        DS 1
-
         ASEGN SFR_AN:DATA:NOROOT,0f7H
 // unsigned char volatile __sfr P2INP
 P2INP:
@@ -539,12 +420,6 @@ P2INP:
         ASEGN SFR_AN:DATA:NOROOT,0fdH
 // unsigned char volatile __sfr P0DIR
 P0DIR:
-        DATA8
-        DS 1
-
-        ASEGN SFR_AN:DATA:NOROOT,0ffH
-// unsigned char volatile __sfr P2DIR
-P2DIR:
         DATA8
         DS 1
 //   84 #include "hal_defs.h"
@@ -620,34 +495,10 @@ P2DIR:
 //  154 /**************************************************************************************************
 //  155  *                                        GLOBAL VARIABLES
 //  156  **************************************************************************************************/
-
-        RSEG XDATA_Z:XDATA:NOROOT(0)
-        DATA8
 //  157 static uint8 halKeySavedKeys;     /* used to store previous key state in polling mode */
-halKeySavedKeys:
-        DS 1
-        REQUIRE __INIT_XDATA_Z
-
-        RSEG XDATA_Z:XDATA:NOROOT(0)
-        DATA16
 //  158 static halKeyCBack_t pHalKeyProcessFunction;
-pHalKeyProcessFunction:
-        DS 2
-        REQUIRE __INIT_XDATA_Z
-
-        RSEG XDATA_Z:XDATA:NOROOT(0)
-        DATA8
 //  159 static uint8 HalKeyConfigured;
-HalKeyConfigured:
-        DS 1
-        REQUIRE __INIT_XDATA_Z
-
-        RSEG XDATA_Z:XDATA:NOROOT(0)
-        DATA8
 //  160 bool Hal_KeyIntEnable;            /* interrupt enable/disable flag */
-Hal_KeyIntEnable:
-        DS 1
-        REQUIRE __INIT_XDATA_Z
 //  161 
 //  162 /**************************************************************************************************
 //  163  *                                        FUNCTIONS - Local
@@ -671,57 +522,24 @@ Hal_KeyIntEnable:
 //  181  *
 //  182  * @return  None
 //  183  **************************************************************************************************/
-
-        RSEG BANKED_CODE:CODE:NOROOT(0)
 //  184 void HalKeyInit( void )
-HalKeyInit:
-        CFI Block cfiBlock0 Using cfiCommon0
-        CFI Function HalKeyInit
-        CODE
 //  185 {
-        PUSH    DPL
-        CFI DPL0 Frame(CFA_SP, 4)
-        CFI CFA_SP SP+-4
-        PUSH    DPH
-        CFI DPH0 Frame(CFA_SP, 5)
-        CFI CFA_SP SP+-5
-        ; Saved register size: 2
-        ; Auto size: 0
 //  186   /* Initialize previous key to 0 */
 //  187   halKeySavedKeys = 0;
-        MOV     DPTR,#halKeySavedKeys
-        CLR     A
-        MOVX    @DPTR,A
 //  188 
 //  189   HAL_KEY_SW_6_SEL &= ~(HAL_KEY_SW_6_BIT);    /* Set pin function to GPIO */
-        ANL     0xf3,#0xfd
 //  190   HAL_KEY_SW_6_DIR &= ~(HAL_KEY_SW_6_BIT);    /* Set pin direction to Input */
-        ANL     0xfd,#0xfd
 //  191 
 //  192   HAL_KEY_JOY_MOVE_SEL &= ~(HAL_KEY_JOY_MOVE_BIT); /* Set pin function to GPIO */
-        ANL     0xf5,#0xfe
 //  193   HAL_KEY_JOY_MOVE_DIR &= ~(HAL_KEY_JOY_MOVE_BIT); /* Set pin direction to Input */
-        ANL     0xff,#0xfe
 //  194 
 //  195 
 //  196   /* Initialize callback function */
 //  197   pHalKeyProcessFunction  = NULL;
-        MOV     DPTR,#pHalKeyProcessFunction
-        MOVX    @DPTR,A
-        INC     DPTR
-        MOVX    @DPTR,A
 //  198 
 //  199   /* Start with key is not configured */
 //  200   HalKeyConfigured = FALSE;
-        MOV     DPTR,#HalKeyConfigured
-        MOVX    @DPTR,A
 //  201 }
-        LJMP    ?Subroutine0 & 0xFFFF
-        CFI EndBlock cfiBlock0
-        REQUIRE P0SEL
-        REQUIRE P0DIR
-        REQUIRE P2SEL
-        REQUIRE P2DIR
 //  202 
 //  203 
 //  204 /**************************************************************************************************
@@ -734,80 +552,23 @@ HalKeyInit:
 //  211  *
 //  212  * @return  None
 //  213  **************************************************************************************************/
-
-        RSEG BANKED_CODE:CODE:NOROOT(0)
 //  214 void HalKeyConfig (bool interruptEnable, halKeyCBack_t cback)
-HalKeyConfig:
-        CFI Block cfiBlock1 Using cfiCommon0
-        CFI Function HalKeyConfig
-        CODE
 //  215 {
-        FUNCALL HalKeyConfig, osal_stop_timerEx
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 9, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 9, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL HalKeyConfig, osal_start_timerEx
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 9, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 9, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        MOV     A,#-0x9
-        LCALL   ?BANKED_ENTER_XDATA
-        CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-1)))
-        CFI DPL0 load(1, XDATA, add(CFA_XSP16, literal(-2)))
-        CFI ?BRET_EXT load(1, XDATA, add(CFA_XSP16, literal(-3)))
-        CFI ?RET_HIGH load(1, XDATA, add(CFA_XSP16, literal(-4)))
-        CFI ?RET_LOW load(1, XDATA, add(CFA_XSP16, literal(-5)))
-        CFI R7 load(1, XDATA, add(CFA_XSP16, literal(-6)))
-        CFI V0 load(1, XDATA, add(CFA_XSP16, literal(-7)))
-        CFI VB load(1, XDATA, add(CFA_XSP16, literal(-8)))
-        CFI R6 load(1, XDATA, add(CFA_XSP16, literal(-9)))
-        CFI CFA_SP SP+0
-        CFI CFA_XSP16 add(XSP16, 9)
-        ; Saved register size: 9
-        ; Auto size: 0
-        MOV     A,R1
 //  216   /* Enable/Disable Interrupt or */
 //  217   Hal_KeyIntEnable = interruptEnable;
-        MOV     DPTR,#Hal_KeyIntEnable
-        MOVX    @DPTR,A
 //  218 
 //  219   /* Register the callback fucntion */
 //  220   pHalKeyProcessFunction = cback;
-        MOV     DPTR,#pHalKeyProcessFunction
-        MOV     A,R2
-        MOVX    @DPTR,A
-        INC     DPTR
-        MOV     A,R3
-        MOVX    @DPTR,A
 //  221 
 //  222   /* Determine if interrupt is enable or not */
 //  223   if (Hal_KeyIntEnable)
-        MOV     DPTR,#Hal_KeyIntEnable
-        MOVX    A,@DPTR
-        JZ      ??HalKeyConfig_0
 //  224   {
 //  225     /* Rising/Falling edge configuratinn */
 //  226 
 //  227     PICTL &= ~(HAL_KEY_SW_6_EDGEBIT);    /* Clear the edge bit */
-        ANL     0x8c,#0xfe
 //  228     /* For falling edge, the bit must be set. */
 //  229   #if (HAL_KEY_SW_6_EDGE == HAL_KEY_FALLING_EDGE)
 //  230     PICTL |= HAL_KEY_SW_6_EDGEBIT;
-        ORL     0x8c,#0x1
 //  231   #endif
 //  232 
 //  233 
@@ -817,22 +578,17 @@ HalKeyConfig:
 //  237      * - Clear any pending interrupt
 //  238      */
 //  239     HAL_KEY_SW_6_ICTL |= HAL_KEY_SW_6_ICTLBIT;
-        ORL     0xab,#0x2
 //  240     HAL_KEY_SW_6_IEN |= HAL_KEY_SW_6_IENBIT;
-        SETB    0xb8.5
 //  241     HAL_KEY_SW_6_PXIFG = ~(HAL_KEY_SW_6_BIT);
-        MOV     0x89,#-0x3
 //  242 
 //  243 
 //  244 
 //  245     /* Rising/Falling edge configuratinn */
 //  246 
 //  247     HAL_KEY_JOY_MOVE_ICTL &= ~(HAL_KEY_JOY_MOVE_EDGEBIT);    /* Clear the edge bit */
-        ANL     0xac,#0xf7
 //  248     /* For falling edge, the bit must be set. */
 //  249   #if (HAL_KEY_JOY_MOVE_EDGE == HAL_KEY_FALLING_EDGE)
 //  250     HAL_KEY_JOY_MOVE_ICTL |= HAL_KEY_JOY_MOVE_EDGEBIT;
-        ORL     0xac,#0x8
 //  251   #endif
 //  252 
 //  253 
@@ -842,68 +598,27 @@ HalKeyConfig:
 //  257      * - Clear any pending interrupt
 //  258      */
 //  259     HAL_KEY_JOY_MOVE_ICTL |= HAL_KEY_JOY_MOVE_ICTLBIT;
-        ORL     0xac,#0x1
 //  260     HAL_KEY_JOY_MOVE_IEN |= HAL_KEY_JOY_MOVE_IENBIT;
-        ORL     0x9a,#0x2
 //  261     HAL_KEY_JOY_MOVE_PXIFG = ~(HAL_KEY_JOY_MOVE_BIT);
-        MOV     0x8b,#-0x2
 //  262 
 //  263 
 //  264     /* Do this only after the hal_key is configured - to work with sleep stuff */
 //  265     if (HalKeyConfigured == TRUE)
-        MOV     DPTR,#HalKeyConfigured
-        MOVX    A,@DPTR
-        XRL     A,#0x1
-        JNZ     ??HalKeyConfig_1
 //  266     {
 //  267       osal_stop_timerEx( Hal_TaskID, HAL_KEY_EVENT);  /* Cancel polling if active */
-        ; Setup parameters for call to function osal_stop_timerEx
-        MOV     R2,#0x1
-        MOV     R3,#0x0
-        MOV     DPTR,#Hal_TaskID
-        MOVX    A,@DPTR
-        MOV     R1,A
-        LCALL   ??osal_stop_timerEx?relay
-        SJMP    ??HalKeyConfig_1
 //  268     }
 //  269   }
 //  270   else    /* Interrupts NOT enabled */
 //  271   {
 //  272     HAL_KEY_SW_6_ICTL &= ~(HAL_KEY_SW_6_ICTLBIT); /* don't generate interrupt */
-??HalKeyConfig_0:
-        ANL     0xab,#0xfd
 //  273     HAL_KEY_SW_6_IEN &= ~(HAL_KEY_SW_6_IENBIT);   /* Clear interrupt enable bit */
-        CLR     0xb8.5
 //  274 
 //  275     osal_start_timerEx (Hal_TaskID, HAL_KEY_EVENT, HAL_KEY_POLLING_VALUE);    /* Kick off polling */
-        ; Setup parameters for call to function osal_start_timerEx
-        MOV     R4,#0x64
-        MOV     R5,#0x0
-        MOV     R2,#0x1
-        MOV     R3,#0x0
-        MOV     DPTR,#Hal_TaskID
-        MOVX    A,@DPTR
-        MOV     R1,A
-        LCALL   ??osal_start_timerEx?relay
 //  276   }
 //  277 
 //  278   /* Key now is configured */
 //  279   HalKeyConfigured = TRUE;
-??HalKeyConfig_1:
-        MOV     DPTR,#HalKeyConfigured
-        MOV     A,#0x1
-        MOVX    @DPTR,A
 //  280 }
-        MOV     R7,A
-        LJMP    ?BANKED_LEAVE_XDATA
-        CFI EndBlock cfiBlock1
-        REQUIRE PICTL
-        REQUIRE P0IEN
-        REQUIRE _A_IEN1
-        REQUIRE P0IFG
-        REQUIRE P2IEN
-        REQUIRE IEN2
-        REQUIRE P2IFG
 //  281 
 //  282 
 //  283 /**************************************************************************************************
@@ -915,25 +630,13 @@ HalKeyConfig:
 //  289  *
 //  290  * @return  keys - current keys status
 //  291  **************************************************************************************************/
-
-        RSEG BANKED_CODE:CODE:NOROOT(0)
 //  292 uint8 HalKeyRead ( void )
-HalKeyRead:
-        CFI Block cfiBlock2 Using cfiCommon0
-        CFI Function HalKeyRead
-        CODE
 //  293 {
-        ; Saved register size: 0
-        ; Auto size: 0
 //  294   uint8 keys = 0;
-        MOV     R1,#0x0
 //  295 
 //  296   if (HAL_PUSH_BUTTON1())
-        MOV     C,0x80.1
-        JNC     ??HalKeyRead_0
 //  297   {
 //  298     keys |= HAL_KEY_SW_6;
-        MOV     R1,#0x20
 //  299   }
 //  300 
 //  301 /*  if ((HAL_KEY_JOY_MOVE_PORT & HAL_KEY_JOY_MOVE_BIT))  // Key is active low 
@@ -942,10 +645,6 @@ HalKeyRead:
 //  304   }
 //  305 */
 //  306   return keys;
-??HalKeyRead_0:
-        LJMP    ?BRET
-        CFI EndBlock cfiBlock2
-        REQUIRE _A_P0
 //  307 }
 //  308 
 //  309 
@@ -958,24 +657,9 @@ HalKeyRead:
 //  316  *
 //  317  * @return  None
 //  318  **************************************************************************************************/
-
-        RSEG BANKED_CODE:CODE:NOROOT(0)
 //  319 void HalKeyPoll (void)
-HalKeyPoll:
-        CFI Block cfiBlock3 Using cfiCommon0
-        CFI Function HalKeyPoll
-        CODE
 //  320 {
-        PUSH    DPL
-        CFI DPL0 Frame(CFA_SP, 4)
-        CFI CFA_SP SP+-4
-        PUSH    DPH
-        CFI DPH0 Frame(CFA_SP, 5)
-        CFI CFA_SP SP+-5
-        ; Saved register size: 2
-        ; Auto size: 0
 //  321   uint8 keys = 0;
-        MOV     R1,#0x0
 //  322 
 //  323 /* if ((HAL_KEY_JOY_MOVE_PORT & HAL_KEY_JOY_MOVE_BIT))  // Key is active HIGH 
 //  324   {
@@ -983,42 +667,23 @@ HalKeyPoll:
 //  326   }
 //  327 */
 //  328   if (!HAL_PUSH_BUTTON2())//S0
-        MOV     C,0xa0.0
-        JC      ??HalKeyPoll_0
 //  329   {
 //  330     keys |= HAL_KEY_SW_1; 
-        INC     R1
 //  331   }
 //  332   if (!HAL_PUSH_BUTTON1())//S1 
-??HalKeyPoll_0:
-        MOV     C,0x80.1
-        JC      ??HalKeyPoll_1
 //  333   {
 //  334     keys |= HAL_KEY_SW_6; 
-        MOV     A,R1
-        SETB    0xE0 /* A   */.5
-        MOV     R1,A
 //  335   }
 //  336   
 //  337   if (!Hal_KeyIntEnable)
-??HalKeyPoll_1:
-        MOV     DPTR,#Hal_KeyIntEnable
-        MOVX    A,@DPTR
-        JNZ     ??HalKeyPoll_2
 //  338   {
 //  339     if (keys == halKeySavedKeys)
-        MOV     DPTR,#halKeySavedKeys
-        MOVX    A,@DPTR
-        XRL     A,R1
-        JZ      ??HalKeyPoll_3
 //  340     {
 //  341       /* Exit - since no keys have changed */
 //  342       return;
 //  343     }
 //  344     /* Store the current keys for comparation next time */
 //  345     halKeySavedKeys = keys;
-        MOV     A,R1
-        MOVX    @DPTR,A
 //  346   }
 //  347   else
 //  348   {
@@ -1027,36 +692,9 @@ HalKeyPoll:
 //  351 
 //  352   /* Invoke Callback if new keys were depressed */
 //  353   if (keys && (pHalKeyProcessFunction))
-??HalKeyPoll_2:
-        MOV     A,R1
-        JZ      ??HalKeyPoll_3
-        MOV     DPTR,#pHalKeyProcessFunction
-        MOVX    A,@DPTR
-        MOV     R2,A
-        INC     DPTR
-        MOVX    A,@DPTR
-        MOV     R3,A
-        MOV     A,R2
-        ORL     A,R3
-        JZ      ??HalKeyPoll_3
 //  354   {
 //  355     (pHalKeyProcessFunction) (keys, HAL_KEY_STATE_NORMAL);
-        ; Setup parameters for indirect call
-        MOV     R2,#0x0
-        MOV     DPTR,#pHalKeyProcessFunction
-        MOVX    A,@DPTR
-        MOV     R0,A
-        INC     DPTR
-        MOVX    A,@DPTR
-        MOV     DPH,A
-        MOV     DPL,R0
-        LCALL   ?CALL_IND
 //  356   }
-??HalKeyPoll_3:
-        LJMP    ?Subroutine0 & 0xFFFF
-        CFI EndBlock cfiBlock3
-        REQUIRE _A_P2
-        REQUIRE _A_P0
 //  357 }
 //  358 
 //  359 /**************************************************************************************************
@@ -1068,141 +706,45 @@ HalKeyPoll:
 //  365  *
 //  366  * @return  keys - current joy key status
 //  367  **************************************************************************************************/
-
-        RSEG BANKED_CODE:CODE:NOROOT(0)
 //  368 uint8 halGetJoyKeyInput(void)
-halGetJoyKeyInput:
-        CFI Block cfiBlock4 Using cfiCommon0
-        CFI Function halGetJoyKeyInput
-        CODE
 //  369 {
-        FUNCALL halGetJoyKeyInput, HalAdcRead
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 9, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 9, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        MOV     A,#-0x9
-        LCALL   ?BANKED_ENTER_XDATA
-        CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-1)))
-        CFI DPL0 load(1, XDATA, add(CFA_XSP16, literal(-2)))
-        CFI ?BRET_EXT load(1, XDATA, add(CFA_XSP16, literal(-3)))
-        CFI ?RET_HIGH load(1, XDATA, add(CFA_XSP16, literal(-4)))
-        CFI ?RET_LOW load(1, XDATA, add(CFA_XSP16, literal(-5)))
-        CFI R7 load(1, XDATA, add(CFA_XSP16, literal(-6)))
-        CFI V0 load(1, XDATA, add(CFA_XSP16, literal(-7)))
-        CFI VB load(1, XDATA, add(CFA_XSP16, literal(-8)))
-        CFI R6 load(1, XDATA, add(CFA_XSP16, literal(-9)))
-        CFI CFA_SP SP+0
-        CFI CFA_XSP16 add(XSP16, 9)
-        ; Saved register size: 9
-        ; Auto size: 0
 //  370   /* The joystick control is encoded as an analog voltage.
 //  371    * Read the JOY_LEVEL analog value and map it to joy movement.
 //  372    */
 //  373   uint8 adc;
 //  374   uint8 ksave0 = 0;
-        MOV     R6,#0x0
 //  375   uint8 ksave1;
 //  376 
 //  377   /* Keep on reading the ADC until two consecutive key decisions are the same. */
 //  378   do
 //  379   {
 //  380     ksave1 = ksave0;    /* save previouse key reading */
-??halGetJoyKeyInput_0:
-        MOV     A,R6
-        MOV     R7,A
 //  381 
 //  382     adc = HalAdcRead (HAL_KEY_JOY_CHN, HAL_ADC_RESOLUTION_8);
-        ; Setup parameters for call to function HalAdcRead
-        MOV     R2,#0x1
-        MOV     R1,#0x6
-        LCALL   ??HalAdcRead?relay
-        MOV     A,R2
-        MOV     R0,A
 //  383 
 //  384     if ((adc >= 2) && (adc <= 38))
-        MOV     A,#-0x2
-        ADD     A,R0
-        CLR     C
-        SUBB    A,#0x25
-        JNC     ??halGetJoyKeyInput_1
 //  385     {
 //  386        ksave0 |= HAL_KEY_UP;
-        MOV     A,R6
-        SETB    0xE0 /* A   */.0
-        SJMP    ??halGetJoyKeyInput_2
 //  387     }
 //  388     else if ((adc >= 74) && (adc <= 88))
-??halGetJoyKeyInput_1:
-        MOV     A,#-0x4a
-        ADD     A,R0
-        CLR     C
-        SUBB    A,#0xf
-        JNC     ??halGetJoyKeyInput_3
 //  389     {
 //  390       ksave0 |= HAL_KEY_RIGHT;
-        MOV     A,R6
-        SETB    0xE0 /* A   */.1
-        SJMP    ??halGetJoyKeyInput_2
 //  391     }
 //  392     else if ((adc >= 60) && (adc <= 73))
-??halGetJoyKeyInput_3:
-        MOV     A,#-0x3c
-        ADD     A,R0
-        CLR     C
-        SUBB    A,#0xe
-        JNC     ??halGetJoyKeyInput_4
 //  393     {
 //  394       ksave0 |= HAL_KEY_LEFT;
-        MOV     A,R6
-        SETB    0xE0 /* A   */.3
-        SJMP    ??halGetJoyKeyInput_2
 //  395     }
 //  396     else if ((adc >= 39) && (adc <= 59))
-??halGetJoyKeyInput_4:
-        MOV     A,#-0x27
-        ADD     A,R0
-        CLR     C
-        SUBB    A,#0x15
-        JNC     ??halGetJoyKeyInput_5
 //  397     {
 //  398       ksave0 |= HAL_KEY_DOWN;
-        MOV     A,R6
-        SETB    0xE0 /* A   */.4
-        SJMP    ??halGetJoyKeyInput_2
 //  399     }
 //  400     else if ((adc >= 89) && (adc <= 100))
-??halGetJoyKeyInput_5:
-        MOV     A,#-0x59
-        ADD     A,R0
-        CLR     C
-        SUBB    A,#0xc
-        JNC     ??halGetJoyKeyInput_6
 //  401     {
 //  402       ksave0 |= HAL_KEY_CENTER;
-        MOV     A,R6
-        SETB    0xE0 /* A   */.2
-??halGetJoyKeyInput_2:
-        MOV     R6,A
 //  403     }
 //  404   } while (ksave0 != ksave1);
-??halGetJoyKeyInput_6:
-        MOV     A,R7
-        XRL     A,R6
-        JNZ     ??halGetJoyKeyInput_0
 //  405 
 //  406   return ksave0;
-        MOV     A,R6
-        MOV     R1,A
-        MOV     R7,#0x1
-        LJMP    ?BANKED_LEAVE_XDATA
-        CFI EndBlock cfiBlock4
 //  407 }
 //  408 
 //  409 
@@ -1219,100 +761,27 @@ halGetJoyKeyInput:
 //  420  *
 //  421  * @return
 //  422  **************************************************************************************************/
-
-        RSEG BANKED_CODE:CODE:NOROOT(0)
 //  423 void halProcessKeyInterrupt (void)
-halProcessKeyInterrupt:
-        CFI Block cfiBlock5 Using cfiCommon0
-        CFI Function halProcessKeyInterrupt
-        CODE
 //  424 {
-        FUNCALL halProcessKeyInterrupt, osal_start_timerEx
-        LOCFRAME ISTACK, 2, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 0, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 2, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 0, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        PUSH    DPL
-        CFI DPL0 Frame(CFA_SP, 4)
-        CFI CFA_SP SP+-4
-        PUSH    DPH
-        CFI DPH0 Frame(CFA_SP, 5)
-        CFI CFA_SP SP+-5
-        ; Saved register size: 2
-        ; Auto size: 0
 //  425   bool valid=FALSE;
-        MOV     R0,#0x0
 //  426 
 //  427   if (HAL_KEY_SW_6_PXIFG & HAL_KEY_SW_6_BIT)  /* Interrupt Flag has been set */
-        MOV     A,0x89
-        MOV     C,0xE0 /* A   */.1
-        JNC     ??halProcessKeyInterrupt_0
 //  428   {
 //  429     HAL_KEY_SW_6_PXIFG = ~(HAL_KEY_SW_6_BIT); /* Clear Interrupt Flag */
-        MOV     0x89,#-0x3
 //  430     valid = TRUE;
-        INC     R0
 //  431   }
 //  432 
 //  433   if (HAL_KEY_JOY_MOVE_PXIFG & HAL_KEY_JOY_MOVE_BIT)  /* Interrupt Flag has been set */
-??halProcessKeyInterrupt_0:
-        MOV     A,0x8b
-        MOV     C,0xE0 /* A   */.0
-        JNC     ??halProcessKeyInterrupt_1
 //  434   {
 //  435     HAL_KEY_JOY_MOVE_PXIFG = ~(HAL_KEY_JOY_MOVE_BIT); /* Clear Interrupt Flag */
-        MOV     0x8b,#-0x2
 //  436     valid = TRUE;
-        SJMP    ??halProcessKeyInterrupt_2
 //  437   }
 //  438 
 //  439   if (valid)
-??halProcessKeyInterrupt_1:
-        MOV     A,R0
-        MOV     C,0xE0 /* A   */.0
-        JNC     ??halProcessKeyInterrupt_3
 //  440   {
 //  441     osal_start_timerEx (Hal_TaskID, HAL_KEY_EVENT, HAL_KEY_DEBOUNCE_VALUE);
-??halProcessKeyInterrupt_2:
-        ; Setup parameters for call to function osal_start_timerEx
-        MOV     R4,#0x19
-        MOV     R5,#0x0
-        MOV     R2,#0x1
-        MOV     R3,#0x0
-        MOV     DPTR,#Hal_TaskID
-        MOVX    A,@DPTR
-        MOV     R1,A
-        LCALL   ??osal_start_timerEx?relay
-        CFI EndBlock cfiBlock5
 //  442   }
 //  443 }
-??halProcessKeyInterrupt_3:
-        REQUIRE ?Subroutine0
-        REQUIRE P0IFG
-        REQUIRE P2IFG
-        ; // Fall through to label ?Subroutine0
-
-        RSEG BANKED_CODE:CODE:NOROOT(0)
-?Subroutine0:
-        CFI Block cfiBlock6 Using cfiCommon0
-        CFI NoFunction
-        CFI CFA_SP SP+-5
-        CFI DPL0 Frame(CFA_SP, 4)
-        CFI DPH0 Frame(CFA_SP, 5)
-        POP     DPH
-        CFI CFA_SP SP+-4
-        CFI DPH0 SameValue
-        POP     DPL
-        CFI CFA_SP SP+-3
-        CFI DPL0 SameValue
-        LJMP    ?BRET
-        CFI EndBlock cfiBlock6
 //  444 
 //  445 /**************************************************************************************************
 //  446  * @fn      HalKeyEnterSleep
@@ -1323,19 +792,9 @@ halProcessKeyInterrupt:
 //  451  *
 //  452  * @return
 //  453  **************************************************************************************************/
-
-        RSEG BANKED_CODE:CODE:NOROOT(0)
 //  454 void HalKeyEnterSleep ( void )
-HalKeyEnterSleep:
-        CFI Block cfiBlock7 Using cfiCommon0
-        CFI Function HalKeyEnterSleep
-        CODE
 //  455 {
-        ; Saved register size: 0
-        ; Auto size: 0
 //  456 }
-        LJMP    ?BRET
-        CFI EndBlock cfiBlock7
 //  457 
 //  458 /**************************************************************************************************
 //  459  * @fn      HalKeyExitSleep
@@ -1346,39 +805,10 @@ HalKeyEnterSleep:
 //  464  *
 //  465  * @return  - return saved keys
 //  466  **************************************************************************************************/
-
-        RSEG BANKED_CODE:CODE:NOROOT(0)
 //  467 uint8 HalKeyExitSleep ( void )
-HalKeyExitSleep:
-        CFI Block cfiBlock8 Using cfiCommon0
-        CFI Function HalKeyExitSleep
-        CODE
 //  468 {
-        FUNCALL HalKeyExitSleep, HalKeyRead
-        LOCFRAME ISTACK, 2, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 0, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 2, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 0, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        PUSH    DPL
-        CFI DPL0 Frame(CFA_SP, 4)
-        CFI CFA_SP SP+-4
-        PUSH    DPH
-        CFI DPH0 Frame(CFA_SP, 5)
-        CFI CFA_SP SP+-5
-        ; Saved register size: 2
-        ; Auto size: 0
 //  469   /* Wake up and read keys */
 //  470   return ( HalKeyRead () );
-        ; Setup parameters for call to function HalKeyRead
-        LCALL   ??HalKeyRead?relay
-        SJMP    ?Subroutine0
-        CFI EndBlock cfiBlock8
 //  471 }
 //  472 
 //  473 /***************************************************************************************************
@@ -1432,10 +862,51 @@ HalKeyExitSleep:
 //  521 #else
 //  522 
 //  523 
+
+        RSEG BANKED_CODE:CODE:NOROOT(0)
 //  524 void HalKeyInit(void){}
+HalKeyInit:
+        CFI Block cfiBlock0 Using cfiCommon0
+        CFI Function HalKeyInit
+        CODE
+        ; Saved register size: 0
+        ; Auto size: 0
+        LJMP    ?BRET
+        CFI EndBlock cfiBlock0
+
+        RSEG BANKED_CODE:CODE:NOROOT(0)
 //  525 void HalKeyConfig(bool interruptEnable, halKeyCBack_t cback){}
+HalKeyConfig:
+        CFI Block cfiBlock1 Using cfiCommon0
+        CFI Function HalKeyConfig
+        CODE
+        ; Saved register size: 0
+        ; Auto size: 0
+        LJMP    ?BRET
+        CFI EndBlock cfiBlock1
+
+        RSEG BANKED_CODE:CODE:NOROOT(0)
 //  526 uint8 HalKeyRead(void){ return 0;}
+HalKeyRead:
+        CFI Block cfiBlock2 Using cfiCommon0
+        CFI Function HalKeyRead
+        CODE
+        ; Saved register size: 0
+        ; Auto size: 0
+        MOV     R1,#0x0
+        LJMP    ?BRET
+        CFI EndBlock cfiBlock2
+
+        RSEG BANKED_CODE:CODE:NOROOT(0)
 //  527 void HalKeyPoll(void){}
+HalKeyPoll:
+        CFI Block cfiBlock3 Using cfiCommon0
+        CFI Function HalKeyPoll
+        CODE
+        ; Saved register size: 0
+        ; Auto size: 0
+        LJMP    ?BRET
+        CFI EndBlock cfiBlock3
 //  528 
 //  529 #endif /* HAL_KEY */
 //  530 
@@ -1448,7 +919,7 @@ HalKeyExitSleep:
         RSEG BANKED_CODE:CODE:NOROOT(0)
 //  536 void InitCoinInterrupt(void) {
 InitCoinInterrupt:
-        CFI Block cfiBlock9 Using cfiCommon0
+        CFI Block cfiBlock4 Using cfiCommon0
         CFI Function InitCoinInterrupt
         CODE
         ; Saved register size: 0
@@ -1469,13 +940,14 @@ InitCoinInterrupt:
         ORL     0x8c,#0x1
 //  545   EA = 1; // 打开总中断
         SETB    0xa8.7
-//  546   P0IE = 1; // 端口0中断使能
+//  546   IEN1 |= (0x1 << 5); // 端口0中断使能
         SETB    0xb8.5
-//  547   P0IFG = 0; // 初始化中断标志位
+//  547   // P0IE = 1; // 端口0中断使能
+//  548   P0IFG = 0; // 初始化中断标志位  
         MOV     0x89,#0x0
-//  548 }
+//  549 }
         LJMP    ?BRET
-        CFI EndBlock cfiBlock9
+        CFI EndBlock cfiBlock4
         REQUIRE P0SEL
         REQUIRE P0DIR
         REQUIRE P0INP
@@ -1511,51 +983,23 @@ InitCoinInterrupt:
         DC24    HalKeyPoll
 
         RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
-??halGetJoyKeyInput?relay:
-        LCALL   ?BDISPATCH
-        DATA
-        DC24    halGetJoyKeyInput
-
-        RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
-??halProcessKeyInterrupt?relay:
-        LCALL   ?BDISPATCH
-        DATA
-        DC24    halProcessKeyInterrupt
-
-        RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
-??HalKeyEnterSleep?relay:
-        LCALL   ?BDISPATCH
-        DATA
-        DC24    HalKeyEnterSleep
-
-        RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
-??HalKeyExitSleep?relay:
-        LCALL   ?BDISPATCH
-        DATA
-        DC24    HalKeyExitSleep
-
-        RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
 ??InitCoinInterrupt?relay:
         LCALL   ?BDISPATCH
         DATA
         DC24    InitCoinInterrupt
 
         END
-//  549 
 //  550 
 //  551 
-//  552 
-//  553 /**************************************************************************************************
-//  554 **************************************************************************************************/
+//  552 /**************************************************************************************************
+//  553 **************************************************************************************************/
 // 
-// 407 bytes in segment BANKED_CODE
-//  54 bytes in segment BANK_RELAYS
-//  16 bytes in segment SFR_AN
-//   5 bytes in segment XDATA_Z
+// 42 bytes in segment BANKED_CODE
+// 30 bytes in segment BANK_RELAYS
+//  9 bytes in segment SFR_AN
 // 
-// 461 bytes of CODE  memory
-//   0 bytes of DATA  memory (+ 16 bytes shared)
-//   5 bytes of XDATA memory
+// 72 bytes of CODE memory
+//  0 bytes of DATA memory (+ 9 bytes shared)
 //
 //Errors: none
 //Warnings: none

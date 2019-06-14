@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         14/Jun/2019  11:09:59 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         14/Jun/2019  17:35:46 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -215,19 +215,9 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
      82           **************************************************************************************************/
      83          #include "hal_mcu.h"
 
-   \                                 In  segment SFR_AN, at 0x80
-   \   union <unnamed> volatile __sfr _A_P0
-   \                     _A_P0:
-   \   000000                DS 1
-
    \                                 In  segment SFR_AN, at 0x89
    \   unsigned char volatile __sfr P0IFG
    \                     P0IFG:
-   \   000000                DS 1
-
-   \                                 In  segment SFR_AN, at 0x8b
-   \   unsigned char volatile __sfr P2IFG
-   \                     P2IFG:
    \   000000                DS 1
 
    \                                 In  segment SFR_AN, at 0x8c
@@ -240,16 +230,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                     P0INP:
    \   000000                DS 1
 
-   \                                 In  segment SFR_AN, at 0x9a
-   \   unsigned char volatile __sfr IEN2
-   \                     IEN2:
-   \   000000                DS 1
-
-   \                                 In  segment SFR_AN, at 0xa0
-   \   union <unnamed> volatile __sfr _A_P2
-   \                     _A_P2:
-   \   000000                DS 1
-
    \                                 In  segment SFR_AN, at 0xa8
    \   union <unnamed> volatile __sfr _A_IEN0
    \                     _A_IEN0:
@@ -258,11 +238,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                                 In  segment SFR_AN, at 0xab
    \   unsigned char volatile __sfr P0IEN
    \                     P0IEN:
-   \   000000                DS 1
-
-   \                                 In  segment SFR_AN, at 0xac
-   \   unsigned char volatile __sfr P2IEN
-   \                     P2IEN:
    \   000000                DS 1
 
    \                                 In  segment SFR_AN, at 0xb8
@@ -275,11 +250,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                     P0SEL:
    \   000000                DS 1
 
-   \                                 In  segment SFR_AN, at 0xf5
-   \   unsigned char volatile __sfr P2SEL
-   \                     P2SEL:
-   \   000000                DS 1
-
    \                                 In  segment SFR_AN, at 0xf7
    \   unsigned char volatile __sfr P2INP
    \                     P2INP:
@@ -288,11 +258,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                                 In  segment SFR_AN, at 0xfd
    \   unsigned char volatile __sfr P0DIR
    \                     P0DIR:
-   \   000000                DS 1
-
-   \                                 In  segment SFR_AN, at 0xff
-   \   unsigned char volatile __sfr P2DIR
-   \                     P2DIR:
    \   000000                DS 1
      84          #include "hal_defs.h"
      85          #include "hal_types.h"
@@ -367,30 +332,10 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     154          /**************************************************************************************************
     155           *                                        GLOBAL VARIABLES
     156           **************************************************************************************************/
-
-   \                                 In  segment XDATA_Z, align 1, keep-with-next
     157          static uint8 halKeySavedKeys;     /* used to store previous key state in polling mode */
-   \                     halKeySavedKeys:
-   \   000000                DS 1
-   \   000001                REQUIRE __INIT_XDATA_Z
-
-   \                                 In  segment XDATA_Z, align 1, keep-with-next
     158          static halKeyCBack_t pHalKeyProcessFunction;
-   \                     pHalKeyProcessFunction:
-   \   000000                DS 2
-   \   000002                REQUIRE __INIT_XDATA_Z
-
-   \                                 In  segment XDATA_Z, align 1, keep-with-next
     159          static uint8 HalKeyConfigured;
-   \                     HalKeyConfigured:
-   \   000000                DS 1
-   \   000001                REQUIRE __INIT_XDATA_Z
-
-   \                                 In  segment XDATA_Z, align 1, keep-with-next
     160          bool Hal_KeyIntEnable;            /* interrupt enable/disable flag */
-   \                     Hal_KeyIntEnable:
-   \   000000                DS 1
-   \   000001                REQUIRE __INIT_XDATA_Z
     161          
     162          /**************************************************************************************************
     163           *                                        FUNCTIONS - Local
@@ -414,55 +359,24 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     181           *
     182           * @return  None
     183           **************************************************************************************************/
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     184          void HalKeyInit( void )
-   \                     HalKeyInit:
     185          {
-   \   000000   C082         PUSH    DPL
-   \   000002   C083         PUSH    DPH
-   \   000004                ; Saved register size: 2
-   \   000004                ; Auto size: 0
     186            /* Initialize previous key to 0 */
     187            halKeySavedKeys = 0;
-   \   000004   90....       MOV     DPTR,#halKeySavedKeys
-   \   000007   E4           CLR     A
-   \   000008   F0           MOVX    @DPTR,A
     188          
     189            HAL_KEY_SW_6_SEL &= ~(HAL_KEY_SW_6_BIT);    /* Set pin function to GPIO */
-   \   000009   53F3FD       ANL     0xf3,#0xfd
     190            HAL_KEY_SW_6_DIR &= ~(HAL_KEY_SW_6_BIT);    /* Set pin direction to Input */
-   \   00000C   53FDFD       ANL     0xfd,#0xfd
     191          
     192            HAL_KEY_JOY_MOVE_SEL &= ~(HAL_KEY_JOY_MOVE_BIT); /* Set pin function to GPIO */
-   \   00000F   53F5FE       ANL     0xf5,#0xfe
     193            HAL_KEY_JOY_MOVE_DIR &= ~(HAL_KEY_JOY_MOVE_BIT); /* Set pin direction to Input */
-   \   000012   53FFFE       ANL     0xff,#0xfe
     194          
     195          
     196            /* Initialize callback function */
     197            pHalKeyProcessFunction  = NULL;
-   \   000015   90....       MOV     DPTR,#pHalKeyProcessFunction
-   \   000018   F0           MOVX    @DPTR,A
-   \   000019   A3           INC     DPTR
-   \   00001A   F0           MOVX    @DPTR,A
     198          
     199            /* Start with key is not configured */
     200            HalKeyConfigured = FALSE;
-   \   00001B   90....       MOV     DPTR,#HalKeyConfigured
-   \   00001E   F0           MOVX    @DPTR,A
     201          }
-   \   00001F   02....       LJMP    ?Subroutine0 & 0xFFFF
-   \   000022                REQUIRE P0SEL
-   \   000022                REQUIRE P0DIR
-   \   000022                REQUIRE P2SEL
-   \   000022                REQUIRE P2DIR
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
-   \                     ?Subroutine0:
-   \   000000   D083         POP     DPH
-   \   000002   D082         POP     DPL
-   \   000004   02....       LJMP    ?BRET
     202          
     203          
     204          /**************************************************************************************************
@@ -475,44 +389,23 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     211           *
     212           * @return  None
     213           **************************************************************************************************/
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     214          void HalKeyConfig (bool interruptEnable, halKeyCBack_t cback)
-   \                     HalKeyConfig:
     215          {
-   \   000000   74F7         MOV     A,#-0x9
-   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
-   \   000005                ; Saved register size: 9
-   \   000005                ; Auto size: 0
-   \   000005   E9           MOV     A,R1
     216            /* Enable/Disable Interrupt or */
     217            Hal_KeyIntEnable = interruptEnable;
-   \   000006   90....       MOV     DPTR,#Hal_KeyIntEnable
-   \   000009   F0           MOVX    @DPTR,A
     218          
     219            /* Register the callback fucntion */
     220            pHalKeyProcessFunction = cback;
-   \   00000A   90....       MOV     DPTR,#pHalKeyProcessFunction
-   \   00000D   EA           MOV     A,R2
-   \   00000E   F0           MOVX    @DPTR,A
-   \   00000F   A3           INC     DPTR
-   \   000010   EB           MOV     A,R3
-   \   000011   F0           MOVX    @DPTR,A
     221          
     222            /* Determine if interrupt is enable or not */
     223            if (Hal_KeyIntEnable)
-   \   000012   90....       MOV     DPTR,#Hal_KeyIntEnable
-   \   000015   E0           MOVX    A,@DPTR
-   \   000016   6033         JZ      ??HalKeyConfig_0
     224            {
     225              /* Rising/Falling edge configuratinn */
     226          
     227              PICTL &= ~(HAL_KEY_SW_6_EDGEBIT);    /* Clear the edge bit */
-   \   000018   538CFE       ANL     0x8c,#0xfe
     228              /* For falling edge, the bit must be set. */
     229            #if (HAL_KEY_SW_6_EDGE == HAL_KEY_FALLING_EDGE)
     230              PICTL |= HAL_KEY_SW_6_EDGEBIT;
-   \   00001B   438C01       ORL     0x8c,#0x1
     231            #endif
     232          
     233          
@@ -522,22 +415,17 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     237               * - Clear any pending interrupt
     238               */
     239              HAL_KEY_SW_6_ICTL |= HAL_KEY_SW_6_ICTLBIT;
-   \   00001E   43AB02       ORL     0xab,#0x2
     240              HAL_KEY_SW_6_IEN |= HAL_KEY_SW_6_IENBIT;
-   \   000021   D2BD         SETB    0xb8.5
     241              HAL_KEY_SW_6_PXIFG = ~(HAL_KEY_SW_6_BIT);
-   \   000023   7589FD       MOV     0x89,#-0x3
     242          
     243          
     244          
     245              /* Rising/Falling edge configuratinn */
     246          
     247              HAL_KEY_JOY_MOVE_ICTL &= ~(HAL_KEY_JOY_MOVE_EDGEBIT);    /* Clear the edge bit */
-   \   000026   53ACF7       ANL     0xac,#0xf7
     248              /* For falling edge, the bit must be set. */
     249            #if (HAL_KEY_JOY_MOVE_EDGE == HAL_KEY_FALLING_EDGE)
     250              HAL_KEY_JOY_MOVE_ICTL |= HAL_KEY_JOY_MOVE_EDGEBIT;
-   \   000029   43AC08       ORL     0xac,#0x8
     251            #endif
     252          
     253          
@@ -547,67 +435,27 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     257               * - Clear any pending interrupt
     258               */
     259              HAL_KEY_JOY_MOVE_ICTL |= HAL_KEY_JOY_MOVE_ICTLBIT;
-   \   00002C   43AC01       ORL     0xac,#0x1
     260              HAL_KEY_JOY_MOVE_IEN |= HAL_KEY_JOY_MOVE_IENBIT;
-   \   00002F   439A02       ORL     0x9a,#0x2
     261              HAL_KEY_JOY_MOVE_PXIFG = ~(HAL_KEY_JOY_MOVE_BIT);
-   \   000032   758BFE       MOV     0x8b,#-0x2
     262          
     263          
     264              /* Do this only after the hal_key is configured - to work with sleep stuff */
     265              if (HalKeyConfigured == TRUE)
-   \   000035   90....       MOV     DPTR,#HalKeyConfigured
-   \   000038   E0           MOVX    A,@DPTR
-   \   000039   6401         XRL     A,#0x1
-   \   00003B   7023         JNZ     ??HalKeyConfig_1
     266              {
     267                osal_stop_timerEx( Hal_TaskID, HAL_KEY_EVENT);  /* Cancel polling if active */
-   \   00003D                ; Setup parameters for call to function osal_stop_timerEx
-   \   00003D   7A01         MOV     R2,#0x1
-   \   00003F   7B00         MOV     R3,#0x0
-   \   000041   90....       MOV     DPTR,#Hal_TaskID
-   \   000044   E0           MOVX    A,@DPTR
-   \   000045   F9           MOV     R1,A
-   \   000046   12....       LCALL   ??osal_stop_timerEx?relay
-   \   000049   8015         SJMP    ??HalKeyConfig_1
     268              }
     269            }
     270            else    /* Interrupts NOT enabled */
     271            {
     272              HAL_KEY_SW_6_ICTL &= ~(HAL_KEY_SW_6_ICTLBIT); /* don't generate interrupt */
-   \                     ??HalKeyConfig_0:
-   \   00004B   53ABFD       ANL     0xab,#0xfd
     273              HAL_KEY_SW_6_IEN &= ~(HAL_KEY_SW_6_IENBIT);   /* Clear interrupt enable bit */
-   \   00004E   C2BD         CLR     0xb8.5
     274          
     275              osal_start_timerEx (Hal_TaskID, HAL_KEY_EVENT, HAL_KEY_POLLING_VALUE);    /* Kick off polling */
-   \   000050                ; Setup parameters for call to function osal_start_timerEx
-   \   000050   7C64         MOV     R4,#0x64
-   \   000052   7D00         MOV     R5,#0x0
-   \   000054   7A01         MOV     R2,#0x1
-   \   000056   7B00         MOV     R3,#0x0
-   \   000058   90....       MOV     DPTR,#Hal_TaskID
-   \   00005B   E0           MOVX    A,@DPTR
-   \   00005C   F9           MOV     R1,A
-   \   00005D   12....       LCALL   ??osal_start_timerEx?relay
     276            }
     277          
     278            /* Key now is configured */
     279            HalKeyConfigured = TRUE;
-   \                     ??HalKeyConfig_1:
-   \   000060   90....       MOV     DPTR,#HalKeyConfigured
-   \   000063   7401         MOV     A,#0x1
-   \   000065   F0           MOVX    @DPTR,A
     280          }
-   \   000066   FF           MOV     R7,A
-   \   000067   02....       LJMP    ?BANKED_LEAVE_XDATA
-   \   00006A                REQUIRE PICTL
-   \   00006A                REQUIRE P0IEN
-   \   00006A                REQUIRE _A_IEN1
-   \   00006A                REQUIRE P0IFG
-   \   00006A                REQUIRE P2IEN
-   \   00006A                REQUIRE IEN2
-   \   00006A                REQUIRE P2IFG
     281          
     282          
     283          /**************************************************************************************************
@@ -619,22 +467,13 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     289           *
     290           * @return  keys - current keys status
     291           **************************************************************************************************/
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     292          uint8 HalKeyRead ( void )
-   \                     HalKeyRead:
     293          {
-   \   000000                ; Saved register size: 0
-   \   000000                ; Auto size: 0
     294            uint8 keys = 0;
-   \   000000   7900         MOV     R1,#0x0
     295          
     296            if (HAL_PUSH_BUTTON1())
-   \   000002   A281         MOV     C,0x80.1
-   \   000004   5002         JNC     ??HalKeyRead_0
     297            {
     298              keys |= HAL_KEY_SW_6;
-   \   000006   7920         MOV     R1,#0x20
     299            }
     300          
     301          /*  if ((HAL_KEY_JOY_MOVE_PORT & HAL_KEY_JOY_MOVE_BIT))  // Key is active low 
@@ -643,9 +482,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     304            }
     305          */
     306            return keys;
-   \                     ??HalKeyRead_0:
-   \   000008   02....       LJMP    ?BRET
-   \   00000B                REQUIRE _A_P0
     307          }
     308          
     309          
@@ -658,17 +494,9 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     316           *
     317           * @return  None
     318           **************************************************************************************************/
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     319          void HalKeyPoll (void)
-   \                     HalKeyPoll:
     320          {
-   \   000000   C082         PUSH    DPL
-   \   000002   C083         PUSH    DPH
-   \   000004                ; Saved register size: 2
-   \   000004                ; Auto size: 0
     321            uint8 keys = 0;
-   \   000004   7900         MOV     R1,#0x0
     322          
     323          /* if ((HAL_KEY_JOY_MOVE_PORT & HAL_KEY_JOY_MOVE_BIT))  // Key is active HIGH 
     324            {
@@ -676,42 +504,23 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     326            }
     327          */
     328            if (!HAL_PUSH_BUTTON2())//S0
-   \   000006   A2A0         MOV     C,0xa0.0
-   \   000008   4001         JC      ??HalKeyPoll_0
     329            {
     330              keys |= HAL_KEY_SW_1; 
-   \   00000A   09           INC     R1
     331            }
     332            if (!HAL_PUSH_BUTTON1())//S1 
-   \                     ??HalKeyPoll_0:
-   \   00000B   A281         MOV     C,0x80.1
-   \   00000D   4004         JC      ??HalKeyPoll_1
     333            {
     334              keys |= HAL_KEY_SW_6; 
-   \   00000F   E9           MOV     A,R1
-   \   000010   D2E5         SETB    0xE0 /* A   */.5
-   \   000012   F9           MOV     R1,A
     335            }
     336            
     337            if (!Hal_KeyIntEnable)
-   \                     ??HalKeyPoll_1:
-   \   000013   90....       MOV     DPTR,#Hal_KeyIntEnable
-   \   000016   E0           MOVX    A,@DPTR
-   \   000017   7009         JNZ     ??HalKeyPoll_2
     338            {
     339              if (keys == halKeySavedKeys)
-   \   000019   90....       MOV     DPTR,#halKeySavedKeys
-   \   00001C   E0           MOVX    A,@DPTR
-   \   00001D   69           XRL     A,R1
-   \   00001E   6021         JZ      ??HalKeyPoll_3
     340              {
     341                /* Exit - since no keys have changed */
     342                return;
     343              }
     344              /* Store the current keys for comparation next time */
     345              halKeySavedKeys = keys;
-   \   000020   E9           MOV     A,R1
-   \   000021   F0           MOVX    @DPTR,A
     346            }
     347            else
     348            {
@@ -720,35 +529,9 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     351          
     352            /* Invoke Callback if new keys were depressed */
     353            if (keys && (pHalKeyProcessFunction))
-   \                     ??HalKeyPoll_2:
-   \   000022   E9           MOV     A,R1
-   \   000023   601C         JZ      ??HalKeyPoll_3
-   \   000025   90....       MOV     DPTR,#pHalKeyProcessFunction
-   \   000028   E0           MOVX    A,@DPTR
-   \   000029   FA           MOV     R2,A
-   \   00002A   A3           INC     DPTR
-   \   00002B   E0           MOVX    A,@DPTR
-   \   00002C   FB           MOV     R3,A
-   \   00002D   EA           MOV     A,R2
-   \   00002E   4B           ORL     A,R3
-   \   00002F   6010         JZ      ??HalKeyPoll_3
     354            {
     355              (pHalKeyProcessFunction) (keys, HAL_KEY_STATE_NORMAL);
-   \   000031                ; Setup parameters for indirect call
-   \   000031   7A00         MOV     R2,#0x0
-   \   000033   90....       MOV     DPTR,#pHalKeyProcessFunction
-   \   000036   E0           MOVX    A,@DPTR
-   \   000037   F8           MOV     R0,A
-   \   000038   A3           INC     DPTR
-   \   000039   E0           MOVX    A,@DPTR
-   \   00003A   F583         MOV     DPH,A
-   \   00003C   8882         MOV     DPL,R0
-   \   00003E   12....       LCALL   ?CALL_IND
     356            }
-   \                     ??HalKeyPoll_3:
-   \   000041   02....       LJMP    ?Subroutine0 & 0xFFFF
-   \   000044                REQUIRE _A_P2
-   \   000044                REQUIRE _A_P0
     357          }
     358          
     359          /**************************************************************************************************
@@ -760,115 +543,45 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     365           *
     366           * @return  keys - current joy key status
     367           **************************************************************************************************/
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     368          uint8 halGetJoyKeyInput(void)
-   \                     halGetJoyKeyInput:
     369          {
-   \   000000   74F7         MOV     A,#-0x9
-   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
-   \   000005                ; Saved register size: 9
-   \   000005                ; Auto size: 0
     370            /* The joystick control is encoded as an analog voltage.
     371             * Read the JOY_LEVEL analog value and map it to joy movement.
     372             */
     373            uint8 adc;
     374            uint8 ksave0 = 0;
-   \   000005   7E00         MOV     R6,#0x0
     375            uint8 ksave1;
     376          
     377            /* Keep on reading the ADC until two consecutive key decisions are the same. */
     378            do
     379            {
     380              ksave1 = ksave0;    /* save previouse key reading */
-   \                     ??halGetJoyKeyInput_0:
-   \   000007   EE           MOV     A,R6
-   \   000008   FF           MOV     R7,A
     381          
     382              adc = HalAdcRead (HAL_KEY_JOY_CHN, HAL_ADC_RESOLUTION_8);
-   \   000009                ; Setup parameters for call to function HalAdcRead
-   \   000009   7A01         MOV     R2,#0x1
-   \   00000B   7906         MOV     R1,#0x6
-   \   00000D   12....       LCALL   ??HalAdcRead?relay
-   \   000010   EA           MOV     A,R2
-   \   000011   F8           MOV     R0,A
     383          
     384              if ((adc >= 2) && (adc <= 38))
-   \   000012   74FE         MOV     A,#-0x2
-   \   000014   28           ADD     A,R0
-   \   000015   C3           CLR     C
-   \   000016   9425         SUBB    A,#0x25
-   \   000018   5005         JNC     ??halGetJoyKeyInput_1
     385              {
     386                 ksave0 |= HAL_KEY_UP;
-   \   00001A   EE           MOV     A,R6
-   \   00001B   D2E0         SETB    0xE0 /* A   */.0
-   \   00001D   8032         SJMP    ??halGetJoyKeyInput_2
     387              }
     388              else if ((adc >= 74) && (adc <= 88))
-   \                     ??halGetJoyKeyInput_1:
-   \   00001F   74B6         MOV     A,#-0x4a
-   \   000021   28           ADD     A,R0
-   \   000022   C3           CLR     C
-   \   000023   940F         SUBB    A,#0xf
-   \   000025   5005         JNC     ??halGetJoyKeyInput_3
     389              {
     390                ksave0 |= HAL_KEY_RIGHT;
-   \   000027   EE           MOV     A,R6
-   \   000028   D2E1         SETB    0xE0 /* A   */.1
-   \   00002A   8025         SJMP    ??halGetJoyKeyInput_2
     391              }
     392              else if ((adc >= 60) && (adc <= 73))
-   \                     ??halGetJoyKeyInput_3:
-   \   00002C   74C4         MOV     A,#-0x3c
-   \   00002E   28           ADD     A,R0
-   \   00002F   C3           CLR     C
-   \   000030   940E         SUBB    A,#0xe
-   \   000032   5005         JNC     ??halGetJoyKeyInput_4
     393              {
     394                ksave0 |= HAL_KEY_LEFT;
-   \   000034   EE           MOV     A,R6
-   \   000035   D2E3         SETB    0xE0 /* A   */.3
-   \   000037   8018         SJMP    ??halGetJoyKeyInput_2
     395              }
     396              else if ((adc >= 39) && (adc <= 59))
-   \                     ??halGetJoyKeyInput_4:
-   \   000039   74D9         MOV     A,#-0x27
-   \   00003B   28           ADD     A,R0
-   \   00003C   C3           CLR     C
-   \   00003D   9415         SUBB    A,#0x15
-   \   00003F   5005         JNC     ??halGetJoyKeyInput_5
     397              {
     398                ksave0 |= HAL_KEY_DOWN;
-   \   000041   EE           MOV     A,R6
-   \   000042   D2E4         SETB    0xE0 /* A   */.4
-   \   000044   800B         SJMP    ??halGetJoyKeyInput_2
     399              }
     400              else if ((adc >= 89) && (adc <= 100))
-   \                     ??halGetJoyKeyInput_5:
-   \   000046   74A7         MOV     A,#-0x59
-   \   000048   28           ADD     A,R0
-   \   000049   C3           CLR     C
-   \   00004A   940C         SUBB    A,#0xc
-   \   00004C   5004         JNC     ??halGetJoyKeyInput_6
     401              {
     402                ksave0 |= HAL_KEY_CENTER;
-   \   00004E   EE           MOV     A,R6
-   \   00004F   D2E2         SETB    0xE0 /* A   */.2
-   \                     ??halGetJoyKeyInput_2:
-   \   000051   FE           MOV     R6,A
     403              }
     404            } while (ksave0 != ksave1);
-   \                     ??halGetJoyKeyInput_6:
-   \   000052   EF           MOV     A,R7
-   \   000053   6E           XRL     A,R6
-   \   000054   70B1         JNZ     ??halGetJoyKeyInput_0
     405          
     406            return ksave0;
-   \   000056   EE           MOV     A,R6
-   \   000057   F9           MOV     R1,A
-   \   000058   7F01         MOV     R7,#0x1
-   \   00005A   02....       LJMP    ?BANKED_LEAVE_XDATA
     407          }
     408          
     409          
@@ -885,65 +598,27 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     420           *
     421           * @return
     422           **************************************************************************************************/
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     423          void halProcessKeyInterrupt (void)
-   \                     halProcessKeyInterrupt:
     424          {
-   \   000000   C082         PUSH    DPL
-   \   000002   C083         PUSH    DPH
-   \   000004                ; Saved register size: 2
-   \   000004                ; Auto size: 0
     425            bool valid=FALSE;
-   \   000004   7800         MOV     R0,#0x0
     426          
     427            if (HAL_KEY_SW_6_PXIFG & HAL_KEY_SW_6_BIT)  /* Interrupt Flag has been set */
-   \   000006   E589         MOV     A,0x89
-   \   000008   A2E1         MOV     C,0xE0 /* A   */.1
-   \   00000A   5004         JNC     ??halProcessKeyInterrupt_0
     428            {
     429              HAL_KEY_SW_6_PXIFG = ~(HAL_KEY_SW_6_BIT); /* Clear Interrupt Flag */
-   \   00000C   7589FD       MOV     0x89,#-0x3
     430              valid = TRUE;
-   \   00000F   08           INC     R0
     431            }
     432          
     433            if (HAL_KEY_JOY_MOVE_PXIFG & HAL_KEY_JOY_MOVE_BIT)  /* Interrupt Flag has been set */
-   \                     ??halProcessKeyInterrupt_0:
-   \   000010   E58B         MOV     A,0x8b
-   \   000012   A2E0         MOV     C,0xE0 /* A   */.0
-   \   000014   5005         JNC     ??halProcessKeyInterrupt_1
     434            {
     435              HAL_KEY_JOY_MOVE_PXIFG = ~(HAL_KEY_JOY_MOVE_BIT); /* Clear Interrupt Flag */
-   \   000016   758BFE       MOV     0x8b,#-0x2
     436              valid = TRUE;
-   \   000019   8005         SJMP    ??halProcessKeyInterrupt_2
     437            }
     438          
     439            if (valid)
-   \                     ??halProcessKeyInterrupt_1:
-   \   00001B   E8           MOV     A,R0
-   \   00001C   A2E0         MOV     C,0xE0 /* A   */.0
-   \   00001E   5010         JNC     ??halProcessKeyInterrupt_3
     440            {
     441              osal_start_timerEx (Hal_TaskID, HAL_KEY_EVENT, HAL_KEY_DEBOUNCE_VALUE);
-   \                     ??halProcessKeyInterrupt_2:
-   \   000020                ; Setup parameters for call to function osal_start_timerEx
-   \   000020   7C19         MOV     R4,#0x19
-   \   000022   7D00         MOV     R5,#0x0
-   \   000024   7A01         MOV     R2,#0x1
-   \   000026   7B00         MOV     R3,#0x0
-   \   000028   90....       MOV     DPTR,#Hal_TaskID
-   \   00002B   E0           MOVX    A,@DPTR
-   \   00002C   F9           MOV     R1,A
-   \   00002D   12....       LCALL   ??osal_start_timerEx?relay
     442            }
     443          }
-   \                     ??halProcessKeyInterrupt_3:
-   \   000030                REQUIRE ?Subroutine0
-   \   000030                REQUIRE P0IFG
-   \   000030                REQUIRE P2IFG
-   \   000030                ; // Fall through to label ?Subroutine0
     444          
     445          /**************************************************************************************************
     446           * @fn      HalKeyEnterSleep
@@ -954,15 +629,9 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     451           *
     452           * @return
     453           **************************************************************************************************/
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     454          void HalKeyEnterSleep ( void )
-   \                     HalKeyEnterSleep:
     455          {
-   \   000000                ; Saved register size: 0
-   \   000000                ; Auto size: 0
     456          }
-   \   000000   02....       LJMP    ?BRET
     457          
     458          /**************************************************************************************************
     459           * @fn      HalKeyExitSleep
@@ -973,20 +642,10 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     464           *
     465           * @return  - return saved keys
     466           **************************************************************************************************/
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     467          uint8 HalKeyExitSleep ( void )
-   \                     HalKeyExitSleep:
     468          {
-   \   000000   C082         PUSH    DPL
-   \   000002   C083         PUSH    DPH
-   \   000004                ; Saved register size: 2
-   \   000004                ; Auto size: 0
     469            /* Wake up and read keys */
     470            return ( HalKeyRead () );
-   \   000004                ; Setup parameters for call to function HalKeyRead
-   \   000004   12....       LCALL   ??HalKeyRead?relay
-   \   000007   80..         SJMP    ?Subroutine0
     471          }
     472          
     473          /***************************************************************************************************
@@ -1040,10 +699,35 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     521          #else
     522          
     523          
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     524          void HalKeyInit(void){}
+   \                     HalKeyInit:
+   \   000000                ; Saved register size: 0
+   \   000000                ; Auto size: 0
+   \   000000   02....       LJMP    ?BRET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     525          void HalKeyConfig(bool interruptEnable, halKeyCBack_t cback){}
+   \                     HalKeyConfig:
+   \   000000                ; Saved register size: 0
+   \   000000                ; Auto size: 0
+   \   000000   02....       LJMP    ?BRET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     526          uint8 HalKeyRead(void){ return 0;}
+   \                     HalKeyRead:
+   \   000000                ; Saved register size: 0
+   \   000000                ; Auto size: 0
+   \   000000   7900         MOV     R1,#0x0
+   \   000002   02....       LJMP    ?BRET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     527          void HalKeyPoll(void){}
+   \                     HalKeyPoll:
+   \   000000                ; Saved register size: 0
+   \   000000                ; Auto size: 0
+   \   000000   02....       LJMP    ?BRET
     528          
     529          #endif /* HAL_KEY */
     530          
@@ -1074,11 +758,12 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \   00000F   438C01       ORL     0x8c,#0x1
     545            EA = 1; // 打开总中断
    \   000012   D2AF         SETB    0xa8.7
-    546            P0IE = 1; // 端口0中断使能
+    546            IEN1 |= (0x1 << 5); // 端口0中断使能
    \   000014   D2BD         SETB    0xb8.5
-    547            P0IFG = 0; // 初始化中断标志位
+    547            // P0IE = 1; // 端口0中断使能
+    548            P0IFG = 0; // 初始化中断标志位  
    \   000016   758900       MOV     0x89,#0x0
-    548          }
+    549          }
    \   000019   02....       LJMP    ?BRET
    \   00001C                REQUIRE P0SEL
    \   00001C                REQUIRE P0DIR
@@ -1111,109 +796,56 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \   000003   ......       DC24    HalKeyPoll
 
    \                                 In  segment BANK_RELAYS, align 1
-   \                     ??halGetJoyKeyInput?relay:
-   \   000000   12....       LCALL   ?BDISPATCH
-   \   000003   ......       DC24    halGetJoyKeyInput
-
-   \                                 In  segment BANK_RELAYS, align 1
-   \                     ??halProcessKeyInterrupt?relay:
-   \   000000   12....       LCALL   ?BDISPATCH
-   \   000003   ......       DC24    halProcessKeyInterrupt
-
-   \                                 In  segment BANK_RELAYS, align 1
-   \                     ??HalKeyEnterSleep?relay:
-   \   000000   12....       LCALL   ?BDISPATCH
-   \   000003   ......       DC24    HalKeyEnterSleep
-
-   \                                 In  segment BANK_RELAYS, align 1
-   \                     ??HalKeyExitSleep?relay:
-   \   000000   12....       LCALL   ?BDISPATCH
-   \   000003   ......       DC24    HalKeyExitSleep
-
-   \                                 In  segment BANK_RELAYS, align 1
    \                     ??InitCoinInterrupt?relay:
    \   000000   12....       LCALL   ?BDISPATCH
    \   000003   ......       DC24    InitCoinInterrupt
-    549          
     550          
     551          
-    552          
-    553          /**************************************************************************************************
-    554          **************************************************************************************************/
+    552          /**************************************************************************************************
+    553          **************************************************************************************************/
 
    Maximum stack usage in bytes:
 
-     Function                ISTACK PSTACK XSTACK
-     --------                ------ ------ ------
-     HalKeyConfig                0      0      9
-       -> osal_stop_timerEx      0      0     18
-       -> osal_start_timerEx     0      0     18
-     HalKeyEnterSleep            0      0      0
-     HalKeyExitSleep             2      0      0
-       -> HalKeyRead             4      0      0
-     HalKeyInit                  2      0      0
-     HalKeyPoll                  2      0      0
-     HalKeyRead                  0      0      0
-     InitCoinInterrupt           0      0      0
-     halGetJoyKeyInput           0      0      9
-       -> HalAdcRead             0      0     18
-     halProcessKeyInterrupt      2      0      0
-       -> osal_start_timerEx     4      0      0
+     Function          ISTACK PSTACK XSTACK
+     --------          ------ ------ ------
+     HalKeyConfig          0      0      0
+     HalKeyInit            0      0      0
+     HalKeyPoll            0      0      0
+     HalKeyRead            0      0      0
+     InitCoinInterrupt     0      0      0
 
 
    Segment part sizes:
 
-     Function/Label                 Bytes
-     --------------                 -----
-     _A_P0                             1
-     P0IFG                             1
-     P2IFG                             1
-     PICTL                             1
-     P0INP                             1
-     IEN2                              1
-     _A_P2                             1
-     _A_IEN0                           1
-     P0IEN                             1
-     P2IEN                             1
-     _A_IEN1                           1
-     P0SEL                             1
-     P2SEL                             1
-     P2INP                             1
-     P0DIR                             1
-     P2DIR                             1
-     halKeySavedKeys                   1
-     pHalKeyProcessFunction            2
-     HalKeyConfigured                  1
-     Hal_KeyIntEnable                  1
-     HalKeyInit                       34
-     ?Subroutine0                      7
-     HalKeyConfig                    106
-     HalKeyRead                       11
-     HalKeyPoll                       68
-     halGetJoyKeyInput                93
-     halProcessKeyInterrupt           48
-     HalKeyEnterSleep                  3
-     HalKeyExitSleep                   9
-     InitCoinInterrupt                28
-     ??HalKeyInit?relay                6
-     ??HalKeyConfig?relay              6
-     ??HalKeyRead?relay                6
-     ??HalKeyPoll?relay                6
-     ??halGetJoyKeyInput?relay         6
-     ??halProcessKeyInterrupt?relay    6
-     ??HalKeyEnterSleep?relay          6
-     ??HalKeyExitSleep?relay           6
-     ??InitCoinInterrupt?relay         6
+     Function/Label            Bytes
+     --------------            -----
+     P0IFG                        1
+     PICTL                        1
+     P0INP                        1
+     _A_IEN0                      1
+     P0IEN                        1
+     _A_IEN1                      1
+     P0SEL                        1
+     P2INP                        1
+     P0DIR                        1
+     HalKeyInit                   3
+     HalKeyConfig                 3
+     HalKeyRead                   5
+     HalKeyPoll                   3
+     InitCoinInterrupt           28
+     ??HalKeyInit?relay           6
+     ??HalKeyConfig?relay         6
+     ??HalKeyRead?relay           6
+     ??HalKeyPoll?relay           6
+     ??InitCoinInterrupt?relay    6
 
  
- 407 bytes in segment BANKED_CODE
-  54 bytes in segment BANK_RELAYS
-  16 bytes in segment SFR_AN
-   5 bytes in segment XDATA_Z
+ 42 bytes in segment BANKED_CODE
+ 30 bytes in segment BANK_RELAYS
+  9 bytes in segment SFR_AN
  
- 461 bytes of CODE  memory
-   0 bytes of DATA  memory (+ 16 bytes shared)
-   5 bytes of XDATA memory
+ 72 bytes of CODE memory
+  0 bytes of DATA memory (+ 9 bytes shared)
 
 Errors: none
 Warnings: none

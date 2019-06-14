@@ -88,12 +88,18 @@ SingleLinkedList.c中定义了单链表的实现
 #include "MT_APP.h"
 #include "MT.h"
 
+/*******
+  一些测试用的宏开关
+*/
+// #define NEED_TEST_DIStANCE
+
 /*********************************************************************
 * MACROS
 */
 #define COIN_PIN P0_5            //定义P0.5口为中断方式接收投币器信号引脚
 #define SIMULATE_PIN P0_7        //定义P0.7口为替换投币器模拟信号发生引脚
 #define UART0        0x00
+#define COIN_SIGNAL_HALF_TIME 40
 
 // This list should be filled with Application specific Cluster IDs.
 const cId_t SampleApp_ClusterList[SAMPLEAPP_MAX_CLUSTERS] =
@@ -155,8 +161,9 @@ void SampleApp_SendHeartBeatMessageEnd(void);
 void printAddrInfoHex(uint8* buf, uint8 dataLen);
 void convertHexToStr(uint16 addr, uint8 lcdLineNum);
 
-#ifndef ZDO_COORDINATOR
+#ifdef END_DEVICE
 int8 NeedCoinDelivered = 0; // 定义终端需要处理的投币个数
+int8 NeedCoinTransport = 0; // 需要转发的投币器信号数量
 #endif
 
 /**
@@ -164,11 +171,14 @@ int8 NeedCoinDelivered = 0; // 定义终端需要处理的投币个数
 */
 #ifdef END_DEVICE
 HAL_ISR_FUNCTION( coinPort0Isr, P0INT_VECTOR ) // P0_5配置为投币器电平变化中断引脚，在HAL/Common/hal_drivers.c中进行的引脚初始化
-{
-  myprintf("P0 interrupt\n");
-  HalLedBlink(HAL_LED_1, 5, 50, 250);
+{  
   P0IFG &= ~(0x1 << 5);       //端口0中断状态标志
   P0IF = 0;        //端口0中断标志，0表示无中断未决，1表示有中断未决，需要每次触发之后置0，不然会一直触发中断
+  
+  SIMULATE_PIN = 1; // 初始高电平 
+  NeedCoinTransport = 1;
+  osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_TRANSPORT_COIN_MSG_EVT, 50); // 产生一个定时器事件
+  HalLedBlink(HAL_LED_2, 5, 50, 250);
 }
 #endif
 
@@ -185,7 +195,7 @@ void SampleApp_Init( uint8 task_id )
   
   P0SEL &= ~(0x01 << 7);         //设置P0.7口为普通IO
   P0DIR |= (0x01 << 7);          //设置P0.7口为输出
-  SIMULATE_PIN = 0;       // 投币器信号模拟输出引脚
+  SIMULATE_PIN = 1;       // 投币器信号模拟输出引脚
   
 #if defined ( BUILD_ALL_DEVICES )
   // The "Demo" target is setup to have BUILD_ALL_DEVICES and HOLD_AUTO_START
@@ -350,22 +360,36 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
     
     return (events ^ SAMPLEAPP_SEND_PERIODIC_MSG_EVT); // 清除此已经处理事件标志位
   }  
-#ifdef END_DEVICE  // 接收到模拟电平变化定时器事件
+  
+#ifdef END_DEVICE  // 接收到线上金币的开启信号，模拟电平变化的定时器事件
   else if(events & SAMPLEAPP_SIMULATE_COIN_MSG_EVT) {
     myprintf("Get COIN_MSG_EVT, NeedCoinDelivered = %d\n", NeedCoinDelivered);
-    if(SIMULATE_PIN == 0) {
-      SIMULATE_PIN = 1; // 产生一个上升沿
-    } else if(SIMULATE_PIN == 1) {
-      SIMULATE_PIN = 0; // 完整产生了一个脉冲
+    if(SIMULATE_PIN == 1) {
+      SIMULATE_PIN = 0; // 产生一个下降沿
+    } else if(SIMULATE_PIN == 0) {
+      SIMULATE_PIN = 1; // 完整产生了一个脉冲
       NeedCoinDelivered--;
     }
     if(NeedCoinDelivered > 0) { // 还需要开启定时器
-      osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SIMULATE_COIN_MSG_EVT, 10);
+      osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SIMULATE_COIN_MSG_EVT, COIN_SIGNAL_HALF_TIME); // 低电平和高电平至少保持50ms
     }    
     return (events ^ SAMPLEAPP_SIMULATE_COIN_MSG_EVT);
+  } else if(events & SAMPLEAPP_TRANSPORT_COIN_MSG_EVT) { // 需要转发投币器的投币信号
+    myprintf("Get transport coin EVT");
+    
+    if(SIMULATE_PIN == 1) {
+      SIMULATE_PIN = 0; // 产生一个下降沿
+    } else if(SIMULATE_PIN == 0) {
+      SIMULATE_PIN = 1; // 完整产生了一个脉冲
+      NeedCoinTransport--;
+    }
+    if(NeedCoinTransport > 0) { // 还需要开启定时器
+      osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_TRANSPORT_COIN_MSG_EVT, COIN_SIGNAL_HALF_TIME); // 低电平和高电平至少保持50ms
+    }
+    return (events ^ SAMPLEAPP_TRANSPORT_COIN_MSG_EVT);
   }
 #endif  
-  myprintf("Discard unknown events = %d\n", events);
+  
   return 0;
 }
 
@@ -418,7 +442,9 @@ void SampleApp_HandleKeys( uint8 shift, uint8 keys )
 * @return  none
 */
 #define INIT_LEFT_SEC 5
+#ifdef NEED_TEST_DIStANCE
 uint16 recvTestMsgCount = 0;
+#endif
 void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
 {
 #ifndef ROUTER_EB  
@@ -444,11 +470,11 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
           myprintf("Insert new EP in list\n");
         } else { // 更新终端所在节点的在线时长，标记为在线状态
           updateListEleStatus(LL, ret, INIT_LEFT_SEC);
-          myprintf("Already In List, update()\n");
+          // myprintf("Already In List, update()\n");
         }
         // myprintf("length = %d\n", ListLength_L(LL));
       } else if(cmd == 0x72 && pkt->cmd.Data[10] == '@') { // 收到终端回复的确认收到投币命令
-        mySendByteBuf(pkt->cmd.Data, 11); // 转发回复消息到上位机
+        mySendByteBuf(pkt->cmd.Data, 11); // 转发回复消息到上位机        
       } else if(cmd == 0x51 && pkt->cmd.Data[12] == '@') { // 终端按键S1上传的长短地址信息
         printAddrInfoHex(pkt->cmd.Data+2, 10);
         mySendByteBuf(pkt->cmd.Data, 13);        
@@ -461,15 +487,13 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
     if(data == '#')
     {
       if(cmd == 0x81 && pkt->cmd.Data[3] == '@') { // 收到投递指定币数的消息
-        // 回复已经收到投币命令0x72
-        AfReplyGetCoinCmd(); 
-        
-        NeedCoinDelivered = pkt->cmd.Data[2]; // 开始模拟投币信号
-        SIMULATE_PIN = 0; // 初始低电平
-        osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SIMULATE_COIN_MSG_EVT, 10); // 产生定时器事件
+        NeedCoinDelivered = pkt->cmd.Data[2]; // 开始模拟投币信号        
+        SIMULATE_PIN = 1; // 初始高电平
+        osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SIMULATE_COIN_MSG_EVT, COIN_SIGNAL_HALF_TIME); // 产生定时器事件                
+        AfReplyGetCoinCmd();  // 回复已经收到投币命令0x72
       } else if(cmd == 0x31 && pkt->cmd.Data[3] == '@') { // LED2闪灯测试命令
         HalLedBlink(HAL_LED_1, 1, 50, 500);
-#ifdef LCD_SUPPORTED 
+#ifdef NEED_TEST_DIStANCE
         recvTestMsgCount++;
         HalLcdWriteString("Recv:", HAL_LCD_LINE_5);
         convertHexToStr(recvTestMsgCount, HAL_LCD_LINE_6);
@@ -510,8 +534,10 @@ void SampleApp_SendPeriodicMessage( int8 key )
 /**
   协调器心跳功能函数，使用串口向树莓派发送心跳信息
 */
-uint16 totalSendTestCount = 0;
-uint16 sendTestCount = 0;
+#ifdef NEED_TEST_DIStANCE
+  uint16 totalSendTestCount = 0;
+  uint16 sendTestCount = 0;
+#endif  
 void SampleApp_SendHeartBeatMessageCoor(void) {
   // 遍历终端列表，将所有节点剩余时间-1，如果小于0，则置0
   uint8 heartBeatBuf[3] = {'#', 0x46, '@'};
@@ -520,13 +546,14 @@ void SampleApp_SendHeartBeatMessageCoor(void) {
   // 将终端列表中元素在线时长-1，如果检测到超时则将IEEE发送到上位机
   decAllListEPLeftSec(LL); 
   HalLedBlink(HAL_LED_2, 1, 50, 500);
-  
+#ifdef NEED_TEST_DIStANCE  
   // 发送稳定性测试数据到终端设备
   totalSendTestCount++;
   if(totalSendTestCount % 3 == 0) {
     SampleApp_SendPeriodicMessage(1);
-    myprintf("sendTestCount = %d\n", sendTestCount); // 串口打印发送的次数
+    myprintf("sendTestCount = %d\n", totalSendTestCount); // 串口打印发送的次数
   }
+#endif  
 }
 
 /**
