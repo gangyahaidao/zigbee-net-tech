@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        14/Jun/2019  12:34:50 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        14/Jun/2019  13:04:31 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -259,6 +259,7 @@
         PUBLIC SampleApp_TransID
         PUBLIC SampleApp_TxAddr
         PUBLIC SampleApp_epDesc
+        PUBWEAK _A_IRCON
         PUBWEAK _A_P0
         PUBLIC coinPort0Isr
         FUNCTION coinPort0Isr,021233H
@@ -741,6 +742,12 @@ P0IFG:
         DATA8
         DS 1
 
+        ASEGN SFR_AN:DATA:NOROOT,0c0H
+// union <unnamed> volatile __sfr _A_IRCON
+_A_IRCON:
+        DATA8
+        DS 1
+
         ASEGN SFR_AN:DATA:NOROOT,0f3H
 // unsigned char volatile __sfr P0SEL
 P0SEL:
@@ -1008,12 +1015,14 @@ coinPort0Isr:
         LCALL   ??HalLedBlink?relay
 //  170   P0IFG &= ~(0x1 << 5);       //端口0中断状态标志
         ANL     0x89,#0xdf
-//  171   // P0IF = 0;        //端口0中断标志，0表示无中断未决，1表示有中断未决
+//  171   P0IF = 0;        //端口0中断标志，0表示无中断未决，1表示有中断未决，需要每次触发之后置0，不然会一直触发中断
+        CLR     0xc0.5
 //  172 }
         MOV     R7,#0x1
         LJMP    ?INTERRUPT_LEAVE_XSP
         CFI EndBlock cfiBlock0
         REQUIRE P0IFG
+        REQUIRE _A_IRCON
 //  173 #endif
 //  174 
 //  175 /**
@@ -4290,14 +4299,14 @@ convertHexToStr:
 // 1 781 bytes in segment BANKED_CODE
 //    66 bytes in segment BANK_RELAYS
 //     3 bytes in segment INTVEC
-//    35 bytes in segment NEAR_CODE
-//     4 bytes in segment SFR_AN
+//    37 bytes in segment NEAR_CODE
+//     5 bytes in segment SFR_AN
 //   264 bytes in segment XDATA_ROM_C
 //    86 bytes in segment XDATA_Z
 // 
-// 1 882 bytes of CODE  memory (+ 3 bytes shared)
+// 1 884 bytes of CODE  memory (+ 3 bytes shared)
 //   264 bytes of CONST memory
-//     0 bytes of DATA  memory (+ 4 bytes shared)
+//     0 bytes of DATA  memory (+ 5 bytes shared)
 //    86 bytes of XDATA memory
 //
 //Errors: none

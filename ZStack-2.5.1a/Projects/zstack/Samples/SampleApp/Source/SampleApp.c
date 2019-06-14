@@ -168,7 +168,7 @@ HAL_ISR_FUNCTION( coinPort0Isr, P0INT_VECTOR ) // P0_5配置为投币器电平变化中断引
   myprintf("P0 interrupt\n");
   HalLedBlink(HAL_LED_1, 5, 50, 250);
   P0IFG &= ~(0x1 << 5);       //端口0中断状态标志
-  // P0IF = 0;        //端口0中断标志，0表示无中断未决，1表示有中断未决
+  P0IF = 0;        //端口0中断标志，0表示无中断未决，1表示有中断未决，需要每次触发之后置0，不然会一直触发中断
 }
 #endif
 

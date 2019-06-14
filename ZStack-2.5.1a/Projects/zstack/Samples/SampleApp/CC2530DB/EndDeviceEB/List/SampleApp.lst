@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         14/Jun/2019  12:34:50 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         14/Jun/2019  13:04:31 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -223,6 +223,11 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \                     P0IFG:
    \   000000                DS 1
 
+   \                                 In  segment SFR_AN, at 0xc0
+   \   union <unnamed> volatile __sfr _A_IRCON
+   \                     _A_IRCON:
+   \   000000                DS 1
+
    \                                 In  segment SFR_AN, at 0xf3
    \   unsigned char volatile __sfr P0SEL
    \                     P0SEL:
@@ -425,11 +430,13 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000018   12....       LCALL   ??HalLedBlink?relay
     170            P0IFG &= ~(0x1 << 5);       //端口0中断状态标志
    \   00001B   5389DF       ANL     0x89,#0xdf
-    171            // P0IF = 0;        //端口0中断标志，0表示无中断未决，1表示有中断未决
+    171            P0IF = 0;        //端口0中断标志，0表示无中断未决，1表示有中断未决，需要每次触发之后置0，不然会一直触发中断
+   \   00001E   C2C5         CLR     0xc0.5
     172          }
-   \   00001E   7F01         MOV     R7,#0x1
-   \   000020   02....       LJMP    ?INTERRUPT_LEAVE_XSP
-   \   000023                REQUIRE P0IFG
+   \   000020   7F01         MOV     R7,#0x1
+   \   000022   02....       LJMP    ?INTERRUPT_LEAVE_XSP
+   \   000025                REQUIRE P0IFG
+   \   000025                REQUIRE _A_IRCON
     173          #endif
     174          
     175          /**
@@ -2288,6 +2295,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
      --------------                             -----
      _A_P0                                         1
      P0IFG                                         1
+     _A_IRCON                                      1
      P0SEL                                         1
      P0DIR                                         1
      SampleApp_ClusterList                         8
@@ -2305,7 +2313,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
      SampleAppFlashCounter                         1
      LL                                            2
      NeedCoinDelivered                             1
-     coinPort0Isr                                 35
+     coinPort0Isr                                 37
      SampleApp_Init                              199
      ??Subroutine15_0                              5
      SampleApp_ProcessEvent                      371
@@ -2372,14 +2380,14 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
  1 781 bytes in segment BANKED_CODE
     66 bytes in segment BANK_RELAYS
      3 bytes in segment INTVEC
-    35 bytes in segment NEAR_CODE
-     4 bytes in segment SFR_AN
+    37 bytes in segment NEAR_CODE
+     5 bytes in segment SFR_AN
    264 bytes in segment XDATA_ROM_C
     86 bytes in segment XDATA_Z
  
- 1 882 bytes of CODE  memory (+ 3 bytes shared)
+ 1 884 bytes of CODE  memory (+ 3 bytes shared)
    264 bytes of CONST memory
-     0 bytes of DATA  memory (+ 4 bytes shared)
+     0 bytes of DATA  memory (+ 5 bytes shared)
     86 bytes of XDATA memory
 
 Errors: none

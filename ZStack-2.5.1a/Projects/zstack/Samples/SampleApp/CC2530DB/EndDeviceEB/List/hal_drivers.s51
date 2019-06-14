@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        14/Jun/2019  11:50:52 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        14/Jun/2019  13:01:10 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -272,19 +272,14 @@ HalAesInit          SYMBOL "HalAesInit"
 HalLcdInit          SYMBOL "HalLcdInit"
 HalLedInit          SYMBOL "HalLedInit"
 HalUARTInit         SYMBOL "HalUARTInit"
-HalKeyInit          SYMBOL "HalKeyInit"
 InitCoinInterrupt   SYMBOL "InitCoinInterrupt"
 osal_msg_receive    SYMBOL "osal_msg_receive"
 osal_msg_deallocate SYMBOL "osal_msg_deallocate"
 HalLedUpdate        SYMBOL "HalLedUpdate"
-HalKeyPoll          SYMBOL "HalKeyPoll"
-osal_start_timerEx  SYMBOL "osal_start_timerEx"
 HalUARTPoll         SYMBOL "HalUARTPoll"
 ??HalAdcInit?relay  SYMBOL "?relay", HalAdcInit
 ??HalAesInit?relay  SYMBOL "?relay", HalAesInit
 ??HalDmaInit?relay  SYMBOL "?relay", HalDmaInit
-??HalKeyInit?relay  SYMBOL "?relay", HalKeyInit
-??HalKeyPoll?relay  SYMBOL "?relay", HalKeyPoll
 ??HalLcdInit?relay  SYMBOL "?relay", HalLcdInit
 ??HalLedInit?relay  SYMBOL "?relay", HalLedInit
 ??HalLedUpdate?relay SYMBOL "?relay", HalLedUpdate
@@ -293,7 +288,6 @@ HalUARTPoll         SYMBOL "HalUARTPoll"
 ??InitCoinInterrupt?relay SYMBOL "?relay", InitCoinInterrupt
 ??osal_msg_deallocate?relay SYMBOL "?relay", osal_msg_deallocate
 ??osal_msg_receive?relay SYMBOL "?relay", osal_msg_receive
-??osal_start_timerEx?relay SYMBOL "?relay", osal_start_timerEx
 HalDriverInit       SYMBOL "HalDriverInit"
 ??HalDriverInit?relay SYMBOL "?relay", HalDriverInit
 Hal_Init            SYMBOL "Hal_Init"
@@ -345,13 +339,6 @@ Hal_ProcessPoll     SYMBOL "Hal_ProcessPoll"
         ARGFRAME XSTACK, 0, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalKeyInit
-        FUNCTION HalKeyInit,0202H
-        ARGFRAME ISTACK, 2, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 0, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         EXTERN InitCoinInterrupt
         FUNCTION InitCoinInterrupt,0202H
         ARGFRAME ISTACK, 2, STACK
@@ -380,20 +367,6 @@ Hal_ProcessPoll     SYMBOL "Hal_ProcessPoll"
         ARGFRAME XSTACK, 10, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalKeyPoll
-        FUNCTION HalKeyPoll,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 10, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN osal_start_timerEx
-        FUNCTION osal_start_timerEx,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 10, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         EXTERN HalUARTPoll
         FUNCTION HalUARTPoll,0202H
         ARGFRAME ISTACK, 2, STACK
@@ -407,10 +380,6 @@ Hal_ProcessPoll     SYMBOL "Hal_ProcessPoll"
         FUNCTION ??HalAesInit?relay,00H
         EXTERN ??HalDmaInit?relay
         FUNCTION ??HalDmaInit?relay,00H
-        EXTERN ??HalKeyInit?relay
-        FUNCTION ??HalKeyInit?relay,00H
-        EXTERN ??HalKeyPoll?relay
-        FUNCTION ??HalKeyPoll?relay,00H
         EXTERN ??HalLcdInit?relay
         FUNCTION ??HalLcdInit?relay,00H
         EXTERN ??HalLedInit?relay
@@ -427,9 +396,6 @@ Hal_ProcessPoll     SYMBOL "Hal_ProcessPoll"
         FUNCTION ??osal_msg_deallocate?relay,00H
         EXTERN ??osal_msg_receive?relay
         FUNCTION ??osal_msg_receive?relay,00H
-        EXTERN ??osal_start_timerEx?relay
-        FUNCTION ??osal_start_timerEx?relay,00H
-        EXTERN Hal_KeyIntEnable
 
 // E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_drivers.c
 //    1 /**************************************************************************************************
@@ -674,17 +640,6 @@ HalDriverInit:
         ARGFRAME XSTACK, 0, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL HalDriverInit, HalKeyInit
-        LOCFRAME ISTACK, 2, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 0, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 2, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 0, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL HalDriverInit, InitCoinInterrupt
         LOCFRAME ISTACK, 2, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -755,8 +710,6 @@ HalDriverInit:
 //  165   /* KEY */
 //  166 #if (defined HAL_KEY) && (HAL_KEY == TRUE)
 //  167   HalKeyInit();
-        ; Setup parameters for call to function HalKeyInit
-        LCALL   ??HalKeyInit?relay
 //  168 #endif
 //  169 
 //  170   /* SPI */
@@ -831,28 +784,6 @@ Hal_ProcessEvent:
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL Hal_ProcessEvent, HalLedUpdate
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 10, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 10, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL Hal_ProcessEvent, HalKeyPoll
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 10, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 10, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL Hal_ProcessEvent, osal_start_timerEx
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
         LOCFRAME XSTACK, 10, STACK
@@ -940,7 +871,6 @@ Hal_ProcessEvent:
 //  223     return events ^ HAL_LED_BLINK_EVENT;
         MOV     A,R6
         XRL     A,#0x2
-??Hal_ProcessEvent_6:
         MOV     R2,A
         MOV     A,R7
         SJMP    ??Hal_ProcessEvent_3
@@ -950,39 +880,24 @@ Hal_ProcessEvent:
 ??Hal_ProcessEvent_5:
         MOV     A,R6
         MOV     C,0xE0 /* A   */.0
-        JNC     ??Hal_ProcessEvent_7
+        JNC     ??Hal_ProcessEvent_6
 //  227   {
 //  228 
 //  229 #if (defined HAL_KEY) && (HAL_KEY == TRUE)
 //  230     /* Check for keys */
 //  231     HalKeyPoll();
-        ; Setup parameters for call to function HalKeyPoll
-        LCALL   ??HalKeyPoll?relay
 //  232 
 //  233     /* if interrupt disabled, do next polling */
 //  234     if (!Hal_KeyIntEnable)
-        MOV     DPTR,#Hal_KeyIntEnable
-        MOVX    A,@DPTR
-        JNZ     ??Hal_ProcessEvent_8
 //  235     {
 //  236       osal_start_timerEx( Hal_TaskID, HAL_KEY_EVENT, 100);
-        ; Setup parameters for call to function osal_start_timerEx
-        MOV     R4,#0x64
-        MOV     R5,#0x0
-        MOV     R2,#0x1
-        MOV     R3,#0x0
-        MOV     DPTR,#Hal_TaskID
-        MOVX    A,@DPTR
-        MOV     R1,A
-        LCALL   ??osal_start_timerEx?relay
 //  237     }
 //  238 #endif // HAL_KEY
 //  239 
 //  240     return events ^ HAL_KEY_EVENT;
-??Hal_ProcessEvent_8:
-        MOV     A,R6
         XRL     A,#0x1
-        SJMP    ??Hal_ProcessEvent_6
+        MOV     R2,A
+        SJMP    ??Hal_ProcessEvent_4
 //  241   }
 //  242 
 //  243 #ifdef POWER_SAVING
@@ -1003,7 +918,7 @@ Hal_ProcessEvent:
 //  258   
 //  259   /* Nothing interested, discard the message */
 //  260   return 0;
-??Hal_ProcessEvent_7:
+??Hal_ProcessEvent_6:
         MOV     R2,#0x0
         MOV     R3,#0x0
 ??Hal_ProcessEvent_4:
@@ -1078,7 +993,7 @@ Hal_ProcessPoll:
 //  299 #endif
 //  300 
 //  301 }
-        LJMP    ?Subroutine0 & 0xFFFF
+        SJMP    ?Subroutine0
         CFI EndBlock cfiBlock4
 
         RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
@@ -1112,11 +1027,11 @@ Hal_ProcessPoll:
 //  305 **************************************************************************************************/
 //  306 
 // 
-// 153 bytes in segment BANKED_CODE
+// 124 bytes in segment BANKED_CODE
 //  24 bytes in segment BANK_RELAYS
 //   1 byte  in segment XDATA_Z
 // 
-// 177 bytes of CODE  memory
+// 148 bytes of CODE  memory
 //   1 byte  of XDATA memory
 //
 //Errors: none

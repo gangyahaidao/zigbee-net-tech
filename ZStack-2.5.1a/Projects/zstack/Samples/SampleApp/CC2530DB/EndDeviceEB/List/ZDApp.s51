@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        10/Jun/2019  16:30:08 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        14/Jun/2019  13:01:11 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -303,11 +303,8 @@
         ARGFRAME XSTACK, 0, STACK
         PUBLIC MatchRsps
         PUBLIC ZDAppCheckForHoldKey
-        FUNCTION ZDAppCheckForHoldKey,021203H
-        ARGFRAME XSTACK, 9, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        LOCFRAME ISTACK, 2, STACK
+        FUNCTION ZDAppCheckForHoldKey,0203H
+        ARGFRAME XSTACK, 0, STACK
         PUBLIC ZDAppDetermineDeviceType
         FUNCTION ZDAppDetermineDeviceType,021203H
         ARGFRAME XSTACK, 12, STACK
@@ -815,7 +812,6 @@ sAddrExtCpy         SYMBOL "sAddrExtCpy"
 osal_memset         SYMBOL "osal_memset"
 osal_nv_item_init   SYMBOL "osal_nv_item_init"
 osal_nv_read        SYMBOL "osal_nv_read"
-HalKeyRead          SYMBOL "HalKeyRead"
 ZDP_IncomingData    SYMBOL "ZDP_IncomingData"
 NLME_JoinRequest    SYMBOL "NLME_JoinRequest"
 ZMacSetReq          SYMBOL "ZMacSetReq"
@@ -855,7 +851,6 @@ osal_get_timeoutEx  SYMBOL "osal_get_timeoutEx"
 APSME_HoldDataRequests SYMBOL "APSME_HoldDataRequests"
 ZDP_DeviceAnnce     SYMBOL "ZDP_DeviceAnnce"
 ??APSME_HoldDataRequests?relay SYMBOL "?relay", APSME_HoldDataRequests
-??HalKeyRead?relay  SYMBOL "?relay", HalKeyRead
 ??HalLedBlink?relay SYMBOL "?relay", HalLedBlink
 ??HalLedSet?relay   SYMBOL "?relay", HalLedSet
 ??NLME_GetCoordShortAddr?relay SYMBOL "?relay", NLME_GetCoordShortAddr
@@ -1271,13 +1266,6 @@ ZDO_beaconNotifyIndCB SYMBOL "ZDO_beaconNotifyIndCB"
         ARGFRAME XSTACK, 37, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalKeyRead
-        FUNCTION HalKeyRead,0202H
-        ARGFRAME ISTACK, 2, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 0, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         EXTERN ZDP_IncomingData
         FUNCTION ZDP_IncomingData,0202H
         ARGFRAME ISTACK, 0, STACK
@@ -1546,8 +1534,6 @@ ZDO_beaconNotifyIndCB SYMBOL "ZDO_beaconNotifyIndCB"
         ARGFRAME DOVERLAY, 0, STATIC
         EXTERN ??APSME_HoldDataRequests?relay
         FUNCTION ??APSME_HoldDataRequests?relay,00H
-        EXTERN ??HalKeyRead?relay
-        FUNCTION ??HalKeyRead?relay,00H
         EXTERN ??HalLedBlink?relay
         FUNCTION ??HalLedBlink?relay,00H
         EXTERN ??HalLedSet?relay
@@ -2113,17 +2099,6 @@ ZDApp_Init:
         ARGFRAME XSTACK, 9, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL ZDApp_Init, ZDAppCheckForHoldKey
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 9, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 9, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL ZDApp_Init, ZDO_Init
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -2251,8 +2226,6 @@ ZDApp_Init:
 //  268 
 //  269   // Check for manual "Hold Auto Start"
 //  270   ZDAppCheckForHoldKey();
-        ; Setup parameters for call to function ZDAppCheckForHoldKey
-        LCALL   ??ZDAppCheckForHoldKey?relay
 //  271 
 //  272   // Initialize ZDO items and setup the device - type of device to create.
 //  273   ZDO_Init();
@@ -4523,46 +4496,20 @@ ZDAppCheckForHoldKey:
         CFI Function ZDAppCheckForHoldKey
         CODE
 //  991 {
-        FUNCALL ZDAppCheckForHoldKey, HalKeyRead
-        LOCFRAME ISTACK, 2, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 0, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 2, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 0, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        PUSH    DPL
-        CFI DPL0 Frame(CFA_SP, 4)
-        CFI CFA_SP SP+-4
-        PUSH    DPH
-        CFI DPH0 Frame(CFA_SP, 5)
-        CFI CFA_SP SP+-5
-        ; Saved register size: 2
+        ; Saved register size: 0
         ; Auto size: 0
 //  992 #if (defined HAL_KEY) && (HAL_KEY == TRUE)
 //  993   // Get Keypad directly to see if a HOLD_START is needed.
 //  994   // Hold down the SW_BYPASS_START key (see OnBoard.h)
 //  995   // while booting to avoid starting up the device.
 //  996   if ( HalKeyRead () == SW_BYPASS_START)
-        ; Setup parameters for call to function HalKeyRead
-        LCALL   ??HalKeyRead?relay
-        MOV     A,R1
-        XRL     A,#0x1
-        JNZ     ??ZDAppCheckForHoldKey_0
 //  997   {
 //  998     // Change the device state to HOLD on start up
 //  999     devState = DEV_HOLD;
-        MOV     DPTR,#devState
-        CLR     A
-        MOVX    @DPTR,A
 // 1000   }
 // 1001 #endif // HAL_KEY
 // 1002 }
-??ZDAppCheckForHoldKey_0:
-        LJMP    ?Subroutine2 & 0xFFFF
+        LJMP    ?BRET
         CFI EndBlock cfiBlock34
 // 1003 
 // 1004 /*********************************************************************
@@ -8044,7 +7991,7 @@ ZDApp_LeaveCtrlBypass:
         CLR     A
         RLC     A
         MOV     R1,A
-        SJMP    ?Subroutine2
+        LJMP    ?Subroutine2 & 0xFFFF
         CFI EndBlock cfiBlock105
 // 1744 }
 // 1745 
@@ -8127,28 +8074,11 @@ ZDApp_LeaveCtrlStartup:
 // 1772     ZDApp_LeaveCtrlReset();
         ; Setup parameters for call to function ZDApp_LeaveCtrlReset
         LCALL   ??ZDApp_LeaveCtrlReset?relay
-        CFI EndBlock cfiBlock106
 // 1773   }
 // 1774 }
 ??ZDApp_LeaveCtrlStartup_0:
-        REQUIRE ?Subroutine2
-        ; // Fall through to label ?Subroutine2
-
-        RSEG BANKED_CODE:CODE:NOROOT(0)
-?Subroutine2:
-        CFI Block cfiBlock107 Using cfiCommon0
-        CFI NoFunction
-        CFI CFA_SP SP+-5
-        CFI DPL0 Frame(CFA_SP, 4)
-        CFI DPH0 Frame(CFA_SP, 5)
-        POP     DPH
-        CFI CFA_SP SP+-4
-        CFI DPH0 SameValue
-        POP     DPL
-        CFI CFA_SP SP+-3
-        CFI DPL0 SameValue
-        LJMP    ?BRET
-        CFI EndBlock cfiBlock107
+        LJMP    ?Subroutine2 & 0xFFFF
+        CFI EndBlock cfiBlock106
 // 1775 
 // 1776 /*********************************************************************
 // 1777  * @fn      ZDApp_LeaveReset
@@ -8163,7 +8093,7 @@ ZDApp_LeaveCtrlStartup:
         RSEG BANKED_CODE:CODE:NOROOT(0)
 // 1785 void ZDApp_LeaveReset( uint8 ra )
 ZDApp_LeaveReset:
-        CFI Block cfiBlock108 Using cfiCommon0
+        CFI Block cfiBlock107 Using cfiCommon0
         CFI Function ZDApp_LeaveReset
         CODE
 // 1786 {
@@ -8215,11 +8145,11 @@ ZDApp_LeaveReset:
         LCALL   ??ZDApp_ResetTimerStart?relay
 // 1790 }
         SJMP    ??Subroutine50_0
-        CFI EndBlock cfiBlock108
+        CFI EndBlock cfiBlock107
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ?Subroutine0:
-        CFI Block cfiBlock109 Using cfiCommon0
+        CFI Block cfiBlock108 Using cfiCommon0
         CFI NoFunction
         CFI CFA_SP SP+0
         CFI CFA_XSP16 add(XSP16, 9)
@@ -8233,14 +8163,14 @@ ZDApp_LeaveReset:
         CFI ?RET_HIGH load(1, XDATA, add(CFA_XSP16, literal(-4)))
         CFI ?RET_LOW load(1, XDATA, add(CFA_XSP16, literal(-5)))
         LCALL   ??Subroutine42_0 & 0xFFFF
-        CFI EndBlock cfiBlock109
+        CFI EndBlock cfiBlock108
 ??CrossCallReturnLabel_65:
         REQUIRE ??Subroutine50_0
         ; // Fall through to label ??Subroutine50_0
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ??Subroutine50_0:
-        CFI Block cfiBlock110 Using cfiCommon0
+        CFI Block cfiBlock109 Using cfiCommon0
         CFI NoFunction
         CFI CFA_SP SP+0
         CFI CFA_XSP16 add(XSP16, 9)
@@ -8255,7 +8185,7 @@ ZDApp_LeaveReset:
         CFI ?RET_LOW load(1, XDATA, add(CFA_XSP16, literal(-5)))
         MOV     R7,#0x1
         LJMP    ?BANKED_LEAVE_XDATA
-        CFI EndBlock cfiBlock110
+        CFI EndBlock cfiBlock109
 // 1791 
 // 1792 /*********************************************************************
 // 1793  * @fn      ZDApp_LeaveUpdate
@@ -8272,7 +8202,7 @@ ZDApp_LeaveReset:
         RSEG BANKED_CODE:CODE:NOROOT(0)
 // 1803 void ZDApp_LeaveUpdate( uint16 nwkAddr, uint8* extAddr,
 ZDApp_LeaveUpdate:
-        CFI Block cfiBlock111 Using cfiCommon0
+        CFI Block cfiBlock110 Using cfiCommon0
         CFI Function ZDApp_LeaveUpdate
         CODE
 // 1804                         uint8 removeChildren )
@@ -8461,7 +8391,7 @@ ZDApp_LeaveUpdate:
         CFI CFA_XSP16 add(XSP16, 15)
         MOV     R7,#0x7
         LJMP    ?BANKED_LEAVE_XDATA
-        CFI EndBlock cfiBlock111
+        CFI EndBlock cfiBlock110
 // 1838 
 // 1839 /*********************************************************************
 // 1840  * @fn      ZDApp_NetworkDiscoveryReq
@@ -8477,7 +8407,7 @@ ZDApp_LeaveUpdate:
         RSEG BANKED_CODE:CODE:NOROOT(0)
 // 1849 ZStatus_t ZDApp_NetworkDiscoveryReq( uint32 scanChannels, uint8 scanDuration)
 ZDApp_NetworkDiscoveryReq:
-        CFI Block cfiBlock112 Using cfiCommon0
+        CFI Block cfiBlock111 Using cfiCommon0
         CFI Function ZDApp_NetworkDiscoveryReq
         CODE
 // 1850 {
@@ -8517,12 +8447,12 @@ ZDApp_NetworkDiscoveryReq:
         ; Setup parameters for call to function NLME_NetworkDiscoveryRequest
         LCALL   ??NLME_NetworkDiscoveryRequest?relay
         SJMP    ??Subroutine51_0
-        CFI EndBlock cfiBlock112
+        CFI EndBlock cfiBlock111
 // 1855 }
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ?Subroutine4:
-        CFI Block cfiBlock113 Using cfiCommon0
+        CFI Block cfiBlock112 Using cfiCommon0
         CFI NoFunction
         CFI CFA_SP SP+0
         CFI CFA_XSP16 add(XSP16, 33)
@@ -8540,13 +8470,13 @@ ZDApp_NetworkDiscoveryReq:
         CFI ?RET_LOW load(1, XDATA, add(CFA_XSP16, literal(-5)))
         MOV     A,#0x15
         LCALL   ?DEALLOC_XSTACK8
-        CFI EndBlock cfiBlock113
+        CFI EndBlock cfiBlock112
         REQUIRE ??Subroutine51_0
         ; // Fall through to label ??Subroutine51_0
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ??Subroutine51_0:
-        CFI Block cfiBlock114 Using cfiCommon0
+        CFI Block cfiBlock113 Using cfiCommon0
         CFI NoFunction
         CFI CFA_SP SP+0
         CFI CFA_XSP16 add(XSP16, 12)
@@ -8564,7 +8494,7 @@ ZDApp_NetworkDiscoveryReq:
         CFI ?RET_LOW load(1, XDATA, add(CFA_XSP16, literal(-5)))
         MOV     R7,#0x4
         LJMP    ?BANKED_LEAVE_XDATA
-        CFI EndBlock cfiBlock114
+        CFI EndBlock cfiBlock113
 // 1856 
 // 1857 /*********************************************************************
 // 1858  * @fn      ZDApp_JoinReq
@@ -8580,7 +8510,7 @@ ZDApp_NetworkDiscoveryReq:
         RSEG BANKED_CODE:CODE:NOROOT(0)
 // 1867 ZStatus_t ZDApp_JoinReq( uint8 channel, uint16 panID, uint8 *extendedPanID,
 ZDApp_JoinReq:
-        CFI Block cfiBlock115 Using cfiCommon0
+        CFI Block cfiBlock114 Using cfiCommon0
         CFI Function ZDApp_JoinReq
         CODE
 // 1868                          uint16 chosenParent, uint8 parentDepth, uint8 stackProfile )
@@ -8682,7 +8612,7 @@ ZDApp_JoinReq:
         LCALL   ??NLME_JoinRequest?relay
         MOV     A,#0x4
         LCALL   ?DEALLOC_XSTACK8
-        CFI EndBlock cfiBlock115
+        CFI EndBlock cfiBlock114
         REQUIRE ?Subroutine5
         ; // Fall through to label ?Subroutine5
 // 1878 
@@ -8690,7 +8620,7 @@ ZDApp_JoinReq:
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ?Subroutine5:
-        CFI Block cfiBlock116 Using cfiCommon0
+        CFI Block cfiBlock115 Using cfiCommon0
         CFI NoFunction
         CFI CFA_SP SP+0
         CFI CFA_XSP16 add(XSP16, 14)
@@ -8710,7 +8640,7 @@ ZDApp_JoinReq:
         CFI ?RET_LOW load(1, XDATA, add(CFA_XSP16, literal(-5)))
         MOV     R7,#0x6
         LJMP    ?BANKED_LEAVE_XDATA
-        CFI EndBlock cfiBlock116
+        CFI EndBlock cfiBlock115
 // 1880 
 // 1881 /*********************************************************************
 // 1882  * @fn      ZDApp_DeviceConfigured
@@ -8726,7 +8656,7 @@ ZDApp_JoinReq:
         RSEG BANKED_CODE:CODE:NOROOT(0)
 // 1891 uint8 ZDApp_DeviceConfigured( void )
 ZDApp_DeviceConfigured:
-        CFI Block cfiBlock117 Using cfiCommon0
+        CFI Block cfiBlock116 Using cfiCommon0
         CFI Function ZDApp_DeviceConfigured
         CODE
 // 1892 {
@@ -8810,7 +8740,7 @@ ZDApp_DeviceConfigured:
         MOV     R1,#0x1
 ??ZDApp_DeviceConfigured_2:
         LJMP    ?Subroutine7 & 0xFFFF
-        CFI EndBlock cfiBlock117
+        CFI EndBlock cfiBlock116
 // 1900 }
 // 1901 
 // 1902 /*********************************************************************
@@ -8835,7 +8765,7 @@ ZDApp_DeviceConfigured:
         RSEG BANKED_CODE:CODE:NOROOT(0)
 // 1920 void ZDApp_SendEventMsg( uint8 cmd, uint8 len, uint8 *buf )
 ZDApp_SendEventMsg:
-        CFI Block cfiBlock118 Using cfiCommon0
+        CFI Block cfiBlock117 Using cfiCommon0
         CFI Function ZDApp_SendEventMsg
         CODE
 // 1921 {
@@ -8877,7 +8807,7 @@ ZDApp_SendEventMsg:
 // 1923 }
 ??CrossCallReturnLabel_22:
         LJMP    ??Subroutine50_0 & 0xFFFF
-        CFI EndBlock cfiBlock118
+        CFI EndBlock cfiBlock117
 // 1924 
 // 1925 /*********************************************************************
 // 1926  * @fn      ZDApp_SendMsg()
@@ -8895,7 +8825,7 @@ ZDApp_SendEventMsg:
         RSEG BANKED_CODE:CODE:NOROOT(0)
 // 1937 void ZDApp_SendMsg( uint8 taskID, uint8 cmd, uint8 len, uint8 *buf )
 ZDApp_SendMsg:
-        CFI Block cfiBlock119 Using cfiCommon0
+        CFI Block cfiBlock118 Using cfiCommon0
         CFI Function ZDApp_SendMsg
         CODE
 // 1938 {
@@ -9016,7 +8946,7 @@ ZDApp_SendMsg:
 ??ZDApp_SendMsg_0:
         MOV     R7,#0x8
         LJMP    ?BANKED_LEAVE_XDATA
-        CFI EndBlock cfiBlock119
+        CFI EndBlock cfiBlock118
 // 1952 
 // 1953 /*********************************************************************
 // 1954  * Call Back Functions from NWK  - API
@@ -9035,7 +8965,7 @@ ZDApp_SendMsg:
         RSEG BANKED_CODE:CODE:NOROOT(0)
 // 1966 ZStatus_t ZDO_NetworkDiscoveryConfirmCB(uint8 status)
 ZDO_NetworkDiscoveryConfirmCB:
-        CFI Block cfiBlock120 Using cfiCommon0
+        CFI Block cfiBlock119 Using cfiCommon0
         CFI Function ZDO_NetworkDiscoveryConfirmCB
         CODE
 // 1967 {
@@ -9123,10 +9053,26 @@ ZDO_NetworkDiscoveryConfirmCB:
         MOV     R1,#0x0
         MOV     A,#0x3
         LCALL   ?DEALLOC_XSTACK8
-        CFI CFA_XSP16 XSP16+0
-        LJMP    ?Subroutine2 & 0xFFFF
-        CFI EndBlock cfiBlock120
+        CFI EndBlock cfiBlock119
+        REQUIRE ?Subroutine2
+        ; // Fall through to label ?Subroutine2
 // 1995 }  // ZDO_NetworkDiscoveryConfirmCB
+
+        RSEG BANKED_CODE:CODE:NOROOT(0)
+?Subroutine2:
+        CFI Block cfiBlock120 Using cfiCommon0
+        CFI NoFunction
+        CFI CFA_SP SP+-5
+        CFI DPL0 Frame(CFA_SP, 4)
+        CFI DPH0 Frame(CFA_SP, 5)
+        POP     DPH
+        CFI CFA_SP SP+-4
+        CFI DPH0 SameValue
+        POP     DPL
+        CFI CFA_SP SP+-3
+        CFI DPL0 SameValue
+        LJMP    ?BRET
+        CFI EndBlock cfiBlock120
 // 1996 
 // 1997 /*********************************************************************
 // 1998  * @fn          ZDApp_NwkDescListProcessing
@@ -15614,14 +15560,14 @@ __Constant_3e8:
 // 3039 /*********************************************************************
 // 3040 *********************************************************************/
 // 
-// 5 214 bytes in segment BANKED_CODE
+// 5 195 bytes in segment BANKED_CODE
 //   390 bytes in segment BANK_RELAYS
 //    11 bytes in segment XDATA_I
 //    11 bytes in segment XDATA_ID
 //     8 bytes in segment XDATA_ROM_C
 //    55 bytes in segment XDATA_Z
 // 
-// 5 615 bytes of CODE  memory
+// 5 596 bytes of CODE  memory
 //     0 bytes of CONST memory (+ 8 bytes shared)
 //    66 bytes of XDATA memory
 //

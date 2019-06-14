@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         10/Jun/2019  16:30:08 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         14/Jun/2019  13:01:11 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -537,72 +537,70 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
     268          
     269            // Check for manual "Hold Auto Start"
     270            ZDAppCheckForHoldKey();
-   \   00001C                ; Setup parameters for call to function ZDAppCheckForHoldKey
-   \   00001C   12....       LCALL   ??ZDAppCheckForHoldKey?relay
     271          
     272            // Initialize ZDO items and setup the device - type of device to create.
     273            ZDO_Init();
-   \   00001F                ; Setup parameters for call to function ZDO_Init
-   \   00001F   12....       LCALL   ??ZDO_Init?relay
+   \   00001C                ; Setup parameters for call to function ZDO_Init
+   \   00001C   12....       LCALL   ??ZDO_Init?relay
     274          
     275            // Register the endpoint description with the AF
     276            // This task doesn't have a Simple description, but we still need
     277            // to register the endpoint.
     278            afRegister( (endPointDesc_t *)&ZDApp_epDesc );
-   \   000022                ; Setup parameters for call to function afRegister
-   \   000022   7A..         MOV     R2,#ZDApp_epDesc & 0xff
-   \   000024   7B..         MOV     R3,#(ZDApp_epDesc >> 8) & 0xff
-   \   000026   12....       LCALL   ??afRegister?relay
+   \   00001F                ; Setup parameters for call to function afRegister
+   \   00001F   7A..         MOV     R2,#ZDApp_epDesc & 0xff
+   \   000021   7B..         MOV     R3,#(ZDApp_epDesc >> 8) & 0xff
+   \   000023   12....       LCALL   ??afRegister?relay
     279          
     280          #if defined( ZDO_USERDESC_RESPONSE )
     281            ZDApp_InitUserDesc();
-   \   000029                ; Setup parameters for call to function ZDApp_InitUserDesc
-   \   000029   12....       LCALL   ??ZDApp_InitUserDesc?relay
+   \   000026                ; Setup parameters for call to function ZDApp_InitUserDesc
+   \   000026   12....       LCALL   ??ZDApp_InitUserDesc?relay
     282          #endif // ZDO_USERDESC_RESPONSE
     283          
     284            // Start the device?
     285            if ( devState != DEV_HOLD )
-   \   00002C   90....       MOV     DPTR,#devState
-   \   00002F   E0           MOVX    A,@DPTR
-   \   000030   6009         JZ      ??ZDApp_Init_0
+   \   000029   90....       MOV     DPTR,#devState
+   \   00002C   E0           MOVX    A,@DPTR
+   \   00002D   6009         JZ      ??ZDApp_Init_0
     286            {
     287              ZDOInitDevice( 0 );
-   \   000032                ; Setup parameters for call to function ZDOInitDevice
-   \   000032   7A00         MOV     R2,#0x0
-   \   000034   7B00         MOV     R3,#0x0
-   \   000036   12....       LCALL   ??ZDOInitDevice?relay
-   \   000039   8014         SJMP    ??ZDApp_Init_1
+   \   00002F                ; Setup parameters for call to function ZDOInitDevice
+   \   00002F   7A00         MOV     R2,#0x0
+   \   000031   7B00         MOV     R3,#0x0
+   \   000033   12....       LCALL   ??ZDOInitDevice?relay
+   \   000036   8014         SJMP    ??ZDApp_Init_1
     288            }
     289            else
     290            {
     291              ZDOInitDevice( ZDO_INIT_HOLD_NWK_START );
    \                     ??ZDApp_Init_0:
-   \   00003B                ; Setup parameters for call to function ZDOInitDevice
-   \   00003B   7AFF         MOV     R2,#-0x1
-   \   00003D   7BFF         MOV     R3,#-0x1
-   \   00003F   12....       LCALL   ??ZDOInitDevice?relay
+   \   000038                ; Setup parameters for call to function ZDOInitDevice
+   \   000038   7AFF         MOV     R2,#-0x1
+   \   00003A   7BFF         MOV     R3,#-0x1
+   \   00003C   12....       LCALL   ??ZDOInitDevice?relay
     292              // Blink LED to indicate HOLD_START
     293              HalLedBlink ( HAL_LED_4, 0, 50, 500 );
-   \   000042                ; Setup parameters for call to function HalLedBlink
-   \   000042   7CF4         MOV     R4,#-0xc
-   \   000044   7D01         MOV     R5,#0x1
-   \   000046   7B32         MOV     R3,#0x32
-   \   000048   7A00         MOV     R2,#0x0
-   \   00004A   7908         MOV     R1,#0x8
-   \   00004C   12....       LCALL   ??HalLedBlink?relay
+   \   00003F                ; Setup parameters for call to function HalLedBlink
+   \   00003F   7CF4         MOV     R4,#-0xc
+   \   000041   7D01         MOV     R5,#0x1
+   \   000043   7B32         MOV     R3,#0x32
+   \   000045   7A00         MOV     R2,#0x0
+   \   000047   7908         MOV     R1,#0x8
+   \   000049   12....       LCALL   ??HalLedBlink?relay
     294            }
     295          
     296            // Initialize the ZDO callback function pointers zdoCBFunc[]
     297            ZDApp_InitZdoCBFunc();
    \                     ??ZDApp_Init_1:
-   \   00004F                ; Setup parameters for call to function ZDApp_InitZdoCBFunc
-   \   00004F   12....       LCALL   ??ZDApp_InitZdoCBFunc?relay
+   \   00004C                ; Setup parameters for call to function ZDApp_InitZdoCBFunc
+   \   00004C   12....       LCALL   ??ZDApp_InitZdoCBFunc?relay
     298          
     299            ZDApp_RegisterCBs();
-   \   000052                ; Setup parameters for call to function ZDApp_RegisterCBs
-   \   000052   12....       LCALL   ??ZDApp_RegisterCBs?relay
+   \   00004F                ; Setup parameters for call to function ZDApp_RegisterCBs
+   \   00004F   12....       LCALL   ??ZDApp_RegisterCBs?relay
     300          } /* ZDApp_Init() */
-   \   000055   02....       LJMP    ??Subroutine50_0 & 0xFFFF
+   \   000052   02....       LJMP    ??Subroutine50_0 & 0xFFFF
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ??Subroutine50_0:
@@ -2009,31 +2007,20 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
     990          void ZDAppCheckForHoldKey( void )
    \                     ZDAppCheckForHoldKey:
     991          {
-   \   000000   C082         PUSH    DPL
-   \   000002   C083         PUSH    DPH
-   \   000004                ; Saved register size: 2
-   \   000004                ; Auto size: 0
+   \   000000                ; Saved register size: 0
+   \   000000                ; Auto size: 0
     992          #if (defined HAL_KEY) && (HAL_KEY == TRUE)
     993            // Get Keypad directly to see if a HOLD_START is needed.
     994            // Hold down the SW_BYPASS_START key (see OnBoard.h)
     995            // while booting to avoid starting up the device.
     996            if ( HalKeyRead () == SW_BYPASS_START)
-   \   000004                ; Setup parameters for call to function HalKeyRead
-   \   000004   12....       LCALL   ??HalKeyRead?relay
-   \   000007   E9           MOV     A,R1
-   \   000008   6401         XRL     A,#0x1
-   \   00000A   7005         JNZ     ??ZDAppCheckForHoldKey_0
     997            {
     998              // Change the device state to HOLD on start up
     999              devState = DEV_HOLD;
-   \   00000C   90....       MOV     DPTR,#devState
-   \   00000F   E4           CLR     A
-   \   000010   F0           MOVX    @DPTR,A
    1000            }
    1001          #endif // HAL_KEY
    1002          }
-   \                     ??ZDAppCheckForHoldKey_0:
-   \   000011   02....       LJMP    ?Subroutine2 & 0xFFFF
+   \   000000   02....       LJMP    ?BRET
    1003          
    1004          /*********************************************************************
    1005           * @fn      ZDApp_ProcessOSALMsg()
@@ -3843,7 +3830,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
    \   00000A   E4           CLR     A
    \   00000B   33           RLC     A
    \   00000C   F9           MOV     R1,A
-   \   00000D   80..         SJMP    ?Subroutine2
+   \   00000D   02....       LJMP    ?Subroutine2 & 0xFFFF
    1744          }
    1745          
    1746          /*********************************************************************
@@ -3910,8 +3897,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
    1773            }
    1774          }
    \                     ??ZDApp_LeaveCtrlStartup_0:
-   \   00002D                REQUIRE ?Subroutine2
-   \   00002D                ; // Fall through to label ?Subroutine2
+   \   00002D   02....       LJMP    ?Subroutine2 & 0xFFFF
    1775          
    1776          /*********************************************************************
    1777           * @fn      ZDApp_LeaveReset
@@ -4480,7 +4466,8 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
    \   000044   7900         MOV     R1,#0x0
    \   000046   7403         MOV     A,#0x3
    \   000048   12....       LCALL   ?DEALLOC_XSTACK8
-   \   00004B   02....       LJMP    ?Subroutine2 & 0xFFFF
+   \   00004B                REQUIRE ?Subroutine2
+   \   00004B                ; // Fall through to label ?Subroutine2
    1995          }  // ZDO_NetworkDiscoveryConfirmCB
    1996          
    1997          /*********************************************************************
@@ -7406,8 +7393,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
      Function                       ISTACK PSTACK XSTACK
      --------                       ------ ------ ------
      AddrMgrWriteNVRequest              0      0      0
-     ZDAppCheckForHoldKey               2      0      9
-       -> HalKeyRead                    4      0      0
+     ZDAppCheckForHoldKey               0      0      0
      ZDAppDetermineDeviceType           2      0     12
        -> nwk_ExtPANIDValid             4      0      0
      ZDApp_AnnounceNewAddress           0      0     23
@@ -7433,7 +7419,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
        -> ZDP_GenericRsp                0      0     28
      ZDApp_Init                         0      0      9
        -> NLME_GetExtAddr               0      0     18
-       -> ZDAppCheckForHoldKey          0      0     18
        -> ZDO_Init                      0      0     18
        -> afRegister                    0      0     18
        -> ZDApp_InitUserDesc            0      0     18
@@ -7687,7 +7672,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
      retryCnt                                       1
      ZDApp_epDesc                                   6
      ZDApp_SavedPollRate                            2
-     ZDApp_Init                                    88
+     ZDApp_Init                                    85
      ??Subroutine50_0                               5
      ZDApp_SecInit                                 11
      ZDApp_event_loop                             170
@@ -7717,7 +7702,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
      ZDApp_InitUserDesc                            89
      ?Subroutine33                                 32
      ?Subroutine35                                  8
-     ZDAppCheckForHoldKey                          20
+     ZDAppCheckForHoldKey                           3
      ZDApp_ProcessOSALMsg                         425
      ?Subroutine34                                  1
      ??Subroutine44_0                               9
@@ -7749,8 +7734,8 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
      ?Subroutine1                                  35
      ZDApp_LeaveCtrlSet                            22
      ZDApp_LeaveCtrlReset                          13
-     ZDApp_LeaveCtrlBypass                         15
-     ZDApp_LeaveCtrlStartup                        45
+     ZDApp_LeaveCtrlBypass                         16
+     ZDApp_LeaveCtrlStartup                        48
      ZDApp_LeaveReset                              17
      ZDApp_LeaveUpdate                            134
      ??Subroutine56_0                               3
@@ -7762,7 +7747,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
      ZDApp_SendEventMsg                            17
      ?Subroutine23                                  9
      ZDApp_SendMsg                                 90
-     ZDO_NetworkDiscoveryConfirmCB                 78
+     ZDO_NetworkDiscoveryConfirmCB                 75
      ZDApp_NwkDescListProcessing                  266
      ?Subroutine21                                  6
      ??Subroutine52_0                               6
@@ -7890,14 +7875,14 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\stack\zdo\ZDApp.c
      ??ZDO_DeregisterForZdoCB?relay                 6
 
  
- 5 214 bytes in segment BANKED_CODE
+ 5 195 bytes in segment BANKED_CODE
    390 bytes in segment BANK_RELAYS
     11 bytes in segment XDATA_I
     11 bytes in segment XDATA_ID
      8 bytes in segment XDATA_ROM_C
     55 bytes in segment XDATA_Z
  
- 5 615 bytes of CODE  memory
+ 5 596 bytes of CODE  memory
      0 bytes of CONST memory (+ 8 bytes shared)
     66 bytes of XDATA memory
 

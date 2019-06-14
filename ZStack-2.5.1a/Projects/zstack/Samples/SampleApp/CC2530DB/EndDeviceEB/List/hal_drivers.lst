@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         14/Jun/2019  11:50:52 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         14/Jun/2019  13:01:10 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -340,8 +340,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
     165            /* KEY */
     166          #if (defined HAL_KEY) && (HAL_KEY == TRUE)
     167            HalKeyInit();
-   \   000016                ; Setup parameters for call to function HalKeyInit
-   \   000016   12....       LCALL   ??HalKeyInit?relay
     168          #endif
     169          
     170            /* SPI */
@@ -356,11 +354,11 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
     179          
     180          #ifdef END_DEVICE
     181            InitCoinInterrupt();  
-   \   000019                ; Setup parameters for call to function InitCoinInterrupt
-   \   000019   12....       LCALL   ??InitCoinInterrupt?relay
+   \   000016                ; Setup parameters for call to function InitCoinInterrupt
+   \   000016   12....       LCALL   ??InitCoinInterrupt?relay
     182          #endif
     183          }
-   \   00001C   80..         SJMP    ?Subroutine0
+   \   000019   80..         SJMP    ?Subroutine0
     184          
     185          
     186          /**************************************************************************************************
@@ -426,7 +424,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
    \   000021   6480         XRL     A,#0x80
    \                     ??Hal_ProcessEvent_3:
    \   000023   FB           MOV     R3,A
-   \   000024   8036         SJMP    ??Hal_ProcessEvent_4
+   \   000024   801D         SJMP    ??Hal_ProcessEvent_4
     216            }
     217          
     218            if ( events & HAL_LED_BLINK_EVENT )
@@ -443,7 +441,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
     223              return events ^ HAL_LED_BLINK_EVENT;
    \   00002E   EE           MOV     A,R6
    \   00002F   6402         XRL     A,#0x2
-   \                     ??Hal_ProcessEvent_6:
    \   000031   FA           MOV     R2,A
    \   000032   EF           MOV     A,R7
    \   000033   80EE         SJMP    ??Hal_ProcessEvent_3
@@ -453,39 +450,24 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
    \                     ??Hal_ProcessEvent_5:
    \   000035   EE           MOV     A,R6
    \   000036   A2E0         MOV     C,0xE0 /* A   */.0
-   \   000038   501E         JNC     ??Hal_ProcessEvent_7
+   \   000038   5005         JNC     ??Hal_ProcessEvent_6
     227            {
     228          
     229          #if (defined HAL_KEY) && (HAL_KEY == TRUE)
     230              /* Check for keys */
     231              HalKeyPoll();
-   \   00003A                ; Setup parameters for call to function HalKeyPoll
-   \   00003A   12....       LCALL   ??HalKeyPoll?relay
     232          
     233              /* if interrupt disabled, do next polling */
     234              if (!Hal_KeyIntEnable)
-   \   00003D   90....       MOV     DPTR,#Hal_KeyIntEnable
-   \   000040   E0           MOVX    A,@DPTR
-   \   000041   7010         JNZ     ??Hal_ProcessEvent_8
     235              {
     236                osal_start_timerEx( Hal_TaskID, HAL_KEY_EVENT, 100);
-   \   000043                ; Setup parameters for call to function osal_start_timerEx
-   \   000043   7C64         MOV     R4,#0x64
-   \   000045   7D00         MOV     R5,#0x0
-   \   000047   7A01         MOV     R2,#0x1
-   \   000049   7B00         MOV     R3,#0x0
-   \   00004B   90....       MOV     DPTR,#Hal_TaskID
-   \   00004E   E0           MOVX    A,@DPTR
-   \   00004F   F9           MOV     R1,A
-   \   000050   12....       LCALL   ??osal_start_timerEx?relay
     237              }
     238          #endif // HAL_KEY
     239          
     240              return events ^ HAL_KEY_EVENT;
-   \                     ??Hal_ProcessEvent_8:
-   \   000053   EE           MOV     A,R6
-   \   000054   6401         XRL     A,#0x1
-   \   000056   80D9         SJMP    ??Hal_ProcessEvent_6
+   \   00003A   6401         XRL     A,#0x1
+   \   00003C   FA           MOV     R2,A
+   \   00003D   8004         SJMP    ??Hal_ProcessEvent_4
     241            }
     242          
     243          #ifdef POWER_SAVING
@@ -506,12 +488,12 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
     258            
     259            /* Nothing interested, discard the message */
     260            return 0;
-   \                     ??Hal_ProcessEvent_7:
-   \   000058   7A00         MOV     R2,#0x0
-   \   00005A   7B00         MOV     R3,#0x0
+   \                     ??Hal_ProcessEvent_6:
+   \   00003F   7A00         MOV     R2,#0x0
+   \   000041   7B00         MOV     R3,#0x0
    \                     ??Hal_ProcessEvent_4:
-   \   00005C   7F02         MOV     R7,#0x2
-   \   00005E   02....       LJMP    ?BANKED_LEAVE_XDATA
+   \   000043   7F02         MOV     R7,#0x2
+   \   000045   02....       LJMP    ?BANKED_LEAVE_XDATA
     261          
     262          }
     263          
@@ -562,7 +544,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
     299          #endif
     300          
     301          }
-   \   000007   02....       LJMP    ?Subroutine0 & 0xFFFF
+   \   000007   80..         SJMP    ?Subroutine0
 
    \                                 In  segment BANK_RELAYS, align 1
    \                     ??Hal_Init?relay:
@@ -600,7 +582,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
        -> HalLcdInit              4      0      0
        -> HalLedInit              4      0      0
        -> HalUARTInit             4      0      0
-       -> HalKeyInit              4      0      0
        -> InitCoinInterrupt       4      0      0
      Hal_Init                     2      0      0
      Hal_ProcessEvent             0      0     10
@@ -608,8 +589,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
        -> osal_msg_deallocate     0      0     20
        -> osal_msg_receive        0      0     20
        -> HalLedUpdate            0      0     20
-       -> HalKeyPoll              0      0     20
-       -> osal_start_timerEx      0      0     20
      Hal_ProcessPoll              2      0      0
        -> HalUARTPoll             4      0      0
 
@@ -621,20 +600,20 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
      Hal_TaskID                  1
      Hal_Init                    9
      ?Subroutine0                7
-     HalDriverInit              30
-     Hal_ProcessEvent           97
-     Hal_ProcessPoll            10
+     HalDriverInit              27
+     Hal_ProcessEvent           72
+     Hal_ProcessPoll             9
      ??Hal_Init?relay            6
      ??HalDriverInit?relay       6
      ??Hal_ProcessEvent?relay    6
      ??Hal_ProcessPoll?relay     6
 
  
- 153 bytes in segment BANKED_CODE
+ 124 bytes in segment BANKED_CODE
   24 bytes in segment BANK_RELAYS
    1 byte  in segment XDATA_Z
  
- 177 bytes of CODE  memory
+ 148 bytes of CODE  memory
    1 byte  of XDATA memory
 
 Errors: none
