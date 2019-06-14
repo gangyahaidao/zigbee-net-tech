@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         10/Jun/2019  19:41:37 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         14/Jun/2019  11:09:59 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -390,12 +390,12 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
     163            终端设备P1端口中断处理函数，用来接收投币器的信号
     164          */
     165          #ifndef ZDO_COORDINATOR
-    166          HAL_ISR_FUNCTION( coinPort1Isr, P0INT_VECTOR ) // P1_2配置为投币器电平变化中断引脚，在HAL/Common/hal_drivers.c中进行的引脚初始化
+    166          HAL_ISR_FUNCTION( coinPort1Isr, P0INT_VECTOR ) // P0_5配置为投币器电平变化中断引脚，在HAL/Common/hal_drivers.c中进行的引脚初始化
     167          {
     168            // ???????????????????????????????终端操作
     169            myprintf("P0 interrupt\n");
-    170            P0IFG = 0;       //清中断标志
-    171            P0IF = 0;        //清中断标志
+    170            P0IFG &= ~(0x1 << 5);       //端口0中断状态标志
+    171            // P0IF = 0;        //端口0中断标志，0表示无中断未决，1表示有中断未决
     172          }
     173          #endif
     174          

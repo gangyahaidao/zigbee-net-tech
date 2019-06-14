@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         10/Jun/2019  16:30:14 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         14/Jun/2019  11:50:52 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -354,8 +354,8 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\common\hal_dri
     177            usbHidInit();
     178          #endif
     179          
-    180          #ifndef ZDO_COORDINATOR
-    181            InitCoinInterrupt();
+    180          #ifdef END_DEVICE
+    181            InitCoinInterrupt();  
    \   000019                ; Setup parameters for call to function InitCoinInterrupt
    \   000019   12....       LCALL   ??InitCoinInterrupt?relay
     182          #endif

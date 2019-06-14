@@ -177,8 +177,8 @@ void HalDriverInit (void)
   usbHidInit();
 #endif
 
-#ifndef ZDO_COORDINATOR
-  InitCoinInterrupt();
+#ifdef END_DEVICE
+  InitCoinInterrupt();  
 #endif
 }
 

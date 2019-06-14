@@ -162,13 +162,13 @@ int8 NeedCoinDelivered = 0; // 定义终端需要处理的投币个数
 /**
   终端设备P1端口中断处理函数，用来接收投币器的信号
 */
-#ifndef ZDO_COORDINATOR
-HAL_ISR_FUNCTION( coinPort1Isr, P0INT_VECTOR ) // P1_2配置为投币器电平变化中断引脚，在HAL/Common/hal_drivers.c中进行的引脚初始化
+#ifdef END_DEVICE
+HAL_ISR_FUNCTION( coinPort0Isr, P0INT_VECTOR ) // P0_5配置为投币器电平变化中断引脚，在HAL/Common/hal_drivers.c中进行的引脚初始化
 {
-  // ???????????????????????????????终端操作
   myprintf("P0 interrupt\n");
-  P0IFG = 0;       //清中断标志
-  P0IF = 0;        //清中断标志
+  HalLedBlink(HAL_LED_1, 5, 50, 250);
+  P0IFG &= ~(0x1 << 5);       //端口0中断状态标志
+  // P0IF = 0;        //端口0中断标志，0表示无中断未决，1表示有中断未决
 }
 #endif
 
@@ -244,10 +244,9 @@ void SampleApp_Init( uint8 task_id )
   // 初始化串口
   MT_UartInit();                    //串口初始化
   MT_UartRegisterTaskID(task_id);   //注册串口任务
-  
-#ifdef ZDO_COORDINATOR  
   myprintf("UartInit OK\n");
-  
+
+#ifdef ZDO_COORDINATOR   
   int ret = InitList_L(&LL); // 单链表初始化
   if(ret == OVERFLOW) {
     myprintf("InitList_L OVERFLOW\n");
@@ -323,10 +322,8 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
           }
           break;
           
-        default:
-#ifdef ZDO_COORDINATOR          
-          myprintf("unknown pkg-event = 0x%x\n", MSGpkt->hdr.event);
-#endif          
+        default:        
+          myprintf("unknown pkg-event = 0x%x\n", MSGpkt->hdr.event);      
           break;
       }      
       
@@ -367,11 +364,8 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
     }    
     return (events ^ SAMPLEAPP_SIMULATE_COIN_MSG_EVT);
   }
-#endif
-  
-#ifdef ZDO_COORDINATOR
-  myprintf("Discard unknown events = %d\n", events);
 #endif  
+  myprintf("Discard unknown events = %d\n", events);
   return 0;
 }
 
@@ -450,7 +444,7 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
           myprintf("Insert new EP in list\n");
         } else { // 更新终端所在节点的在线时长，标记为在线状态
           updateListEleStatus(LL, ret, INIT_LEFT_SEC);
-          // myprintf("Already In List, update()\n");
+          myprintf("Already In List, update()\n");
         }
         // myprintf("length = %d\n", ListLength_L(LL));
       } else if(cmd == 0x72 && pkt->cmd.Data[10] == '@') { // 收到终端回复的确认收到投币命令
@@ -506,7 +500,7 @@ void SampleApp_SendPeriodicMessage( int8 key )
                         AF_DISCV_ROUTE,
                         AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )
     {
-      HalLedBlink(HAL_LED_1, 1, 50, 200);
+      HalLedBlink(HAL_LED_1, 1, 50, 250);
     }
   } else if(key == 2) { // 按键S2
     // myprintf("press key S2\n");
