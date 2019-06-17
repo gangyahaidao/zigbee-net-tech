@@ -80,10 +80,11 @@ extern "C"
 // Send Message Timeout
 #define SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT   1000     // Every 1 seconds
 
-// Application Events (OSAL) - These are bit weighted definitions.
+// Application Events (OSAL) - These are bit weighted definitions.使用幂次数表示事件
 #define SAMPLEAPP_SEND_PERIODIC_MSG_EVT       0x0001
-#define SAMPLEAPP_SIMULATE_COIN_MSG_EVT       0x0003  // 用于模拟引脚电平变化的事件标识
-#define SAMPLEAPP_TRANSPORT_COIN_MSG_EVT      0x0005  // 用于产生信号，转发投币器产生的投币信号
+#define SAMPLEAPP_SIMULATE_COIN_MSG_EVT       0x0002  // 用于模拟引脚电平变化的事件标识
+#define SAMPLEAPP_TRANSPORT_COIN_MSG_EVT      0x0004  // 用于产生信号，转发投币器产生的投币信号
+#define SAMPLEAPP_TRANSPORT_REWARD_MSG_EVT    0x0008  // 用于向游戏模拟彩票机的出票信号低电平40ms
 
 // Group ID for Flash Command
 #define SAMPLEAPP_FLASH_GROUP                 0x0001

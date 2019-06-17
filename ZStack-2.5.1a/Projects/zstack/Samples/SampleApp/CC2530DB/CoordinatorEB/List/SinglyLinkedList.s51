@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        14/Jun/2019  17:35:45 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        17/Jun/2019  20:12:02 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -379,7 +379,9 @@ osal_msg_deallocate SYMBOL "osal_msg_deallocate"
 osal_memcmp         SYMBOL "osal_memcmp"
 osal_memcpy         SYMBOL "osal_memcpy"
 mySendByteBuf       SYMBOL "mySendByteBuf"
+myprintf            SYMBOL "myprintf"
 ??mySendByteBuf?relay SYMBOL "?relay", mySendByteBuf
+??myprintf?relay    SYMBOL "?relay", myprintf
 ??osal_memcmp?relay SYMBOL "?relay", osal_memcmp
 ??osal_memcpy?relay SYMBOL "?relay", osal_memcpy
 ??osal_msg_allocate?relay SYMBOL "?relay", osal_msg_allocate
@@ -438,8 +440,17 @@ updateListEleStatus SYMBOL "updateListEleStatus"
         ARGFRAME XSTACK, 22, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
+        EXTERN myprintf
+        FUNCTION myprintf,0202H
+        ARGFRAME ISTACK, 0, STACK
+        ARGFRAME PSTACK, 0, STACK
+        ARGFRAME XSTACK, 22, STACK
+        ARGFRAME IOVERLAY, 0, STATIC
+        ARGFRAME DOVERLAY, 0, STATIC
         EXTERN ??mySendByteBuf?relay
         FUNCTION ??mySendByteBuf?relay,00H
+        EXTERN ??myprintf?relay
+        FUNCTION ??myprintf?relay,00H
         EXTERN ??osal_memcmp?relay
         FUNCTION ??osal_memcmp?relay,00H
         EXTERN ??osal_memcpy?relay
@@ -1185,6 +1196,17 @@ decAllListEPLeftSec:
         ARGFRAME XSTACK, 22, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
+        FUNCALL decAllListEPLeftSec, myprintf
+        LOCFRAME ISTACK, 0, STACK
+        LOCFRAME PSTACK, 0, STACK
+        LOCFRAME XSTACK, 22, STACK
+        LOCFRAME IOVERLAY, 0, STATIC
+        LOCFRAME DOVERLAY, 0, STATIC
+        ARGFRAME ISTACK, 0, STACK
+        ARGFRAME PSTACK, 0, STACK
+        ARGFRAME XSTACK, 22, STACK
+        ARGFRAME IOVERLAY, 0, STATIC
+        ARGFRAME DOVERLAY, 0, STATIC
         MOV     A,#-0xb
         LCALL   ?BANKED_ENTER_XDATA
         CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-1)))
@@ -1285,20 +1307,25 @@ decAllListEPLeftSec:
         MOV     R2,DPL
         MOV     R3,DPH
         LCALL   ??mySendByteBuf?relay
-//  104     }
-//  105     // myprintf("i = %d, leftSecCount = %d\n", i, p->data.leftSecCount);
-//  106     p = p->next;
+//  104       myprintf("one end device offline\n");
+        ; Setup parameters for call to function myprintf
+        MOV     R2,#`?<Constant "one end device offline\\n">` & 0xff
+        MOV     R3,#(`?<Constant "one end device offline\\n">` >> 8) & 0xff
+        LCALL   ??myprintf?relay
+//  105     }
+//  106     // myprintf("i = %d, leftSecCount = %d\n", i, p->data.leftSecCount);
+//  107     p = p->next;
 ??decAllListEPLeftSec_2:
         MOV     A,R6
         LCALL   ??Subroutine15_0 & 0xFFFF
-//  107   }
+//  108   }
 ??CrossCallReturnLabel_33:
         MOV     A,R7
 ??decAllListEPLeftSec_0:
         LCALL   ?Subroutine4 & 0xFFFF
 ??CrossCallReturnLabel_5:
         JNZ     ??decAllListEPLeftSec_1
-//  108 }
+//  109 }
         MOV     A,#0xb
         LCALL   ?DEALLOC_XSTACK8
         CFI CFA_XSP16 add(XSP16, 11)
@@ -1498,18 +1525,18 @@ decAllListEPLeftSec:
         CFI EndBlock cfiCond32
         CFI EndBlock cfiCond33
         CFI EndBlock cfiPicker34
-//  109 
-//  110 /*════╗
-//  111 ║ 算法2.8║ 
-//  112 ╚════*/
+//  110 
+//  111 /*════╗
+//  112 ║ 算法2.8║ 
+//  113 ╚════*/
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  113 Status GetElem_L(LinkList L, int i, LElemType_L *e)
+//  114 Status GetElem_L(LinkList L, int i, LElemType_L *e)
 GetElem_L:
         CFI Block cfiBlock35 Using cfiCommon0
         CFI Function GetElem_L
         CODE
-//  114 {
+//  115 {
         MOV     A,#-0xa
         LCALL   ?BANKED_ENTER_XDATA
         CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-1)))
@@ -1533,19 +1560,19 @@ GetElem_L:
         INC     DPTR
         MOVX    A,@DPTR
         MOV     R7,A
-//  115 	int j = 1;
+//  116 	int j = 1;
         LCALL   ?Subroutine5 & 0xFFFF
-//  116 	LinkList p = L->next;
+//  117 	LinkList p = L->next;
 ??CrossCallReturnLabel_15:
         SJMP    ??GetElem_L_0
-//  117 	
-//  118 	while(p && j<i)						//p不为空且还未到达i处
-//  119 	{
-//  120 		j++;
+//  118 	
+//  119 	while(p && j<i)						//p不为空且还未到达i处
+//  120 	{
+//  121 		j++;
 ??GetElem_L_1:
         LCALL   ?Subroutine6 & 0xFFFF
-//  121 		p = p->next;
-//  122 	}
+//  122 		p = p->next;
+//  123 	}
 ??CrossCallReturnLabel_30:
         MOV     A,DPH
 ??GetElem_L_0:
@@ -1564,15 +1591,15 @@ GetElem_L:
         XRL     A,PSW
         RLC     A
         JNC     ??GetElem_L_3
-//  123 
-//  124 	if(!p || j>i)						//第i个元素不存在 
-//  125 		return ERROR;
+//  124 
+//  125 	if(!p || j>i)						//第i个元素不存在 
+//  126 		return ERROR;
 ??GetElem_L_2:
         MOV     R2,#0x0
         MOV     R3,#0x0
         SJMP    ??GetElem_L_4
-//  126 
-//  127 	*e = p->data;
+//  127 
+//  128 	*e = p->data;
 ??GetElem_L_3:
         MOV     A,R6
         MOV     R4,A
@@ -1580,14 +1607,14 @@ GetElem_L:
         MOV     R5,A
         MOV     A,#0xb
         LCALL   ?MOVE_LONG8_XDATA_XDATA
-//  128 
-//  129 	return OK; 
+//  129 
+//  130 	return OK; 
         MOV     R2,#0x1
         MOV     R3,A
 ??GetElem_L_4:
         LJMP    ?Subroutine1 & 0xFFFF
         CFI EndBlock cfiBlock35
-//  130 }
+//  131 }
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ?Subroutine9:
@@ -1686,24 +1713,24 @@ GetElem_L:
         CFI EndBlock cfiCond39
         CFI EndBlock cfiCond40
         CFI EndBlock cfiPicker41
-//  131 
-//  132 /**
-//  133   向列表中插入一个终端上传的地址
-//  134   参数：
-//  135     插入的位置
-//  136     短地址高字节
-//  137     短地址低字节
-//  138     ieee地址8个字节
-//  139     心跳检测的次数，协调器检查每次减1，终端上传每次加1
-//  140 */
+//  132 
+//  133 /**
+//  134   向列表中插入一个终端上传的地址
+//  135   参数：
+//  136     插入的位置
+//  137     短地址高字节
+//  138     短地址低字节
+//  139     ieee地址8个字节
+//  140     心跳检测的次数，协调器检查每次减1，终端上传每次加1
+//  141 */
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  141 Status ListInsert_L(LinkList L, int i, uint8 addrH, uint8 addrL, uint8* ieeeAddrP, int8 delaySec)
+//  142 Status ListInsert_L(LinkList L, int i, uint8 addrH, uint8 addrL, uint8* ieeeAddrP, int8 delaySec)
 ListInsert_L:
         CFI Block cfiBlock42 Using cfiCommon0
         CFI Function ListInsert_L
         CODE
-//  142 {
+//  143 {
         FUNCALL ListInsert_L, osal_msg_allocate
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -1766,20 +1793,20 @@ ListInsert_L:
         LCALL   ?XSTACK_DISP0_8
         MOVX    A,@DPTR
         MOV     ?V0 + 3,A
-//  143 	LinkList p, s;
-//  144 	int j = 0;	
+//  144 	LinkList p, s;
+//  145 	int j = 0;	
         MOV     R0,#0x0
         MOV     R1,#0x0
-//  145 	p = L;
+//  146 	p = L;
         MOV     A,R2
         MOV     R6,A
         MOV     A,R3
         MOV     R7,A
         SJMP    ??ListInsert_L_0
-//  146 	
-//  147 	while(p && j<i-1)					//寻找第i-1个结点 
-//  148 	{
-//  149 		p = p->next;
+//  147 	
+//  148 	while(p && j<i-1)					//寻找第i-1个结点 
+//  149 	{
+//  150 		p = p->next;
 ??ListInsert_L_1:
         MOV     A,R6
         LCALL   ??Subroutine15_0 & 0xFFFF
@@ -1790,14 +1817,14 @@ ListInsert_L:
         INC     DPTR
         MOVX    A,@DPTR
         MOV     R7,A
-//  150 		++j;
+//  151 		++j;
         MOV     A,R0
         ADD     A,#0x1
         INC     R0
         MOV     A,R1
         ADDC    A,#0x0
         MOV     R1,A
-//  151 	}	
+//  152 	}	
 ??ListInsert_L_0:
         MOV     A,R6
         ORL     A,R7
@@ -1826,15 +1853,15 @@ ListInsert_L:
         XRL     A,PSW
         RLC     A
         JNC     ??ListInsert_L_3
-//  152 	if(!p || j>i-1)
-//  153         {
-//  154 		return ERROR;
+//  153 	if(!p || j>i-1)
+//  154         {
+//  155 		return ERROR;
 ??ListInsert_L_2:
         MOV     R2,#0x0
         SJMP    ??ListInsert_L_4
-//  155         }
-//  156 
-//  157 	s = (LinkList)osal_msg_allocate(sizeof(LNode));
+//  156         }
+//  157 
+//  158 	s = (LinkList)osal_msg_allocate(sizeof(LNode));
 ??ListInsert_L_3:
         ; Setup parameters for call to function osal_msg_allocate
         MOV     R2,#0xd
@@ -1842,27 +1869,27 @@ ListInsert_L:
         LCALL   ??osal_msg_allocate?relay
         MOV     ?V0 + 0,R2
         MOV     ?V0 + 1,R3
-//  158 	if(!s)
+//  159 	if(!s)
         MOV     A,R2
         ORL     A,?V0 + 1
         JNZ     ??ListInsert_L_5
-//  159         {
-//  160 		return (OVERFLOW);
+//  160         {
+//  161 		return (OVERFLOW);
         MOV     R2,#-0x2
         MOV     R3,#-0x1
         SJMP    ??ListInsert_L_6
-//  161         }
-//  162 	s->data.shortAddrH = addrH;
+//  162         }
+//  163 	s->data.shortAddrH = addrH;
 ??ListInsert_L_5:
         MOV     DPL,R2
         MOV     DPH,R3
         MOV     A,?V0 + 2
         MOVX    @DPTR,A
-//  163         s->data.shortAddrL = addrL;
+//  164         s->data.shortAddrL = addrL;
         INC     DPTR
         MOV     A,?V0 + 6
         MOVX    @DPTR,A
-//  164         osal_memcpy(s->data.IEEEArr, ieeeAddrP, 8);
+//  165         osal_memcpy(s->data.IEEEArr, ieeeAddrP, 8);
         ; Setup parameters for call to function osal_memcpy
         MOV     ?V0 + 6,#0x0
         MOV     R0,#?V0 + 4
@@ -1881,7 +1908,7 @@ ListInsert_L:
         MOV     A,#0x3
         LCALL   ?DEALLOC_XSTACK8
         CFI CFA_XSP16 add(XSP16, 18)
-//  165         s->data.leftSecCount = delaySec;
+//  166         s->data.leftSecCount = delaySec;
         MOV     DPL,?V0 + 0
         MOV     DPH,?V0 + 1
         INC     DPTR
@@ -1896,8 +1923,8 @@ ListInsert_L:
         INC     DPTR
         MOV     A,?V0 + 3
         MOVX    @DPTR,A
-//  166         
-//  167 	s->next = p->next;
+//  167         
+//  168 	s->next = p->next;
         MOV     A,R6
         ADD     A,#0xb
         MOV     R0,A
@@ -1920,7 +1947,7 @@ ListInsert_L:
         INC     DPTR
         MOV     A,R3
         MOVX    @DPTR,A
-//  168 	p->next = s;
+//  169 	p->next = s;
         MOV     DPL,R0
         MOV     DPH,R1
         MOV     A,?V0 + 0
@@ -1928,8 +1955,8 @@ ListInsert_L:
         INC     DPTR
         MOV     A,?V0 + 1
         MOVX    @DPTR,A
-//  169 
-//  170 	return OK;
+//  170 
+//  171 	return OK;
         MOV     R2,#0x1
 ??ListInsert_L_4:
         MOV     R3,#0x0
@@ -1937,7 +1964,7 @@ ListInsert_L:
         MOV     R7,#0xa
         LJMP    ?BANKED_LEAVE_XDATA
         CFI EndBlock cfiBlock42
-//  171 }
+//  172 }
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ?Subroutine7:
@@ -2250,18 +2277,18 @@ ListInsert_L:
         CFI EndBlock cfiCond59
         CFI EndBlock cfiCond60
         CFI EndBlock cfiPicker61
-//  172 
-//  173 /*═════╗
-//  174 ║ 算法2.10 ║ 
-//  175 ╚═════*/
+//  173 
+//  174 /*═════╗
+//  175 ║ 算法2.10 ║ 
+//  176 ╚═════*/
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  176 Status ListDelete_L(LinkList L, int i)
+//  177 Status ListDelete_L(LinkList L, int i)
 ListDelete_L:
         CFI Block cfiBlock62 Using cfiCommon0
         CFI Function ListDelete_L
         CODE
-//  177 {
+//  178 {
         FUNCALL ListDelete_L, osal_msg_deallocate
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -2288,18 +2315,18 @@ ListDelete_L:
         CFI CFA_XSP16 add(XSP16, 9)
         ; Saved register size: 9
         ; Auto size: 0
-//  178 	LinkList pre, p; 
-//  179 	int j;
-//  180 
-//  181 	pre = L;
-//  182 	j = 1; 
+//  179 	LinkList pre, p; 
+//  180 	int j;
+//  181 
+//  182 	pre = L;
+//  183 	j = 1; 
         MOV     R0,#0x1
         MOV     R1,#0x0
         SJMP    ??ListDelete_L_0
-//  183 
-//  184 	while(pre->next && j<i)			//寻找第i个结点，并令pre指向其前驱 
-//  185 	{
-//  186 		pre = pre->next;
+//  184 
+//  185 	while(pre->next && j<i)			//寻找第i个结点，并令pre指向其前驱 
+//  186 	{
+//  187 		pre = pre->next;
 ??ListDelete_L_1:
         LCALL   ??Subroutine13_0 & 0xFFFF
 ??CrossCallReturnLabel_19:
@@ -2309,14 +2336,14 @@ ListDelete_L:
         INC     DPTR
         MOVX    A,@DPTR
         MOV     R3,A
-//  187 		++j;
+//  188 		++j;
         MOV     A,R0
         ADD     A,#0x1
         INC     R0
         MOV     A,R1
         ADDC    A,#0x0
         MOV     R1,A
-//  188 	}
+//  189 	}
 ??ListDelete_L_0:
         LCALL   ??Subroutine13_0 & 0xFFFF
 ??CrossCallReturnLabel_20:
@@ -2332,8 +2359,8 @@ ListDelete_L:
         XRL     A,PSW
         RLC     A
         JC      ??ListDelete_L_1
-//  189 	
-//  190 	if(!pre->next || j>i)			//删除位置不合理
+//  190 	
+//  191 	if(!pre->next || j>i)			//删除位置不合理
 ??ListDelete_L_2:
         MOV     A,R6
         ORL     A,R7
@@ -2347,12 +2374,12 @@ ListDelete_L:
         XRL     A,PSW
         RLC     A
         JNC     ??ListDelete_L_4
-//  191 		return ERROR;
+//  192 		return ERROR;
 ??ListDelete_L_3:
         MOV     R2,#0x0
         SJMP    ??ListDelete_L_5
-//  192 
-//  193 	p = pre->next;
+//  193 
+//  194 	p = pre->next;
 ??ListDelete_L_4:
         MOV     A,R2
         ADD     A,#0xb
@@ -2361,7 +2388,7 @@ ListDelete_L:
         LCALL   ?Subroutine7 & 0xFFFF
 ??CrossCallReturnLabel_9:
         LCALL   ?Subroutine2 & 0xFFFF
-//  194 	pre->next = p->next;
+//  195 	pre->next = p->next;
 ??CrossCallReturnLabel_0:
         MOV     R4,A
         INC     DPTR
@@ -2374,17 +2401,17 @@ ListDelete_L:
         INC     DPTR
         MOV     A,R5
         MOVX    @DPTR,A
-//  195 	osal_msg_deallocate((uint8 *)p);
+//  196 	osal_msg_deallocate((uint8 *)p);
         ; Setup parameters for call to function osal_msg_deallocate
         LCALL   ??osal_msg_deallocate?relay
-//  196 
-//  197 	return OK; 
+//  197 
+//  198 	return OK; 
         MOV     R2,#0x1
 ??ListDelete_L_5:
         MOV     R3,#0x0
         LJMP    ?Subroutine0 & 0xFFFF
         CFI EndBlock cfiBlock62
-//  198 }
+//  199 }
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ?Subroutine2:
@@ -2695,17 +2722,22 @@ ListDelete_L:
         DB 0
         DB 64
 
+        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
+        DATA8
+`?<Constant "one end device offline\\n">`:
+        DB "one end device offline\012"
+
         END
-//  199 
 //  200 
-//  201 #endif 
+//  201 
+//  202 #endif 
 // 
-// 983 bytes in segment BANKED_CODE
+// 990 bytes in segment BANKED_CODE
 //  54 bytes in segment BANK_RELAYS
-//  11 bytes in segment XDATA_ROM_C
+//  35 bytes in segment XDATA_ROM_C
 // 
-// 1 037 bytes of CODE  memory
-//    11 bytes of CONST memory
+// 1 044 bytes of CODE  memory
+//    35 bytes of CONST memory
 //
 //Errors: none
 //Warnings: none

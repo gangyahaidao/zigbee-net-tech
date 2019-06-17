@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        14/Jun/2019  13:01:12 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        17/Jun/2019  16:41:51 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -16,12 +16,11 @@
 //                          .\..\..\Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ   /
 //                          -DROOT=__near_func -DMAC_CFG_TX_DATA_MAX=3        /
 //                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3             /
-//                          -DLCD_SUPPORTED -DEND_DEVICE) -f                  /
-//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
-//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
-//                          .\..\Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO    /
-//                          -DSECURE=0 -DZG_SECURE_DYNAMIC=0 -DREFLECTOR      /
-//                          -DDEFAULT_CHANLIST=0x00000800                     /
+//                          -DEND_DEVICE) -f E:\Github_Repository\zigbee-net- /
+//                          tech\ZStack-2.5.1a\Projects\zstack\Samples\Sample /
+//                          App\CC2530DB\..\..\..\Tools\CC2530DB\f8wConfig.cf /
+//                          g (-DZIGBEEPRO -DSECURE=0 -DZG_SECURE_DYNAMIC=0   /
+//                          -DREFLECTOR -DDEFAULT_CHANLIST=0x00000800         /
 //                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                      /
 //                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_M /
 //                          ASK=0x007F -DBEACON_REQUEST_DELAY=100             /
@@ -155,15 +154,12 @@
         EXTERN ?MOVE_LONG8_XDATA_XDATA
         EXTERN ?PUSH_XSTACK_I_THREE
         EXTERN ?PUSH_XSTACK_I_TWO
-        EXTERN ?S_DIV_MOD
         EXTERN ?V0
         EXTERN ?XSP
-        EXTERN ?XSTACK_DISP0_8
         EXTERN __INIT_XDATA_I
 
         PUBLIC ??main?relay
         FUNCTION ??main?relay,0203H
-        FUNCTION ??zmain_dev_info?relay,0203H
         FUNCTION ??zmain_ext_addr?relay,0203H
         PUBLIC AppTitle
         PUBWEAK CLKCONCMD
@@ -176,12 +172,6 @@
         PUBLIC main
         FUNCTION main,0a1a03H
         ARGFRAME XSTACK, 0, STACK
-        FUNCTION zmain_dev_info,021203H
-        ARGFRAME XSTACK, 0, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        LOCFRAME ISTACK, 1, STACK
-        LOCFRAME XSTACK, 35, STACK
         FUNCTION zmain_ext_addr,021203H
         ARGFRAME XSTACK, 0, STACK
         ARGFRAME IOVERLAY, 0, STATIC
@@ -362,17 +352,10 @@ osal_memcpy         SYMBOL "osal_memcpy"
 osal_nv_write       SYMBOL "osal_nv_write"
 ZMacSetReq          SYMBOL "ZMacSetReq"
 osal_rand           SYMBOL "osal_rand"
-DrawRectFill        SYMBOL "DrawRectFill"
-osal_strlen         SYMBOL "osal_strlen"
-LCD_write_EN_string SYMBOL "LCD_write_EN_string"
-HalLcdWriteString   SYMBOL "HalLcdWriteString"
-??DrawRectFill?relay SYMBOL "?relay", DrawRectFill
 ??HalAdcCheckVdd?relay SYMBOL "?relay", HalAdcCheckVdd
 ??HalDriverInit?relay SYMBOL "?relay", HalDriverInit
 ??HalFlashRead?relay SYMBOL "?relay", HalFlashRead
-??HalLcdWriteString?relay SYMBOL "?relay", HalLcdWriteString
 ??InitBoard?relay   SYMBOL "?relay", InitBoard
-??LCD_write_EN_string?relay SYMBOL "?relay", LCD_write_EN_string
 ??ZMacInit?relay    SYMBOL "?relay", ZMacInit
 ??ZMacSetReq?relay  SYMBOL "?relay", ZMacSetReq
 ??osal_init_system?relay SYMBOL "?relay", osal_init_system
@@ -386,7 +369,6 @@ HalLcdWriteString   SYMBOL "HalLcdWriteString"
 ??osal_nv_write?relay SYMBOL "?relay", osal_nv_write
 ??osal_rand?relay   SYMBOL "?relay", osal_rand
 ??osal_start_system?relay SYMBOL "?relay", osal_start_system
-??osal_strlen?relay SYMBOL "?relay", osal_strlen
 ??zgInit?relay      SYMBOL "?relay", zgInit
 main                SYMBOL "main"
 ??main?relay        SYMBOL "?relay", main
@@ -517,48 +499,14 @@ main                SYMBOL "main"
         ARGFRAME XSTACK, 19, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN DrawRectFill
-        FUNCTION DrawRectFill,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 35, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN osal_strlen
-        FUNCTION osal_strlen,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 29, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN LCD_write_EN_string
-        FUNCTION LCD_write_EN_string,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 29, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN HalLcdWriteString
-        FUNCTION HalLcdWriteString,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 29, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN ??DrawRectFill?relay
-        FUNCTION ??DrawRectFill?relay,00H
         EXTERN ??HalAdcCheckVdd?relay
         FUNCTION ??HalAdcCheckVdd?relay,00H
         EXTERN ??HalDriverInit?relay
         FUNCTION ??HalDriverInit?relay,00H
         EXTERN ??HalFlashRead?relay
         FUNCTION ??HalFlashRead?relay,00H
-        EXTERN ??HalLcdWriteString?relay
-        FUNCTION ??HalLcdWriteString?relay,00H
         EXTERN ??InitBoard?relay
         FUNCTION ??InitBoard?relay,00H
-        EXTERN ??LCD_write_EN_string?relay
-        FUNCTION ??LCD_write_EN_string?relay,00H
         EXTERN ??ZMacInit?relay
         FUNCTION ??ZMacInit?relay,00H
         EXTERN ??ZMacSetReq?relay
@@ -585,12 +533,8 @@ main                SYMBOL "main"
         FUNCTION ??osal_rand?relay,00H
         EXTERN ??osal_start_system?relay
         FUNCTION ??osal_start_system?relay,00H
-        EXTERN ??osal_strlen?relay
-        FUNCTION ??osal_strlen?relay,00H
         EXTERN ??zgInit?relay
         FUNCTION ??zgInit?relay,00H
-        EXTERN Color
-        EXTERN Color_BK
         EXTERN aExtendedAddress
 
 // E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\ZMain\TI2530DB\ZMain.c
@@ -848,17 +792,6 @@ main:
         ARGFRAME XSTACK, 0, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL main, zmain_dev_info
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 0, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 0, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL main, osal_start_system
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -989,8 +922,6 @@ main:
 //  124 
 //  125   // Display information about this device
 //  126   zmain_dev_info();
-        ; Setup parameters for call to function zmain_dev_info
-        LCALL   ??zmain_dev_info?relay
 //  127 
 //  128 #ifdef WDT_IN_PM1
 //  129   /* If WDT is used, this is a good place to enable it. */
@@ -1514,6 +1445,42 @@ zmain_ext_addr:
         CFI EndBlock cfiCond3
         CFI EndBlock cfiCond4
         CFI EndBlock cfiPicker5
+
+        RSEG XDATA_ID:CODE:NOROOT(0)
+`?<Initializer for AppTitle>`:
+        DATA16
+        DW `?<Constant "QingPu">`
+
+        RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
+??main?relay:
+        LCALL   ?BDISPATCH
+        DATA
+        DC24    main
+
+        RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
+??zmain_ext_addr?relay:
+        LCALL   ?BDISPATCH
+        DATA
+        DC24    zmain_ext_addr
+
+        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
+        DATA8
+`?<Constant "QingPu">`:
+        DB "QingPu"
+
+        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
+        DATA8
+`?<Constant {255, 255, 255, 255, 255, 255, 255,`:
+        DB 255
+        DB 255
+        DB 255
+        DB 255
+        DB 255
+        DB 255
+        DB 255
+        DB 255
+
+        END
 //  230 
 //  231 #if defined ZCL_KEY_ESTABLISH
 //  232 /**************************************************************************************************
@@ -1588,79 +1555,8 @@ zmain_ext_addr:
 //  301  * @return      None.
 //  302  **************************************************************************************************
 //  303  */
-
-        RSEG BANKED_CODE:CODE:NOROOT(0)
 //  304 static void zmain_dev_info(void)
-zmain_dev_info:
-        CFI Block cfiBlock6 Using cfiCommon0
-        CFI Function zmain_dev_info
-        CODE
 //  305 {
-        FUNCALL zmain_dev_info, DrawRectFill
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 35, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 35, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL zmain_dev_info, osal_strlen
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 29, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 29, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL zmain_dev_info, LCD_write_EN_string
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 29, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 29, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL zmain_dev_info, HalLcdWriteString
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 29, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 29, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
-        MOV     A,#-0xc
-        LCALL   ?BANKED_ENTER_XDATA
-        CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-1)))
-        CFI DPL0 load(1, XDATA, add(CFA_XSP16, literal(-2)))
-        CFI ?BRET_EXT load(1, XDATA, add(CFA_XSP16, literal(-3)))
-        CFI ?RET_HIGH load(1, XDATA, add(CFA_XSP16, literal(-4)))
-        CFI ?RET_LOW load(1, XDATA, add(CFA_XSP16, literal(-5)))
-        CFI R7 load(1, XDATA, add(CFA_XSP16, literal(-6)))
-        CFI V3 load(1, XDATA, add(CFA_XSP16, literal(-7)))
-        CFI V2 load(1, XDATA, add(CFA_XSP16, literal(-8)))
-        CFI V1 load(1, XDATA, add(CFA_XSP16, literal(-9)))
-        CFI V0 load(1, XDATA, add(CFA_XSP16, literal(-10)))
-        CFI VB load(1, XDATA, add(CFA_XSP16, literal(-11)))
-        CFI R6 load(1, XDATA, add(CFA_XSP16, literal(-12)))
-        CFI CFA_SP SP+0
-        CFI CFA_XSP16 add(XSP16, 12)
-        ; Saved register size: 12
-        ; Auto size: 17
-        MOV     A,#-0x11
-        LCALL   ?ALLOC_XSTACK8
-        CFI CFA_XSP16 add(XSP16, 29)
 //  306 #ifdef LCD_SUPPORTED
 //  307   uint8 i;
 //  308   uint8 *xad;
@@ -1668,258 +1564,41 @@ zmain_dev_info:
 //  310 
 //  311   // Display the extended address.
 //  312   xad = aExtendedAddress + Z_EXTADDR_LEN - 1;
-        MOV     R0,#(aExtendedAddress + 7) & 0xff
-        MOV     R1,#((aExtendedAddress + 7) >> 8) & 0xff
 //  313 
 //  314   for (i = 0; i < Z_EXTADDR_LEN*2; xad--)
-        MOV     R4,#0x0
 //  315   {
 //  316     uint8 ch;
 //  317     ch = (*xad >> 4) & 0x0F;
-??zmain_dev_info_0:
-        MOV     DPL,R0
-        MOV     DPH,R1
-        MOVX    A,@DPTR
-        SWAP    A
-        ANL     A,#0xf
-        MOV     R5,A
 //  318     lcd_buf[i++] = ch + (( ch < 10 ) ? '0' : '7'); // +7可以转变成大写字符ABCDEF
-        MOV     A,R4
-        MOV     R7,A
-        INC     R4
-        MOV     A,R5
-        CLR     C
-        SUBB    A,#0xa
-        JNC     ??zmain_dev_info_1
-        MOV     R2,#0x30
-        SJMP    ??zmain_dev_info_2
-??zmain_dev_info_1:
-        MOV     R2,#0x37
-??zmain_dev_info_2:
-        MOV     A,R2
-        ADD     A,R5
-        PUSH    A
-        CFI CFA_SP SP+-1
-        MOV     ?V0 + 0,R7
-        MOV     DPL,?XSP + 0
-        MOV     DPH,?XSP + 1
-        MOV     A,DPL
-        ADD     A,?V0 + 0
-        MOV     DPL,A
-        MOV     A,DPH
-        ADDC    A,#0x0
-        MOV     DPH,A
-        POP     A
-        CFI CFA_SP SP+0
-        MOVX    @DPTR,A
 //  319     ch = *xad & 0x0F;
-        MOV     DPL,R0
-        MOV     DPH,R1
-        MOVX    A,@DPTR
-        ANL     A,#0xf
-        MOV     R5,A
 //  320     lcd_buf[i++] = ch + (( ch < 10 ) ? '0' : '7');
-        MOV     ?V0 + 0,R4
-        INC     R4
-        CLR     C
-        SUBB    A,#0xa
-        JNC     ??zmain_dev_info_3
-        MOV     R2,#0x30
-        SJMP    ??zmain_dev_info_4
-??zmain_dev_info_3:
-        MOV     R2,#0x37
-??zmain_dev_info_4:
-        MOV     A,R2
-        ADD     A,R5
-        PUSH    A
-        CFI CFA_SP SP+-1
-        MOV     ?V0 + 2,?V0 + 0
-        MOV     DPL,?XSP + 0
-        MOV     DPH,?XSP + 1
-        MOV     A,DPL
-        ADD     A,?V0 + 2
-        MOV     DPL,A
-        MOV     A,DPH
-        ADDC    A,#0x0
-        MOV     DPH,A
-        POP     A
-        CFI CFA_SP SP+0
-        MOVX    @DPTR,A
 //  321   }
-        MOV     A,R0
-        ADD     A,#-0x1
-        DEC     R0
-        MOV     A,R1
-        ADDC    A,#-0x1
-        MOV     R1,A
-        MOV     A,R4
-        CLR     C
-        SUBB    A,#0x10
-        JC      ??zmain_dev_info_0
 //  322   lcd_buf[Z_EXTADDR_LEN*2] = '\0';
-        MOV     A,#0x10
-        LCALL   ?XSTACK_DISP0_8
-        CLR     A
-        MOVX    @DPTR,A
 //  323   
 //  324   //DrawRectFill(0 ,0 ,128,128,GREEN);//背景色
 //  325   DrawRectFill(3 ,20 ,122,106,WHITE); //显示窗口
-        ; Setup parameters for call to function DrawRectFill
-        MOV     ?V0 + 2,#-0x1
-        MOV     ?V0 + 3,#-0x1
-        MOV     R0,#?V0 + 2
-        LCALL   ?PUSH_XSTACK_I_TWO
-        CFI CFA_XSP16 add(XSP16, 31)
-        MOV     ?V0 + 2,#0x6a
-        MOV     ?V0 + 3,#0x0
-        MOV     R0,#?V0 + 2
-        LCALL   ?PUSH_XSTACK_I_TWO
-        CFI CFA_XSP16 add(XSP16, 33)
-        MOV     ?V0 + 2,#0x7a
-        MOV     R0,#?V0 + 2
-        LCALL   ?PUSH_XSTACK_I_TWO
-        CFI CFA_XSP16 add(XSP16, 35)
-        MOV     R4,#0x14
-        MOV     R5,#0x0
-        MOV     R2,#0x3
-        MOV     R3,#0x0
-        LCALL   ??DrawRectFill?relay
-        MOV     A,#0x6
-        LCALL   ?DEALLOC_XSTACK8
-        CFI CFA_XSP16 add(XSP16, 29)
 //  326    
 //  327   Color    = BLACK; //前景色
-        MOV     DPTR,#Color
-        CLR     A
-        MOVX    @DPTR,A
-        INC     DPTR
-        MOVX    @DPTR,A
 //  328   Color_BK = GREEN; //背景色
-        MOV     DPTR,#Color_BK
-        MOV     A,#-0x20
-        MOVX    @DPTR,A
-        INC     DPTR
-        MOV     A,#0x7
-        MOVX    @DPTR,A
 //  329   LCD_write_EN_string(64-7*osal_strlen((char*)AppTitle)/2,3,AppTitle); //显示标题
-        ; Setup parameters for call to function osal_strlen
-        MOV     DPTR,#AppTitle
-        MOVX    A,@DPTR
-        MOV     R2,A
-        INC     DPTR
-        MOVX    A,@DPTR
-        MOV     R3,A
-        LCALL   ??osal_strlen?relay
-        ; Setup parameters for call to function LCD_write_EN_string
-        MOV     DPTR,#AppTitle
-        MOVX    A,@DPTR
-        MOV     R4,A
-        INC     DPTR
-        MOVX    A,@DPTR
-        MOV     R5,A
-        MOV     A,R2
-        MOV     B,#0x7
-        MUL     AB
-        MOV     R0,A
-        MOV     R2,B
-        MOV     B,#0x7
-        MOV     A,R3
-        MUL     AB
-        ADD     A,R2
-        MOV     R1,A
-        MOV     R2,#0x2
-        MOV     R3,#0x0
-        LCALL   ?S_DIV_MOD
-        MOV     A,#0x40
-        CLR     C
-        SUBB    A,R0
-        MOV     R1,A
-        MOV     A,#0x3
-        MOV     R2,A
-        LCALL   ??LCD_write_EN_string?relay
 //  330   
 //  331   Color    = BLACK; //前景色
-        MOV     DPTR,#Color
-        CLR     A
-        MOVX    @DPTR,A
-        INC     DPTR
-        MOVX    @DPTR,A
 //  332   Color_BK = WHITE; //背景色          
-        MOV     DPTR,#Color_BK
-        MOV     A,#-0x1
-        MOVX    @DPTR,A
-        INC     DPTR
-        MOVX    @DPTR,A
 //  333   HalLcdWriteString( (char*)lcd_buf, HAL_LCD_LINE_7);
-        ; Setup parameters for call to function HalLcdWriteString
-        MOV     R1,#0x6
-        MOV     DPL,?XSP + 0
-        MOV     DPH,?XSP + 1
-        MOV     R2,DPL
-        MOV     R3,DPH
-        LCALL   ??HalLcdWriteString?relay
 //  334 #endif
 //  335 }
-        MOV     A,#0x11
-        LCALL   ?DEALLOC_XSTACK8
-        CFI CFA_XSP16 add(XSP16, 12)
-        MOV     R7,#0x4
-        LJMP    ?BANKED_LEAVE_XDATA
-        CFI EndBlock cfiBlock6
-
-        RSEG XDATA_ID:CODE:NOROOT(0)
-`?<Initializer for AppTitle>`:
-        DATA16
-        DW `?<Constant "QingPu">`
-
-        RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
-??main?relay:
-        LCALL   ?BDISPATCH
-        DATA
-        DC24    main
-
-        RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
-??zmain_ext_addr?relay:
-        LCALL   ?BDISPATCH
-        DATA
-        DC24    zmain_ext_addr
-
-        RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
-??zmain_dev_info?relay:
-        LCALL   ?BDISPATCH
-        DATA
-        DC24    zmain_dev_info
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
-`?<Constant "QingPu">`:
-        DB "QingPu"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
-`?<Constant {255, 255, 255, 255, 255, 255, 255,`:
-        DB 255
-        DB 255
-        DB 255
-        DB 255
-        DB 255
-        DB 255
-        DB 255
-        DB 255
-
-        END
 //  336 
 //  337 /*********************************************************************
 //  338 *********************************************************************/
 // 
-// 819 bytes in segment BANKED_CODE
-//  18 bytes in segment BANK_RELAYS
+// 523 bytes in segment BANKED_CODE
+//  12 bytes in segment BANK_RELAYS
 //   7 bytes in segment SFR_AN
 //   2 bytes in segment XDATA_I
 //   2 bytes in segment XDATA_ID
 //  15 bytes in segment XDATA_ROM_C
 // 
-// 839 bytes of CODE  memory
+// 537 bytes of CODE  memory
 //  15 bytes of CONST memory
 //   0 bytes of DATA  memory (+ 7 bytes shared)
 //   2 bytes of XDATA memory

@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         14/Jun/2019  13:01:12 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         17/Jun/2019  16:41:51 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -16,12 +16,11 @@
 #                          ..\..\Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ      #
 #                          -DROOT=__near_func -DMAC_CFG_TX_DATA_MAX=3         #
 #                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3              #
-#                          -DLCD_SUPPORTED -DEND_DEVICE) -f                   #
-#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
-#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
-#                          ..\Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO       #
-#                          -DSECURE=0 -DZG_SECURE_DYNAMIC=0 -DREFLECTOR       #
-#                          -DDEFAULT_CHANLIST=0x00000800                      #
+#                          -DEND_DEVICE) -f E:\Github_Repository\zigbee-net-t #
+#                          ech\ZStack-2.5.1a\Projects\zstack\Samples\SampleAp #
+#                          p\CC2530DB\..\..\..\Tools\CC2530DB\f8wConfig.cfg   #
+#                          (-DZIGBEEPRO -DSECURE=0 -DZG_SECURE_DYNAMIC=0      #
+#                          -DREFLECTOR -DDEFAULT_CHANLIST=0x00000800          #
 #                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                       #
 #                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_MA #
 #                          SK=0x007F -DBEACON_REQUEST_DELAY=100               #
@@ -372,8 +371,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\ZMain\TI2530D
     124          
     125            // Display information about this device
     126            zmain_dev_info();
-   \   000075                ; Setup parameters for call to function zmain_dev_info
-   \   000075   12....       LCALL   ??zmain_dev_info?relay
     127          
     128          #ifdef WDT_IN_PM1
     129            /* If WDT is used, this is a good place to enable it. */
@@ -381,20 +378,20 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\ZMain\TI2530D
     131          #endif
     132          
     133            osal_start_system(); // 循环处理系统事件
-   \   000078                ; Setup parameters for call to function osal_start_system
-   \   000078   12....       LCALL   ??osal_start_system?relay
+   \   000075                ; Setup parameters for call to function osal_start_system
+   \   000075   12....       LCALL   ??osal_start_system?relay
     134          
     135            return 0;  // Shouldn't get here.
-   \   00007B   7A00         MOV     R2,#0x0
-   \   00007D   7B00         MOV     R3,#0x0
-   \   00007F   02....       LJMP    ?BRET
-   \   000082                REQUIRE SLEEPCMD
-   \   000082                REQUIRE SLEEPSTA
-   \   000082                REQUIRE CLKCONCMD
-   \   000082                REQUIRE CLKCONSTA
-   \   000082                REQUIRE _A_P1
-   \   000082                REQUIRE P1DIR
-   \   000082                REQUIRE P0INP
+   \   000078   7A00         MOV     R2,#0x0
+   \   00007A   7B00         MOV     R3,#0x0
+   \   00007C   02....       LJMP    ?BRET
+   \   00007F                REQUIRE SLEEPCMD
+   \   00007F                REQUIRE SLEEPSTA
+   \   00007F                REQUIRE CLKCONCMD
+   \   00007F                REQUIRE CLKCONSTA
+   \   00007F                REQUIRE _A_P1
+   \   00007F                REQUIRE P1DIR
+   \   00007F                REQUIRE P0INP
     136          } // main()
     137          
     138          /*********************************************************************
@@ -693,6 +690,36 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\ZMain\TI2530D
    \   00000A   3400         ADDC    A,#0x0
    \   00000C   F583         MOV     DPH,A
    \   00000E   22           RET
+
+   \                                 In  segment XDATA_ID, align 1, keep-with-next
+   \                     `?<Initializer for AppTitle>`:
+   \   000000   ....         DW `?<Constant "QingPu">`
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??main?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    main
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??zmain_ext_addr?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    zmain_ext_addr
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     `?<Constant "QingPu">`:
+   \   000000   51696E67     DB "QingPu"
+   \            507500  
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     `?<Constant {255, 255, 255, 255, 255, 255, 255,`:
+   \   000000   FF           DB 255
+   \   000001   FF           DB 255
+   \   000002   FF           DB 255
+   \   000003   FF           DB 255
+   \   000004   FF           DB 255
+   \   000005   FF           DB 255
+   \   000006   FF           DB 255
+   \   000007   FF           DB 255
     230          
     231          #if defined ZCL_KEY_ESTABLISH
     232          /**************************************************************************************************
@@ -767,17 +794,8 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\ZMain\TI2530D
     301           * @return      None.
     302           **************************************************************************************************
     303           */
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
     304          static void zmain_dev_info(void)
-   \                     zmain_dev_info:
     305          {
-   \   000000   74F4         MOV     A,#-0xc
-   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
-   \   000005                ; Saved register size: 12
-   \   000005                ; Auto size: 17
-   \   000005   74EF         MOV     A,#-0x11
-   \   000007   12....       LCALL   ?ALLOC_XSTACK8
     306          #ifdef LCD_SUPPORTED
     307            uint8 i;
     308            uint8 *xad;
@@ -785,267 +803,61 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\ZMain\TI2530D
     310          
     311            // Display the extended address.
     312            xad = aExtendedAddress + Z_EXTADDR_LEN - 1;
-   \   00000A   78..         MOV     R0,#(aExtendedAddress + 7) & 0xff
-   \   00000C   79..         MOV     R1,#((aExtendedAddress + 7) >> 8) & 0xff
     313          
     314            for (i = 0; i < Z_EXTADDR_LEN*2; xad--)
-   \   00000E   7C00         MOV     R4,#0x0
     315            {
     316              uint8 ch;
     317              ch = (*xad >> 4) & 0x0F;
-   \                     ??zmain_dev_info_0:
-   \   000010   8882         MOV     DPL,R0
-   \   000012   8983         MOV     DPH,R1
-   \   000014   E0           MOVX    A,@DPTR
-   \   000015   C4           SWAP    A
-   \   000016   540F         ANL     A,#0xf
-   \   000018   FD           MOV     R5,A
     318              lcd_buf[i++] = ch + (( ch < 10 ) ? '0' : '7'); // +7可以转变成大写字符ABCDEF
-   \   000019   EC           MOV     A,R4
-   \   00001A   FF           MOV     R7,A
-   \   00001B   0C           INC     R4
-   \   00001C   ED           MOV     A,R5
-   \   00001D   C3           CLR     C
-   \   00001E   940A         SUBB    A,#0xa
-   \   000020   5004         JNC     ??zmain_dev_info_1
-   \   000022   7A30         MOV     R2,#0x30
-   \   000024   8002         SJMP    ??zmain_dev_info_2
-   \                     ??zmain_dev_info_1:
-   \   000026   7A37         MOV     R2,#0x37
-   \                     ??zmain_dev_info_2:
-   \   000028   EA           MOV     A,R2
-   \   000029   2D           ADD     A,R5
-   \   00002A   C0E0         PUSH    A
-   \   00002C   8F..         MOV     ?V0 + 0,R7
-   \   00002E   85..82       MOV     DPL,?XSP + 0
-   \   000031   85..83       MOV     DPH,?XSP + 1
-   \   000034   E582         MOV     A,DPL
-   \   000036   25..         ADD     A,?V0 + 0
-   \   000038   F582         MOV     DPL,A
-   \   00003A   E583         MOV     A,DPH
-   \   00003C   3400         ADDC    A,#0x0
-   \   00003E   F583         MOV     DPH,A
-   \   000040   D0E0         POP     A
-   \   000042   F0           MOVX    @DPTR,A
     319              ch = *xad & 0x0F;
-   \   000043   8882         MOV     DPL,R0
-   \   000045   8983         MOV     DPH,R1
-   \   000047   E0           MOVX    A,@DPTR
-   \   000048   540F         ANL     A,#0xf
-   \   00004A   FD           MOV     R5,A
     320              lcd_buf[i++] = ch + (( ch < 10 ) ? '0' : '7');
-   \   00004B   8C..         MOV     ?V0 + 0,R4
-   \   00004D   0C           INC     R4
-   \   00004E   C3           CLR     C
-   \   00004F   940A         SUBB    A,#0xa
-   \   000051   5004         JNC     ??zmain_dev_info_3
-   \   000053   7A30         MOV     R2,#0x30
-   \   000055   8002         SJMP    ??zmain_dev_info_4
-   \                     ??zmain_dev_info_3:
-   \   000057   7A37         MOV     R2,#0x37
-   \                     ??zmain_dev_info_4:
-   \   000059   EA           MOV     A,R2
-   \   00005A   2D           ADD     A,R5
-   \   00005B   C0E0         PUSH    A
-   \   00005D   85....       MOV     ?V0 + 2,?V0 + 0
-   \   000060   85..82       MOV     DPL,?XSP + 0
-   \   000063   85..83       MOV     DPH,?XSP + 1
-   \   000066   E582         MOV     A,DPL
-   \   000068   25..         ADD     A,?V0 + 2
-   \   00006A   F582         MOV     DPL,A
-   \   00006C   E583         MOV     A,DPH
-   \   00006E   3400         ADDC    A,#0x0
-   \   000070   F583         MOV     DPH,A
-   \   000072   D0E0         POP     A
-   \   000074   F0           MOVX    @DPTR,A
     321            }
-   \   000075   E8           MOV     A,R0
-   \   000076   24FF         ADD     A,#-0x1
-   \   000078   18           DEC     R0
-   \   000079   E9           MOV     A,R1
-   \   00007A   34FF         ADDC    A,#-0x1
-   \   00007C   F9           MOV     R1,A
-   \   00007D   EC           MOV     A,R4
-   \   00007E   C3           CLR     C
-   \   00007F   9410         SUBB    A,#0x10
-   \   000081   408D         JC      ??zmain_dev_info_0
     322            lcd_buf[Z_EXTADDR_LEN*2] = '\0';
-   \   000083   7410         MOV     A,#0x10
-   \   000085   12....       LCALL   ?XSTACK_DISP0_8
-   \   000088   E4           CLR     A
-   \   000089   F0           MOVX    @DPTR,A
     323            
     324            //DrawRectFill(0 ,0 ,128,128,GREEN);//背景色
     325            DrawRectFill(3 ,20 ,122,106,WHITE); //显示窗口
-   \   00008A                ; Setup parameters for call to function DrawRectFill
-   \   00008A   75..FF       MOV     ?V0 + 2,#-0x1
-   \   00008D   75..FF       MOV     ?V0 + 3,#-0x1
-   \   000090   78..         MOV     R0,#?V0 + 2
-   \   000092   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   000095   75..6A       MOV     ?V0 + 2,#0x6a
-   \   000098   75..00       MOV     ?V0 + 3,#0x0
-   \   00009B   78..         MOV     R0,#?V0 + 2
-   \   00009D   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   0000A0   75..7A       MOV     ?V0 + 2,#0x7a
-   \   0000A3   78..         MOV     R0,#?V0 + 2
-   \   0000A5   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   0000A8   7C14         MOV     R4,#0x14
-   \   0000AA   7D00         MOV     R5,#0x0
-   \   0000AC   7A03         MOV     R2,#0x3
-   \   0000AE   7B00         MOV     R3,#0x0
-   \   0000B0   12....       LCALL   ??DrawRectFill?relay
-   \   0000B3   7406         MOV     A,#0x6
-   \   0000B5   12....       LCALL   ?DEALLOC_XSTACK8
     326             
     327            Color    = BLACK; //前景色
-   \   0000B8   90....       MOV     DPTR,#Color
-   \   0000BB   E4           CLR     A
-   \   0000BC   F0           MOVX    @DPTR,A
-   \   0000BD   A3           INC     DPTR
-   \   0000BE   F0           MOVX    @DPTR,A
     328            Color_BK = GREEN; //背景色
-   \   0000BF   90....       MOV     DPTR,#Color_BK
-   \   0000C2   74E0         MOV     A,#-0x20
-   \   0000C4   F0           MOVX    @DPTR,A
-   \   0000C5   A3           INC     DPTR
-   \   0000C6   7407         MOV     A,#0x7
-   \   0000C8   F0           MOVX    @DPTR,A
     329            LCD_write_EN_string(64-7*osal_strlen((char*)AppTitle)/2,3,AppTitle); //显示标题
-   \   0000C9                ; Setup parameters for call to function osal_strlen
-   \   0000C9   90....       MOV     DPTR,#AppTitle
-   \   0000CC   E0           MOVX    A,@DPTR
-   \   0000CD   FA           MOV     R2,A
-   \   0000CE   A3           INC     DPTR
-   \   0000CF   E0           MOVX    A,@DPTR
-   \   0000D0   FB           MOV     R3,A
-   \   0000D1   12....       LCALL   ??osal_strlen?relay
-   \   0000D4                ; Setup parameters for call to function LCD_write_EN_string
-   \   0000D4   90....       MOV     DPTR,#AppTitle
-   \   0000D7   E0           MOVX    A,@DPTR
-   \   0000D8   FC           MOV     R4,A
-   \   0000D9   A3           INC     DPTR
-   \   0000DA   E0           MOVX    A,@DPTR
-   \   0000DB   FD           MOV     R5,A
-   \   0000DC   EA           MOV     A,R2
-   \   0000DD   75F007       MOV     B,#0x7
-   \   0000E0   A4           MUL     AB
-   \   0000E1   F8           MOV     R0,A
-   \   0000E2   AAF0         MOV     R2,B
-   \   0000E4   75F007       MOV     B,#0x7
-   \   0000E7   EB           MOV     A,R3
-   \   0000E8   A4           MUL     AB
-   \   0000E9   2A           ADD     A,R2
-   \   0000EA   F9           MOV     R1,A
-   \   0000EB   7A02         MOV     R2,#0x2
-   \   0000ED   7B00         MOV     R3,#0x0
-   \   0000EF   12....       LCALL   ?S_DIV_MOD
-   \   0000F2   7440         MOV     A,#0x40
-   \   0000F4   C3           CLR     C
-   \   0000F5   98           SUBB    A,R0
-   \   0000F6   F9           MOV     R1,A
-   \   0000F7   7403         MOV     A,#0x3
-   \   0000F9   FA           MOV     R2,A
-   \   0000FA   12....       LCALL   ??LCD_write_EN_string?relay
     330            
     331            Color    = BLACK; //前景色
-   \   0000FD   90....       MOV     DPTR,#Color
-   \   000100   E4           CLR     A
-   \   000101   F0           MOVX    @DPTR,A
-   \   000102   A3           INC     DPTR
-   \   000103   F0           MOVX    @DPTR,A
     332            Color_BK = WHITE; //背景色          
-   \   000104   90....       MOV     DPTR,#Color_BK
-   \   000107   74FF         MOV     A,#-0x1
-   \   000109   F0           MOVX    @DPTR,A
-   \   00010A   A3           INC     DPTR
-   \   00010B   F0           MOVX    @DPTR,A
     333            HalLcdWriteString( (char*)lcd_buf, HAL_LCD_LINE_7);
-   \   00010C                ; Setup parameters for call to function HalLcdWriteString
-   \   00010C   7906         MOV     R1,#0x6
-   \   00010E   85..82       MOV     DPL,?XSP + 0
-   \   000111   85..83       MOV     DPH,?XSP + 1
-   \   000114   AA82         MOV     R2,DPL
-   \   000116   AB83         MOV     R3,DPH
-   \   000118   12....       LCALL   ??HalLcdWriteString?relay
     334          #endif
     335          }
-   \   00011B   7411         MOV     A,#0x11
-   \   00011D   12....       LCALL   ?DEALLOC_XSTACK8
-   \   000120   7F04         MOV     R7,#0x4
-   \   000122   02....       LJMP    ?BANKED_LEAVE_XDATA
-
-   \                                 In  segment XDATA_ID, align 1, keep-with-next
-   \                     `?<Initializer for AppTitle>`:
-   \   000000   ....         DW `?<Constant "QingPu">`
-
-   \                                 In  segment BANK_RELAYS, align 1
-   \                     ??main?relay:
-   \   000000   12....       LCALL   ?BDISPATCH
-   \   000003   ......       DC24    main
-
-   \                                 In  segment BANK_RELAYS, align 1
-   \                     ??zmain_ext_addr?relay:
-   \   000000   12....       LCALL   ?BDISPATCH
-   \   000003   ......       DC24    zmain_ext_addr
-
-   \                                 In  segment BANK_RELAYS, align 1
-   \                     ??zmain_dev_info?relay:
-   \   000000   12....       LCALL   ?BDISPATCH
-   \   000003   ......       DC24    zmain_dev_info
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "QingPu">`:
-   \   000000   51696E67     DB "QingPu"
-   \            507500  
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant {255, 255, 255, 255, 255, 255, 255,`:
-   \   000000   FF           DB 255
-   \   000001   FF           DB 255
-   \   000002   FF           DB 255
-   \   000003   FF           DB 255
-   \   000004   FF           DB 255
-   \   000005   FF           DB 255
-   \   000006   FF           DB 255
-   \   000007   FF           DB 255
     336          
     337          /*********************************************************************
     338          *********************************************************************/
 
    Maximum stack usage in bytes:
 
-     Function                 ISTACK PSTACK XSTACK
-     --------                 ------ ------ ------
-     main                         0      0      0
-       -> osal_int_disable        0      0      0
-       -> HalAdcCheckVdd          0      0      0
-       -> InitBoard               0      0      0
-       -> HalDriverInit           0      0      0
-       -> osal_nv_init            0      0      0
-       -> ZMacInit                0      0      0
-       -> zmain_ext_addr          0      0      0
-       -> zgInit                  0      0      0
-       -> osal_init_system        0      0      0
-       -> osal_int_enable         0      0      0
-       -> InitBoard               0      0      0
-       -> zmain_dev_info          0      0      0
-       -> osal_start_system       0      0      0
-     zmain_dev_info               1      0     35
-       -> DrawRectFill            0      0     70
-       -> osal_strlen             0      0     58
-       -> LCD_write_EN_string     0      0     58
-       -> HalLcdWriteString       0      0     58
-     zmain_ext_addr               2      0     23
-       -> osal_nv_item_init       0      0     42
-       -> osal_nv_read            0      0     46
-       -> osal_memcmp             0      0     44
-       -> HalFlashRead            0      0     42
-       -> osal_memcmp             0      0     44
-       -> osal_memcmp             0      0     44
-       -> osal_memcpy             0      0     44
-       -> osal_nv_write           0      0     46
-       -> ZMacSetReq              0      0     38
-       -> osal_rand               0      0     38
+     Function               ISTACK PSTACK XSTACK
+     --------               ------ ------ ------
+     main                       0      0      0
+       -> osal_int_disable      0      0      0
+       -> HalAdcCheckVdd        0      0      0
+       -> InitBoard             0      0      0
+       -> HalDriverInit         0      0      0
+       -> osal_nv_init          0      0      0
+       -> ZMacInit              0      0      0
+       -> zmain_ext_addr        0      0      0
+       -> zgInit                0      0      0
+       -> osal_init_system      0      0      0
+       -> osal_int_enable       0      0      0
+       -> InitBoard             0      0      0
+       -> osal_start_system     0      0      0
+     zmain_ext_addr             2      0     23
+       -> osal_nv_item_init     0      0     42
+       -> osal_nv_read          0      0     46
+       -> osal_memcmp           0      0     44
+       -> HalFlashRead          0      0     42
+       -> osal_memcmp           0      0     44
+       -> osal_memcmp           0      0     44
+       -> osal_memcpy           0      0     44
+       -> osal_nv_write         0      0     46
+       -> ZMacSetReq            0      0     38
+       -> osal_rand             0      0     38
 
 
    Segment part sizes:
@@ -1060,26 +872,24 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\ZMain\TI2530D
      CLKCONCMD                                         1
      P1DIR                                             1
      AppTitle                                          2
-     main                                            130
+     main                                            127
      zmain_ext_addr                                  381
      ?Subroutine0                                     15
-     zmain_dev_info                                  293
      ?<Initializer for AppTitle>                       2
      ??main?relay                                      6
      ??zmain_ext_addr?relay                            6
-     ??zmain_dev_info?relay                            6
      ?<Constant "QingPu">                              7
      ?<Constant {255, 255, 255, 255, 255, 255, 255,    8
 
  
- 819 bytes in segment BANKED_CODE
-  18 bytes in segment BANK_RELAYS
+ 523 bytes in segment BANKED_CODE
+  12 bytes in segment BANK_RELAYS
    7 bytes in segment SFR_AN
    2 bytes in segment XDATA_I
    2 bytes in segment XDATA_ID
   15 bytes in segment XDATA_ROM_C
  
- 839 bytes of CODE  memory
+ 537 bytes of CODE  memory
   15 bytes of CONST memory
    0 bytes of DATA  memory (+ 7 bytes shared)
    2 bytes of XDATA memory

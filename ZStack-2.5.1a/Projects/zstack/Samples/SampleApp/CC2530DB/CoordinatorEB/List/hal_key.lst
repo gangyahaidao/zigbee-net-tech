@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         14/Jun/2019  17:35:46 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         17/Jun/2019  20:01:59 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -734,46 +734,53 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     531          /**
     532            初始化中断引脚
     533            用于监控投币机的引脚电平变化
-    534            P0_5引脚
-    535          */
+    534          */
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    536          void InitCoinInterrupt(void) {
+    535          void InitCoinInterrupt(void) {
    \                     InitCoinInterrupt:
    \   000000                ; Saved register size: 0
    \   000000                ; Auto size: 0
-    537            P0SEL &= ~(0x1 << 5); // P0_5 设置为0一般功能IO口，通用IO
-   \   000000   53F3DF       ANL     0xf3,#0xdf
-    538            P0DIR &= ~(0x1<<5);  // 设置为输入功能
-   \   000003   53FDDF       ANL     0xfd,#0xdf
-    539            P0INP &= ~(0x1<<5); // 上拉/下拉模式
-   \   000006   538FDF       ANL     0x8f,#0xdf
-    540            P2INP &= ~(0x1<<5); // 所有端口0设置为0上拉
-   \   000009   53F7DF       ANL     0xf7,#0xdf
-    541            
-    542            P0IEN |= (0x1 << 5); //  P0_5中断使能
-   \   00000C   43AB20       ORL     0xab,#0x20
-    543            // PICTL &= ~(0x1 << 0); // 端口0设置为0表示上升沿引起中断
-    544            PICTL |= (0x1 << 0); // 输入的下降沿引起中断
-   \   00000F   438C01       ORL     0x8c,#0x1
-    545            EA = 1; // 打开总中断
-   \   000012   D2AF         SETB    0xa8.7
-    546            IEN1 |= (0x1 << 5); // 端口0中断使能
-   \   000014   D2BD         SETB    0xb8.5
-    547            // P0IE = 1; // 端口0中断使能
-    548            P0IFG = 0; // 初始化中断标志位  
-   \   000016   758900       MOV     0x89,#0x0
-    549          }
-   \   000019   02....       LJMP    ?BRET
-   \   00001C                REQUIRE P0SEL
-   \   00001C                REQUIRE P0DIR
-   \   00001C                REQUIRE P0INP
-   \   00001C                REQUIRE P2INP
-   \   00001C                REQUIRE P0IEN
-   \   00001C                REQUIRE PICTL
-   \   00001C                REQUIRE _A_IEN0
-   \   00001C                REQUIRE _A_IEN1
-   \   00001C                REQUIRE P0IFG
+    536            P0SEL &= ~(0x1 << 4); // P0_4，获取投币信号，设置为0一般功能IO口，通用IO
+   \   000000   53F3EF       ANL     0xf3,#0xef
+    537            P0SEL &= ~(0x1 << 6); // P0_6获取出一个彩票动作
+   \   000003   53F3BF       ANL     0xf3,#0xbf
+    538            P0DIR &= ~(0x1<<4);  // 设置为输入功能
+   \   000006   53FDEF       ANL     0xfd,#0xef
+    539            P0DIR &= ~(0x1<<6);
+   \   000009   53FDBF       ANL     0xfd,#0xbf
+    540            P0INP &= ~(0x1<<4); // 引脚设置为上拉/下拉模式
+   \   00000C   538FEF       ANL     0x8f,#0xef
+    541            P0INP &= ~(0x1<<6);
+   \   00000F   538FBF       ANL     0x8f,#0xbf
+    542            
+    543            P2INP &= ~(0x1<<5); // 所有端口0设置为0上拉
+   \   000012   53F7DF       ANL     0xf7,#0xdf
+    544            
+    545            P0IEN |= (0x1 << 4); //  P0_7中断使能
+   \   000015   43AB10       ORL     0xab,#0x10
+    546            P0IEN |= (0x1 << 6);
+   \   000018   43AB40       ORL     0xab,#0x40
+    547            // PICTL &= ~(0x1 << 0); // 端口0设置为0表示上升沿引起中断
+    548            PICTL |= (0x1 << 0); // 端口0输入的下降沿引起中断
+   \   00001B   438C01       ORL     0x8c,#0x1
+    549            EA = 1; // 打开总中断
+   \   00001E   D2AF         SETB    0xa8.7
+    550            IEN1 |= (0x1 << 5); // 端口0中断使能
+   \   000020   D2BD         SETB    0xb8.5
+    551            P0IFG = 0; // 初始化中断标志位  
+   \   000022   758900       MOV     0x89,#0x0
+    552          }
+   \   000025   02....       LJMP    ?BRET
+   \   000028                REQUIRE P0SEL
+   \   000028                REQUIRE P0DIR
+   \   000028                REQUIRE P0INP
+   \   000028                REQUIRE P2INP
+   \   000028                REQUIRE P0IEN
+   \   000028                REQUIRE PICTL
+   \   000028                REQUIRE _A_IEN0
+   \   000028                REQUIRE _A_IEN1
+   \   000028                REQUIRE P0IFG
 
    \                                 In  segment BANK_RELAYS, align 1
    \                     ??HalKeyInit?relay:
@@ -799,10 +806,10 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \                     ??InitCoinInterrupt?relay:
    \   000000   12....       LCALL   ?BDISPATCH
    \   000003   ......       DC24    InitCoinInterrupt
-    550          
-    551          
-    552          /**************************************************************************************************
-    553          **************************************************************************************************/
+    553          
+    554          
+    555          /**************************************************************************************************
+    556          **************************************************************************************************/
 
    Maximum stack usage in bytes:
 
@@ -832,7 +839,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
      HalKeyConfig                 3
      HalKeyRead                   5
      HalKeyPoll                   3
-     InitCoinInterrupt           28
+     InitCoinInterrupt           40
      ??HalKeyInit?relay           6
      ??HalKeyConfig?relay         6
      ??HalKeyRead?relay           6
@@ -840,11 +847,11 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
      ??InitCoinInterrupt?relay    6
 
  
- 42 bytes in segment BANKED_CODE
+ 54 bytes in segment BANKED_CODE
  30 bytes in segment BANK_RELAYS
   9 bytes in segment SFR_AN
  
- 72 bytes of CODE memory
+ 84 bytes of CODE memory
   0 bytes of DATA memory (+ 9 bytes shared)
 
 Errors: none

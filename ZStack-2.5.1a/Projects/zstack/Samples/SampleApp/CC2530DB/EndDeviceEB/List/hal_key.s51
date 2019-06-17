@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        14/Jun/2019  13:01:14 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        17/Jun/2019  20:02:05 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -16,12 +16,11 @@
 //                          .\..\..\Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ   /
 //                          -DROOT=__near_func -DMAC_CFG_TX_DATA_MAX=3        /
 //                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3             /
-//                          -DLCD_SUPPORTED -DEND_DEVICE) -f                  /
-//                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1 /
-//                          a\Projects\zstack\Samples\SampleApp\CC2530DB\..\. /
-//                          .\..\Tools\CC2530DB\f8wConfig.cfg (-DZIGBEEPRO    /
-//                          -DSECURE=0 -DZG_SECURE_DYNAMIC=0 -DREFLECTOR      /
-//                          -DDEFAULT_CHANLIST=0x00000800                     /
+//                          -DEND_DEVICE) -f E:\Github_Repository\zigbee-net- /
+//                          tech\ZStack-2.5.1a\Projects\zstack\Samples\Sample /
+//                          App\CC2530DB\..\..\..\Tools\CC2530DB\f8wConfig.cf /
+//                          g (-DZIGBEEPRO -DSECURE=0 -DZG_SECURE_DYNAMIC=0   /
+//                          -DREFLECTOR -DDEFAULT_CHANLIST=0x00000800         /
 //                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                      /
 //                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_M /
 //                          ASK=0x007F -DBEACON_REQUEST_DELAY=100             /
@@ -912,39 +911,46 @@ HalKeyPoll:
 //  531 /**
 //  532   初始化中断引脚
 //  533   用于监控投币机的引脚电平变化
-//  534   P0_5引脚
-//  535 */
+//  534 */
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  536 void InitCoinInterrupt(void) {
+//  535 void InitCoinInterrupt(void) {
 InitCoinInterrupt:
         CFI Block cfiBlock4 Using cfiCommon0
         CFI Function InitCoinInterrupt
         CODE
         ; Saved register size: 0
         ; Auto size: 0
-//  537   P0SEL &= ~(0x1 << 5); // P0_5 设置为0一般功能IO口，通用IO
-        ANL     0xf3,#0xdf
-//  538   P0DIR &= ~(0x1<<5);  // 设置为输入功能
-        ANL     0xfd,#0xdf
-//  539   P0INP &= ~(0x1<<5); // 上拉/下拉模式
-        ANL     0x8f,#0xdf
-//  540   P2INP &= ~(0x1<<5); // 所有端口0设置为0上拉
+//  536   P0SEL &= ~(0x1 << 4); // P0_4，获取投币信号，设置为0一般功能IO口，通用IO
+        ANL     0xf3,#0xef
+//  537   P0SEL &= ~(0x1 << 6); // P0_6获取出一个彩票动作
+        ANL     0xf3,#0xbf
+//  538   P0DIR &= ~(0x1<<4);  // 设置为输入功能
+        ANL     0xfd,#0xef
+//  539   P0DIR &= ~(0x1<<6);
+        ANL     0xfd,#0xbf
+//  540   P0INP &= ~(0x1<<4); // 引脚设置为上拉/下拉模式
+        ANL     0x8f,#0xef
+//  541   P0INP &= ~(0x1<<6);
+        ANL     0x8f,#0xbf
+//  542   
+//  543   P2INP &= ~(0x1<<5); // 所有端口0设置为0上拉
         ANL     0xf7,#0xdf
-//  541   
-//  542   P0IEN |= (0x1 << 5); //  P0_5中断使能
-        ORL     0xab,#0x20
-//  543   // PICTL &= ~(0x1 << 0); // 端口0设置为0表示上升沿引起中断
-//  544   PICTL |= (0x1 << 0); // 输入的下降沿引起中断
+//  544   
+//  545   P0IEN |= (0x1 << 4); //  P0_7中断使能
+        ORL     0xab,#0x10
+//  546   P0IEN |= (0x1 << 6);
+        ORL     0xab,#0x40
+//  547   // PICTL &= ~(0x1 << 0); // 端口0设置为0表示上升沿引起中断
+//  548   PICTL |= (0x1 << 0); // 端口0输入的下降沿引起中断
         ORL     0x8c,#0x1
-//  545   EA = 1; // 打开总中断
+//  549   EA = 1; // 打开总中断
         SETB    0xa8.7
-//  546   IEN1 |= (0x1 << 5); // 端口0中断使能
+//  550   IEN1 |= (0x1 << 5); // 端口0中断使能
         SETB    0xb8.5
-//  547   // P0IE = 1; // 端口0中断使能
-//  548   P0IFG = 0; // 初始化中断标志位  
+//  551   P0IFG = 0; // 初始化中断标志位  
         MOV     0x89,#0x0
-//  549 }
+//  552 }
         LJMP    ?BRET
         CFI EndBlock cfiBlock4
         REQUIRE P0SEL
@@ -988,16 +994,16 @@ InitCoinInterrupt:
         DC24    InitCoinInterrupt
 
         END
-//  550 
-//  551 
-//  552 /**************************************************************************************************
-//  553 **************************************************************************************************/
+//  553 
+//  554 
+//  555 /**************************************************************************************************
+//  556 **************************************************************************************************/
 // 
-// 42 bytes in segment BANKED_CODE
+// 54 bytes in segment BANKED_CODE
 // 30 bytes in segment BANK_RELAYS
 //  9 bytes in segment SFR_AN
 // 
-// 72 bytes of CODE memory
+// 84 bytes of CODE memory
 //  0 bytes of DATA memory (+ 9 bytes shared)
 //
 //Errors: none

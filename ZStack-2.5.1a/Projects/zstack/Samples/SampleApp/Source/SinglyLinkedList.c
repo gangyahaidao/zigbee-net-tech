@@ -101,6 +101,7 @@ void  decAllListEPLeftSec(LinkList L) {
       p->data.leftSecCount = 0;
       osal_memcpy(sendBuf+2, p->data.IEEEArr, 8); // 复制IEEE地址
       mySendByteBuf(sendBuf, 11); // 发送到上位机
+      // myprintf("one end device offline\n");
     }
     // myprintf("i = %d, leftSecCount = %d\n", i, p->data.leftSecCount);
     p = p->next;
