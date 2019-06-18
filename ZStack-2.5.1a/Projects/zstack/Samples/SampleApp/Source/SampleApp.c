@@ -41,6 +41,7 @@ SingleLinkedList.c中定义了单链表的实现
 #include "MT_APP.h"
 #include "MT.h"
 
+#include "OSAL_Clock.h"
 /*******
   一些测试用的宏开关
 */
@@ -53,13 +54,10 @@ SingleLinkedList.c中定义了单链表的实现
 #define REWARD_OUTPUT_PIN  P0_6      //中断输入下降沿触发，彩票奖励输出个数信号引脚，输出一个彩票奖励则产生一个40ms的低电平
 
 #define COIN_SIMULATE_PIN  P1_2      //输出，定义P1.2口为替换投币器模拟信号发生引脚
-#define REWARD_RECV_PIN    P1_3      //输入，定义彩票机动作触发引脚，初始高电平，变成低电平表示游戏结束进行出彩票动作
-#define REWARD_CTL_PIN     P1_4      //输出，代替彩票机的动作控制引脚，输出低电平开始出彩票
-#define REWARD_BACK_PIN    P1_5      //输出，向游戏机反馈彩票纸的出票个数，模拟产生一个40ms的低电平脉冲
 
 #define UART0        0x00
-#define COIN_SIGNAL_HALF_TIME 40 // Ms
-#define REWARD_SIGNAL_HALF_TIME 40
+#define COIN_SIGNAL_HALF_TIME 50 // Ms
+#define REWARD_SIGNAL_HALF_TIME 50
 
 // This list should be filled with Application specific Cluster IDs.
 const cId_t SampleApp_ClusterList[SAMPLEAPP_MAX_CLUSTERS] =
@@ -119,33 +117,56 @@ void SampleApp_SendPeriodicMessage( int8 whichKey );
 void SampleApp_SendHeartBeatMessageCoor(void);
 void SampleApp_SendHeartBeatMessageEnd(void);
 void printAddrInfoHex(uint8* buf, uint8 dataLen);
-void convertHexToStr(uint16 addr, uint8 lcdLineNum);
-void checkGameIsOverReward(void);
+void convertHexToStrLCD(uint16 addr, uint8 lcdLineNum);
 
-int8 NeedCoinDelivered = 0; // 定义终端需要处理的投币个数
+int8 NeedCoinDelivered = 0; // 线上开启游戏需要处理的投币个数
 int8 NeedCoinTransport = 0; // 需要转发的投币器信号数量
-uint8 gameWillOver = 0; // 是否游戏结束开始出彩票
 uint8 rewardCount = 0;  // 一次游戏出彩票个数统计
+uint8 startRewardInterrupt = 0;
+UTCTime lastRecvRewardSecTime = 0;//=osal_getClock();
 
 /**
   终端设备P1端口中断处理函数，用来接收投币器的信号
 */
 #ifdef END_DEVICE
+uint8 pre_coin_pin_value = 1;
+uint8 coin_pin_value = 1;
+uint8 pre_reward_pin_value = 1;
+uint8 reward_pin_value = 1;
 HAL_ISR_FUNCTION( port0Isr, P0INT_VECTOR ) // P0_5配置为投币器电平变化中断引脚，在HAL/Common/hal_drivers.c中进行的引脚初始化
 { 
-  if((P0IFG >> 4) & 0x1 == 1) { // 中断p0_4引脚产生中断，投币信号
-    P0IFG &= ~(0x1 << 4);       //端口0中断状态标志
-    NeedCoinTransport = 1;
-    osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_TRANSPORT_COIN_MSG_EVT, COIN_SIGNAL_HALF_TIME); // 产生一个定时器事件
-    myprintf("get p0_4 coin input interrupt\n");
+  IEN1 &= ~(0x1 << 5); // 关闭端口0中断
+  if((P0IFG >> 4) & 0x1 == 1) { // 中断p0_4引脚产生中断，投币信号    
+    coin_pin_value = COIN_RECV_PIN;
+    if(coin_pin_value == 0) {
+      if(coin_pin_value != pre_coin_pin_value) {
+        pre_coin_pin_value = coin_pin_value;
+        NeedCoinTransport = 1;
+        osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_TRANSPORT_COIN_MSG_EVT, COIN_SIGNAL_HALF_TIME); // 产生一个定时器事件    
+      }
+    } else {
+      pre_coin_pin_value = 1;
+    }
+    P0IFG &= ~(0x1 << 4);       //端口0中断状态标志    
+    //myprintf("get p0_4 coin input interrupt pin = %d\n", COIN_RECV_PIN);
   } 
   if((P0IFG >> 6) & 0x1 == 1) { // P0_6引脚，彩票机出一个彩票中断信号，转发到游戏机并上传服务器
-    P0IFG &= ~(0x1 << 6);    
-    osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_TRANSPORT_REWARD_MSG_EVT, REWARD_SIGNAL_HALF_TIME); // 产生一个定时器事件
-    myprintf("Get p0_6 one reward interrupt\n");
+    startRewardInterrupt = 1;
+    lastRecvRewardSecTime = osal_getClock(); // 设置收到信号当前的秒数，在定时器中进行检测
+    reward_pin_value = REWARD_OUTPUT_PIN;
+    if(reward_pin_value == 0) {
+      if(reward_pin_value != pre_reward_pin_value) {
+        pre_reward_pin_value = reward_pin_value;
+        rewardCount += 1;
+      }      
+    } else {
+      pre_reward_pin_value = 1;
+    }
+    P0IFG &= ~(0x1 << 6);
+    myprintf("\nP0_6=%d", REWARD_OUTPUT_PIN);
   }
-  
   P0IF = 0;        //端口0中断标志，0表示无中断未决，1表示有中断未决，需要每次触发之后置0，不然会一直触发中断 
+  IEN1 |= (0x1 << 5); // 端口0中断使能
 }
 #endif
 
@@ -164,21 +185,7 @@ void SampleApp_Init( uint8 task_id )
   //P1_2输出，投币器模拟信号产生引脚
   P1SEL &= ~(0x01 << 2);         //设置P1.2口为普通IO
   P1DIR |= (0x01 << 2);          //设置P1.2口为输出
-  COIN_SIMULATE_PIN = 1;       // 投币器信号模拟输出引脚
-  
-  //P1_3输入，彩票机动作触发引脚，检测到变成低电平开始出彩票，在主函数中需要不停的读取P1.3引脚状态
-  P1SEL &= ~(0x01 << 3);
-  P1DIR &= ~(0x01 << 3);
-
-  // P1_4输出，代替彩票机的动作控制引脚
-  P1SEL &= ~(0x01 << 4);
-  P1DIR |= (0x01 << 4);
-  REWARD_CTL_PIN = 1; // 初始高电平，低电平彩票机开始动作
-  
-  // P1_5输出，向游戏机模拟反馈出了一个彩票信号，低电平40Ms
-  P1SEL &= ~(0x01 << 5);
-  P1DIR |= (0x01 << 5);
-  REWARD_BACK_PIN = 1;  
+  COIN_SIMULATE_PIN = 1;       // 投币器信号模拟输出引脚  
 #endif
   
 #if defined ( BUILD_ALL_DEVICES )
@@ -284,7 +291,7 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
           // Action taken when confirmation is received.
           if ( sentStatus != ZSuccess )
           {
-            myprintf("ERROR:AF_DATA_CONFIRM_CMD failed\n");
+            myprintf("Got ERROR:AF_DATA_CONFIRM_CMD failed\n");
           }
           break;
         
@@ -313,6 +320,7 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
             AfSendAddrInfo(0x71); // 向协调器发送入网消息
             HalLedBlink(HAL_LED_2, 3, 50, 250);
             osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SEND_PERIODIC_MSG_EVT, SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT ); // 开启定时器
+            IEN1 |= (0x1 << 5); // 开启端口0中断
           }
           break;
           
@@ -340,7 +348,7 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
     
 #ifdef END_DEVICE // 终端设备
     SampleApp_SendHeartBeatMessageEnd(); // 终端心跳功能函数
-    osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SEND_PERIODIC_MSG_EVT, SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT*2); // 2000ms再次开启定时器
+    osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SEND_PERIODIC_MSG_EVT, SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT*3/2); // 2000ms再次开启定时器
 #endif
     
     return (events ^ SAMPLEAPP_SEND_PERIODIC_MSG_EVT); // 清除此已经处理事件标志位
@@ -362,7 +370,7 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
     return (events ^ SAMPLEAPP_SIMULATE_COIN_MSG_EVT);
   } 
   else if(events & SAMPLEAPP_TRANSPORT_COIN_MSG_EVT) { // 需要转发投币器的投币信号
-    myprintf("Get transport coin EVT, NeedCoinTransport = %d\n", NeedCoinTransport);
+    //myprintf("Get transport coin EVT, NeedCoinTransport = %d\n", NeedCoinTransport);
     
     if(COIN_SIMULATE_PIN == 1) {
       COIN_SIMULATE_PIN = 0; // 产生一个下降沿
@@ -374,17 +382,6 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
       osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_TRANSPORT_COIN_MSG_EVT, COIN_SIGNAL_HALF_TIME); // 低电平和高电平至少保持50ms
     }
     return (events ^ SAMPLEAPP_TRANSPORT_COIN_MSG_EVT);
-  } 
-  else if(events & SAMPLEAPP_TRANSPORT_REWARD_MSG_EVT) { // 需要向游戏机转发产生的出了一个彩票信息
-    myprintf("get trans reward msg event, REWARD_BACK_PIN = %d\n", REWARD_BACK_PIN);
-    if(REWARD_BACK_PIN == 1) {
-      REWARD_BACK_PIN = 0; // 只产生一个下降沿
-      osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_TRANSPORT_REWARD_MSG_EVT, REWARD_SIGNAL_HALF_TIME);
-    } else if(REWARD_BACK_PIN == 0) {
-      REWARD_BACK_PIN = 1;
-      rewardCount++; // 累计本次游戏出彩票个数，在出彩票结束之后再上传个数
-    }
-    return (events ^ SAMPLEAPP_TRANSPORT_REWARD_MSG_EVT);
   }
 #endif  
 
@@ -413,13 +410,7 @@ void SampleApp_HandleKeys( uint8 shift, uint8 keys )
   if ( keys & HAL_KEY_SW_6 ){ // 按键S1,以广播方式发数据    
     SampleApp_SendPeriodicMessage(1);
   } else if(keys & HAL_KEY_SW_1) { // 按键S2
-    SampleApp_SendPeriodicMessage(2);
-  }
-#endif
-
-#ifdef END_DEVICE
-  if ( keys & HAL_KEY_SW_6 ){
-    AfSendAddrInfo(0x51); // 只用在路由和终端设备上，向协调器上传自身地址，协调器收到此消息后打印出地址
+    //SampleApp_SendPeriodicMessage(2);
   }
 #endif
 }
@@ -469,7 +460,7 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
           printAddrInfoHex(pkt->cmd.Data+2, 10); // 打印中断的长短地址信息
         } else { // 更新终端所在节点的在线时长，标记为在线状态
           updateListEleStatus(LL, ret, INIT_LEFT_SEC);
-          myprintf("Already In List, update()\n");
+          //myprintf("Already In List, update() sec = %d\n", osal_getClock());
         }
         // myprintf("length = %d\n", ListLength_L(LL));
       } else if(cmd == 0x72 && pkt->cmd.Data[10] == '@') { // 收到终端回复的确认收到投币命令
@@ -496,7 +487,7 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
 #ifdef NEED_TEST_DIStANCE
         recvTestMsgCount++;
         HalLcdWriteString("Recv:", HAL_LCD_LINE_5);
-        convertHexToStr(recvTestMsgCount, HAL_LCD_LINE_6);
+        convertHexToStrLCD(recvTestMsgCount, HAL_LCD_LINE_6);
 #endif        
       }
     }        
@@ -525,9 +516,9 @@ void SampleApp_SendPeriodicMessage( int8 key )
                         AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )
     {
       HalLedBlink(HAL_LED_1, 1, 50, 250);
+    } else {
+      myprintf("SampleApp_SendPeriodicMessage() failed\n");
     }
-  } else if(key == 2) { // 按键S2
-    // myprintf("press key S2\n");
   }
 }
 
@@ -545,7 +536,7 @@ void SampleApp_SendHeartBeatMessageCoor(void) {
   
   // 将终端列表中元素在线时长-1，如果检测到超时则将IEEE发送到上位机
   decAllListEPLeftSec(LL); 
-  HalLedBlink(HAL_LED_2, 1, 50, 500);
+  HalLedBlink(HAL_LED_1, 1, 50, 500);
 #ifdef NEED_TEST_DIStANCE  
   // 发送稳定性测试数据到终端设备
   totalSendTestCount++;
@@ -560,12 +551,38 @@ void SampleApp_SendHeartBeatMessageCoor(void) {
   终端心跳函数，用于定时向协调器发送本机地址信息
 */
 void SampleApp_SendHeartBeatMessageEnd(void) { 
-  AfSendAddrInfo(0x71);  
-  myprintf("send heart_beat\n");
+  AfSendAddrInfo(0x71);    
+  if(startRewardInterrupt == 1 && (osal_getClock() - lastRecvRewardSecTime) >= 2) { // 如果触发了奖励中断，且奖励结束距离当前时间大于指定时间则认为是一次奖励结束
+    if(rewardCount == 0) {
+      startRewardInterrupt = 0; 
+      return;
+    }
+    myprintf("Upload reward result count, rewardCount = %d\n", rewardCount);
+    uint8 strBuf[12] = {0};  
+    // 通知服务器游戏结束，并将奖励彩票个数信息rewardCount发送到服务器
+    strBuf[0] = '#';  // 发送数据的标识，便于协调器解析
+    strBuf[1] = 0x73; // 消息类型标识
+    strBuf[2] = rewardCount; // 获取的奖励个数
+    osal_memcpy(&strBuf[3], NLME_GetExtAddr(), 8); // 复制IEEE地址????????????????????????替换成机器玩家位置编号
+    strBuf[11] = '@'; // 尾部字节
+    if ( AF_DataRequest( &SampleApp_TxAddr,                  // 发送的目的地址+端点地址+传送模式
+                        (endPointDesc_t *)&SampleApp_epDesc, // 源终端的描述
+                        SAMPLEAPP_PERIODIC_CLUSTERID,        // 被profile指定的有效的集群号
+                        12,                                  // 发送数据长度
+                        strBuf,                              // 发送数据缓冲区
+                        &SampleApp_TransID,                  // 消息发送ID
+                        AF_DISCV_ROUTE,                      // 有效位掩码的发送选项
+                        AF_DEFAULT_RADIUS ) != afStatus_SUCCESS ) // 传送跳数，通常设置为AF_DEFAULT_RADIUS
+    {
+      myprintf("send gameover reward result failed\n");
+    }
+    rewardCount = 0; // 置0
+    startRewardInterrupt = 0;    
+  }
 }
 
 /**
-  发送终端地址信息到协调器
+  发送终端地址信息到协调器，用于发送入网和心跳数据
 */
 void AfSendAddrInfo(uint8 cmd) {
   uint16 shortAddr;
@@ -587,7 +604,7 @@ void AfSendAddrInfo(uint8 cmd) {
                       AF_DISCV_ROUTE,                      // 有效位掩码的发送选项
                       AF_DEFAULT_RADIUS ) != afStatus_SUCCESS ) // 传送跳数，通常设置为AF_DEFAULT_RADIUS
   {
-    HalLedBlink(HAL_LED_1, 2, 50, 250); // 发送失败快速闪烁两次
+    myprintf("send cmd = 0x%x failed\n", cmd); 
   } else {
     HalLedBlink(HAL_LED_1, 1, 50, 500); // 发送成功正常闪烁一次
   }
@@ -612,9 +629,7 @@ void AfReplyGetCoinCmd(void) {
                       AF_DISCV_ROUTE,                      // 有效位掩码的发送选项
                       AF_DEFAULT_RADIUS ) != afStatus_SUCCESS ) // 传送跳数，通常设置为AF_DEFAULT_RADIUS
   {
-    HalLedBlink(HAL_LED_1, 4, 50, 250); // 发送失败快速闪烁两次
-  } else {
-    HalLedBlink(HAL_LED_2, 2, 50, 200); // 发送成功正常闪烁2次
+    myprintf("end_device send recved coin cmd failed\n");
   }
 }
 
@@ -637,7 +652,7 @@ void printAddrInfoHex(uint8* buf, uint8 dataLen) {
 /**
   将十六进制数转变成字符
 */
-void convertHexToStr(uint16 addr, uint8 lcdLineNum) {
+void convertHexToStrLCD(uint16 addr, uint8 lcdLineNum) {
   uint8 i;
   uint8 *xad;
   uint8 lcd_buf[2*2+1];
@@ -655,42 +670,4 @@ void convertHexToStr(uint16 addr, uint8 lcdLineNum) {
   }
   lcd_buf[2*2] = '\0';
   HalLcdWriteString( (char*)lcd_buf, lcdLineNum);
-}
-
-/**
-  检测彩票机动作控制引脚，如果检测到低电平表示需要出发彩票机，main主函数中循环调用
-*/
-void checkGameIsOverReward(void) {
-  if(REWARD_RECV_PIN == 0) { // 游戏结束，开始动作彩票机出奖励
-    REWARD_CTL_PIN = 0;  // 转发信号，控制彩票机开始出彩票
-    gameWillOver = 1;
-  } else if(REWARD_RECV_PIN == 1) {    
-    if(gameWillOver == 1) {
-      REWARD_CTL_PIN = 1;  // 转发停止出彩票
-      gameWillOver = 0;    
-      uint8 strBuf[12] = {0};  
-      // 通知服务器游戏结束，并将奖励彩票个数信息rewardCount发送到服务器
-      strBuf[0] = '#';  // 发送数据的标识，便于协调器解析
-      strBuf[1] = 0x73; // 消息类型标识
-      strBuf[2] = rewardCount; // 获取的奖励个数
-      osal_memcpy(&strBuf[3], NLME_GetExtAddr(), 8); // 复制IEEE地址
-      strBuf[11] = '@'; // 尾部字节
-      if ( AF_DataRequest( &SampleApp_TxAddr,                  // 发送的目的地址+端点地址+传送模式
-                          (endPointDesc_t *)&SampleApp_epDesc, // 源终端的描述
-                          SAMPLEAPP_PERIODIC_CLUSTERID,        // 被profile指定的有效的集群号
-                          12,                                  // 发送数据长度
-                          strBuf,                              // 发送数据缓冲区
-                          &SampleApp_TransID,                  // 消息发送ID
-                          AF_DISCV_ROUTE,                      // 有效位掩码的发送选项
-                          AF_DEFAULT_RADIUS ) != afStatus_SUCCESS ) // 传送跳数，通常设置为AF_DEFAULT_RADIUS
-      {
-        HalLedBlink(HAL_LED_1, 4, 50, 250); // 发送失败快速闪烁2次
-      } else {
-        HalLedBlink(HAL_LED_2, 2, 50, 200); // 发送成功正常闪烁2次
-      }
-            
-      myprintf("Stop out reward, rewardCount = %d\n", rewardCount);
-      rewardCount = 0;
-    }
-  }
 }

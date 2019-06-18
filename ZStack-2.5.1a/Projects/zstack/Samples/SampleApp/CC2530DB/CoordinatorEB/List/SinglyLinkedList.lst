@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         17/Jun/2019  20:12:02 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         18/Jun/2019  14:15:05 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -611,7 +611,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
      95            LinkList p = L->next;
    \   00001F   12....       LCALL   ??Subroutine13_0 & 0xFFFF
    \                     ??CrossCallReturnLabel_18:
-   \   000022   806B         SJMP    ??decAllListEPLeftSec_0
+   \   000022   8064         SJMP    ??decAllListEPLeftSec_0
      96            int i = 0;
      97            while(p) {
      98              i++;
@@ -630,7 +630,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000031   A2D2         MOV     C,0xD0 /* PSW */.2
    \   000033   65D0         XRL     A,PSW
    \   000035   33           RLC     A
-   \   000036   5052         JNC     ??decAllListEPLeftSec_2
+   \   000036   504B         JNC     ??decAllListEPLeftSec_2
     101                p->data.leftSecCount = 0;
    \   000038   8E82         MOV     DPL,R6
    \   00003A   8F83         MOV     DPH,R7
@@ -677,29 +677,25 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   00007C   AA82         MOV     R2,DPL
    \   00007E   AB83         MOV     R3,DPH
    \   000080   12....       LCALL   ??mySendByteBuf?relay
-    104                myprintf("one end device offline\n");
-   \   000083                ; Setup parameters for call to function myprintf
-   \   000083   7A..         MOV     R2,#`?<Constant "one end device offline\\n">` & 0xff
-   \   000085   7B..         MOV     R3,#(`?<Constant "one end device offline\\n">` >> 8) & 0xff
-   \   000087   12....       LCALL   ??myprintf?relay
+    104                // myprintf("one end device offline\n");
     105              }
     106              // myprintf("i = %d, leftSecCount = %d\n", i, p->data.leftSecCount);
     107              p = p->next;
    \                     ??decAllListEPLeftSec_2:
-   \   00008A   EE           MOV     A,R6
-   \   00008B   12....       LCALL   ??Subroutine15_0 & 0xFFFF
+   \   000083   EE           MOV     A,R6
+   \   000084   12....       LCALL   ??Subroutine15_0 & 0xFFFF
     108            }
    \                     ??CrossCallReturnLabel_33:
-   \   00008E   EF           MOV     A,R7
+   \   000087   EF           MOV     A,R7
    \                     ??decAllListEPLeftSec_0:
-   \   00008F   12....       LCALL   ?Subroutine4 & 0xFFFF
+   \   000088   12....       LCALL   ?Subroutine4 & 0xFFFF
    \                     ??CrossCallReturnLabel_5:
-   \   000092   7090         JNZ     ??decAllListEPLeftSec_1
+   \   00008B   7097         JNZ     ??decAllListEPLeftSec_1
     109          }
-   \   000094   740B         MOV     A,#0xb
-   \   000096   12....       LCALL   ?DEALLOC_XSTACK8
-   \   000099   7F03         MOV     R7,#0x3
-   \   00009B   02....       LJMP    ?BANKED_LEAVE_XDATA
+   \   00008D   740B         MOV     A,#0xb
+   \   00008F   12....       LCALL   ?DEALLOC_XSTACK8
+   \   000092   7F03         MOV     R7,#0x3
+   \   000094   02....       LJMP    ?BANKED_LEAVE_XDATA
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine8:
@@ -1152,15 +1148,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000008   00           DB 0
    \   000009   00           DB 0
    \   00000A   40           DB 64
-
-   \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant "one end device offline\\n">`:
-   \   000000   6F6E6520     DB "one end device offline\012"
-   \            656E6420
-   \            64657669
-   \            6365206F
-   \            66666C69
-   \            6E650A00
     200          
     201          
     202          #endif 
@@ -1185,7 +1172,6 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
      decAllListEPLeftSec          2      0     25
        -> osal_memcpy             0      0     50
        -> mySendByteBuf           0      0     44
-       -> myprintf                0      0     44
      updateListEleStatus          1      0     12
 
 
@@ -1213,7 +1199,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
      ?Subroutine9                                     13
      ?Subroutine3                                     16
      ?Subroutine6                                      5
-     decAllListEPLeftSec                             158
+     decAllListEPLeftSec                             151
      ?Subroutine8                                      1
      GetElem_L                                        70
      ListInsert_L                                    234
@@ -1228,15 +1214,14 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
      ??ListInsert_L?relay                              6
      ??ListDelete_L?relay                              6
      ?<Constant {35, 68, 0, 0, 0, 0, 0, 0, 0, 0, 64   11
-     ?<Constant "one end device offline\n">           24
 
  
- 990 bytes in segment BANKED_CODE
+ 983 bytes in segment BANKED_CODE
   54 bytes in segment BANK_RELAYS
-  35 bytes in segment XDATA_ROM_C
+  11 bytes in segment XDATA_ROM_C
  
- 1 044 bytes of CODE  memory
-    35 bytes of CONST memory
+ 1 037 bytes of CODE  memory
+    11 bytes of CONST memory
 
 Errors: none
 Warnings: none

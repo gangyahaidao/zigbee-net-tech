@@ -65,9 +65,6 @@
 /*********************************************************************
  * MACROS
  */
-#ifdef END_DEVICE
-void checkGameIsOverReward(void);
-#endif
 
 /*********************************************************************
  * CONSTANTS
@@ -1026,12 +1023,7 @@ void osal_start_system( void )
   for(;;)  // Forever Loop
 #endif
   {
-    osal_run_system();
-    
-    // 增加彩票机奖励开始引脚检测，检测到低电平表示游戏机开始进行出彩票操作
-#ifdef END_DEVICE    
-   checkGameIsOverReward();
-#endif
+    osal_run_system();    
   }
 }
 

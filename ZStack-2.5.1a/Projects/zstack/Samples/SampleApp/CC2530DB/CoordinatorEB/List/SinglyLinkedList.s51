@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        17/Jun/2019  20:12:02 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        18/Jun/2019  14:15:05 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -379,9 +379,7 @@ osal_msg_deallocate SYMBOL "osal_msg_deallocate"
 osal_memcmp         SYMBOL "osal_memcmp"
 osal_memcpy         SYMBOL "osal_memcpy"
 mySendByteBuf       SYMBOL "mySendByteBuf"
-myprintf            SYMBOL "myprintf"
 ??mySendByteBuf?relay SYMBOL "?relay", mySendByteBuf
-??myprintf?relay    SYMBOL "?relay", myprintf
 ??osal_memcmp?relay SYMBOL "?relay", osal_memcmp
 ??osal_memcpy?relay SYMBOL "?relay", osal_memcpy
 ??osal_msg_allocate?relay SYMBOL "?relay", osal_msg_allocate
@@ -440,17 +438,8 @@ updateListEleStatus SYMBOL "updateListEleStatus"
         ARGFRAME XSTACK, 22, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        EXTERN myprintf
-        FUNCTION myprintf,0202H
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 22, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         EXTERN ??mySendByteBuf?relay
         FUNCTION ??mySendByteBuf?relay,00H
-        EXTERN ??myprintf?relay
-        FUNCTION ??myprintf?relay,00H
         EXTERN ??osal_memcmp?relay
         FUNCTION ??osal_memcmp?relay,00H
         EXTERN ??osal_memcpy?relay
@@ -1196,17 +1185,6 @@ decAllListEPLeftSec:
         ARGFRAME XSTACK, 22, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL decAllListEPLeftSec, myprintf
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 22, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 22, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         MOV     A,#-0xb
         LCALL   ?BANKED_ENTER_XDATA
         CFI DPH0 load(1, XDATA, add(CFA_XSP16, literal(-1)))
@@ -1307,11 +1285,7 @@ decAllListEPLeftSec:
         MOV     R2,DPL
         MOV     R3,DPH
         LCALL   ??mySendByteBuf?relay
-//  104       myprintf("one end device offline\n");
-        ; Setup parameters for call to function myprintf
-        MOV     R2,#`?<Constant "one end device offline\\n">` & 0xff
-        MOV     R3,#(`?<Constant "one end device offline\\n">` >> 8) & 0xff
-        LCALL   ??myprintf?relay
+//  104       // myprintf("one end device offline\n");
 //  105     }
 //  106     // myprintf("i = %d, leftSecCount = %d\n", i, p->data.leftSecCount);
 //  107     p = p->next;
@@ -2722,22 +2696,17 @@ ListDelete_L:
         DB 0
         DB 64
 
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
-`?<Constant "one end device offline\\n">`:
-        DB "one end device offline\012"
-
         END
 //  200 
 //  201 
 //  202 #endif 
 // 
-// 990 bytes in segment BANKED_CODE
+// 983 bytes in segment BANKED_CODE
 //  54 bytes in segment BANK_RELAYS
-//  35 bytes in segment XDATA_ROM_C
+//  11 bytes in segment XDATA_ROM_C
 // 
-// 1 044 bytes of CODE  memory
-//    35 bytes of CONST memory
+// 1 037 bytes of CODE  memory
+//    11 bytes of CONST memory
 //
 //Errors: none
 //Warnings: none
