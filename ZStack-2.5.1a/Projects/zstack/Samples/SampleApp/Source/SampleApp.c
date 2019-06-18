@@ -380,7 +380,6 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
     if(REWARD_BACK_PIN == 1) {
       REWARD_BACK_PIN = 0; // 只产生一个下降沿
       osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_TRANSPORT_REWARD_MSG_EVT, REWARD_SIGNAL_HALF_TIME);
-      myprintf("REWARD_BACK_PIN = %d\n", REWARD_BACK_PIN);
     } else if(REWARD_BACK_PIN == 0) {
       REWARD_BACK_PIN = 1;
       rewardCount++; // 累计本次游戏出彩票个数，在出彩票结束之后再上传个数
@@ -685,7 +684,7 @@ void checkGameIsOverReward(void) {
                           AF_DISCV_ROUTE,                      // 有效位掩码的发送选项
                           AF_DEFAULT_RADIUS ) != afStatus_SUCCESS ) // 传送跳数，通常设置为AF_DEFAULT_RADIUS
       {
-        HalLedBlink(HAL_LED_1, 4, 50, 250); // 发送失败快速闪烁两次
+        HalLedBlink(HAL_LED_1, 4, 50, 250); // 发送失败快速闪烁2次
       } else {
         HalLedBlink(HAL_LED_2, 2, 50, 200); // 发送成功正常闪烁2次
       }
