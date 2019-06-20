@@ -163,7 +163,7 @@ HAL_ISR_FUNCTION( port0Isr, P0INT_VECTOR ) // P0_5配置为投币器电平变化中断引脚，
       pre_reward_pin_value = 1;
     }
     P0IFG &= ~(0x1 << 6);
-    myprintf("\nP0_6=%d", REWARD_OUTPUT_PIN);
+    myprintf("\nP0_6=%d", REWARD_OUTPUT_PIN); // 此条串口打印语句不能去掉，否则计数会产生不准确结果
   }
   P0IF = 0;        //端口0中断标志，0表示无中断未决，1表示有中断未决，需要每次触发之后置0，不然会一直触发中断 
   IEN1 |= (0x1 << 5); // 端口0中断使能
