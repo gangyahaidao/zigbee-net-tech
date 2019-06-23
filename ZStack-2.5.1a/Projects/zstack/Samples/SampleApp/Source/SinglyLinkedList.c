@@ -13,6 +13,27 @@
 #include "OSAL.h"
 #include "MT_UART.h"
 
+/**
+查找某个指定机器编号的设备是否在列表中
+存在：0
+不存在：-1
+*/
+int findEndDeviceShortAddrByMachineid(LinkList L, uint8 machineId, uint8* addr) {
+  int i = 0;
+  LinkList p = L->next;
+  while(p) {
+    i++;
+    if(p->data.machineId == machineId) {
+      addr[0] = p->data.shortAddrH;
+      addr[0] = p->data.shortAddrL;
+      return 0;
+    }
+    p = p->next;
+  }
+  
+  return -1;
+}
+
 Status InitList_L(LinkList *L)                  // 初始化单链表L
 {
 	(*L) = (LinkList)osal_msg_allocate(sizeof(LNode)); // osal_msg_deallocate
@@ -58,12 +79,29 @@ int ListLength_L(LinkList L)
 /**
   检查某个IEEE地址终端是否在列表中，如果已经在列表中返回位置
 */
-int checkEPInList(LinkList L, uint8* ieeeAddrP) {
+int checkEPIsInListByIEEE(LinkList L, uint8* ieeeAddrP) {
   int i = 0;
   LinkList p = L->next;
   while(p) {
     i++;
     if(osal_memcmp(p->data.IEEEArr, ieeeAddrP, 8) == TRUE) {
+      return i;
+    }
+    p = p->next;
+  }
+  
+  return -1;
+}
+
+/**
+根据终端编号查找终端是否在列表中
+*/
+int checkEPIsInListByMachineId(LinkList L, uint8 machineId) {
+  int i = 0;
+  LinkList p = L->next;
+  while(p) {
+    i++;
+    if(p->data.machineId == machineId) {
       return i;
     }
     p = p->next;

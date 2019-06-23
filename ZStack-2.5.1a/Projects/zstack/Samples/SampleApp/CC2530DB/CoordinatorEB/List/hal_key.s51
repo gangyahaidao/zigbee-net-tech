@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        18/Jun/2019  14:15:05 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        23/Jun/2019  21:24:23 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -948,13 +948,13 @@ InitCoinInterrupt:
 //  549   // PICTL &= ~(0x1 << 0); // 端口0设置为0表示上升沿引起中断
 //  550   PICTL |= (0x1 << 0); // 端口0输入的下降沿引起中断
         ORL     0x8c,#0x1
-//  551   EA = 1; // 打开总中断
-        SETB    0xa8.7
-//  552   IEN1 &= ~(0x1 << 5); // 关闭端口0中断，当加入协调器网络的时候再开启中断
+//  551   IEN1 &= ~(0x1 << 5); // 关闭端口0中断，当加入协调器网络的时候再开启中断
         CLR     0xb8.5
-//  553   //IEN1 |= (0x1 << 5); // 端口0中断使能
-//  554   P0IFG = 0; // 初始化中断标志位  
+//  552   //IEN1 |= (0x1 << 5); // 端口0中断使能
+//  553   P0IFG = 0; // 初始化中断标志位  
         MOV     0x89,#0x0
+//  554   EA = 1; // 打开总中断
+        SETB    0xa8.7
 //  555 }
         LJMP    ?BRET
         CFI EndBlock cfiBlock4
@@ -964,9 +964,9 @@ InitCoinInterrupt:
         REQUIRE P2INP
         REQUIRE P0IEN
         REQUIRE PICTL
-        REQUIRE _A_IEN0
         REQUIRE _A_IEN1
         REQUIRE P0IFG
+        REQUIRE _A_IEN0
 
         RSEG BANK_RELAYS:CODE:REORDER:NOROOT(0)
 ??HalKeyInit?relay:

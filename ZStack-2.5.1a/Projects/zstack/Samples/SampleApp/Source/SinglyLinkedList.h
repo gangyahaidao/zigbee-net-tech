@@ -16,9 +16,10 @@
 
 
 typedef struct {
+  uint8 machineId; // 终端设备编号
   uint8 shortAddrH;
   uint8 shortAddrL;
-  uint8 IEEEArr[8]; // 终端固定地址
+  uint8 IEEEArr[8]; // 终端固定地址，后面可以考虑删除此信息
   int8  leftSecCount; // 剩余的秒数
 } LElemType_L;
 
@@ -31,9 +32,17 @@ typedef struct LNode
 typedef LNode* LinkList;		//指向单链表结点的指针 
 
 /**
+查找某个指定机器编号的设备是否在列表中
+存在：0
+不存在：-1
+*/
+int findEndDeviceShortAddrByMachineid(LinkList L, uint8 machineId, uint8* addr);
+
+/**
   检查某个IEEE地址终端是否在列表中，如果已经在列表中返回位置
 */
-int checkEPInList(LinkList L, uint8* ieeeAddrP);
+int checkEPIsInListByIEEE(LinkList L, uint8* ieeeAddrP);
+int checkEPIsInListByMachineId(LinkList L, uint8 machineId);
 
 /**
   更新指定位置元素的时间状态值

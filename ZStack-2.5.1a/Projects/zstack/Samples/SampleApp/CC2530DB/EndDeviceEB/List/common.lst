@@ -1,0 +1,746 @@
+###############################################################################
+#                                                                             #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         23/Jun/2019  21:32:54 #
+# Copyright 2004-2011 IAR Systems AB.                                         #
+#                                                                             #
+#    Core               =  plain                                              #
+#    Code model         =  banked                                             #
+#    Data model         =  large                                              #
+#    Calling convention =  xdata reentrant                                    #
+#    Constant location  =  data_rom                                           #
+#    Dptr setup         =  1,16                                               #
+#    Source file        =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\Source\common.c #
+#    Command line       =  -f E:\Github_Repository\zigbee-net-tech\ZStack-2.5 #
+#                          .1a\Projects\zstack\Samples\SampleApp\CC2530DB\..\ #
+#                          ..\..\Tools\CC2530DB\f8wEndev.cfg (-DCPU32MHZ      #
+#                          -DROOT=__near_func -DMAC_CFG_TX_DATA_MAX=3         #
+#                          -DMAC_CFG_TX_MAX=6 -DMAC_CFG_RX_MAX=3              #
+#                          -DEND_DEVICE) -f E:\Github_Repository\zigbee-net-t #
+#                          ech\ZStack-2.5.1a\Projects\zstack\Samples\SampleAp #
+#                          p\CC2530DB\..\..\..\Tools\CC2530DB\f8wConfig.cfg   #
+#                          (-DZIGBEEPRO -DSECURE=0 -DZG_SECURE_DYNAMIC=0      #
+#                          -DREFLECTOR -DDEFAULT_CHANLIST=0x00000800          #
+#                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                       #
+#                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_MA #
+#                          SK=0x007F -DBEACON_REQUEST_DELAY=100               #
+#                          -DBEACON_REQ_DELAY_MASK=0x00FF                     #
+#                          -DLINK_STATUS_JITTER_MASK=0x007F                   #
+#                          -DROUTE_EXPIRY_TIME=30 -DAPSC_ACK_WAIT_DURATION_PO #
+#                          LLED=3000 -DNWK_INDIRECT_MSG_TIMEOUT=7             #
+#                          -DMAX_RREQ_ENTRIES=8 -DAPSC_MAX_FRAME_RETRIES=3    #
+#                          -DNWK_MAX_DATA_RETRIES=2                           #
+#                          -DMAX_POLL_FAILURE_RETRIES=2 -DMAX_BCAST=9         #
+#                          -DAPS_MAX_GROUPS=16 -DMAX_RTG_ENTRIES=40           #
+#                          -DNWK_MAX_BINDING_ENTRIES=4                        #
+#                          -DMAX_BINDING_CLUSTER_IDS=4 "-DDEFAULT_KEY={0x01,  #
+#                          0x03, 0x05, 0x07, 0x09, 0x0B, 0x0D, 0x0F, 0x00,    #
+#                          0x02, 0x04, 0x06, 0x08, 0x0A, 0x0C, 0x0D}"         #
+#                          -DMAC_MAX_FRAME_SIZE=116                           #
+#                          -DZDNWKMGR_MIN_TRANSMISSIONS=20 "-DCONST=const     #
+#                          __code" -DGENERIC=__generic                        #
+#                          -DRFD_RCVC_ALWAYS_ON=FALSE -DPOLL_RATE=1000        #
+#                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100)   #
+#                          -DREJOIN_POLL_RATE=440 E:\Github_Repository\zigbee #
+#                          -net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sa #
+#                          mpleApp\Source\common.c -D NWK_AUTO_POLL -D        #
+#                          ZTOOL_P1 -D MT_TASK -D MT_SYS_FUNC -D MT_ZDO_FUNC  #
+#                          -lC E:\Github_Repository\zigbee-net-tech\ZStack-2. #
+#                          5.1a\Projects\zstack\Samples\SampleApp\CC2530DB\En #
+#                          dDeviceEB\List\ -lA E:\Github_Repository\zigbee-ne #
+#                          t-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl #
+#                          eApp\CC2530DB\EndDeviceEB\List\ --diag_suppress    #
+#                          Pe001,Pa010 -o E:\Github_Repository\zigbee-net-tec #
+#                          h\ZStack-2.5.1a\Projects\zstack\Samples\SampleApp\ #
+#                          CC2530DB\EndDeviceEB\Obj\ -e --no_code_motion      #
+#                          --debug --core=plain --dptr=16,1                   #
+#                          --data_model=large --code_model=banked             #
+#                          --calling_convention=xdata_reentrant               #
+#                          --place_constants=data_rom --nr_virtual_regs 16    #
+#                          -I E:\Github_Repository\zigbee-net-tech\ZStack-2.5 #
+#                          .1a\Projects\zstack\Samples\SampleApp\CC2530DB\    #
+#                          -I E:\Github_Repository\zigbee-net-tech\ZStack-2.5 #
+#                          .1a\Projects\zstack\Samples\SampleApp\CC2530DB\..\ #
+#                          Source\ -I E:\Github_Repository\zigbee-net-tech\ZS #
+#                          tack-2.5.1a\Projects\zstack\Samples\SampleApp\CC25 #
+#                          30DB\..\..\..\ZMain\TI2530DB\ -I                   #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\hal\include\ -I                #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\hal\target\CC2530EB\ -I        #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\mac\include\ -I                #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\mac\high_level\ -I             #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\mac\low_level\srf04\ -I        #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\mac\low_level\srf04\single_chi #
+#                          p\ -I E:\Github_Repository\zigbee-net-tech\ZStack- #
+#                          2.5.1a\Projects\zstack\Samples\SampleApp\CC2530DB\ #
+#                          ..\..\..\..\..\Components\mt\ -I                   #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\osal\include\ -I               #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\services\saddr\ -I             #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\services\sdata\ -I             #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\af\ -I                   #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\nwk\ -I                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\sapi\ -I                 #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\sec\ -I                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\sys\ -I                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\stack\zdo\ -I                  #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\zmac\ -I                       #
+#                          E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ #
+#                          ..\..\..\Components\zmac\f8w\ -Ohz                 #
+#                          --require_prototypes                               #
+#    List file          =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\EndDev #
+#                          iceEB\List\common.lst                              #
+#    Object file        =  E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a #
+#                          \Projects\zstack\Samples\SampleApp\CC2530DB\EndDev #
+#                          iceEB\Obj\common.r51                               #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\SampleApp\Source\common.c
+      1          #include "common.h"
+      2          
+      3          
+      4          /**
+      5           * 解析服务器发送过来的数据，步骤一：数据替换
+      6          */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+      7          uint8* re_replace_data(uint8* buffer, uint8 length, uint8* destArr, uint8* destLengthPtr){
+   \                     re_replace_data:
+   \   000000   74F2         MOV     A,#-0xe
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 14
+   \   000005                ; Auto size: 0
+   \   000005   EA           MOV     A,R2
+   \   000006   FE           MOV     R6,A
+   \   000007   EB           MOV     A,R3
+   \   000008   FF           MOV     R7,A
+   \   000009   89..         MOV     ?V0 + 2,R1
+   \   00000B   EC           MOV     A,R4
+   \   00000C   FA           MOV     R2,A
+   \   00000D   ED           MOV     A,R5
+   \   00000E   FB           MOV     R3,A
+   \   00000F   740E         MOV     A,#0xe
+   \   000011   12....       LCALL   ?XSTACK_DISP0_8
+   \   000014   E0           MOVX    A,@DPTR
+   \   000015   F8           MOV     R0,A
+   \   000016   A3           INC     DPTR
+   \   000017   E0           MOVX    A,@DPTR
+   \   000018   F9           MOV     R1,A
+   \   000019   88..         MOV     ?V0 + 0,R0
+   \   00001B   89..         MOV     ?V0 + 1,R1
+      8              int i = 0;
+      9              int j = 0;
+   \   00001D   7C00         MOV     R4,#0x0
+   \   00001F   7D00         MOV     R5,#0x0
+     10              for(i = 0; i < length; i++) {
+   \   000021   7800         MOV     R0,#0x0
+   \   000023   7900         MOV     R1,#0x0
+   \   000025   8010         SJMP    ??CrossCallReturnLabel_18
+     11                  if(buffer[i] == 0x7D && buffer[i+1] == 0x02) {
+     12                      destArr[j++] = 0x7E;
+     13                      i++;
+     14                  } else if(buffer[i] == 0x7D && buffer[i+1] == 0x01) {
+     15                      destArr[j++] = 0x7D;
+     16                      i++;
+     17                  } else {
+     18                      destArr[j++] = buffer[i];
+   \                     ??re_replace_data_0:
+   \   000027   12....       LCALL   ?Subroutine9 & 0xFFFF
+     19                  }
+   \                     ??CrossCallReturnLabel_16:
+   \   00002A   C0E0         PUSH    A
+   \   00002C   12....       LCALL   ?Subroutine2 & 0xFFFF
+   \                     ??CrossCallReturnLabel_2:
+   \   00002F   D0E0         POP     A
+   \   000031   12....       LCALL   ?Subroutine4 & 0xFFFF
+   \                     ??CrossCallReturnLabel_7:
+   \   000034   12....       LCALL   ??Subroutine10_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_18:
+   \   000037   85....       MOV     ?V0 + 4,?V0 + 2
+   \   00003A   C3           CLR     C
+   \   00003B   E8           MOV     A,R0
+   \   00003C   95..         SUBB    A,?V0 + 4
+   \   00003E   E9           MOV     A,R1
+   \   00003F   9400         SUBB    A,#0x0
+   \   000041   A2D2         MOV     C,0xD0 /* PSW */.2
+   \   000043   65D0         XRL     A,PSW
+   \   000045   33           RLC     A
+   \   000046   502A         JNC     ??re_replace_data_1
+   \   000048   12....       LCALL   ?Subroutine3 & 0xFFFF
+   \                     ??CrossCallReturnLabel_5:
+   \   00004B   7013         JNZ     ??re_replace_data_2
+   \   00004D   A3           INC     DPTR
+   \   00004E   E0           MOVX    A,@DPTR
+   \   00004F   6402         XRL     A,#0x2
+   \   000051   700D         JNZ     ??re_replace_data_2
+   \   000053   12....       LCALL   ?Subroutine2 & 0xFFFF
+   \                     ??CrossCallReturnLabel_3:
+   \   000056   747E         MOV     A,#0x7e
+   \                     ??re_replace_data_3:
+   \   000058   12....       LCALL   ?Subroutine4 & 0xFFFF
+   \                     ??CrossCallReturnLabel_8:
+   \   00005B   12....       LCALL   ??Subroutine10_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_19:
+   \   00005E   80D4         SJMP    ??CrossCallReturnLabel_7
+   \                     ??re_replace_data_2:
+   \   000060   12....       LCALL   ?Subroutine3 & 0xFFFF
+   \                     ??CrossCallReturnLabel_6:
+   \   000063   70C2         JNZ     ??re_replace_data_0
+   \   000065   A3           INC     DPTR
+   \   000066   E0           MOVX    A,@DPTR
+   \   000067   6401         XRL     A,#0x1
+   \   000069   70BC         JNZ     ??re_replace_data_0
+   \   00006B   12....       LCALL   ?Subroutine2 & 0xFFFF
+     20              }
+   \                     ??CrossCallReturnLabel_4:
+   \   00006E   747D         MOV     A,#0x7d
+   \   000070   80E6         SJMP    ??re_replace_data_3
+     21              *destLengthPtr = j; // 替换之后的长度
+   \                     ??re_replace_data_1:
+   \   000072   EC           MOV     A,R4
+   \   000073   85..82       MOV     DPL,?V0 + 0
+   \   000076   85..83       MOV     DPH,?V0 + 1
+   \   000079   F0           MOVX    @DPTR,A
+     22              return destArr;
+   \   00007A   7F06         MOV     R7,#0x6
+   \   00007C   02....       LJMP    ?BANKED_LEAVE_XDATA
+     23          }
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine4:
+   \   000000   F0           MOVX    @DPTR,A
+   \   000001   EC           MOV     A,R4
+   \   000002   2401         ADD     A,#0x1
+   \   000004   0C           INC     R4
+   \   000005   ED           MOV     A,R5
+   \   000006   3400         ADDC    A,#0x0
+   \   000008   FD           MOV     R5,A
+   \   000009   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine3:
+   \   000000   12....       LCALL   ?Subroutine9 & 0xFFFF
+   \                     ??CrossCallReturnLabel_17:
+   \   000003   647D         XRL     A,#0x7d
+   \   000005   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine9:
+   \   000000   EE           MOV     A,R6
+   \   000001   28           ADD     A,R0
+   \   000002   F582         MOV     DPL,A
+   \   000004   EF           MOV     A,R7
+   \   000005   39           ADDC    A,R1
+   \   000006   F583         MOV     DPH,A
+   \   000008   E0           MOVX    A,@DPTR
+   \   000009   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine2:
+   \   000000   EA           MOV     A,R2
+   \   000001   2C           ADD     A,R4
+   \   000002   F582         MOV     DPL,A
+   \   000004   EB           MOV     A,R3
+   \   000005   3D           ADDC    A,R5
+   \   000006   F583         MOV     DPH,A
+   \   000008   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ??Subroutine10_0:
+   \   000000   E8           MOV     A,R0
+   \   000001   2401         ADD     A,#0x1
+   \   000003   08           INC     R0
+   \   000004   E9           MOV     A,R1
+   \   000005   3400         ADDC    A,#0x0
+   \   000007   F9           MOV     R1,A
+   \   000008   22           RET
+     24          /**
+     25           * 解析服务器发送过来的数据，步骤二：数据校验
+     26          */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+     27          bool check_xor(uint8* destArr, uint8 length) {
+   \                     check_xor:
+   \   000000   74F5         MOV     A,#-0xb
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 11
+   \   000005                ; Auto size: 0
+   \   000005   E9           MOV     A,R1
+   \   000006   FF           MOV     R7,A
+     28              uint8 XOR = destArr[length-2];
+   \   000007   8F..         MOV     ?V0 + 0,R7
+   \   000009   EA           MOV     A,R2
+   \   00000A   25..         ADD     A,?V0 + 0
+   \   00000C   F8           MOV     R0,A
+   \   00000D   EB           MOV     A,R3
+   \   00000E   3400         ADDC    A,#0x0
+   \   000010   F9           MOV     R1,A
+   \   000011   E8           MOV     A,R0
+   \   000012   24FE         ADD     A,#-0x2
+   \   000014   F582         MOV     DPL,A
+   \   000016   E9           MOV     A,R1
+   \   000017   34FF         ADDC    A,#-0x1
+   \   000019   F583         MOV     DPH,A
+   \   00001B   E0           MOVX    A,@DPTR
+   \   00001C   FE           MOV     R6,A
+     29              uint8 contentLen = destArr[3];
+     30          
+     31              if(contentLen > 0) {
+   \   00001D   8A82         MOV     DPL,R2
+   \   00001F   8B83         MOV     DPH,R3
+   \   000021   A3           INC     DPTR
+   \   000022   A3           INC     DPTR
+   \   000023   A3           INC     DPTR
+   \   000024   E0           MOVX    A,@DPTR
+   \   000025   6039         JZ      ??check_xor_0
+     32                  uint8 calculate = destArr[1];
+   \   000027   8A82         MOV     DPL,R2
+   \   000029   8B83         MOV     DPH,R3
+   \   00002B   A3           INC     DPTR
+   \   00002C   E0           MOVX    A,@DPTR
+   \   00002D   F5..         MOV     ?V0 + 2,A
+     33                  int i = 0;
+     34                  for(i = 2; i < length-2; i++) {
+   \   00002F   7802         MOV     R0,#0x2
+   \   000031   7900         MOV     R1,#0x0
+   \   000033   800E         SJMP    ??CrossCallReturnLabel_20
+     35                      calculate = calculate ^ destArr[i];
+   \                     ??check_xor_1:
+   \   000035   EA           MOV     A,R2
+   \   000036   28           ADD     A,R0
+   \   000037   F582         MOV     DPL,A
+   \   000039   EB           MOV     A,R3
+   \   00003A   39           ADDC    A,R1
+   \   00003B   F583         MOV     DPH,A
+   \   00003D   E0           MOVX    A,@DPTR
+   \   00003E   62..         XRL     ?V0 + 2,A
+     36                  }
+   \   000040   12....       LCALL   ??Subroutine10_0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_20:
+   \   000043   EF           MOV     A,R7
+   \   000044   24FE         ADD     A,#-0x2
+   \   000046   FC           MOV     R4,A
+   \   000047   E4           CLR     A
+   \   000048   34FF         ADDC    A,#-0x1
+   \   00004A   FD           MOV     R5,A
+   \   00004B   C3           CLR     C
+   \   00004C   E8           MOV     A,R0
+   \   00004D   9C           SUBB    A,R4
+   \   00004E   E9           MOV     A,R1
+   \   00004F   9D           SUBB    A,R5
+   \   000050   A2D2         MOV     C,0xD0 /* PSW */.2
+   \   000052   65D0         XRL     A,PSW
+   \   000054   33           RLC     A
+   \   000055   40DE         JC      ??check_xor_1
+     37                  if(XOR != calculate) {
+   \   000057   E5..         MOV     A,?V0 + 2
+   \   000059   6E           XRL     A,R6
+   \   00005A   6004         JZ      ??check_xor_0
+     38                      return FALSE;
+   \   00005C   7900         MOV     R1,#0x0
+   \   00005E   8002         SJMP    ??check_xor_2
+     39                  }
+     40              }
+     41              return TRUE;
+   \                     ??check_xor_0:
+   \   000060   7901         MOV     R1,#0x1
+   \                     ??check_xor_2:
+   \   000062   7F03         MOV     R7,#0x3
+   \   000064   02....       LJMP    ?BANKED_LEAVE_XDATA
+     42          }
+     43          
+     44          //**************************************************************************//
+     45          /**
+     46           * 按照协议封装数据
+     47           * Data Format: 0x7E + 1byteCmd + encType + 1byteLength + data[] + xor + 0x7E
+     48          */
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine1:
+   \   000000   F0           MOVX    @DPTR,A
+   \   000001                REQUIRE ??Subroutine10_0
+   \   000001                ; // Fall through to label ??Subroutine10_0
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+     49          void encodeData(uint8 cmd, uint8* content, uint8 contentLen, uint8* outputBuf, uint8* outputLen) {
+   \                     encodeData:
+   \   000000   74F1         MOV     A,#-0xf
+   \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
+   \   000005                ; Saved register size: 15
+   \   000005                ; Auto size: 32
+   \   000005   74E0         MOV     A,#-0x20
+   \   000007   12....       LCALL   ?ALLOC_XSTACK8
+   \   00000A   8C..         MOV     ?V0 + 1,R4
+   \   00000C   742F         MOV     A,#0x2f
+   \   00000E   12....       LCALL   ?XSTACK_DISP0_8
+   \   000011   E0           MOVX    A,@DPTR
+   \   000012   FE           MOV     R6,A
+   \   000013   A3           INC     DPTR
+   \   000014   E0           MOVX    A,@DPTR
+   \   000015   FF           MOV     R7,A
+   \   000016   7431         MOV     A,#0x31
+   \   000018   12....       LCALL   ?XSTACK_DISP0_8
+   \   00001B   E0           MOVX    A,@DPTR
+   \   00001C   F5..         MOV     ?V0 + 2,A
+   \   00001E   A3           INC     DPTR
+   \   00001F   E0           MOVX    A,@DPTR
+   \   000020   F5..         MOV     ?V0 + 3,A
+     50              uint8 sendBuf[SEND_BUF_SIZE] = {0};
+   \   000022   85..82       MOV     DPL,?XSP + 0
+   \   000025   85..83       MOV     DPH,?XSP + 1
+   \   000028   AC82         MOV     R4,DPL
+   \   00002A   AD83         MOV     R5,DPH
+   \   00002C   7583..       MOV     DPH,#(`?<Constant {0}>` >> 8) & 0xff
+   \   00002F   7582..       MOV     DPL,#`?<Constant {0}>` & 0xff
+   \   000032   7420         MOV     A,#0x20
+   \   000034   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
+     51              int index = 0;
+     52          
+     53              sendBuf[index++] = 0x7E;
+   \   000037   85..82       MOV     DPL,?XSP + 0
+   \   00003A   85..83       MOV     DPH,?XSP + 1
+   \   00003D   747E         MOV     A,#0x7e
+   \   00003F   F0           MOVX    @DPTR,A
+     54              sendBuf[index++] = cmd;
+   \   000040   7401         MOV     A,#0x1
+   \   000042   12....       LCALL   ?XSTACK_DISP0_8
+   \   000045   E9           MOV     A,R1
+   \   000046   F0           MOVX    @DPTR,A
+     55              sendBuf[index++] = 0x0; // 加密方式0x0表示不加密
+   \   000047   7402         MOV     A,#0x2
+   \   000049   12....       LCALL   ?XSTACK_DISP0_8
+   \   00004C   E4           CLR     A
+   \   00004D   F0           MOVX    @DPTR,A
+     56              sendBuf[index++] = contentLen; // 消息体长度
+   \   00004E   7403         MOV     A,#0x3
+   \   000050   12....       LCALL   ?XSTACK_DISP0_8
+   \   000053   E5..         MOV     A,?V0 + 1
+   \   000055   F0           MOVX    @DPTR,A
+   \   000056   7804         MOV     R0,#0x4
+   \   000058   7900         MOV     R1,#0x0
+     57              if(contentLen > 0) { // 如果消息体中有内容才进行组装
+   \   00005A   602C         JZ      ??encodeData_0
+     58                  osal_memcpy(sendBuf+index, content, contentLen);
+   \   00005C                ; Setup parameters for call to function osal_memcpy
+   \   00005C   8A..         MOV     ?V0 + 4,R2
+   \   00005E   8B..         MOV     ?V0 + 5,R3
+   \   000060   89..         MOV     ?V0 + 6,R1
+   \   000062   78..         MOV     R0,#?V0 + 4
+   \   000064   12....       LCALL   ?PUSH_XSTACK_I_THREE
+   \   000067   85....       MOV     ?V0 + 4,?V0 + 1
+   \   00006A   AC..         MOV     R4,?V0 + 4
+   \   00006C   7D00         MOV     R5,#0x0
+   \   00006E   7407         MOV     A,#0x7
+   \   000070   12....       LCALL   ?XSTACK_DISP0_8
+   \   000073   AA82         MOV     R2,DPL
+   \   000075   AB83         MOV     R3,DPH
+   \   000077   12....       LCALL   ??osal_memcpy?relay
+   \   00007A   7403         MOV     A,#0x3
+   \   00007C   12....       LCALL   ?DEALLOC_XSTACK8
+     59                  index += contentLen;
+   \   00007F   E5..         MOV     A,?V0 + 4
+   \   000081   2404         ADD     A,#0x4
+   \   000083   F8           MOV     R0,A
+   \   000084   E4           CLR     A
+   \   000085   3400         ADDC    A,#0x0
+   \   000087   F9           MOV     R1,A
+     60              }    
+     61              // calculate xor
+     62              uint8 XOR = sendBuf[1];
+   \                     ??encodeData_0:
+   \   000088   7401         MOV     A,#0x1
+   \   00008A   12....       LCALL   ?XSTACK_DISP0_8
+   \   00008D   E0           MOVX    A,@DPTR
+   \   00008E   F5..         MOV     ?V0 + 4,A
+     63              int i = 0;
+     64              for(i = 2; i < index; i++) {
+   \   000090   7A02         MOV     R2,#0x2
+   \   000092   7B00         MOV     R3,#0x0
+   \   000094   800D         SJMP    ??encodeData_1
+     65                  XOR ^= sendBuf[i];
+   \                     ??encodeData_2:
+   \   000096   12....       LCALL   ??Subroutine11_0 & 0xFFFF
+     66              }
+   \                     ??CrossCallReturnLabel_23:
+   \   000099   62..         XRL     ?V0 + 4,A
+   \   00009B   EA           MOV     A,R2
+   \   00009C   2401         ADD     A,#0x1
+   \   00009E   0A           INC     R2
+   \   00009F   EB           MOV     A,R3
+   \   0000A0   3400         ADDC    A,#0x0
+   \   0000A2   FB           MOV     R3,A
+   \                     ??encodeData_1:
+   \   0000A3   C3           CLR     C
+   \   0000A4   EA           MOV     A,R2
+   \   0000A5   98           SUBB    A,R0
+   \   0000A6   EB           MOV     A,R3
+   \   0000A7   99           SUBB    A,R1
+   \   0000A8   A2D2         MOV     C,0xD0 /* PSW */.2
+   \   0000AA   65D0         XRL     A,PSW
+   \   0000AC   33           RLC     A
+   \   0000AD   85..82       MOV     DPL,?XSP + 0
+   \   0000B0   85..83       MOV     DPH,?XSP + 1
+   \   0000B3   E582         MOV     A,DPL
+   \   0000B5   40DF         JC      ??encodeData_2
+     67              sendBuf[index++] = XOR;
+   \   0000B7   12....       LCALL   ?Subroutine5 & 0xFFFF
+   \                     ??CrossCallReturnLabel_9:
+   \   0000BA   E5..         MOV     A,?V0 + 4
+   \   0000BC   12....       LCALL   ?Subroutine1 & 0xFFFF
+     68              sendBuf[index++] = 0x7E;
+   \                     ??CrossCallReturnLabel_21:
+   \   0000BF   85..82       MOV     DPL,?XSP + 0
+   \   0000C2   85..83       MOV     DPH,?XSP + 1
+   \   0000C5   E582         MOV     A,DPL
+   \   0000C7   12....       LCALL   ?Subroutine5 & 0xFFFF
+   \                     ??CrossCallReturnLabel_10:
+   \   0000CA   747E         MOV     A,#0x7e
+   \   0000CC   12....       LCALL   ?Subroutine1 & 0xFFFF
+     69              uint8 tmpOutLen = 0;
+     70              outputBuf[tmpOutLen++] = 0x7E;
+   \                     ??CrossCallReturnLabel_22:
+   \   0000CF   8E82         MOV     DPL,R6
+   \   0000D1   8F83         MOV     DPH,R7
+   \   0000D3   747E         MOV     A,#0x7e
+   \   0000D5   F0           MOVX    @DPTR,A
+   \   0000D6   75..01       MOV     ?V0 + 6,#0x1
+     71              for(i = 1; i < index-1; i++) {
+   \   0000D9   7A01         MOV     R2,#0x1
+   \   0000DB   7B00         MOV     R3,#0x0
+   \   0000DD   8015         SJMP    ??encodeData_3
+     72                  if(sendBuf[i] == 0x7E) {
+     73                      outputBuf[tmpOutLen++] = 0x7D;
+     74                      outputBuf[tmpOutLen++] = 0x02;
+     75                  } else if(sendBuf[i] == 0x7D) {
+     76                      outputBuf[tmpOutLen++] = 0x7D;
+     77                      outputBuf[tmpOutLen++] = 0x01;
+     78                  } else {
+     79                      outputBuf[tmpOutLen++] = sendBuf[i];
+   \                     ??encodeData_4:
+   \   0000DF   12....       LCALL   ?Subroutine6 & 0xFFFF
+     80                  }
+   \                     ??CrossCallReturnLabel_24:
+   \   0000E2   C0E0         PUSH    A
+   \   0000E4   12....       LCALL   ?Subroutine7 & 0xFFFF
+   \                     ??CrossCallReturnLabel_11:
+   \   0000E7   D0E0         POP     A
+   \                     ??encodeData_5:
+   \   0000E9   F0           MOVX    @DPTR,A
+   \   0000EA   05..         INC     ?V0 + 6
+   \   0000EC   EA           MOV     A,R2
+   \   0000ED   2401         ADD     A,#0x1
+   \   0000EF   0A           INC     R2
+   \   0000F0   EB           MOV     A,R3
+   \   0000F1   3400         ADDC    A,#0x0
+   \   0000F3   FB           MOV     R3,A
+   \                     ??encodeData_3:
+   \   0000F4   E8           MOV     A,R0
+   \   0000F5   24FF         ADD     A,#-0x1
+   \   0000F7   FC           MOV     R4,A
+   \   0000F8   E9           MOV     A,R1
+   \   0000F9   34FF         ADDC    A,#-0x1
+   \   0000FB   FD           MOV     R5,A
+   \   0000FC   C3           CLR     C
+   \   0000FD   EA           MOV     A,R2
+   \   0000FE   9C           SUBB    A,R4
+   \   0000FF   EB           MOV     A,R3
+   \   000100   9D           SUBB    A,R5
+   \   000101   A2D2         MOV     C,0xD0 /* PSW */.2
+   \   000103   65D0         XRL     A,PSW
+   \   000105   33           RLC     A
+   \   000106   501C         JNC     ??encodeData_6
+   \   000108   12....       LCALL   ?Subroutine6 & 0xFFFF
+   \                     ??CrossCallReturnLabel_25:
+   \   00010B   647E         XRL     A,#0x7e
+   \   00010D   7007         JNZ     ??encodeData_7
+   \   00010F   12....       LCALL   ?Subroutine0 & 0xFFFF
+   \                     ??CrossCallReturnLabel_0:
+   \   000112   7402         MOV     A,#0x2
+   \   000114   80D3         SJMP    ??encodeData_5
+   \                     ??encodeData_7:
+   \   000116   12....       LCALL   ?Subroutine6 & 0xFFFF
+   \                     ??CrossCallReturnLabel_26:
+   \   000119   647D         XRL     A,#0x7d
+   \   00011B   70C2         JNZ     ??encodeData_4
+   \   00011D   12....       LCALL   ?Subroutine0 & 0xFFFF
+     81              }
+   \                     ??CrossCallReturnLabel_1:
+   \   000120   7401         MOV     A,#0x1
+   \   000122   80C5         SJMP    ??encodeData_5
+     82              outputBuf[tmpOutLen] = 0x7E;
+   \                     ??encodeData_6:
+   \   000124   12....       LCALL   ?Subroutine7 & 0xFFFF
+   \                     ??CrossCallReturnLabel_12:
+   \   000127   747E         MOV     A,#0x7e
+   \   000129   F0           MOVX    @DPTR,A
+     83              *outputLen = tmpOutLen;
+   \   00012A   85..82       MOV     DPL,?V0 + 2
+   \   00012D   85..83       MOV     DPH,?V0 + 3
+   \   000130   E5..         MOV     A,?V0 + 6
+   \   000132   F0           MOVX    @DPTR,A
+     84          }
+   \   000133   7420         MOV     A,#0x20
+   \   000135   12....       LCALL   ?DEALLOC_XSTACK8
+   \   000138   7F07         MOV     R7,#0x7
+   \   00013A   02....       LJMP    ?BANKED_LEAVE_XDATA
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine7:
+   \   000000   12....       LCALL   ?Subroutine8 & 0xFFFF
+   \                     ??CrossCallReturnLabel_15:
+   \   000003   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine6:
+   \   000000   85..82       MOV     DPL,?XSP + 0
+   \   000003   85..83       MOV     DPH,?XSP + 1
+   \   000006   E582         MOV     A,DPL
+   \   000008                REQUIRE ??Subroutine11_0
+   \   000008                ; // Fall through to label ??Subroutine11_0
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ??Subroutine11_0:
+   \   000000   2A           ADD     A,R2
+   \   000001   F582         MOV     DPL,A
+   \   000003   E583         MOV     A,DPH
+   \   000005   3B           ADDC    A,R3
+   \   000006   F583         MOV     DPH,A
+   \   000008   E0           MOVX    A,@DPTR
+   \   000009   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine5:
+   \   000000   28           ADD     A,R0
+   \   000001   F582         MOV     DPL,A
+   \   000003   E583         MOV     A,DPH
+   \   000005   39           ADDC    A,R1
+   \   000006   F583         MOV     DPH,A
+   \   000008   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine0:
+   \   000000   12....       LCALL   ?Subroutine8 & 0xFFFF
+   \                     ??CrossCallReturnLabel_13:
+   \   000003   747D         MOV     A,#0x7d
+   \   000005   F0           MOVX    @DPTR,A
+   \   000006   05..         INC     ?V0 + 6
+   \   000008   12....       LCALL   ?Subroutine8 & 0xFFFF
+   \                     ??CrossCallReturnLabel_14:
+   \   00000B   22           RET
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+   \                     ?Subroutine8:
+   \   000000   85....       MOV     ?V0 + 4,?V0 + 6
+   \   000003   EE           MOV     A,R6
+   \   000004   25..         ADD     A,?V0 + 4
+   \   000006   F582         MOV     DPL,A
+   \   000008   EF           MOV     A,R7
+   \   000009   3400         ADDC    A,#0x0
+   \   00000B   F583         MOV     DPH,A
+   \   00000D   22           RET
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??re_replace_data?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    re_replace_data
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??check_xor?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    check_xor
+
+   \                                 In  segment BANK_RELAYS, align 1
+   \                     ??encodeData?relay:
+   \   000000   12....       LCALL   ?BDISPATCH
+   \   000003   ......       DC24    encodeData
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     `?<Constant {0}>`:
+   \   000000   00           DB 0
+   \   000001   00000000     DB 0, 0, 0, 0, 0, 0, 0, 0
+   \            00000000
+   \   000009   00000000     DB 0, 0, 0, 0, 0, 0, 0, 0
+   \            00000000
+   \   000011   00000000     DB 0, 0, 0, 0, 0, 0, 0, 0
+   \            00000000
+   \   000019   00000000     DB 0, 0, 0, 0, 0, 0, 0
+   \            000000  
+
+   Maximum stack usage in bytes:
+
+     Function         ISTACK PSTACK XSTACK
+     --------         ------ ------ ------
+     check_xor            0      0     11
+     encodeData           2      0     54
+       -> osal_memcpy     0      0    100
+     re_replace_data      1      0     16
+
+
+   Segment part sizes:
+
+     Function/Label          Bytes
+     --------------          -----
+     re_replace_data          127
+     ?Subroutine4              10
+     ?Subroutine3               6
+     ?Subroutine9              10
+     ?Subroutine2               9
+     ??Subroutine10_0           9
+     check_xor                103
+     ?Subroutine1               1
+     encodeData               317
+     ?Subroutine7               4
+     ?Subroutine6               8
+     ??Subroutine11_0          10
+     ?Subroutine5               9
+     ?Subroutine0              12
+     ?Subroutine8              14
+     ??re_replace_data?relay    6
+     ??check_xor?relay          6
+     ??encodeData?relay         6
+     ?<Constant {0}>           32
+
+ 
+ 649 bytes in segment BANKED_CODE
+  18 bytes in segment BANK_RELAYS
+  32 bytes in segment XDATA_ROM_C
+ 
+ 667 bytes of CODE  memory
+  32 bytes of CONST memory
+
+Errors: none
+Warnings: none

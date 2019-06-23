@@ -51,6 +51,9 @@
 #include "SampleApp.h"
 #include "hal_led.h"
 
+#include "common.h"
+#include "SinglyLinkedList.h"
+
 /***************************************************************************************************
  * MACROS
  ***************************************************************************************************/
@@ -203,47 +206,83 @@ uint8 speed_buffer[4] = {0};
 extern endPointDesc_t SampleApp_epDesc;
 extern afAddrType_t EndPoint_DstAddr;
 extern uint8 SampleApp_TransID;
+extern LinkList LL; // 定义线性链表存储终端地址以及心跳信息
+
 void MT_MyUartProcessZToolData ( uint8 port, uint8 event )
 {
   uint8  ch;
   (void)event;  // Intentionally unreferenced parameter
+  bool recv_head = false;
+  bool recv_tail = false;
+  uint8 buffer[SERIAL_BUFFER_SIZE] = {0};    
+  uint8 recvLen = 0;
+  uint8 outputBuffer[SERIAL_BUFFER_SIZE] = {0};
+  uint8 outputLen = 0;
+  int ret = 0;
   
   while (Hal_UART_RxBufLen(port))
   {
     HalUARTRead (port, &ch, 1); // 数据格式：头部 + 地址高字节 + 地址低字节 + 命令字节 + 尾部
-    if(ch == '#') { // 一帧数据的开始字节
-      recv_index = 0;
-    } else if(ch == '@') { // 接收到一帧数据尾部
-      recv_index = 0;     
-        
-      uint8 cmd = speed_buffer[0]; // 消息命令类型
-      uint16 addr = speed_buffer[1]; // 终端地址高字节
-      addr = (addr << 8) | speed_buffer[2];
-      if(cmd == 0x81) { // 让指定地址的游戏机开始游戏
-        uint8 sendEPBuf[4] = {'#', 0x81, 0, '@'};
-        sendEPBuf[2] = speed_buffer[3]; // 需要的投币个数
-        EndPoint_DstAddr.addr.shortAddr = addr;
-        if ( AF_DataRequest( &EndPoint_DstAddr, // 以单播的形式发送数据到指定的终端，终端收到投币命令之后，会回复一个0x72消息给协调器，协调器将此消息再转发到上位机
+    if(ch == HEAD_BYTE) {
+        if(!recv_head) { // 第一次收到开始标识
+            recv_head = true;
+        } else {
+            recv_tail = true;
+        }
+    }
+    if(recv_head) { // 避免接收无效的数据
+      buffer[recvLen++] = ch;
+    }
+    if(recvLen >= 6 && recv_head && recv_tail) { // 收到一帧完整的数据，至少有6个字节
+      re_replace_data(buffer, recvLen, outputBuffer, &outputLen); // 还原被替换的特殊数据
+      bool check = check_xor(outputBuffer, outputLen); // 数据校验
+      if(check) {
+          uint8 cmd = outputBuffer[1];
+          if(cmd == TO_PAY_COIN) { // 服务器发送的需要模拟投币命令
+            uint8 machineId = outputBuffer[4]; // 目标终端设备的编号            
+            uint8 needProduceCoin = outputBuffer[5]; // 需要终端设备投递的金币数
+            
+            // 协调器根据设备编号遍历终端列表查找短地址
+            uint8 shortAddr[2] = {0};
+            ret = findEndDeviceShortAddrByMachineid(LL, machineId, shortAddr);
+            if(ret == 0) { // 说明终端在协调器列表中
+              uint16 addr = shortAddr[0]; // 终端地址高字节
+              addr = (addr << 8) | shortAddr[1];
+              EndPoint_DstAddr.addr.shortAddr = addr;
+              
+              uint8 contentBuf[1] = {needProduceCoin};
+              uint8 contentBufLen = 1;
+              // 将数据进行协议拼装
+              uint8 outputBuf[SEND_BUF_SIZE] = {0};
+              uint8 outputLen = 0;
+              encodeData(TO_PAY_COIN, contentBuf, contentBufLen, outputBuf, &outputLen);
+              // 将数据发送到终端
+              if ( AF_DataRequest( &EndPoint_DstAddr, // 以单播的形式发送数据到指定的终端，终端收到投币命令之后，会回复一个0x72消息给协调器，协调器将此消息再转发到上位机
                             &SampleApp_epDesc,
                             SAMPLEAPP_PERIODIC_CLUSTERID,
-                            4,
-                            sendEPBuf,
+                            outputLen,
+                            outputBuf,
                             &SampleApp_TransID,
                             AF_DISCV_ROUTE,
                             AF_DEFAULT_RADIUS ) != afStatus_SUCCESS )
-        {
-          myprintf("SendToEPFailed\n");
-        }
+              {
+                myprintf("SendToEPFailed\n");
+              }
+            
+            } else if(ret == -1) { // 说明终端不在协调器列表中
+              // ?????????????????????????????????上报服务器
+              myprintf("end device is not in coor list\n");
+            }                        
+          }                    
+      } else {
+        myprintf("XOR check failed\n");
       }
-    } else {
-      if(recv_index >= 4){
-        recv_index = 0;
-      }else{
-        speed_buffer[recv_index] = ch;
-        recv_index++;  
-      }
-    }
-    
+      recv_head = false;
+      recv_tail = false;
+      recvLen = 0;
+      osal_memset( buffer, 0x0, SERIAL_BUFFER_SIZE);
+      osal_memset( outputBuffer, 0x0, SERIAL_BUFFER_SIZE);
+    }        
   }
 }
 /***************************************************************************************************

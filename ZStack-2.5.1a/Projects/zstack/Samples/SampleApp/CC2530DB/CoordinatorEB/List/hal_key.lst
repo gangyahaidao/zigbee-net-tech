@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         18/Jun/2019  14:15:05 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         23/Jun/2019  21:24:23 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -766,13 +766,13 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
     549            // PICTL &= ~(0x1 << 0); // 端口0设置为0表示上升沿引起中断
     550            PICTL |= (0x1 << 0); // 端口0输入的下降沿引起中断
    \   00001B   438C01       ORL     0x8c,#0x1
-    551            EA = 1; // 打开总中断
-   \   00001E   D2AF         SETB    0xa8.7
-    552            IEN1 &= ~(0x1 << 5); // 关闭端口0中断，当加入协调器网络的时候再开启中断
-   \   000020   C2BD         CLR     0xb8.5
-    553            //IEN1 |= (0x1 << 5); // 端口0中断使能
-    554            P0IFG = 0; // 初始化中断标志位  
-   \   000022   758900       MOV     0x89,#0x0
+    551            IEN1 &= ~(0x1 << 5); // 关闭端口0中断，当加入协调器网络的时候再开启中断
+   \   00001E   C2BD         CLR     0xb8.5
+    552            //IEN1 |= (0x1 << 5); // 端口0中断使能
+    553            P0IFG = 0; // 初始化中断标志位  
+   \   000020   758900       MOV     0x89,#0x0
+    554            EA = 1; // 打开总中断
+   \   000023   D2AF         SETB    0xa8.7
     555          }
    \   000025   02....       LJMP    ?BRET
    \   000028                REQUIRE P0SEL
@@ -781,9 +781,9 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\hal\target\CC2530E
    \   000028                REQUIRE P2INP
    \   000028                REQUIRE P0IEN
    \   000028                REQUIRE PICTL
-   \   000028                REQUIRE _A_IEN0
    \   000028                REQUIRE _A_IEN1
    \   000028                REQUIRE P0IFG
+   \   000028                REQUIRE _A_IEN0
 
    \                                 In  segment BANK_RELAYS, align 1
    \                     ??HalKeyInit?relay:

@@ -4,6 +4,8 @@
 /* 状态码 */
 #define	TRUE		1			//真 
 #define	FALSE		0			//假
+#define	true		1			//真 
+#define	false		0			//假
 #define YES             1			//是
 #define NO              0			//否 
 #define	OK		1			//通过

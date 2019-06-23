@@ -3180,6 +3180,12 @@
   <group>
     <name>App</name>
     <file>
+      <name>$PROJ_DIR$\..\Source\common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Source\common.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\Source\OSAL_SampleApp.c</name>
     </file>
     <file>
