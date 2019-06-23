@@ -11,7 +11,7 @@
 
 #define HEAD_BYTE 0x7E
 
-#define TO_PAY_COIN 0x50 // 线上进行投币操作：投币数量1个byte
+#define TO_PAY_COIN 0x50 // 线上进行投币操作：设备编号 + 投币数量byte
 #define TEST_DISTANCE_FLASH_LED 0x51 // 用于闪灯测试距离稳定性
 
 #define ENDDEVICE_NETWORK_READY 0x80 // 终端入网命令:machineId + addrH + addrL + IEEE8个byte
