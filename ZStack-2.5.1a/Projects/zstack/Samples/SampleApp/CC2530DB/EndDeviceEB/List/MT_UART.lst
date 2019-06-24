@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         23/Jun/2019  21:32:55 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         24/Jun/2019  16:43:42 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -610,59 +610,60 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
     238                bool check = check_xor(outputBuffer, outputLen); // 数据校验
     239                if(check) {
     240                    uint8 cmd = outputBuffer[1];
-    241                    if(cmd == TO_PAY_COIN) { // 服务器发送的需要模拟投币命令
-    242                      uint8 machineId = outputBuffer[4]; // 目标终端设备的编号            
-    243                      uint8 needProduceCoin = outputBuffer[5]; // 需要终端设备投递的金币数
-    244                      
-    245                      // 协调器根据设备编号遍历终端列表查找短地址
-    246                      uint8 shortAddr[2] = {0};
-    247                      ret = findEndDeviceShortAddrByMachineid(LL, machineId, shortAddr);
-    248                      if(ret == 0) { // 说明终端在协调器列表中
-    249                        uint16 addr = shortAddr[0]; // 终端地址高字节
-    250                        addr = (addr << 8) | shortAddr[1];
-    251                        EndPoint_DstAddr.addr.shortAddr = addr;
-    252                        
-    253                        uint8 contentBuf[1] = {needProduceCoin};
-    254                        uint8 contentBufLen = 1;
-    255                        // 将数据进行协议拼装
-    256                        uint8 outputBuf[SEND_BUF_SIZE] = {0};
-    257                        uint8 outputLen = 0;
-    258                        encodeData(TO_PAY_COIN, contentBuf, contentBufLen, outputBuf, &outputLen);
-    259                        // 将数据发送到终端
-    260                        if ( AF_DataRequest( &EndPoint_DstAddr, // 以单播的形式发送数据到指定的终端，终端收到投币命令之后，会回复一个0x72消息给协调器，协调器将此消息再转发到上位机
-    261                                      &SampleApp_epDesc,
-    262                                      SAMPLEAPP_PERIODIC_CLUSTERID,
-    263                                      outputLen,
-    264                                      outputBuf,
-    265                                      &SampleApp_TransID,
-    266                                      AF_DISCV_ROUTE,
-    267                                      AF_DEFAULT_RADIUS ) != afStatus_SUCCESS )
-    268                        {
-    269                          myprintf("SendToEPFailed\n");
-    270                        }
-    271                      
-    272                      } else if(ret == -1) { // 说明终端不在协调器列表中
-    273                        // ?????????????????????????????????上报服务器
-    274                        myprintf("end device is not in coor list\n");
-    275                      }                        
-    276                    }                    
-    277                } else {
-    278                  myprintf("XOR check failed\n");
+    241                    myprintf("recv cmd = 0x%x\n", cmd);
+    242                    if(cmd == TO_PAY_COIN) { // 服务器发送的需要模拟投币命令
+    243                      uint8 machineId = outputBuffer[4]; // 目标终端设备的编号            
+    244                      uint8 needProduceCoin = outputBuffer[5]; // 需要终端设备投递的金币数
+    245                      
+    246                      // 协调器根据设备编号遍历终端列表查找短地址
+    247                      uint8 shortAddr[2] = {0};
+    248                      ret = findEndDeviceShortAddrByMachineid(LL, machineId, shortAddr);
+    249                      if(ret == 0) { // 说明终端在协调器列表中
+    250                        uint16 addr = shortAddr[0]; // 终端地址高字节
+    251                        addr = (addr << 8) | shortAddr[1];
+    252                        EndPoint_DstAddr.addr.shortAddr = addr;
+    253                        
+    254                        uint8 contentBuf[1] = {needProduceCoin};
+    255                        uint8 contentBufLen = 1;
+    256                        // 将数据进行协议拼装
+    257                        uint8 outputBuf[SEND_BUF_SIZE] = {0};
+    258                        uint8 outputLen = 0;
+    259                        encodeData(TO_PAY_COIN, contentBuf, contentBufLen, outputBuf, &outputLen);
+    260                        // 将数据发送到终端
+    261                        if ( AF_DataRequest( &EndPoint_DstAddr, // 以单播的形式发送数据到指定的终端，终端收到投币命令之后，会回复一个0x72消息给协调器，协调器将此消息再转发到上位机
+    262                                      &SampleApp_epDesc,
+    263                                      SAMPLEAPP_PERIODIC_CLUSTERID,
+    264                                      outputLen,
+    265                                      outputBuf,
+    266                                      &SampleApp_TransID,
+    267                                      AF_DISCV_ROUTE,
+    268                                      AF_DEFAULT_RADIUS ) != afStatus_SUCCESS )
+    269                        {
+    270                          myprintf("SendToEPFailed\n");
+    271                        }
+    272                      
+    273                      } else if(ret == -1) { // 说明终端不在协调器列表中
+    274                        // ?????????????????????????????????上报服务器
+    275                        myprintf("end device is not in coor list\n");
+    276                      }                        
+    277                    }                    
+    278                } else {
+    279                  myprintf("XOR check failed\n");
    \                     ??MT_MyUartProcessZToolData_1:
    \   000042                ; Setup parameters for call to function myprintf
    \   000042   7A..         MOV     R2,#`?<Constant "XOR check failed\\n">` & 0xff
    \   000044   7B..         MOV     R3,#(`?<Constant "XOR check failed\\n">` >> 8) & 0xff
    \                     ??MT_MyUartProcessZToolData_2:
    \   000046   12....       LCALL   ??myprintf?relay
-    279                }
-    280                recv_head = false;
+    280                }
+    281                recv_head = false;
    \                     ??MT_MyUartProcessZToolData_3:
    \   000049   7F00         MOV     R7,#0x0
-    281                recv_tail = false;
+    282                recv_tail = false;
    \   00004B   8F..         MOV     ?V0 + 0,R7
-    282                recvLen = 0;
+    283                recvLen = 0;
    \   00004D   7E00         MOV     R6,#0x0
-    283                osal_memset( buffer, 0x0, SERIAL_BUFFER_SIZE);
+    284                osal_memset( buffer, 0x0, SERIAL_BUFFER_SIZE);
    \   00004F                ; Setup parameters for call to function osal_memset
    \   00004F   7C20         MOV     R4,#0x20
    \   000051   7D00         MOV     R5,#0x0
@@ -672,7 +673,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   00005A   AA82         MOV     R2,DPL
    \   00005C   AB83         MOV     R3,DPH
    \   00005E   12....       LCALL   ??osal_memset?relay
-    284                osal_memset( outputBuffer, 0x0, SERIAL_BUFFER_SIZE);
+    285                osal_memset( outputBuffer, 0x0, SERIAL_BUFFER_SIZE);
    \   000061                ; Setup parameters for call to function osal_memset
    \   000061   7C20         MOV     R4,#0x20
    \   000063   7D00         MOV     R5,#0x0
@@ -775,179 +776,191 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   00011B   7407         MOV     A,#0x7
    \   00011D   12....       LCALL   ?XSTACK_DISP0_8
    \   000120   E0           MOVX    A,@DPTR
-   \   000121   6450         XRL     A,#0x50
-   \   000123   6003         JZ      $+5
-   \   000125   02....       LJMP    ??MT_MyUartProcessZToolData_3 & 0xFFFF
-   \   000128   740B         MOV     A,#0xb
-   \   00012A   12....       LCALL   ?XSTACK_DISP0_8
-   \   00012D   E0           MOVX    A,@DPTR
-   \   00012E   FE           MOV     R6,A
-   \   00012F   7404         MOV     A,#0x4
-   \   000131   12....       LCALL   ?XSTACK_DISP0_8
-   \   000134   AC82         MOV     R4,DPL
-   \   000136   AD83         MOV     R5,DPH
-   \   000138   7583..       MOV     DPH,#(`?<Constant {0}>_2` >> 8) & 0xff
-   \   00013B   7582..       MOV     DPL,#`?<Constant {0}>_2` & 0xff
-   \   00013E   7402         MOV     A,#0x2
-   \   000140   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
-   \   000143                ; Setup parameters for call to function findEndDeviceShortAddrByMachineid
-   \   000143   7404         MOV     A,#0x4
-   \   000145   12....       LCALL   ?XSTACK_DISP0_8
-   \   000148   1C           DEC     R4
-   \   000149   1C           DEC     R4
-   \   00014A   AD83         MOV     R5,DPH
-   \   00014C   740A         MOV     A,#0xa
-   \   00014E   12....       LCALL   ?XSTACK_DISP0_8
-   \   000151   E0           MOVX    A,@DPTR
-   \   000152   F9           MOV     R1,A
-   \   000153   90....       MOV     DPTR,#LL
-   \   000156   E0           MOVX    A,@DPTR
-   \   000157   FA           MOV     R2,A
-   \   000158   A3           INC     DPTR
-   \   000159   E0           MOVX    A,@DPTR
-   \   00015A   FB           MOV     R3,A
-   \   00015B   12....       LCALL   ??findEndDeviceShortAddrByMachineid?relay
-   \   00015E   8A..         MOV     ?V0 + 2,R2
-   \   000160   8B..         MOV     ?V0 + 3,R3
-   \   000162   A8..         MOV     R0,?V0 + 2
-   \   000164   A9..         MOV     R1,?V0 + 3
-   \   000166   E8           MOV     A,R0
-   \   000167   49           ORL     A,R1
-   \   000168   6003         JZ      $+5
-   \   00016A   02....       LJMP    ??MT_MyUartProcessZToolData_9 & 0xFFFF
-   \   00016D   7404         MOV     A,#0x4
-   \   00016F   12....       LCALL   ?XSTACK_DISP0_8
-   \   000172   E0           MOVX    A,@DPTR
-   \   000173   F9           MOV     R1,A
-   \   000174   7405         MOV     A,#0x5
-   \   000176   12....       LCALL   ?XSTACK_DISP0_8
-   \   000179   E0           MOVX    A,@DPTR
-   \   00017A   90....       MOV     DPTR,#EndPoint_DstAddr
-   \   00017D   F0           MOVX    @DPTR,A
-   \   00017E   A3           INC     DPTR
-   \   00017F   E9           MOV     A,R1
-   \   000180   F0           MOVX    @DPTR,A
-   \   000181   7403         MOV     A,#0x3
-   \   000183   12....       LCALL   ?XSTACK_DISP0_8
-   \   000186   EE           MOV     A,R6
-   \   000187   F0           MOVX    @DPTR,A
-   \   000188   7446         MOV     A,#0x46
-   \   00018A   12....       LCALL   ?XSTACK_DISP0_8
-   \   00018D   AC82         MOV     R4,DPL
-   \   00018F   AD83         MOV     R5,DPH
-   \   000191   7583..       MOV     DPH,#(`?<Constant {0}>_3` >> 8) & 0xff
-   \   000194   7582..       MOV     DPL,#`?<Constant {0}>_3` & 0xff
-   \   000197   7420         MOV     A,#0x20
-   \   000199   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
-   \   00019C   04           INC     A
-   \   00019D   12....       LCALL   ?XSTACK_DISP0_8
-   \   0001A0   E4           CLR     A
-   \   0001A1   F0           MOVX    @DPTR,A
-   \   0001A2                ; Setup parameters for call to function encodeData
-   \   0001A2   8582..       MOV     ?V0 + 2,DPL
-   \   0001A5   8583..       MOV     ?V0 + 3,DPH
-   \   0001A8   78..         MOV     R0,#?V0 + 2
-   \   0001AA   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   0001AD   7448         MOV     A,#0x48
-   \   0001AF   12....       LCALL   ?XSTACK_DISP0_8
-   \   0001B2   8582..       MOV     ?V0 + 2,DPL
-   \   0001B5   8583..       MOV     ?V0 + 3,DPH
-   \   0001B8   78..         MOV     R0,#?V0 + 2
-   \   0001BA   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   0001BD   7C01         MOV     R4,#0x1
-   \   0001BF   7407         MOV     A,#0x7
-   \   0001C1   12....       LCALL   ?XSTACK_DISP0_8
-   \   0001C4   AA82         MOV     R2,DPL
-   \   0001C6   AB83         MOV     R3,DPH
-   \   0001C8   7950         MOV     R1,#0x50
-   \   0001CA   12....       LCALL   ??encodeData?relay
-   \   0001CD   7404         MOV     A,#0x4
-   \   0001CF   12....       LCALL   ?DEALLOC_XSTACK8
-   \   0001D2                ; Setup parameters for call to function AF_DataRequest
-   \   0001D2   75..1E       MOV     ?V0 + 0,#0x1e
-   \   0001D5   78..         MOV     R0,#?V0 + 0
-   \   0001D7   12....       LCALL   ?PUSH_XSTACK_I_ONE
-   \   0001DA   75....       MOV     ?V0 + 2,#SampleApp_TransID & 0xff
-   \   0001DD   75....       MOV     ?V0 + 3,#(SampleApp_TransID >> 8) & 0xff
-   \   0001E0   78..         MOV     R0,#?V0 + 2
-   \   0001E2   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   0001E5   7449         MOV     A,#0x49
-   \   0001E7   12....       LCALL   ?XSTACK_DISP0_8
-   \   0001EA   8582..       MOV     ?V0 + 2,DPL
-   \   0001ED   8583..       MOV     ?V0 + 3,DPH
-   \   0001F0   78..         MOV     R0,#?V0 + 2
-   \   0001F2   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   0001F5   7406         MOV     A,#0x6
-   \   0001F7   12....       LCALL   ?XSTACK_DISP0_8
-   \   0001FA   E0           MOVX    A,@DPTR
-   \   0001FB   F5..         MOV     ?V0 + 2,A
-   \   0001FD   75..00       MOV     ?V0 + 3,#0x0
-   \   000200   78..         MOV     R0,#?V0 + 2
-   \   000202   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   000205   75..01       MOV     ?V0 + 2,#0x1
+   \   000121   FE           MOV     R6,A
+   \   000122                ; Setup parameters for call to function myprintf
+   \   000122   8E..         MOV     ?V0 + 2,R6
+   \   000124   75..00       MOV     ?V0 + 3,#0x0
+   \   000127   78..         MOV     R0,#?V0 + 2
+   \   000129   12....       LCALL   ?PUSH_XSTACK_I_TWO
+   \   00012C   7A..         MOV     R2,#`?<Constant "recv cmd = 0x%x\\n">` & 0xff
+   \   00012E   7B..         MOV     R3,#(`?<Constant "recv cmd = 0x%x\\n">` >> 8) & 0xff
+   \   000130   12....       LCALL   ??myprintf?relay
+   \   000133   7402         MOV     A,#0x2
+   \   000135   12....       LCALL   ?DEALLOC_XSTACK8
+   \   000138   7450         MOV     A,#0x50
+   \   00013A   6E           XRL     A,R6
+   \   00013B   6003         JZ      $+5
+   \   00013D   02....       LJMP    ??MT_MyUartProcessZToolData_3 & 0xFFFF
+   \   000140   740B         MOV     A,#0xb
+   \   000142   12....       LCALL   ?XSTACK_DISP0_8
+   \   000145   E0           MOVX    A,@DPTR
+   \   000146   FE           MOV     R6,A
+   \   000147   7404         MOV     A,#0x4
+   \   000149   12....       LCALL   ?XSTACK_DISP0_8
+   \   00014C   AC82         MOV     R4,DPL
+   \   00014E   AD83         MOV     R5,DPH
+   \   000150   7583..       MOV     DPH,#(`?<Constant {0}>_2` >> 8) & 0xff
+   \   000153   7582..       MOV     DPL,#`?<Constant {0}>_2` & 0xff
+   \   000156   7402         MOV     A,#0x2
+   \   000158   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
+   \   00015B                ; Setup parameters for call to function findEndDeviceShortAddrByMachineid
+   \   00015B   7404         MOV     A,#0x4
+   \   00015D   12....       LCALL   ?XSTACK_DISP0_8
+   \   000160   1C           DEC     R4
+   \   000161   1C           DEC     R4
+   \   000162   AD83         MOV     R5,DPH
+   \   000164   740A         MOV     A,#0xa
+   \   000166   12....       LCALL   ?XSTACK_DISP0_8
+   \   000169   E0           MOVX    A,@DPTR
+   \   00016A   F9           MOV     R1,A
+   \   00016B   90....       MOV     DPTR,#LL
+   \   00016E   E0           MOVX    A,@DPTR
+   \   00016F   FA           MOV     R2,A
+   \   000170   A3           INC     DPTR
+   \   000171   E0           MOVX    A,@DPTR
+   \   000172   FB           MOV     R3,A
+   \   000173   12....       LCALL   ??findEndDeviceShortAddrByMachineid?relay
+   \   000176   8A..         MOV     ?V0 + 2,R2
+   \   000178   8B..         MOV     ?V0 + 3,R3
+   \   00017A   A8..         MOV     R0,?V0 + 2
+   \   00017C   A9..         MOV     R1,?V0 + 3
+   \   00017E   E8           MOV     A,R0
+   \   00017F   49           ORL     A,R1
+   \   000180   6003         JZ      $+5
+   \   000182   02....       LJMP    ??MT_MyUartProcessZToolData_9 & 0xFFFF
+   \   000185   7404         MOV     A,#0x4
+   \   000187   12....       LCALL   ?XSTACK_DISP0_8
+   \   00018A   E0           MOVX    A,@DPTR
+   \   00018B   F9           MOV     R1,A
+   \   00018C   7405         MOV     A,#0x5
+   \   00018E   12....       LCALL   ?XSTACK_DISP0_8
+   \   000191   E0           MOVX    A,@DPTR
+   \   000192   90....       MOV     DPTR,#EndPoint_DstAddr
+   \   000195   F0           MOVX    @DPTR,A
+   \   000196   A3           INC     DPTR
+   \   000197   E9           MOV     A,R1
+   \   000198   F0           MOVX    @DPTR,A
+   \   000199   7403         MOV     A,#0x3
+   \   00019B   12....       LCALL   ?XSTACK_DISP0_8
+   \   00019E   EE           MOV     A,R6
+   \   00019F   F0           MOVX    @DPTR,A
+   \   0001A0   7446         MOV     A,#0x46
+   \   0001A2   12....       LCALL   ?XSTACK_DISP0_8
+   \   0001A5   AC82         MOV     R4,DPL
+   \   0001A7   AD83         MOV     R5,DPH
+   \   0001A9   7583..       MOV     DPH,#(`?<Constant {0}>_3` >> 8) & 0xff
+   \   0001AC   7582..       MOV     DPL,#`?<Constant {0}>_3` & 0xff
+   \   0001AF   7420         MOV     A,#0x20
+   \   0001B1   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
+   \   0001B4   04           INC     A
+   \   0001B5   12....       LCALL   ?XSTACK_DISP0_8
+   \   0001B8   E4           CLR     A
+   \   0001B9   F0           MOVX    @DPTR,A
+   \   0001BA                ; Setup parameters for call to function encodeData
+   \   0001BA   8582..       MOV     ?V0 + 2,DPL
+   \   0001BD   8583..       MOV     ?V0 + 3,DPH
+   \   0001C0   78..         MOV     R0,#?V0 + 2
+   \   0001C2   12....       LCALL   ?PUSH_XSTACK_I_TWO
+   \   0001C5   7448         MOV     A,#0x48
+   \   0001C7   12....       LCALL   ?XSTACK_DISP0_8
+   \   0001CA   8582..       MOV     ?V0 + 2,DPL
+   \   0001CD   8583..       MOV     ?V0 + 3,DPH
+   \   0001D0   78..         MOV     R0,#?V0 + 2
+   \   0001D2   12....       LCALL   ?PUSH_XSTACK_I_TWO
+   \   0001D5   7C01         MOV     R4,#0x1
+   \   0001D7   7407         MOV     A,#0x7
+   \   0001D9   12....       LCALL   ?XSTACK_DISP0_8
+   \   0001DC   AA82         MOV     R2,DPL
+   \   0001DE   AB83         MOV     R3,DPH
+   \   0001E0   7950         MOV     R1,#0x50
+   \   0001E2   12....       LCALL   ??encodeData?relay
+   \   0001E5   7404         MOV     A,#0x4
+   \   0001E7   12....       LCALL   ?DEALLOC_XSTACK8
+   \   0001EA                ; Setup parameters for call to function AF_DataRequest
+   \   0001EA   75..1E       MOV     ?V0 + 0,#0x1e
+   \   0001ED   78..         MOV     R0,#?V0 + 0
+   \   0001EF   12....       LCALL   ?PUSH_XSTACK_I_ONE
+   \   0001F2   75....       MOV     ?V0 + 2,#SampleApp_TransID & 0xff
+   \   0001F5   75....       MOV     ?V0 + 3,#(SampleApp_TransID >> 8) & 0xff
+   \   0001F8   78..         MOV     R0,#?V0 + 2
+   \   0001FA   12....       LCALL   ?PUSH_XSTACK_I_TWO
+   \   0001FD   7449         MOV     A,#0x49
+   \   0001FF   12....       LCALL   ?XSTACK_DISP0_8
+   \   000202   8582..       MOV     ?V0 + 2,DPL
+   \   000205   8583..       MOV     ?V0 + 3,DPH
    \   000208   78..         MOV     R0,#?V0 + 2
    \   00020A   12....       LCALL   ?PUSH_XSTACK_I_TWO
-   \   00020D   7920         MOV     R1,#0x20
-   \   00020F   7C..         MOV     R4,#SampleApp_epDesc & 0xff
-   \   000211   7D..         MOV     R5,#(SampleApp_epDesc >> 8) & 0xff
-   \   000213   7A..         MOV     R2,#EndPoint_DstAddr & 0xff
-   \   000215   7B..         MOV     R3,#(EndPoint_DstAddr >> 8) & 0xff
-   \   000217   12....       LCALL   ??AF_DataRequest?relay
-   \   00021A   7409         MOV     A,#0x9
-   \   00021C   12....       LCALL   ?DEALLOC_XSTACK8
-   \   00021F   E9           MOV     A,R1
-   \   000220   7003         JNZ     $+5
-   \   000222   02....       LJMP    ??MT_MyUartProcessZToolData_3 & 0xFFFF
-   \   000225                ; Setup parameters for call to function myprintf
-   \   000225   7A..         MOV     R2,#`?<Constant "SendToEPFailed\\n">` & 0xff
-   \   000227   7B..         MOV     R3,#(`?<Constant "SendToEPFailed\\n">` >> 8) & 0xff
-   \   000229   02....       LJMP    ??MT_MyUartProcessZToolData_2 & 0xFFFF
+   \   00020D   7406         MOV     A,#0x6
+   \   00020F   12....       LCALL   ?XSTACK_DISP0_8
+   \   000212   E0           MOVX    A,@DPTR
+   \   000213   F5..         MOV     ?V0 + 2,A
+   \   000215   75..00       MOV     ?V0 + 3,#0x0
+   \   000218   78..         MOV     R0,#?V0 + 2
+   \   00021A   12....       LCALL   ?PUSH_XSTACK_I_TWO
+   \   00021D   75..01       MOV     ?V0 + 2,#0x1
+   \   000220   78..         MOV     R0,#?V0 + 2
+   \   000222   12....       LCALL   ?PUSH_XSTACK_I_TWO
+   \   000225   7920         MOV     R1,#0x20
+   \   000227   7C..         MOV     R4,#SampleApp_epDesc & 0xff
+   \   000229   7D..         MOV     R5,#(SampleApp_epDesc >> 8) & 0xff
+   \   00022B   7A..         MOV     R2,#EndPoint_DstAddr & 0xff
+   \   00022D   7B..         MOV     R3,#(EndPoint_DstAddr >> 8) & 0xff
+   \   00022F   12....       LCALL   ??AF_DataRequest?relay
+   \   000232   7409         MOV     A,#0x9
+   \   000234   12....       LCALL   ?DEALLOC_XSTACK8
+   \   000237   E9           MOV     A,R1
+   \   000238   7003         JNZ     $+5
+   \   00023A   02....       LJMP    ??MT_MyUartProcessZToolData_3 & 0xFFFF
+   \   00023D                ; Setup parameters for call to function myprintf
+   \   00023D   7A..         MOV     R2,#`?<Constant "SendToEPFailed\\n">` & 0xff
+   \   00023F   7B..         MOV     R3,#(`?<Constant "SendToEPFailed\\n">` >> 8) & 0xff
+   \   000241   02....       LJMP    ??MT_MyUartProcessZToolData_2 & 0xFFFF
    \                     ??MT_MyUartProcessZToolData_9:
-   \   00022C   74FF         MOV     A,#-0x1
-   \   00022E   68           XRL     A,R0
-   \   00022F   7003         JNZ     ??MT_MyUartProcessZToolData_10
-   \   000231   74FF         MOV     A,#-0x1
-   \   000233   69           XRL     A,R1
+   \   000244   74FF         MOV     A,#-0x1
+   \   000246   68           XRL     A,R0
+   \   000247   7003         JNZ     ??MT_MyUartProcessZToolData_10
+   \   000249   74FF         MOV     A,#-0x1
+   \   00024B   69           XRL     A,R1
    \                     ??MT_MyUartProcessZToolData_10:
-   \   000234   6003         JZ      $+5
-   \   000236   02....       LJMP    ??MT_MyUartProcessZToolData_3 & 0xFFFF
-   \   000239                ; Setup parameters for call to function myprintf
-   \   000239   7A..         MOV     R2,#`?<Constant "end device is not in ...">` & 0xff
-   \   00023B   7B..         MOV     R3,#(`?<Constant "end device is not in ...">` >> 8) & 0xff
-   \   00023D   02....       LJMP    ??MT_MyUartProcessZToolData_2 & 0xFFFF
-    285              }        
-    286            }
-    287          }
+   \   00024C   6003         JZ      $+5
+   \   00024E   02....       LJMP    ??MT_MyUartProcessZToolData_3 & 0xFFFF
+   \   000251                ; Setup parameters for call to function myprintf
+   \   000251   7A..         MOV     R2,#`?<Constant "end device is not in ...">` & 0xff
+   \   000253   7B..         MOV     R3,#(`?<Constant "end device is not in ...">` >> 8) & 0xff
+   \   000255   02....       LJMP    ??MT_MyUartProcessZToolData_2 & 0xFFFF
+    286              }        
+    287            }
+    288          }
    \                     ??MT_MyUartProcessZToolData_4:
-   \   000240   7466         MOV     A,#0x66
-   \   000242   12....       LCALL   ?DEALLOC_XSTACK8
-   \   000245                REQUIRE ?Subroutine2
-   \   000245                ; // Fall through to label ?Subroutine2
+   \   000258   7466         MOV     A,#0x66
+   \   00025A   12....       LCALL   ?DEALLOC_XSTACK8
+   \   00025D                REQUIRE ?Subroutine2
+   \   00025D                ; // Fall through to label ?Subroutine2
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine2:
    \   000000   7F04         MOV     R7,#0x4
    \   000002   02....       LJMP    ?BANKED_LEAVE_XDATA
-    288          /***************************************************************************************************
-    289           * @fn      MT_UartProcessZToolData
-    290           *
-    291           * @brief   | SOP | Data Length  |   CMD   |   Data   |  FCS  |
-    292           *          |  1  |     1        |    2    |  0-Len   |   1   |
-    293           *
-    294           *          Parses the data and determine either is SPI or just simply serial data
-    295           *          then send the data to correct place (MT or APP)
-    296           *
-    297           * @param   port     - UART port
-    298           *          event    - Event that causes the callback
-    299           *
+    289          /***************************************************************************************************
+    290           * @fn      MT_UartProcessZToolData
+    291           *
+    292           * @brief   | SOP | Data Length  |   CMD   |   Data   |  FCS  |
+    293           *          |  1  |     1        |    2    |  0-Len   |   1   |
+    294           *
+    295           *          Parses the data and determine either is SPI or just simply serial data
+    296           *          then send the data to correct place (MT or APP)
+    297           *
+    298           * @param   port     - UART port
+    299           *          event    - Event that causes the callback
     300           *
-    301           * @return  None
-    302           ***************************************************************************************************/
+    301           *
+    302           * @return  None
+    303           ***************************************************************************************************/
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    303          void MT_UartProcessZToolData ( uint8 port, uint8 event )
+    304          void MT_UartProcessZToolData ( uint8 port, uint8 event )
    \                     MT_UartProcessZToolData:
-    304          {
+    305          {
    \   000000   74F6         MOV     A,#-0xa
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 10
@@ -956,42 +969,42 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000007   12....       LCALL   ?ALLOC_XSTACK8
    \   00000A   E9           MOV     A,R1
    \   00000B   FE           MOV     R6,A
-    305            uint8  ch;
-    306            uint8  bytesInRxBuffer;
-    307            
-    308            (void)event;  // Intentionally unreferenced parameter
+    306            uint8  ch;
+    307            uint8  bytesInRxBuffer;
+    308            
+    309            (void)event;  // Intentionally unreferenced parameter
    \   00000C   802D         SJMP    ??MT_UartProcessZToolData_0
-    309          
-    310            while (Hal_UART_RxBufLen(port))
-    311            {
-    312              HalUARTRead (port, &ch, 1);
-    313              
-    314              switch (state)
-    315              {
-    316                case SOP_STATE:
-    317                  if (ch == MT_UART_SOF)
-    318                    state = LEN_STATE;
-    319                  break;
-    320          
-    321                case LEN_STATE:
-    322                  LEN_Token = ch;
-    323          
-    324                  tempDataLen = 0;
-    325          
-    326                  /* Allocate memory for the data */
-    327                  pMsg = (mtOSALSerialData_t *)osal_msg_allocate( sizeof ( mtOSALSerialData_t ) +
-    328                                                                  MT_RPC_FRAME_HDR_SZ + LEN_Token );
-    329          
-    330                  if (pMsg)
-    331                  {
-    332                    /* Fill up what we can */
-    333                    pMsg->hdr.event = CMD_SERIAL_MSG;
+    310          
+    311            while (Hal_UART_RxBufLen(port))
+    312            {
+    313              HalUARTRead (port, &ch, 1);
+    314              
+    315              switch (state)
+    316              {
+    317                case SOP_STATE:
+    318                  if (ch == MT_UART_SOF)
+    319                    state = LEN_STATE;
+    320                  break;
+    321          
+    322                case LEN_STATE:
+    323                  LEN_Token = ch;
+    324          
+    325                  tempDataLen = 0;
+    326          
+    327                  /* Allocate memory for the data */
+    328                  pMsg = (mtOSALSerialData_t *)osal_msg_allocate( sizeof ( mtOSALSerialData_t ) +
+    329                                                                  MT_RPC_FRAME_HDR_SZ + LEN_Token );
+    330          
+    331                  if (pMsg)
+    332                  {
+    333                    /* Fill up what we can */
+    334                    pMsg->hdr.event = CMD_SERIAL_MSG;
    \                     ??MT_UartProcessZToolData_1:
    \   00000E   12....       LCALL   ??Subroutine16_0 & 0xFFFF
    \                     ??CrossCallReturnLabel_25:
    \   000011   7401         MOV     A,#0x1
    \   000013   F0           MOVX    @DPTR,A
-    334                    pMsg->msg = (uint8*)(pMsg+1);
+    335                    pMsg->msg = (uint8*)(pMsg+1);
    \   000014   90....       MOV     DPTR,#pMsg
    \   000017   E0           MOVX    A,@DPTR
    \   000018   2404         ADD     A,#0x4
@@ -1007,7 +1020,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000025   A3           INC     DPTR
    \   000026   E9           MOV     A,R1
    \   000027   12....       LCALL   ?Subroutine4 & 0xFFFF
-    335                    pMsg->msg[MT_RPC_POS_LEN] = LEN_Token;
+    336                    pMsg->msg[MT_RPC_POS_LEN] = LEN_Token;
    \                     ??CrossCallReturnLabel_3:
    \   00002A   C0E0         PUSH    A
    \   00002C   12....       LCALL   ?Subroutine7 & 0xFFFF
@@ -1016,18 +1029,18 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \                     ??CrossCallReturnLabel_26:
    \   000032   D0E0         POP     A
    \   000034   F0           MOVX    @DPTR,A
-    336                    state = CMD_STATE1;
+    337                    state = CMD_STATE1;
    \   000035   90....       MOV     DPTR,#state
    \   000038   7401         MOV     A,#0x1
    \                     ??MT_UartProcessZToolData_2:
    \   00003A   F0           MOVX    @DPTR,A
-    337                  }
-    338                  else
-    339                  {
-    340                    state = SOP_STATE;
-    341                    return;
-    342                  }
-    343                  break;
+    338                  }
+    339                  else
+    340                  {
+    341                    state = SOP_STATE;
+    342                    return;
+    343                  }
+    344                  break;
    \                     ??MT_UartProcessZToolData_0:
    \   00003B                ; Setup parameters for call to function Hal_UART_RxBufLen
    \   00003B   EE           MOV     A,R6
@@ -1110,9 +1123,9 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \                     ??MT_UartProcessZToolData_3:
    \   0000C1   7401         MOV     A,#0x1
    \   0000C3   02....       LJMP    ?Subroutine1 & 0xFFFF
-    344          
-    345                case CMD_STATE1:
-    346                  pMsg->msg[MT_RPC_POS_CMD0] = ch;
+    345          
+    346                case CMD_STATE1:
+    347                  pMsg->msg[MT_RPC_POS_CMD0] = ch;
    \                     ??MT_UartProcessZToolData_5:
    \   0000C6   85..82       MOV     DPL,?XSP + 0
    \   0000C9   85..83       MOV     DPH,?XSP + 1
@@ -1122,14 +1135,14 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \                     ??CrossCallReturnLabel_9:
    \   0000D2   D0E0         POP     A
    \   0000D4   F0           MOVX    @DPTR,A
-    347                  state = CMD_STATE2;
+    348                  state = CMD_STATE2;
    \   0000D5   90....       MOV     DPTR,#state
    \   0000D8   7402         MOV     A,#0x2
    \   0000DA   02....       LJMP    ??MT_UartProcessZToolData_2 & 0xFFFF
-    348                  break;
-    349          
-    350                case CMD_STATE2:
-    351                  pMsg->msg[MT_RPC_POS_CMD1] = ch;
+    349                  break;
+    350          
+    351                case CMD_STATE2:
+    352                  pMsg->msg[MT_RPC_POS_CMD1] = ch;
    \                     ??MT_UartProcessZToolData_6:
    \   0000DD   85..82       MOV     DPL,?XSP + 0
    \   0000E0   85..83       MOV     DPH,?XSP + 1
@@ -1140,27 +1153,27 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   0000E9   A3           INC     DPTR
    \   0000EA   D0E0         POP     A
    \   0000EC   12....       LCALL   ?Subroutine4 & 0xFFFF
-    352                  /* If there is no data, skip to FCS state */
-    353                  if (LEN_Token)
+    353                  /* If there is no data, skip to FCS state */
+    354                  if (LEN_Token)
    \                     ??CrossCallReturnLabel_5:
    \   0000EF   7003         JNZ     $+5
    \   0000F1   02....       LJMP    ??MT_UartProcessZToolData_10 & 0xFFFF
-    354                  {
-    355                    state = DATA_STATE;
+    355                  {
+    356                    state = DATA_STATE;
    \   0000F4   90....       MOV     DPTR,#state
    \   0000F7   7404         MOV     A,#0x4
    \   0000F9   02....       LJMP    ??MT_UartProcessZToolData_2 & 0xFFFF
-    356                  }
-    357                  else
-    358                  {
-    359                    state = FCS_STATE;
-    360                  }
-    361                  break;
-    362          
-    363                case DATA_STATE:
-    364          
-    365                  /* Fill in the buffer the first byte of the data */
-    366                  pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen++] = ch;
+    357                  }
+    358                  else
+    359                  {
+    360                    state = FCS_STATE;
+    361                  }
+    362                  break;
+    363          
+    364                case DATA_STATE:
+    365          
+    366                  /* Fill in the buffer the first byte of the data */
+    367                  pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen++] = ch;
    \                     ??MT_UartProcessZToolData_8:
    \   0000FC   85..82       MOV     DPL,?XSP + 0
    \   0000FF   85..83       MOV     DPH,?XSP + 1
@@ -1179,18 +1192,18 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000116   E0           MOVX    A,@DPTR
    \   000117   04           INC     A
    \   000118   F0           MOVX    @DPTR,A
-    367          
-    368                  /* Check number of bytes left in the Rx buffer */
-    369                  bytesInRxBuffer = Hal_UART_RxBufLen(port);
+    368          
+    369                  /* Check number of bytes left in the Rx buffer */
+    370                  bytesInRxBuffer = Hal_UART_RxBufLen(port);
    \   000119                ; Setup parameters for call to function Hal_UART_RxBufLen
    \   000119   EE           MOV     A,R6
    \   00011A   F9           MOV     R1,A
    \   00011B   12....       LCALL   ??Hal_UART_RxBufLen?relay
    \   00011E   EA           MOV     A,R2
    \   00011F   FF           MOV     R7,A
-    370          
-    371                  /* If the remain of the data is there, read them all, otherwise, just read enough */
-    372                  if (bytesInRxBuffer <= LEN_Token - tempDataLen)
+    371          
+    372                  /* If the remain of the data is there, read them all, otherwise, just read enough */
+    373                  if (bytesInRxBuffer <= LEN_Token - tempDataLen)
    \   000120   90....       MOV     DPTR,#LEN_Token
    \   000123   E0           MOVX    A,@DPTR
    \   000124   F8           MOV     R0,A
@@ -1213,24 +1226,24 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   00013C   65D0         XRL     A,PSW
    \   00013E   33           RLC     A
    \   00013F   4010         JC      ??MT_UartProcessZToolData_11
-    373                  {
-    374                    HalUARTRead (port, &pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen], bytesInRxBuffer);
+    374                  {
+    375                    HalUARTRead (port, &pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen], bytesInRxBuffer);
    \   000141                ; Setup parameters for call to function HalUARTRead
    \   000141   AC..         MOV     R4,?V0 + 0
    \   000143   7D00         MOV     R5,#0x0
    \   000145   E0           MOVX    A,@DPTR
    \   000146   F8           MOV     R0,A
    \   000147   12....       LCALL   ?Subroutine5 & 0xFFFF
-    375                    tempDataLen += bytesInRxBuffer;
+    376                    tempDataLen += bytesInRxBuffer;
    \                     ??CrossCallReturnLabel_7:
    \   00014A   90....       MOV     DPTR,#tempDataLen
    \   00014D   E0           MOVX    A,@DPTR
    \   00014E   2F           ADD     A,R7
    \   00014F   8016         SJMP    ??MT_UartProcessZToolData_12
-    376                  }
-    377                  else
-    378                  {
-    379                    HalUARTRead (port, &pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen], LEN_Token - tempDataLen);
+    377                  }
+    378                  else
+    379                  {
+    380                    HalUARTRead (port, &pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen], LEN_Token - tempDataLen);
    \                     ??MT_UartProcessZToolData_11:
    \   000151   E0           MOVX    A,@DPTR
    \   000152   F8           MOV     R0,A
@@ -1243,17 +1256,17 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   00015A   95E0         SUBB    A,0xE0 /* A   */
    \   00015C   FD           MOV     R5,A
    \   00015D   12....       LCALL   ?Subroutine5 & 0xFFFF
-    380                    tempDataLen += (LEN_Token - tempDataLen);
+    381                    tempDataLen += (LEN_Token - tempDataLen);
    \                     ??CrossCallReturnLabel_8:
    \   000160   90....       MOV     DPTR,#LEN_Token
    \   000163   E0           MOVX    A,@DPTR
    \   000164   90....       MOV     DPTR,#tempDataLen
    \                     ??MT_UartProcessZToolData_12:
    \   000167   F0           MOVX    @DPTR,A
-    381                  }
-    382          
-    383                  /* If number of bytes read is equal to data length, time to move on to FCS */
-    384                  if ( tempDataLen == LEN_Token )
+    382                  }
+    383          
+    384                  /* If number of bytes read is equal to data length, time to move on to FCS */
+    385                  if ( tempDataLen == LEN_Token )
    \   000168   E0           MOVX    A,@DPTR
    \   000169   F8           MOV     R0,A
    \   00016A   90....       MOV     DPTR,#LEN_Token
@@ -1265,22 +1278,22 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000174   90....       MOV     DPTR,#state
    \   000177   7405         MOV     A,#0x5
    \   000179   02....       LJMP    ??MT_UartProcessZToolData_2 & 0xFFFF
-    385                      state = FCS_STATE;
-    386          
-    387                  break;
-    388          
-    389                case FCS_STATE:
-    390          
-    391                  FSC_Token = ch;
+    386                      state = FCS_STATE;
+    387          
+    388                  break;
+    389          
+    390                case FCS_STATE:
+    391          
+    392                  FSC_Token = ch;
    \                     ??MT_UartProcessZToolData_9:
    \   00017C   85..82       MOV     DPL,?XSP + 0
    \   00017F   85..83       MOV     DPH,?XSP + 1
    \   000182   E0           MOVX    A,@DPTR
    \   000183   90....       MOV     DPTR,#FSC_Token
    \   000186   12....       LCALL   ?Subroutine4 & 0xFFFF
-    392          
-    393                  /* Make sure it's correct */
-    394                  if ((MT_UartCalcFCS ((uint8*)&pMsg->msg[0], MT_RPC_FRAME_HDR_SZ + LEN_Token) == FSC_Token))
+    393          
+    394                  /* Make sure it's correct */
+    395                  if ((MT_UartCalcFCS ((uint8*)&pMsg->msg[0], MT_RPC_FRAME_HDR_SZ + LEN_Token) == FSC_Token))
    \                     ??CrossCallReturnLabel_6:
    \   000189   2403         ADD     A,#0x3
    \   00018B   F9           MOV     R1,A
@@ -1298,8 +1311,8 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   00019C   68           XRL     A,R0
    \   00019D   90....       MOV     DPTR,#pMsg
    \   0001A0   700F         JNZ     ??MT_UartProcessZToolData_13
-    395                  {
-    396                    osal_msg_send( App_TaskID, (byte *)pMsg );
+    396                  {
+    397                    osal_msg_send( App_TaskID, (byte *)pMsg );
    \   0001A2                ; Setup parameters for call to function osal_msg_send
    \   0001A2   E0           MOVX    A,@DPTR
    \   0001A3   FA           MOV     R2,A
@@ -1311,11 +1324,11 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   0001AB   F9           MOV     R1,A
    \   0001AC   12....       LCALL   ??osal_msg_send?relay
    \   0001AF   8008         SJMP    ??MT_UartProcessZToolData_14
-    397                  }
-    398                  else
-    399                  {
-    400                    /* deallocate the msg */
-    401                    osal_msg_deallocate ( (uint8 *)pMsg );
+    398                  }
+    399                  else
+    400                  {
+    401                    /* deallocate the msg */
+    402                    osal_msg_deallocate ( (uint8 *)pMsg );
    \                     ??MT_UartProcessZToolData_13:
    \   0001B1                ; Setup parameters for call to function osal_msg_deallocate
    \   0001B1   E0           MOVX    A,@DPTR
@@ -1324,22 +1337,22 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   0001B4   E0           MOVX    A,@DPTR
    \   0001B5   FB           MOV     R3,A
    \   0001B6   12....       LCALL   ??osal_msg_deallocate?relay
-    402                  }
-    403          
-    404                  /* Reset the state, send or discard the buffers at this point */
-    405                  state = SOP_STATE;
+    403                  }
+    404          
+    405                  /* Reset the state, send or discard the buffers at this point */
+    406                  state = SOP_STATE;
    \                     ??MT_UartProcessZToolData_14:
    \   0001B9   90....       MOV     DPTR,#state
    \   0001BC   E4           CLR     A
    \   0001BD   02....       LJMP    ??MT_UartProcessZToolData_2 & 0xFFFF
-    406          
-    407                  break;
-    408          
-    409                default:
-    410                 break;
-    411              }
-    412            }
-    413          }
+    407          
+    408                  break;
+    409          
+    410                default:
+    411                 break;
+    412              }
+    413            }
+    414          }
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine8:
@@ -1436,157 +1449,157 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000001   90....       MOV     DPTR,#LEN_Token
    \   000004   E0           MOVX    A,@DPTR
    \   000005   22           RET
-    414          
-    415          #if defined (ZAPP_P1) || defined (ZAPP_P2)
-    416          /***************************************************************************************************
-    417           * @fn      MT_UartProcessZAppData
-    418           *
-    419           * @brief   | SOP | CMD  |   Data Length   | FSC  |
-    420           *          |  1  |  2   |       1         |  1   |
-    421           *
-    422           *          Parses the data and determine either is SPI or just simply serial data
-    423           *          then send the data to correct place (MT or APP)
-    424           *
-    425           * @param   port    - UART port
-    426           *          event   - Event that causes the callback
-    427           *
+    415          
+    416          #if defined (ZAPP_P1) || defined (ZAPP_P2)
+    417          /***************************************************************************************************
+    418           * @fn      MT_UartProcessZAppData
+    419           *
+    420           * @brief   | SOP | CMD  |   Data Length   | FSC  |
+    421           *          |  1  |  2   |       1         |  1   |
+    422           *
+    423           *          Parses the data and determine either is SPI or just simply serial data
+    424           *          then send the data to correct place (MT or APP)
+    425           *
+    426           * @param   port    - UART port
+    427           *          event   - Event that causes the callback
     428           *
-    429           * @return  None
-    430           ***************************************************************************************************/
-    431          void MT_UartProcessZAppData ( uint8 port, uint8 event )
-    432          {
-    433          
-    434            osal_event_hdr_t  *msg_ptr;
-    435            uint16 length = 0;
-    436            uint16 rxBufLen  = Hal_UART_RxBufLen(MT_UART_DEFAULT_PORT);
-    437          
-    438            /*
-    439               If maxZAppBufferLength is 0 or larger than current length
-    440               the entire length of the current buffer is returned.
-    441            */
-    442            if ((MT_UartMaxZAppBufLen != 0) && (MT_UartMaxZAppBufLen <= rxBufLen))
-    443            {
-    444              length = MT_UartMaxZAppBufLen;
-    445            }
-    446            else
-    447            {
-    448              length = rxBufLen;
-    449            }
-    450          
-    451            /* Verify events */
-    452            if (event == HAL_UART_TX_FULL)
-    453            {
-    454              // Do something when TX if full
-    455              return;
-    456            }
-    457          
-    458            if (event & ( HAL_UART_RX_FULL | HAL_UART_RX_ABOUT_FULL | HAL_UART_RX_TIMEOUT))
-    459            {
-    460              if ( App_TaskID )
-    461              {
-    462                /*
-    463                   If Application is ready to receive and there is something
-    464                   in the Rx buffer then send it up
-    465                */
-    466                if ((MT_UartZAppRxStatus == MT_UART_ZAPP_RX_READY ) && (length != 0))
-    467                {
-    468                  /* Disable App flow control until it processes the current data */
-    469                   MT_UartAppFlowControl (MT_UART_ZAPP_RX_NOT_READY);
-    470          
-    471                  /* 2 more bytes are added, 1 for CMD type, other for length */
-    472                  msg_ptr = (osal_event_hdr_t *)osal_msg_allocate( length + sizeof(osal_event_hdr_t) );
-    473                  if ( msg_ptr )
-    474                  {
-    475                    msg_ptr->event = SPI_INCOMING_ZAPP_DATA;
-    476                    msg_ptr->status = length;
-    477          
-    478                    /* Read the data of Rx buffer */
-    479                    HalUARTRead( MT_UART_DEFAULT_PORT, (uint8 *)(msg_ptr + 1), length );
-    480          
-    481                    /* Send the raw data to application...or where ever */
-    482                    osal_msg_send( App_TaskID, (uint8 *)msg_ptr );
-    483                  }
-    484                }
-    485              }
-    486            }
-    487          }
-    488          
-    489          /***************************************************************************************************
-    490           * @fn      SPIMgr_ZAppBufferLengthRegister
-    491           *
-    492           * @brief
-    493           *
-    494           * @param   maxLen - Max Length that the application wants at a time
-    495           *
-    496           * @return  None
-    497           *
-    498           ***************************************************************************************************/
-    499          void MT_UartZAppBufferLengthRegister ( uint16 maxLen )
-    500          {
-    501            /* If the maxLen is larger than the RX buff, something is not right */
-    502            if (maxLen <= MT_UART_DEFAULT_MAX_RX_BUFF)
-    503              MT_UartMaxZAppBufLen = maxLen;
-    504            else
-    505              MT_UartMaxZAppBufLen = 1; /* default is 1 byte */
-    506          }
-    507          
-    508          /***************************************************************************************************
-    509           * @fn      SPIMgr_AppFlowControl
-    510           *
-    511           * @brief
-    512           *
-    513           * @param   status - ready to send or not
-    514           *
-    515           * @return  None
-    516           *
-    517           ***************************************************************************************************/
-    518          void MT_UartAppFlowControl ( bool status )
-    519          {
-    520          
-    521            /* Make sure only update if needed */
-    522            if (status != MT_UartZAppRxStatus )
-    523            {
-    524              MT_UartZAppRxStatus = status;
-    525            }
-    526          
-    527            /* App is ready to read again, ProcessZAppData have to be triggered too */
-    528            if (status == MT_UART_ZAPP_RX_READY)
-    529            {
-    530              MT_UartProcessZAppData (MT_UART_DEFAULT_PORT, HAL_UART_RX_TIMEOUT );
-    531            }
-    532          
-    533          }
-    534          
-    535          #endif //ZAPP
-    536          
-    537          /**
-    538            static类型只在本文件内有效
-    539          */
-    540          static void _itoa(uint16 num, uint8 *buf, uint8 radix)
-    541          {
-    542            char c,i;
-    543            uint8 *p, rst[5];
-    544           
-    545            p = rst;
-    546            for ( i=0; i<5; i++,p++ )
-    547            {
-    548              c = num % radix;  // Isolate a digit
-    549              *p = c + (( c < 10 ) ? '0' : '7');  // Convert to Ascii
-    550              num /= radix;
-    551              if ( !num )
-    552                break;
-    553            }
-    554           
-    555            for ( c=0 ; c<=i; c++ )
-    556              *buf++ = *p--;  // Reverse character order
-    557           
-    558            *buf = '\0';
-    559          }
+    429           *
+    430           * @return  None
+    431           ***************************************************************************************************/
+    432          void MT_UartProcessZAppData ( uint8 port, uint8 event )
+    433          {
+    434          
+    435            osal_event_hdr_t  *msg_ptr;
+    436            uint16 length = 0;
+    437            uint16 rxBufLen  = Hal_UART_RxBufLen(MT_UART_DEFAULT_PORT);
+    438          
+    439            /*
+    440               If maxZAppBufferLength is 0 or larger than current length
+    441               the entire length of the current buffer is returned.
+    442            */
+    443            if ((MT_UartMaxZAppBufLen != 0) && (MT_UartMaxZAppBufLen <= rxBufLen))
+    444            {
+    445              length = MT_UartMaxZAppBufLen;
+    446            }
+    447            else
+    448            {
+    449              length = rxBufLen;
+    450            }
+    451          
+    452            /* Verify events */
+    453            if (event == HAL_UART_TX_FULL)
+    454            {
+    455              // Do something when TX if full
+    456              return;
+    457            }
+    458          
+    459            if (event & ( HAL_UART_RX_FULL | HAL_UART_RX_ABOUT_FULL | HAL_UART_RX_TIMEOUT))
+    460            {
+    461              if ( App_TaskID )
+    462              {
+    463                /*
+    464                   If Application is ready to receive and there is something
+    465                   in the Rx buffer then send it up
+    466                */
+    467                if ((MT_UartZAppRxStatus == MT_UART_ZAPP_RX_READY ) && (length != 0))
+    468                {
+    469                  /* Disable App flow control until it processes the current data */
+    470                   MT_UartAppFlowControl (MT_UART_ZAPP_RX_NOT_READY);
+    471          
+    472                  /* 2 more bytes are added, 1 for CMD type, other for length */
+    473                  msg_ptr = (osal_event_hdr_t *)osal_msg_allocate( length + sizeof(osal_event_hdr_t) );
+    474                  if ( msg_ptr )
+    475                  {
+    476                    msg_ptr->event = SPI_INCOMING_ZAPP_DATA;
+    477                    msg_ptr->status = length;
+    478          
+    479                    /* Read the data of Rx buffer */
+    480                    HalUARTRead( MT_UART_DEFAULT_PORT, (uint8 *)(msg_ptr + 1), length );
+    481          
+    482                    /* Send the raw data to application...or where ever */
+    483                    osal_msg_send( App_TaskID, (uint8 *)msg_ptr );
+    484                  }
+    485                }
+    486              }
+    487            }
+    488          }
+    489          
+    490          /***************************************************************************************************
+    491           * @fn      SPIMgr_ZAppBufferLengthRegister
+    492           *
+    493           * @brief
+    494           *
+    495           * @param   maxLen - Max Length that the application wants at a time
+    496           *
+    497           * @return  None
+    498           *
+    499           ***************************************************************************************************/
+    500          void MT_UartZAppBufferLengthRegister ( uint16 maxLen )
+    501          {
+    502            /* If the maxLen is larger than the RX buff, something is not right */
+    503            if (maxLen <= MT_UART_DEFAULT_MAX_RX_BUFF)
+    504              MT_UartMaxZAppBufLen = maxLen;
+    505            else
+    506              MT_UartMaxZAppBufLen = 1; /* default is 1 byte */
+    507          }
+    508          
+    509          /***************************************************************************************************
+    510           * @fn      SPIMgr_AppFlowControl
+    511           *
+    512           * @brief
+    513           *
+    514           * @param   status - ready to send or not
+    515           *
+    516           * @return  None
+    517           *
+    518           ***************************************************************************************************/
+    519          void MT_UartAppFlowControl ( bool status )
+    520          {
+    521          
+    522            /* Make sure only update if needed */
+    523            if (status != MT_UartZAppRxStatus )
+    524            {
+    525              MT_UartZAppRxStatus = status;
+    526            }
+    527          
+    528            /* App is ready to read again, ProcessZAppData have to be triggered too */
+    529            if (status == MT_UART_ZAPP_RX_READY)
+    530            {
+    531              MT_UartProcessZAppData (MT_UART_DEFAULT_PORT, HAL_UART_RX_TIMEOUT );
+    532            }
+    533          
+    534          }
+    535          
+    536          #endif //ZAPP
+    537          
+    538          /**
+    539            static类型只在本文件内有效
+    540          */
+    541          static void _itoa(uint16 num, uint8 *buf, uint8 radix)
+    542          {
+    543            char c,i;
+    544            uint8 *p, rst[5];
+    545           
+    546            p = rst;
+    547            for ( i=0; i<5; i++,p++ )
+    548            {
+    549              c = num % radix;  // Isolate a digit
+    550              *p = c + (( c < 10 ) ? '0' : '7');  // Convert to Ascii
+    551              num /= radix;
+    552              if ( !num )
+    553                break;
+    554            }
+    555           
+    556            for ( c=0 ; c<=i; c++ )
+    557              *buf++ = *p--;  // Reverse character order
+    558           
+    559            *buf = '\0';
+    560          }
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    560          static int vsprintf(char *buf, const char *fmt, va_list args) 
+    561          static int vsprintf(char *buf, const char *fmt, va_list args) 
    \                     vsprintf:
-    561          { 
+    562          { 
    \   000000   74EA         MOV     A,#-0x16
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 22
@@ -1604,55 +1617,55 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   00001A   A3           INC     DPTR
    \   00001B   E0           MOVX    A,@DPTR
    \   00001C   F5..         MOV     ?V0 + 5,A
-    562              char* p;
-    563              uint8 radix = 0;
-    564              int num = 0;
-    565           
-    566              for (p = buf; *fmt; fmt++)
+    563              char* p;
+    564              uint8 radix = 0;
+    565              int num = 0;
+    566           
+    567              for (p = buf; *fmt; fmt++)
    \   00001E   AE..         MOV     R6,?V0 + 12
    \   000020   AF..         MOV     R7,?V0 + 13
    \   000022   8054         SJMP    ??vsprintf_0
-    567              {
-    568                  if (*fmt != '%')
-    569                  {
-    570                      if (*fmt == '\n')
-    571                      {
-    572                          *p++ = '\r';
-    573                      }
-    574                      *p++ = *fmt;
-    575                      continue;
-    576                  }
-    577           
-    578                  fmt++;
-    579                  radix = 0;
-    580                  switch (*fmt)
-    581                  {
-    582                      case 'x':
-    583                          radix += 6;
-    584                      case 'd':
-    585                          radix += 2;
-    586                      case 'o':
-    587                          {
-    588                              char tmp[10];
-    589                              radix += 8;
-    590                              num = va_arg(args, int);
-    591                              _itoa(num, (uint8 *)tmp, radix);
-    592                              num = strlen(tmp);
-    593                              strncpy(p, tmp, num);
-    594                              p += num;
-    595                          }
-    596                          break;
-    597                      case 's':
-    598                          {
-    599                              char *s = va_arg(args, char *);
-    600                              num = strlen(s);
-    601                              strncpy(p, s, num);
-    602                              p += num;
-    603                          }
-    604                          break;
-    605                      default:
-    606                          ///unsupport
-    607                          va_arg(args, char *);
+    568              {
+    569                  if (*fmt != '%')
+    570                  {
+    571                      if (*fmt == '\n')
+    572                      {
+    573                          *p++ = '\r';
+    574                      }
+    575                      *p++ = *fmt;
+    576                      continue;
+    577                  }
+    578           
+    579                  fmt++;
+    580                  radix = 0;
+    581                  switch (*fmt)
+    582                  {
+    583                      case 'x':
+    584                          radix += 6;
+    585                      case 'd':
+    586                          radix += 2;
+    587                      case 'o':
+    588                          {
+    589                              char tmp[10];
+    590                              radix += 8;
+    591                              num = va_arg(args, int);
+    592                              _itoa(num, (uint8 *)tmp, radix);
+    593                              num = strlen(tmp);
+    594                              strncpy(p, tmp, num);
+    595                              p += num;
+    596                          }
+    597                          break;
+    598                      case 's':
+    599                          {
+    600                              char *s = va_arg(args, char *);
+    601                              num = strlen(s);
+    602                              strncpy(p, s, num);
+    603                              p += num;
+    604                          }
+    605                          break;
+    606                      default:
+    607                          ///unsupport
+    608                          va_arg(args, char *);
    \                     ??vsprintf_1:
    \   000024   85..82       MOV     DPL,?V0 + 4
    \   000027   85..83       MOV     DPH,?V0 + 5
@@ -1662,8 +1675,8 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   00002E   A3           INC     DPTR
    \   00002F   E0           MOVX    A,@DPTR
    \   000030   12....       LCALL   ??Subroutine17_0 & 0xFFFF
-    608                          num = strlen(" unknow type %  ");
-    609                          strncpy(p, " unknow type %  ", num);
+    609                          num = strlen(" unknow type %  ");
+    610                          strncpy(p, " unknow type %  ", num);
    \                     ??CrossCallReturnLabel_29:
    \   000033                ; Setup parameters for call to function strncpy
    \   000033   75..10       MOV     ?V0 + 2,#0x10
@@ -1679,14 +1692,14 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000045   12....       LCALL   ??strncpy?relay
    \   000048   7402         MOV     A,#0x2
    \   00004A   12....       LCALL   ?DEALLOC_XSTACK8
-    610                          p += num;
+    611                          p += num;
    \   00004D   EE           MOV     A,R6
    \   00004E   2410         ADD     A,#0x10
    \   000050   FE           MOV     R6,A
    \   000051   EF           MOV     A,R7
    \   000052   3400         ADDC    A,#0x0
    \   000054   FF           MOV     R7,A
-    611                          *(p - 2) = *fmt;
+    612                          *(p - 2) = *fmt;
    \   000055   85..82       MOV     DPL,?V0 + 0
    \   000058   85..83       MOV     DPH,?V0 + 1
    \   00005B   E0           MOVX    A,@DPTR
@@ -1699,7 +1712,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000066   F583         MOV     DPH,A
    \   000068   D0E0         POP     A
    \   00006A   F0           MOVX    @DPTR,A
-    612                          break;
+    613                          break;
    \                     ??vsprintf_2:
    \   00006B   85..82       MOV     DPL,?V0 + 0
    \   00006E   85..83       MOV     DPH,?V0 + 1
@@ -1886,15 +1899,15 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   0001AE   AA..         MOV     R2,?V0 + 6
    \   0001B0   AB..         MOV     R3,?V0 + 7
    \   0001B2   12....       LCALL   ?Subroutine11 & 0xFFFF
-    613                  }
-    614              }
+    614                  }
+    615              }
    \                     ??CrossCallReturnLabel_18:
    \   0001B5   12....       LCALL   ?PUSH_XSTACK_I_TWO
    \   0001B8   AC..         MOV     R4,?V0 + 6
    \   0001BA   AD..         MOV     R5,?V0 + 7
    \   0001BC   80CD         SJMP    ??vsprintf_14
-    615           
-    616              return (p - buf);
+    616           
+    617              return (p - buf);
    \                     ??vsprintf_3:
    \   0001BE   EE           MOV     A,R6
    \   0001BF   C3           CLR     C
@@ -1907,7 +1920,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   0001C9   12....       LCALL   ?DEALLOC_XSTACK8
    \   0001CC   7F0E         MOV     R7,#0xe
    \   0001CE   02....       LJMP    ?BANKED_LEAVE_XDATA
-    617          }
+    618          }
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine11:
@@ -1955,15 +1968,15 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   00000D   8983         MOV     DPH,R1
    \   00000F   E0           MOVX    A,@DPTR
    \   000010   22           RET
-    618          
-    619          /**
-    620            自定义串口打印函数
-    621          */
+    619          
+    620          /**
+    621            自定义串口打印函数
+    622          */
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    622          void myprintf(char*fmt, ...)
+    623          void myprintf(char*fmt, ...)
    \                     myprintf:
-    623          {
+    624          {
    \   000000   74F4         MOV     A,#-0xc
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 12
@@ -1971,15 +1984,15 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000005   7582FE       MOV     DPL,#-0x2
    \   000008   7583FE       MOV     DPH,#-0x2
    \   00000B   12....       LCALL   ?ADD_XSTACK_DISP0_16
-    624             char buf[256];
-    625             va_list arg;
-    626             int len = 0;
-    627             int wr = 0;
-    628             int off = 0;
+    625             char buf[256];
+    626             va_list arg;
+    627             int len = 0;
+    628             int wr = 0;
+    629             int off = 0;
    \   00000E   75..00       MOV     ?V0 + 0,#0x0
    \   000011   75..00       MOV     ?V0 + 1,#0x0
-    629             
-    630             va_start(arg, fmt);
+    630             
+    631             va_start(arg, fmt);
    \   000014   75820E       MOV     DPL,#0xe
    \   000017   758301       MOV     DPH,#0x1
    \   00001A   12....       LCALL   ?XSTACK_DISP0_16
@@ -1992,7 +2005,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000029   A3           INC     DPTR
    \   00002A   E9           MOV     A,R1
    \   00002B   12....       LCALL   ?Subroutine3 & 0xFFFF
-    631             len = vsprintf(buf, fmt, arg); 
+    632             len = vsprintf(buf, fmt, arg); 
    \                     ??CrossCallReturnLabel_2:
    \   00002E   8582..       MOV     ?V0 + 2,DPL
    \   000031   8583..       MOV     ?V0 + 3,DPH
@@ -2013,20 +2026,20 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000050   8B..         MOV     ?V0 + 3,R3
    \   000052   AE..         MOV     R6,?V0 + 2
    \   000054   AF..         MOV     R7,?V0 + 3
-    632             va_end(arg);
+    633             va_end(arg);
    \   000056   8038         SJMP    ??myprintf_0
-    633            
-    634             while (len)
-    635             {
-    636            #if (HAL_UART_DMA)
-    637                if (len >= 128)
-    638                {
-    639                    wr =  HalUARTWrite(0, (uint8 *)buf + off, 64);
-    640                }
-    641                else
-    642            #endif
-    643                {
-    644                    wr =  HalUARTWrite(0, (uint8 *)buf + off, len);
+    634            
+    635             while (len)
+    636             {
+    637            #if (HAL_UART_DMA)
+    638                if (len >= 128)
+    639                {
+    640                    wr =  HalUARTWrite(0, (uint8 *)buf + off, 64);
+    641                }
+    642                else
+    643            #endif
+    644                {
+    645                    wr =  HalUARTWrite(0, (uint8 *)buf + off, len);
    \                     ??myprintf_1:
    \   000058                ; Setup parameters for call to function HalUARTWrite
    \   000058   EE           MOV     A,R6
@@ -2048,9 +2061,9 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000072   8B..         MOV     ?V0 + 3,R3
    \   000074   A8..         MOV     R0,?V0 + 2
    \   000076   A9..         MOV     R1,?V0 + 3
-    645                }
-    646            
-    647                len -= wr;
+    646                }
+    647            
+    648                len -= wr;
    \   000078   C3           CLR     C
    \   000079   EE           MOV     A,R6
    \   00007A   98           SUBB    A,R0
@@ -2058,22 +2071,22 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   00007C   EF           MOV     A,R7
    \   00007D   99           SUBB    A,R1
    \   00007E   FF           MOV     R7,A
-    648                off += wr;
+    649                off += wr;
    \   00007F   E5..         MOV     A,?V0 + 0
    \   000081   28           ADD     A,R0
    \   000082   F5..         MOV     ?V0 + 0,A
    \   000084   E5..         MOV     A,?V0 + 1
    \   000086   39           ADDC    A,R1
    \   000087   F5..         MOV     ?V0 + 1,A
-    649                if (!wr)
+    650                if (!wr)
    \   000089   E8           MOV     A,R0
    \   00008A   49           ORL     A,R1
    \   00008B   7003         JNZ     ??myprintf_0
-    650                {
-    651                    HalUARTPoll();
+    651                {
+    652                    HalUARTPoll();
    \   00008D                ; Setup parameters for call to function HalUARTPoll
    \   00008D   12....       LCALL   ??HalUARTPoll?relay
-    652                }
+    653                }
    \                     ??myprintf_0:
    \   000090   EE           MOV     A,R6
    \   000091   4F           ORL     A,R7
@@ -2091,20 +2104,20 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   0000A2   7C40         MOV     R4,#0x40
    \   0000A4   7D00         MOV     R5,#0x0
    \   0000A6   80B4         SJMP    ??myprintf_2
-    653             }
-    654          }
+    654             }
+    655          }
    \                     ??myprintf_3:
    \   0000A8   758202       MOV     DPL,#0x2
    \   0000AB   758301       MOV     DPH,#0x1
    \   0000AE   12....       LCALL   ?ADD_XSTACK_DISP0_16
    \   0000B1   02....       LJMP    ?Subroutine2 & 0xFFFF
-    655          
-    656          /**
-    657            自定义发送指定字节数组函数
-    658          */
+    656          
+    657          /**
+    658            自定义发送指定字节数组函数
+    659          */
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    659          void mySendByteBuf(uint8* buf, int len) {
+    660          void mySendByteBuf(uint8* buf, int len) {
    \                     mySendByteBuf:
    \   000000   74F2         MOV     A,#-0xe
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
@@ -2114,15 +2127,15 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000007   8B..         MOV     ?V0 + 3,R3
    \   000009   8C..         MOV     ?V0 + 0,R4
    \   00000B   8D..         MOV     ?V0 + 1,R5
-    660             int wr = 0;
-    661             int off = 0;
+    661             int wr = 0;
+    662             int off = 0;
    \   00000D   7E00         MOV     R6,#0x0
    \   00000F   7F00         MOV     R7,#0x0
    \   000011   8031         SJMP    ??mySendByteBuf_0
-    662             
-    663             while (len)
-    664             {
-    665                wr =  HalUARTWrite(0, (uint8 *)buf + off, len);
+    663             
+    664             while (len)
+    665             {
+    666                wr =  HalUARTWrite(0, (uint8 *)buf + off, len);
    \                     ??mySendByteBuf_1:
    \   000013                ; Setup parameters for call to function HalUARTWrite
    \   000013   AC..         MOV     R4,?V0 + 0
@@ -2139,7 +2152,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000026   8B..         MOV     ?V0 + 5,R3
    \   000028   A8..         MOV     R0,?V0 + 4
    \   00002A   A9..         MOV     R1,?V0 + 5
-    666                len -= wr;
+    667                len -= wr;
    \   00002C   C3           CLR     C
    \   00002D   E5..         MOV     A,?V0 + 0
    \   00002F   98           SUBB    A,R0
@@ -2147,28 +2160,28 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \   000032   E5..         MOV     A,?V0 + 1
    \   000034   99           SUBB    A,R1
    \   000035   F5..         MOV     ?V0 + 1,A
-    667                off += wr;
+    668                off += wr;
    \   000037   EE           MOV     A,R6
    \   000038   28           ADD     A,R0
    \   000039   FE           MOV     R6,A
    \   00003A   EF           MOV     A,R7
    \   00003B   39           ADDC    A,R1
    \   00003C   FF           MOV     R7,A
-    668                if (!wr)
+    669                if (!wr)
    \   00003D   E8           MOV     A,R0
    \   00003E   49           ORL     A,R1
    \   00003F   7003         JNZ     ??mySendByteBuf_0
-    669                {
-    670                    HalUARTPoll();
+    670                {
+    671                    HalUARTPoll();
    \   000041                ; Setup parameters for call to function HalUARTPoll
    \   000041   12....       LCALL   ??HalUARTPoll?relay
-    671                }
-    672             }
+    672                }
+    673             }
    \                     ??mySendByteBuf_0:
    \   000044   E5..         MOV     A,?V0 + 0
    \   000046   45..         ORL     A,?V0 + 1
    \   000048   70C9         JNZ     ??mySendByteBuf_1
-    673          }
+    674          }
    \   00004A   7F06         MOV     R7,#0x6
    \   00004C   02....       LJMP    ?BANKED_LEAVE_XDATA
 
@@ -2242,6 +2255,14 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \            000000  
 
    \                                 In  segment XDATA_ROM_C, align 1
+   \                     `?<Constant "recv cmd = 0x%x\\n">`:
+   \   000000   72656376     DB "recv cmd = 0x%x\012"
+   \            20636D64
+   \            203D2030
+   \            7825780A
+   \            00      
+
+   \                                 In  segment XDATA_ROM_C, align 1
    \                     `?<Constant {0}>_2`:
    \   000000   00           DB 0
    \   000001   00           DB 0
@@ -2291,9 +2312,9 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
    \            74797065
    \            20252020
    \            00      
-    674          
-    675          /***************************************************************************************************
-    676          ***************************************************************************************************/
+    675          
+    676          /***************************************************************************************************
+    677          ***************************************************************************************************/
 
    Maximum stack usage in bytes:
 
@@ -2307,6 +2328,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
        -> HalUARTRead                   0      0    228
        -> re_replace_data               0      0    232
        -> check_xor                     0      0    228
+       -> myprintf                      0      0    232
        -> findEndDeviceShortAddrByMachineid
                                         0      0    228
        -> encodeData                    0      0    236
@@ -2330,7 +2352,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
      mySendByteBuf                      0      0     14
        -> HalUARTWrite                  0      0     28
        -> HalUARTPoll                   0      0     28
-     myprintf                           0      0    386
+     myprintf                           0      0    388
        -> vsprintf                      0      0    544
        -> HalUARTWrite                  0      0    540
        -> HalUARTPoll                   0      0    540
@@ -2366,7 +2388,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
      ?Subroutine1                              8
      recv_index                                1
      speed_buffer                              4
-     MT_MyUartProcessZToolData               581
+     MT_MyUartProcessZToolData               605
      ?Subroutine2                              5
      MT_UartProcessZToolData                 448
      ?Subroutine8                              4
@@ -2397,6 +2419,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
      ??mySendByteBuf?relay                     6
      ?<Constant {0}>                          32
      ?<Constant {0}>_1                        32
+     ?<Constant "recv cmd = 0x%x\n">          17
      ?<Constant {0}>_2                         2
      ?<Constant {0}>_3                        32
      ?<Constant "SendToEPFailed\n">           16
@@ -2405,13 +2428,13 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Components\mt\MT_UART.c
      ?<Constant " unknow type %  ">           17
 
  
- 2 119 bytes in segment BANKED_CODE
+ 2 143 bytes in segment BANKED_CODE
     54 bytes in segment BANK_RELAYS
-   181 bytes in segment XDATA_ROM_C
+   198 bytes in segment XDATA_ROM_C
     14 bytes in segment XDATA_Z
  
- 2 173 bytes of CODE  memory
-   181 bytes of CONST memory
+ 2 197 bytes of CODE  memory
+   198 bytes of CONST memory
     14 bytes of XDATA memory
 
 Errors: none

@@ -250,7 +250,6 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
   if ( events & SYS_EVENT_MSG )
   {
     MSGpkt = (afIncomingMSGPacket_t *)osal_msg_receive( SampleApp_TaskID );
-    uint8 coodStarted[3] = {'#', 0x45, '@'};
     while ( MSGpkt )
     {      
       switch ( MSGpkt->hdr.event )
@@ -280,8 +279,7 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
         case ZDO_STATE_CHANGE:
           SampleApp_NwkState = (devStates_t)(MSGpkt->hdr.status); // 另外MSGpkt->srcAddr.addr.shortAddr;可用于获取终端节点的网络短地址                    
           // 判断不同的设备类型
-          if(SampleApp_NwkState == DEV_ZB_COORD) { // 协调器组建好网络            
-            mySendByteBuf(coodStarted, 3); // 向上位机发送已经启动消息            
+          if(SampleApp_NwkState == DEV_ZB_COORD) { // 协调器组建好网络
             osal_start_timerEx( SampleApp_TaskID, SAMPLEAPP_SEND_PERIODIC_MSG_EVT, SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT ); // 开启定时器
             HalLedBlink(HAL_LED_2, 3, 50, 250);
           } else if(SampleApp_NwkState == DEV_ROUTER) { // 路由器加入网络
@@ -432,9 +430,7 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
     } else {
       myprintf("end device check af data failed\n");
     }     
-#endif    
-
-    
+#endif        
   }
 }
 

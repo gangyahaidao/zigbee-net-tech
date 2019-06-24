@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         23/Jun/2019  21:32:54 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         24/Jun/2019  16:43:42 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -607,16 +607,17 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \                     ??CrossCallReturnLabel_12:
    \   000127   747E         MOV     A,#0x7e
    \   000129   F0           MOVX    @DPTR,A
-     83              *outputLen = tmpOutLen;
-   \   00012A   85..82       MOV     DPL,?V0 + 2
-   \   00012D   85..83       MOV     DPH,?V0 + 3
-   \   000130   E5..         MOV     A,?V0 + 6
-   \   000132   F0           MOVX    @DPTR,A
+     83              *outputLen = tmpOutLen+1;
+   \   00012A   7401         MOV     A,#0x1
+   \   00012C   25..         ADD     A,?V0 + 6
+   \   00012E   85..82       MOV     DPL,?V0 + 2
+   \   000131   85..83       MOV     DPH,?V0 + 3
+   \   000134   F0           MOVX    @DPTR,A
      84          }
-   \   000133   7420         MOV     A,#0x20
-   \   000135   12....       LCALL   ?DEALLOC_XSTACK8
-   \   000138   7F07         MOV     R7,#0x7
-   \   00013A   02....       LJMP    ?BANKED_LEAVE_XDATA
+   \   000135   7420         MOV     A,#0x20
+   \   000137   12....       LCALL   ?DEALLOC_XSTACK8
+   \   00013A   7F07         MOV     R7,#0x7
+   \   00013C   02....       LJMP    ?BANKED_LEAVE_XDATA
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine7:
@@ -722,7 +723,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
      ??Subroutine10_0           9
      check_xor                103
      ?Subroutine1               1
-     encodeData               317
+     encodeData               319
      ?Subroutine7               4
      ?Subroutine6               8
      ??Subroutine11_0          10
@@ -735,11 +736,11 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
      ?<Constant {0}>           32
 
  
- 649 bytes in segment BANKED_CODE
+ 651 bytes in segment BANKED_CODE
   18 bytes in segment BANK_RELAYS
   32 bytes in segment XDATA_ROM_C
  
- 667 bytes of CODE  memory
+ 669 bytes of CODE  memory
   32 bytes of CONST memory
 
 Errors: none

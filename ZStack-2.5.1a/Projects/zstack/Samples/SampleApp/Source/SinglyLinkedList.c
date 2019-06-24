@@ -12,6 +12,7 @@
 #include "SinglyLinkedList.h" 		
 #include "OSAL.h"
 #include "MT_UART.h"
+#include "common.h"
 
 /**
 查找某个指定机器编号的设备是否在列表中
@@ -129,7 +130,11 @@ void updateListEleStatus(LinkList L, int i, int initLeftSec) {
   遍历终端列表，将所有节点剩余时间-1，如果小于0，则置0
 */
 void  decAllListEPLeftSec(LinkList L) {
-  uint8 sendBuf[11] = {'#', 0x44, 0, 0, 0, 0, 0, 0, 0, 0, '@'};
+  uint8 strBuf[SEND_BUF_SIZE] = {0};
+  uint8 strBufLen = 0;
+  uint8 outputBuf[SEND_BUF_SIZE] = {0};
+  uint8 outputBufLen = 0;
+  
   LinkList p = L->next;
   int i = 0;
   while(p) {
@@ -137,9 +142,12 @@ void  decAllListEPLeftSec(LinkList L) {
     p->data.leftSecCount -= 1;
     if(p->data.leftSecCount < 0) {
       p->data.leftSecCount = 0;
-      osal_memcpy(sendBuf+2, p->data.IEEEArr, 8); // 复制IEEE地址
-      mySendByteBuf(sendBuf, 11); // 发送到上位机
-      // myprintf("one end device offline\n");
+      
+      strBuf[0] = p->data.machineId;  
+      strBufLen = 0x1;
+      encodeData(COORD_REPORT_OFFLINE_ENDDEVICE, strBuf, strBufLen, outputBuf, &outputBufLen);
+      mySendByteBuf(outputBuf, outputBufLen); // 将终端掉线信息发送到树莓派
+      myprintf("one end device offline, machineId = 0x%x\n", p->data.machineId);
     }
     // myprintf("i = %d, leftSecCount = %d\n", i, p->data.leftSecCount);
     p = p->next;

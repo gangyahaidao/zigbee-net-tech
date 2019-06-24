@@ -1,6 +1,6 @@
 ###############################################################################
 #                                                                             #
-# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         23/Jun/2019  21:03:20 #
+# IAR C/C++ Compiler V8.10.3.10338/W32 for 8051         24/Jun/2019  16:48:18 #
 # Copyright 2004-2011 IAR Systems AB.                                         #
 #                                                                             #
 #    Core               =  plain                                              #
@@ -146,15 +146,16 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
      12          #include "SinglyLinkedList.h" 		
      13          #include "OSAL.h"
      14          #include "MT_UART.h"
-     15          
-     16          /**
-     17          查找某个指定机器编号的设备是否在列表中
-     18          存在：0
-     19          不存在：-1
-     20          */
+     15          #include "common.h"
+     16          
+     17          /**
+     18          查找某个指定机器编号的设备是否在列表中
+     19          存在：0
+     20          不存在：-1
+     21          */
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-     21          int findEndDeviceShortAddrByMachineid(LinkList L, uint8 machineId, uint8* addr) {
+     22          int findEndDeviceShortAddrByMachineid(LinkList L, uint8 machineId, uint8* addr) {
    \                     findEndDeviceShortAddrByMachineid:
    \   000000   74F7         MOV     A,#-0x9
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
@@ -162,19 +163,19 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000005                ; Auto size: 0
    \   000005   E9           MOV     A,R1
    \   000006   FE           MOV     R6,A
-     22            int i = 0;
-     23            LinkList p = L->next;
+     23            int i = 0;
+     24            LinkList p = L->next;
    \   000007   12....       LCALL   ??Subroutine16_0 & 0xFFFF
    \                     ??CrossCallReturnLabel_37:
    \   00000A   8004         SJMP    ??findEndDeviceShortAddrByMachineid_0
-     24            while(p) {
-     25              i++;
-     26              if(p->data.machineId == machineId) {
-     27                addr[0] = p->data.shortAddrH;
-     28                addr[0] = p->data.shortAddrL;
-     29                return 0;
-     30              }
-     31              p = p->next;
+     25            while(p) {
+     26              i++;
+     27              if(p->data.machineId == machineId) {
+     28                addr[0] = p->data.shortAddrH;
+     29                addr[0] = p->data.shortAddrL;
+     30                return 0;
+     31              }
+     32              p = p->next;
    \                     ??findEndDeviceShortAddrByMachineid_1:
    \   00000C   12....       LCALL   ?Subroutine7 & 0xFFFF
    \                     ??CrossCallReturnLabel_31:
@@ -204,16 +205,16 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000030   7A00         MOV     R2,#0x0
    \   000032   7B00         MOV     R3,#0x0
    \   000034   8004         SJMP    ??findEndDeviceShortAddrByMachineid_3
-     32            }
-     33            
-     34            return -1;
+     33            }
+     34            
+     35            return -1;
    \                     ??findEndDeviceShortAddrByMachineid_2:
    \   000036   7AFF         MOV     R2,#-0x1
    \   000038   7BFF         MOV     R3,#-0x1
    \                     ??findEndDeviceShortAddrByMachineid_3:
    \   00003A                REQUIRE ?Subroutine0
    \   00003A                ; // Fall through to label ?Subroutine0
-     35          }
+     36          }
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine0:
@@ -258,12 +259,12 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000003   F582         MOV     DPL,A
    \   000005   EB           MOV     A,R3
    \   000006   22           RET
-     36          
+     37          
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-     37          Status InitList_L(LinkList *L)                  // 初始化单链表L
+     38          Status InitList_L(LinkList *L)                  // 初始化单链表L
    \                     InitList_L:
-     38          {
+     39          {
    \   000000   74F7         MOV     A,#-0x9
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 9
@@ -272,7 +273,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000006   FE           MOV     R6,A
    \   000007   EB           MOV     A,R3
    \   000008   FF           MOV     R7,A
-     39          	(*L) = (LinkList)osal_msg_allocate(sizeof(LNode)); // osal_msg_deallocate
+     40          	(*L) = (LinkList)osal_msg_allocate(sizeof(LNode)); // osal_msg_deallocate
    \   000009                ; Setup parameters for call to function osal_msg_allocate
    \   000009   7A0E         MOV     R2,#0xe
    \   00000B   7B00         MOV     R3,#0x0
@@ -284,7 +285,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000016   A3           INC     DPTR
    \   000017   EB           MOV     A,R3
    \   000018   F0           MOVX    @DPTR,A
-     40          	if(!(*L)) {
+     41          	if(!(*L)) {
    \   000019   8E82         MOV     DPL,R6
    \   00001B   8F83         MOV     DPH,R7
    \   00001D   E0           MOVX    A,@DPTR
@@ -295,12 +296,12 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000022   E8           MOV     A,R0
    \   000023   49           ORL     A,R1
    \   000024   7006         JNZ     ??InitList_L_0
-     41                    return (OVERFLOW);
+     42                    return (OVERFLOW);
    \   000026   7AFE         MOV     R2,#-0x2
    \   000028   7BFF         MOV     R3,#-0x1
    \   00002A   8014         SJMP    ??InitList_L_1
-     42                  }        
-     43          	(*L)->next = NULL;	
+     43                  }        
+     44          	(*L)->next = NULL;	
    \                     ??InitList_L_0:
    \   00002C   8E82         MOV     DPL,R6
    \   00002E   8F83         MOV     DPH,R7
@@ -315,13 +316,13 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   00003A   F0           MOVX    @DPTR,A
    \   00003B   A3           INC     DPTR
    \   00003C   F0           MOVX    @DPTR,A
-     44          
-     45          	return OK;
+     45          
+     46          	return OK;
    \   00003D   7A01         MOV     R2,#0x1
    \   00003F   FB           MOV     R3,A
    \                     ??InitList_L_1:
    \   000040   80..         SJMP    ?Subroutine0
-     46          }
+     47          }
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine8:
@@ -330,19 +331,19 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000003   8882         MOV     DPL,R0
    \   000005   8983         MOV     DPH,R1
    \   000007   22           RET
-     47          
+     48          
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-     48          void DestroyList_L(LinkList *L)			//销毁所有结点 
+     49          void DestroyList_L(LinkList *L)			//销毁所有结点 
    \                     DestroyList_L:
-     49          {
+     50          {
    \   000000   74F6         MOV     A,#-0xa
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 10
    \   000005                ; Auto size: 0
    \   000005   8A..         MOV     ?V0 + 0,R2
    \   000007   8B..         MOV     ?V0 + 1,R3
-     50          	LinkList p = *L;	
+     51          	LinkList p = *L;	
    \   000009   8A82         MOV     DPL,R2
    \   00000B   8B83         MOV     DPH,R3
    \   00000D   E0           MOVX    A,@DPTR
@@ -351,10 +352,10 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000010   E0           MOVX    A,@DPTR
    \   000011   FF           MOV     R7,A
    \   000012   801F         SJMP    ??DestroyList_L_0
-     51          
-     52          	while(p)
-     53          	{
-     54          		p = (*L)->next;
+     52          
+     53          	while(p)
+     54          	{
+     55          		p = (*L)->next;
    \                     ??DestroyList_L_1:
    \   000014   85..82       MOV     DPL,?V0 + 0
    \   000017   85..83       MOV     DPH,?V0 + 1
@@ -364,10 +365,10 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   00001E   A3           INC     DPTR
    \   00001F   E0           MOVX    A,@DPTR
    \   000020   FF           MOV     R7,A
-     55          		osal_msg_deallocate((uint8*)*L);
+     56          		osal_msg_deallocate((uint8*)*L);
    \   000021                ; Setup parameters for call to function osal_msg_deallocate
    \   000021   12....       LCALL   ??osal_msg_deallocate?relay
-     56          		(*L) = p;
+     57          		(*L) = p;
    \   000024   EE           MOV     A,R6
    \   000025   F8           MOV     R0,A
    \   000026   EF           MOV     A,R7
@@ -379,19 +380,13 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000030   A3           INC     DPTR
    \   000031   E9           MOV     A,R1
    \   000032   F0           MOVX    @DPTR,A
-     57          	}
+     58          	}
    \                     ??DestroyList_L_0:
    \   000033   EE           MOV     A,R6
    \   000034   4F           ORL     A,R7
    \   000035   70DD         JNZ     ??DestroyList_L_1
-     58          }
-   \   000037                REQUIRE ?Subroutine1
-   \   000037                ; // Fall through to label ?Subroutine1
-
-   \                                 In  segment BANKED_CODE, align 1, keep-with-next
-   \                     ?Subroutine1:
-   \   000000   7F02         MOV     R7,#0x2
-   \   000002   02....       LJMP    ?BANKED_LEAVE_XDATA
+     59          }
+   \   000037   02....       LJMP    ?Subroutine1 & 0xFFFF
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine5:
@@ -412,34 +407,39 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000006   12....       LCALL   ?Subroutine12 & 0xFFFF
    \                     ??CrossCallReturnLabel_24:
    \   000009   22           RET
-     59          
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-     60          int ListLength_L(LinkList L)
+   \                     ?Subroutine1:
+   \   000000   7F02         MOV     R7,#0x2
+   \   000002   02....       LJMP    ?BANKED_LEAVE_XDATA
+     60          
+
+   \                                 In  segment BANKED_CODE, align 1, keep-with-next
+     61          int ListLength_L(LinkList L)
    \                     ListLength_L:
-     61          {
+     62          {
    \   000000   C082         PUSH    DPL
    \   000002   C083         PUSH    DPH
    \   000004                ; Saved register size: 2
    \   000004                ; Auto size: 0
-     62          	LinkList p;
-     63          	int i = 0;
+     63          	LinkList p;
+     64          	int i = 0;
    \   000004   7C00         MOV     R4,#0x0
    \   000006   7D00         MOV     R5,#0x0
-     64          	
-     65          	if(L)
+     65          	
+     66          	if(L)
    \   000008   EA           MOV     A,R2
    \   000009   4B           ORL     A,R3
    \   00000A   6016         JZ      ??ListLength_L_0
-     66          	{
-     67                    i = 0;
-     68                    p = L->next;
+     67          	{
+     68                    i = 0;
+     69                    p = L->next;
    \   00000C   12....       LCALL   ??Subroutine16_0 & 0xFFFF
    \                     ??CrossCallReturnLabel_38:
    \   00000F   800C         SJMP    ??ListLength_L_1
-     69                    while(p)
-     70                    {
-     71                      i++;
+     70                    while(p)
+     71                    {
+     72                      i++;
    \                     ??ListLength_L_2:
    \   000011   EC           MOV     A,R4
    \   000012   2401         ADD     A,#0x1
@@ -447,18 +447,18 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000015   ED           MOV     A,R5
    \   000016   3400         ADDC    A,#0x0
    \   000018   FD           MOV     R5,A
-     72                      p = p->next;
+     73                      p = p->next;
    \   000019   12....       LCALL   ?Subroutine7 & 0xFFFF
-     73                    }		
-     74          	}
+     74                    }		
+     75          	}
    \                     ??CrossCallReturnLabel_32:
    \   00001C   E9           MOV     A,R1
    \                     ??ListLength_L_1:
    \   00001D   12....       LCALL   ?Subroutine3 & 0xFFFF
    \                     ??CrossCallReturnLabel_1:
    \   000020   70EF         JNZ     ??ListLength_L_2
-     75          	
-     76          	return i;
+     76          	
+     77          	return i;
    \                     ??ListLength_L_0:
    \   000022   EC           MOV     A,R4
    \   000023   FA           MOV     R2,A
@@ -466,20 +466,20 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000025   FB           MOV     R3,A
    \   000026                REQUIRE ?Subroutine2
    \   000026                ; // Fall through to label ?Subroutine2
-     77          }
+     78          }
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine2:
    \   000000   D083         POP     DPH
    \   000002   D082         POP     DPL
    \   000004   02....       LJMP    ?BRET
-     78          
-     79          /**
-     80            检查某个IEEE地址终端是否在列表中，如果已经在列表中返回位置
-     81          */
+     79          
+     80          /**
+     81            检查某个IEEE地址终端是否在列表中，如果已经在列表中返回位置
+     82          */
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-     82          int checkEPIsInListByIEEE(LinkList L, uint8* ieeeAddrP) {
+     83          int checkEPIsInListByIEEE(LinkList L, uint8* ieeeAddrP) {
    \                     checkEPIsInListByIEEE:
    \   000000   74F1         MOV     A,#-0xf
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
@@ -487,18 +487,18 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000005                ; Auto size: 0
    \   000005   8C..         MOV     ?V0 + 2,R4
    \   000007   8D..         MOV     ?V0 + 3,R5
-     83            int i = 0;
+     84            int i = 0;
    \   000009   75..00       MOV     ?V0 + 0,#0x0
    \   00000C   12....       LCALL   ??Subroutine15_0 & 0xFFFF
-     84            LinkList p = L->next;
+     85            LinkList p = L->next;
    \                     ??CrossCallReturnLabel_36:
    \   00000F   8005         SJMP    ??checkEPIsInListByIEEE_0
-     85            while(p) {
-     86              i++;
-     87              if(osal_memcmp(p->data.IEEEArr, ieeeAddrP, 8) == TRUE) {
-     88                return i;
-     89              }
-     90              p = p->next;
+     86            while(p) {
+     87              i++;
+     88              if(osal_memcmp(p->data.IEEEArr, ieeeAddrP, 8) == TRUE) {
+     89                return i;
+     90              }
+     91              p = p->next;
    \                     ??checkEPIsInListByIEEE_1:
    \   000011   EE           MOV     A,R6
    \   000012   12....       LCALL   ??Subroutine14_0 & 0xFFFF
@@ -535,16 +535,16 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   00004A   AA..         MOV     R2,?V0 + 0
    \   00004C   AB..         MOV     R3,?V0 + 1
    \   00004E   8004         SJMP    ??checkEPIsInListByIEEE_3
-     91            }
-     92            
-     93            return -1;
+     92            }
+     93            
+     94            return -1;
    \                     ??checkEPIsInListByIEEE_2:
    \   000050   7AFF         MOV     R2,#-0x1
    \   000052   7BFF         MOV     R3,#-0x1
    \                     ??checkEPIsInListByIEEE_3:
    \   000054   7F07         MOV     R7,#0x7
    \   000056   02....       LJMP    ?BANKED_LEAVE_XDATA
-     94          }
+     95          }
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine10:
@@ -573,31 +573,31 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000000   75..00       MOV     ?V0 + 1,#0x0
    \   000003                REQUIRE ??Subroutine16_0
    \   000003                ; // Fall through to label ??Subroutine16_0
-     95          
-     96          /**
-     97          根据终端编号查找终端是否在列表中
-     98          */
+     96          
+     97          /**
+     98          根据终端编号查找终端是否在列表中
+     99          */
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-     99          int checkEPIsInListByMachineId(LinkList L, uint8 machineId) {
+    100          int checkEPIsInListByMachineId(LinkList L, uint8 machineId) {
    \                     checkEPIsInListByMachineId:
    \   000000   C082         PUSH    DPL
    \   000002   C083         PUSH    DPH
    \   000004                ; Saved register size: 2
    \   000004                ; Auto size: 0
-    100            int i = 0;
+    101            int i = 0;
    \   000004   7C00         MOV     R4,#0x0
    \   000006   7D00         MOV     R5,#0x0
-    101            LinkList p = L->next;
+    102            LinkList p = L->next;
    \   000008   12....       LCALL   ??Subroutine16_0 & 0xFFFF
    \                     ??CrossCallReturnLabel_39:
    \   00000B   8007         SJMP    ??checkEPIsInListByMachineId_0
-    102            while(p) {
-    103              i++;
-    104              if(p->data.machineId == machineId) {
-    105                return i;
-    106              }
-    107              p = p->next;
+    103            while(p) {
+    104              i++;
+    105              if(p->data.machineId == machineId) {
+    106                return i;
+    107              }
+    108              p = p->next;
    \                     ??checkEPIsInListByMachineId_1:
    \   00000D   E582         MOV     A,DPL
    \   00000F   12....       LCALL   ??Subroutine14_0 & 0xFFFF
@@ -629,28 +629,28 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000033   ED           MOV     A,R5
    \   000034   FB           MOV     R3,A
    \   000035   8004         SJMP    ??checkEPIsInListByMachineId_3
-    108            }
-    109            
-    110            return -1;
+    109            }
+    110            
+    111            return -1;
    \                     ??checkEPIsInListByMachineId_2:
    \   000037   7AFF         MOV     R2,#-0x1
    \   000039   7BFF         MOV     R3,#-0x1
    \                     ??checkEPIsInListByMachineId_3:
    \   00003B   02....       LJMP    ?Subroutine2 & 0xFFFF
-    111          }
+    112          }
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
    \                     ?Subroutine9:
    \   000000   12....       LCALL   ?Subroutine12 & 0xFFFF
    \                     ??CrossCallReturnLabel_23:
    \   000003   22           RET
-    112          
-    113          /**
-    114            更新指定位置元素的时间状态值
-    115          */
+    113          
+    114          /**
+    115            更新指定位置元素的时间状态值
+    116          */
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    116          void updateListEleStatus(LinkList L, int i, int initLeftSec) {
+    117          void updateListEleStatus(LinkList L, int i, int initLeftSec) {
    \                     updateListEleStatus:
    \   000000   74F6         MOV     A,#-0xa
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
@@ -660,21 +660,21 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000007   12....       LCALL   ?XSTACK_DISP0_8
    \   00000A   E0           MOVX    A,@DPTR
    \   00000B   FE           MOV     R6,A
-    117            int j = 1;
+    118            int j = 1;
    \   00000C   12....       LCALL   ?Subroutine6 & 0xFFFF
-    118            LinkList p = L->next;
+    119            LinkList p = L->next;
    \                     ??CrossCallReturnLabel_34:
    \   00000F   8007         SJMP    ??updateListEleStatus_0
-    119            
-    120            while(p && j<i)  //p不为空且还未到达i处
-    121            {
-    122              j++;
+    120            
+    121            while(p && j<i)  //p不为空且还未到达i处
+    122            {
+    123              j++;
    \                     ??updateListEleStatus_1:
    \   000011   12....       LCALL   ?Subroutine10 & 0xFFFF
-    123              p = p->next;
+    124              p = p->next;
    \                     ??CrossCallReturnLabel_14:
    \   000014   12....       LCALL   ?Subroutine7 & 0xFFFF
-    124            }
+    125            }
    \                     ??CrossCallReturnLabel_33:
    \   000017   E9           MOV     A,R1
    \                     ??updateListEleStatus_0:
@@ -684,7 +684,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   00001D   12....       LCALL   ?Subroutine11 & 0xFFFF
    \                     ??CrossCallReturnLabel_16:
    \   000020   40EF         JC      ??updateListEleStatus_1
-    125            p->data.leftSecCount = initLeftSec;
+    126            p->data.leftSecCount = initLeftSec;
    \                     ??updateListEleStatus_2:
    \   000022   E8           MOV     A,R0
    \   000023   240B         ADD     A,#0xb
@@ -694,7 +694,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   00002A   F583         MOV     DPH,A
    \   00002C   EE           MOV     A,R6
    \   00002D   F0           MOVX    @DPTR,A
-    126          }
+    127          }
    \   00002E   02....       LJMP    ?Subroutine1 & 0xFFFF
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
@@ -714,116 +714,159 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000000   75..01       MOV     ?V0 + 0,#0x1
    \   000003                REQUIRE ??Subroutine15_0
    \   000003                ; // Fall through to label ??Subroutine15_0
-    127          
-    128          /**
-    129            遍历终端列表，将所有节点剩余时间-1，如果小于0，则置0
-    130          */
+    128          
+    129          /**
+    130            遍历终端列表，将所有节点剩余时间-1，如果小于0，则置0
+    131          */
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    131          void  decAllListEPLeftSec(LinkList L) {
+    132          void  decAllListEPLeftSec(LinkList L) {
    \                     decAllListEPLeftSec:
-   \   000000   74F5         MOV     A,#-0xb
+   \   000000   74F6         MOV     A,#-0xa
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
-   \   000005                ; Saved register size: 11
-   \   000005                ; Auto size: 11
-   \   000005   74F5         MOV     A,#-0xb
+   \   000005                ; Saved register size: 10
+   \   000005                ; Auto size: 65
+   \   000005   74BF         MOV     A,#-0x41
    \   000007   12....       LCALL   ?ALLOC_XSTACK8
-    132            uint8 sendBuf[11] = {'#', 0x44, 0, 0, 0, 0, 0, 0, 0, 0, '@'};
-   \   00000A   85..82       MOV     DPL,?XSP + 0
-   \   00000D   85..83       MOV     DPH,?XSP + 1
-   \   000010   AC82         MOV     R4,DPL
-   \   000012   AD83         MOV     R5,DPH
-   \   000014   7583..       MOV     DPH,#(`?<Constant {35, 68, 0, 0, 0, 0, 0, 0, 0, 0, 64` >> 8) & 0xff
-   \   000017   7582..       MOV     DPL,#`?<Constant {35, 68, 0, 0, 0, 0, 0, 0, 0, 0, 64` & 0xff
-   \   00001A   740B         MOV     A,#0xb
-   \   00001C   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
-    133            LinkList p = L->next;
-   \   00001F   12....       LCALL   ??Subroutine16_0 & 0xFFFF
+    133            uint8 strBuf[SEND_BUF_SIZE] = {0};
+   \   00000A   7421         MOV     A,#0x21
+   \   00000C   12....       LCALL   ?XSTACK_DISP0_8
+   \   00000F   AC82         MOV     R4,DPL
+   \   000011   AD83         MOV     R5,DPH
+   \   000013   7583..       MOV     DPH,#(`?<Constant {0}>` >> 8) & 0xff
+   \   000016   7582..       MOV     DPL,#`?<Constant {0}>` & 0xff
+   \   000019   7420         MOV     A,#0x20
+   \   00001B   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
+    134            uint8 strBufLen = 0;
+    135            uint8 outputBuf[SEND_BUF_SIZE] = {0};
+   \   00001E   04           INC     A
+   \   00001F   12....       LCALL   ?XSTACK_DISP0_8
+   \   000022   AC82         MOV     R4,DPL
+   \   000024   AD83         MOV     R5,DPH
+   \   000026   7583..       MOV     DPH,#(`?<Constant {0}>_1` >> 8) & 0xff
+   \   000029   7582..       MOV     DPL,#`?<Constant {0}>_1` & 0xff
+   \   00002C   7420         MOV     A,#0x20
+   \   00002E   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
+    136            uint8 outputBufLen = 0;
+   \   000031   85..82       MOV     DPL,?XSP + 0
+   \   000034   85..83       MOV     DPH,?XSP + 1
+   \   000037   F0           MOVX    @DPTR,A
+    137            
+    138            LinkList p = L->next;
+   \   000038   12....       LCALL   ??Subroutine16_0 & 0xFFFF
    \                     ??CrossCallReturnLabel_40:
-   \   000022   8058         SJMP    ??decAllListEPLeftSec_0
-    134            int i = 0;
-    135            while(p) {
-    136              i++;
-    137              p->data.leftSecCount -= 1;
+   \   00003B   02....       LJMP    ??decAllListEPLeftSec_0 & 0xFFFF
+    139            int i = 0;
+    140            while(p) {
+    141              i++;
+    142              p->data.leftSecCount -= 1;
    \                     ??decAllListEPLeftSec_1:
-   \   000024   EE           MOV     A,R6
-   \   000025   240B         ADD     A,#0xb
-   \   000027   F582         MOV     DPL,A
-   \   000029   EF           MOV     A,R7
-   \   00002A   12....       LCALL   ?Subroutine9 & 0xFFFF
+   \   00003E   EE           MOV     A,R6
+   \   00003F   240B         ADD     A,#0xb
+   \   000041   F582         MOV     DPL,A
+   \   000043   EF           MOV     A,R7
+   \   000044   12....       LCALL   ?Subroutine9 & 0xFFFF
    \                     ??CrossCallReturnLabel_10:
-   \   00002D   14           DEC     A
-   \   00002E   F0           MOVX    @DPTR,A
-    138              if(p->data.leftSecCount < 0) {
-   \   00002F   C3           CLR     C
-   \   000030   9400         SUBB    A,#0x0
-   \   000032   A2D2         MOV     C,0xD0 /* PSW */.2
-   \   000034   65D0         XRL     A,PSW
-   \   000036   33           RLC     A
-   \   000037   503E         JNC     ??decAllListEPLeftSec_2
-    139                p->data.leftSecCount = 0;
-   \   000039   E4           CLR     A
-   \   00003A   F0           MOVX    @DPTR,A
-    140                osal_memcpy(sendBuf+2, p->data.IEEEArr, 8); // 复制IEEE地址
-   \   00003B                ; Setup parameters for call to function osal_memcpy
-   \   00003B   8E82         MOV     DPL,R6
-   \   00003D   8F83         MOV     DPH,R7
-   \   00003F   A3           INC     DPTR
-   \   000040   A3           INC     DPTR
-   \   000041   A3           INC     DPTR
-   \   000042   A982         MOV     R1,DPL
-   \   000044   AA83         MOV     R2,DPH
-   \   000046   89..         MOV     ?V0 + 0,R1
-   \   000048   8A..         MOV     ?V0 + 1,R2
-   \   00004A   F5..         MOV     ?V0 + 2,A
-   \   00004C   78..         MOV     R0,#?V0 + 0
-   \   00004E   12....       LCALL   ?PUSH_XSTACK_I_THREE
-   \   000051   7C08         MOV     R4,#0x8
-   \   000053   7D00         MOV     R5,#0x0
-   \   000055   7405         MOV     A,#0x5
-   \   000057   12....       LCALL   ?XSTACK_DISP0_8
-   \   00005A   AA82         MOV     R2,DPL
-   \   00005C   AB83         MOV     R3,DPH
-   \   00005E   12....       LCALL   ??osal_memcpy?relay
-   \   000061   7403         MOV     A,#0x3
-   \   000063   12....       LCALL   ?DEALLOC_XSTACK8
-    141                mySendByteBuf(sendBuf, 11); // 发送到上位机
-   \   000066                ; Setup parameters for call to function mySendByteBuf
-   \   000066   7C0B         MOV     R4,#0xb
-   \   000068   7D00         MOV     R5,#0x0
-   \   00006A   85..82       MOV     DPL,?XSP + 0
-   \   00006D   85..83       MOV     DPH,?XSP + 1
-   \   000070   AA82         MOV     R2,DPL
-   \   000072   AB83         MOV     R3,DPH
-   \   000074   12....       LCALL   ??mySendByteBuf?relay
-    142                // myprintf("one end device offline\n");
-    143              }
-    144              // myprintf("i = %d, leftSecCount = %d\n", i, p->data.leftSecCount);
-    145              p = p->next;
+   \   000047   14           DEC     A
+   \   000048   F0           MOVX    @DPTR,A
+    143              if(p->data.leftSecCount < 0) {
+   \   000049   C3           CLR     C
+   \   00004A   9400         SUBB    A,#0x0
+   \   00004C   A2D2         MOV     C,0xD0 /* PSW */.2
+   \   00004E   65D0         XRL     A,PSW
+   \   000050   33           RLC     A
+   \   000051   5078         JNC     ??decAllListEPLeftSec_2
+    144                p->data.leftSecCount = 0;
+   \   000053   E4           CLR     A
+   \   000054   F0           MOVX    @DPTR,A
+    145                
+    146                strBuf[0] = p->data.machineId;  
+   \   000055   8E82         MOV     DPL,R6
+   \   000057   8F83         MOV     DPH,R7
+   \   000059   E0           MOVX    A,@DPTR
+   \   00005A   C0E0         PUSH    A
+   \   00005C   7421         MOV     A,#0x21
+   \   00005E   12....       LCALL   ?XSTACK_DISP0_8
+   \   000061   D0E0         POP     A
+   \   000063   F0           MOVX    @DPTR,A
+    147                strBufLen = 0x1;
+    148                encodeData(COORD_REPORT_OFFLINE_ENDDEVICE, strBuf, strBufLen, outputBuf, &outputBufLen);
+   \   000064                ; Setup parameters for call to function encodeData
+   \   000064   85..82       MOV     DPL,?XSP + 0
+   \   000067   85..83       MOV     DPH,?XSP + 1
+   \   00006A   8582..       MOV     ?V0 + 0,DPL
+   \   00006D   8583..       MOV     ?V0 + 1,DPH
+   \   000070   78..         MOV     R0,#?V0 + 0
+   \   000072   12....       LCALL   ?PUSH_XSTACK_I_TWO
+   \   000075   7403         MOV     A,#0x3
+   \   000077   12....       LCALL   ?XSTACK_DISP0_8
+   \   00007A   8582..       MOV     ?V0 + 0,DPL
+   \   00007D   8583..       MOV     ?V0 + 1,DPH
+   \   000080   78..         MOV     R0,#?V0 + 0
+   \   000082   12....       LCALL   ?PUSH_XSTACK_I_TWO
+   \   000085   7C01         MOV     R4,#0x1
+   \   000087   7425         MOV     A,#0x25
+   \   000089   12....       LCALL   ?XSTACK_DISP0_8
+   \   00008C   AA82         MOV     R2,DPL
+   \   00008E   AB83         MOV     R3,DPH
+   \   000090   7990         MOV     R1,#-0x70
+   \   000092   12....       LCALL   ??encodeData?relay
+   \   000095   7404         MOV     A,#0x4
+   \   000097   12....       LCALL   ?DEALLOC_XSTACK8
+    149                mySendByteBuf(outputBuf, outputBufLen); // 将终端掉线信息发送到树莓派
+   \   00009A                ; Setup parameters for call to function mySendByteBuf
+   \   00009A   85..82       MOV     DPL,?XSP + 0
+   \   00009D   85..83       MOV     DPH,?XSP + 1
+   \   0000A0   E0           MOVX    A,@DPTR
+   \   0000A1   FC           MOV     R4,A
+   \   0000A2   7D00         MOV     R5,#0x0
+   \   0000A4   7401         MOV     A,#0x1
+   \   0000A6   12....       LCALL   ?XSTACK_DISP0_8
+   \   0000A9   AA82         MOV     R2,DPL
+   \   0000AB   AB83         MOV     R3,DPH
+   \   0000AD   12....       LCALL   ??mySendByteBuf?relay
+    150                myprintf("one end device offline, machineId = 0x%x\n", p->data.machineId);
+   \   0000B0                ; Setup parameters for call to function myprintf
+   \   0000B0   8E82         MOV     DPL,R6
+   \   0000B2   8F83         MOV     DPH,R7
+   \   0000B4   E0           MOVX    A,@DPTR
+   \   0000B5   F5..         MOV     ?V0 + 0,A
+   \   0000B7   75..00       MOV     ?V0 + 1,#0x0
+   \   0000BA   78..         MOV     R0,#?V0 + 0
+   \   0000BC   12....       LCALL   ?PUSH_XSTACK_I_TWO
+   \   0000BF   7A..         MOV     R2,#`?<Constant "one end device offlin...">` & 0xff
+   \   0000C1   7B..         MOV     R3,#(`?<Constant "one end device offlin...">` >> 8) & 0xff
+   \   0000C3   12....       LCALL   ??myprintf?relay
+   \   0000C6   7402         MOV     A,#0x2
+   \   0000C8   12....       LCALL   ?DEALLOC_XSTACK8
+    151              }
+    152              // myprintf("i = %d, leftSecCount = %d\n", i, p->data.leftSecCount);
+    153              p = p->next;
    \                     ??decAllListEPLeftSec_2:
-   \   000077   EE           MOV     A,R6
-   \   000078   12....       LCALL   ??Subroutine14_0 & 0xFFFF
-    146            }
+   \   0000CB   EE           MOV     A,R6
+   \   0000CC   12....       LCALL   ??Subroutine14_0 & 0xFFFF
+    154            }
    \                     ??CrossCallReturnLabel_27:
-   \   00007B   EF           MOV     A,R7
+   \   0000CF   EF           MOV     A,R7
    \                     ??decAllListEPLeftSec_0:
-   \   00007C   12....       LCALL   ?Subroutine4 & 0xFFFF
+   \   0000D0   12....       LCALL   ?Subroutine4 & 0xFFFF
    \                     ??CrossCallReturnLabel_4:
-   \   00007F   70A3         JNZ     ??decAllListEPLeftSec_1
-    147          }
-   \   000081   740B         MOV     A,#0xb
-   \   000083   12....       LCALL   ?DEALLOC_XSTACK8
-   \   000086   7F03         MOV     R7,#0x3
-   \   000088   02....       LJMP    ?BANKED_LEAVE_XDATA
-    148          
-    149          /*════╗
-    150          ║ 算法2.8║ 
-    151          ╚════*/
+   \   0000D3   6003         JZ      $+5
+   \   0000D5   02....       LJMP    ??decAllListEPLeftSec_1 & 0xFFFF
+    155          }
+   \   0000D8   7441         MOV     A,#0x41
+   \   0000DA   12....       LCALL   ?DEALLOC_XSTACK8
+   \   0000DD                REQUIRE ?Subroutine1
+   \   0000DD                ; // Fall through to label ?Subroutine1
+    156          
+    157          /*════╗
+    158          ║ 算法2.8║ 
+    159          ╚════*/
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    152          Status GetElem_L(LinkList L, int i, LElemType_L *e)
+    160          Status GetElem_L(LinkList L, int i, LElemType_L *e)
    \                     GetElem_L:
-    153          {
+    161          {
    \   000000   74F6         MOV     A,#-0xa
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 10
@@ -835,22 +878,22 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   00000C   A3           INC     DPTR
    \   00000D   E0           MOVX    A,@DPTR
    \   00000E   FF           MOV     R7,A
-    154          	int j = 1;
+    162          	int j = 1;
    \   00000F   12....       LCALL   ?Subroutine6 & 0xFFFF
-    155          	LinkList p = L->next;
+    163          	LinkList p = L->next;
    \                     ??CrossCallReturnLabel_35:
    \   000012   800A         SJMP    ??GetElem_L_0
-    156          	
-    157          	while(p && j<i)						//p不为空且还未到达i处
-    158          	{
-    159          		j++;
+    164          	
+    165          	while(p && j<i)						//p不为空且还未到达i处
+    166          	{
+    167          		j++;
    \                     ??GetElem_L_1:
    \   000014   12....       LCALL   ?Subroutine10 & 0xFFFF
-    160          		p = p->next;
+    168          		p = p->next;
    \                     ??CrossCallReturnLabel_15:
    \   000017   E582         MOV     A,DPL
    \   000019   12....       LCALL   ??Subroutine14_0 & 0xFFFF
-    161          	}
+    169          	}
    \                     ??CrossCallReturnLabel_28:
    \   00001C   E583         MOV     A,DPH
    \                     ??GetElem_L_0:
@@ -877,15 +920,15 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   00003D   65D0         XRL     A,PSW
    \   00003F   33           RLC     A
    \   000040   5006         JNC     ??GetElem_L_3
-    162          
-    163          	if(!p || j>i)						//第i个元素不存在 
-    164          		return ERROR;
+    170          
+    171          	if(!p || j>i)						//第i个元素不存在 
+    172          		return ERROR;
    \                     ??GetElem_L_2:
    \   000042   7A00         MOV     R2,#0x0
    \   000044   7B00         MOV     R3,#0x0
    \   000046   800C         SJMP    ??GetElem_L_4
-    165          
-    166          	*e = p->data;
+    173          
+    174          	*e = p->data;
    \                     ??GetElem_L_3:
    \   000048   EE           MOV     A,R6
    \   000049   FC           MOV     R4,A
@@ -893,28 +936,28 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   00004B   FD           MOV     R5,A
    \   00004C   740C         MOV     A,#0xc
    \   00004E   12....       LCALL   ?MOVE_LONG8_XDATA_XDATA
-    167          
-    168          	return OK; 
+    175          
+    176          	return OK; 
    \   000051   7A01         MOV     R2,#0x1
    \   000053   FB           MOV     R3,A
    \                     ??GetElem_L_4:
-   \   000054   02....       LJMP    ?Subroutine1 & 0xFFFF
-    169          }
-    170          
-    171          /**
-    172            向列表中插入一个终端上传的地址
-    173            参数：
-    174              插入的位置
-    175              短地址高字节
-    176              短地址低字节
-    177              ieee地址8个字节
-    178              心跳检测的次数，协调器检查每次减1，终端上传每次加1
-    179          */
+   \   000054   80..         SJMP    ?Subroutine1
+    177          }
+    178          
+    179          /**
+    180            向列表中插入一个终端上传的地址
+    181            参数：
+    182              插入的位置
+    183              短地址高字节
+    184              短地址低字节
+    185              ieee地址8个字节
+    186              心跳检测的次数，协调器检查每次减1，终端上传每次加1
+    187          */
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    180          Status ListInsert_L(LinkList L, int i, uint8 addrH, uint8 addrL, uint8* ieeeAddrP, int8 delaySec)
+    188          Status ListInsert_L(LinkList L, int i, uint8 addrH, uint8 addrL, uint8* ieeeAddrP, int8 delaySec)
    \                     ListInsert_L:
-    181          {
+    189          {
    \   000000   74EE         MOV     A,#-0x12
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 18
@@ -935,18 +978,18 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   00001D   12....       LCALL   ?XSTACK_DISP0_8
    \   000020   E0           MOVX    A,@DPTR
    \   000021   F5..         MOV     ?V0 + 3,A
-    182          	LinkList p, s;
-    183          	int j = 0;	
+    190          	LinkList p, s;
+    191          	int j = 0;	
    \   000023   7800         MOV     R0,#0x0
    \   000025   7900         MOV     R1,#0x0
-    184          	p = L;
+    192          	p = L;
    \   000027   8A..         MOV     ?V0 + 0,R2
    \   000029   8B..         MOV     ?V0 + 1,R3
    \   00002B   8018         SJMP    ??ListInsert_L_0
-    185          	
-    186          	while(p && j<i-1)					//寻找第i-1个结点 
-    187          	{
-    188          		p = p->next;
+    193          	
+    194          	while(p && j<i-1)					//寻找第i-1个结点 
+    195          	{
+    196          		p = p->next;
    \                     ??ListInsert_L_1:
    \   00002D   E5..         MOV     A,?V0 + 0
    \   00002F   12....       LCALL   ??Subroutine14_0 & 0xFFFF
@@ -958,14 +1001,14 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000039   A3           INC     DPTR
    \   00003A   E0           MOVX    A,@DPTR
    \   00003B   F5..         MOV     ?V0 + 1,A
-    189          		++j;
+    197          		++j;
    \   00003D   E8           MOV     A,R0
    \   00003E   2401         ADD     A,#0x1
    \   000040   08           INC     R0
    \   000041   E9           MOV     A,R1
    \   000042   3400         ADDC    A,#0x0
    \   000044   F9           MOV     R1,A
-    190          	}	
+    198          	}	
    \                     ??ListInsert_L_0:
    \   000045   E5..         MOV     A,?V0 + 0
    \   000047   45..         ORL     A,?V0 + 1
@@ -994,15 +1037,15 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000066   65D0         XRL     A,PSW
    \   000068   33           RLC     A
    \   000069   5004         JNC     ??ListInsert_L_3
-    191          	if(!p || j>i-1)
-    192                  {
-    193          		return ERROR;
+    199          	if(!p || j>i-1)
+    200                  {
+    201          		return ERROR;
    \                     ??ListInsert_L_2:
    \   00006B   7A00         MOV     R2,#0x0
    \   00006D   807D         SJMP    ??ListInsert_L_4
-    194                  }
-    195          
-    196          	s = (LinkList)osal_msg_allocate(sizeof(LNode));
+    202                  }
+    203          
+    204          	s = (LinkList)osal_msg_allocate(sizeof(LNode));
    \                     ??ListInsert_L_3:
    \   00006F                ; Setup parameters for call to function osal_msg_allocate
    \   00006F   7A0E         MOV     R2,#0xe
@@ -1012,31 +1055,31 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000078   8B..         MOV     ?V0 + 9,R3
    \   00007A   AE..         MOV     R6,?V0 + 8
    \   00007C   AF..         MOV     R7,?V0 + 9
-    197          	if(!s)
+    205          	if(!s)
    \   00007E   EE           MOV     A,R6
    \   00007F   4F           ORL     A,R7
    \   000080   7006         JNZ     ??ListInsert_L_5
-    198                  {
-    199          		return (OVERFLOW);
+    206                  {
+    207          		return (OVERFLOW);
    \   000082   7AFE         MOV     R2,#-0x2
    \   000084   7BFF         MOV     R3,#-0x1
    \   000086   8066         SJMP    ??ListInsert_L_6
-    200                  }
-    201          	s->data.shortAddrH = addrH;
+    208                  }
+    209          	s->data.shortAddrH = addrH;
    \                     ??ListInsert_L_5:
    \   000088   8E82         MOV     DPL,R6
    \   00008A   8F83         MOV     DPH,R7
    \   00008C   A3           INC     DPTR
    \   00008D   E5..         MOV     A,?V0 + 2
    \   00008F   F0           MOVX    @DPTR,A
-    202                  s->data.shortAddrL = addrL;
+    210                  s->data.shortAddrL = addrL;
    \   000090   8E82         MOV     DPL,R6
    \   000092   8F83         MOV     DPH,R7
    \   000094   A3           INC     DPTR
    \   000095   A3           INC     DPTR
    \   000096   E5..         MOV     A,?V0 + 6
    \   000098   F0           MOVX    @DPTR,A
-    203                  osal_memcpy(s->data.IEEEArr, ieeeAddrP, 8);
+    211                  osal_memcpy(s->data.IEEEArr, ieeeAddrP, 8);
    \   000099                ; Setup parameters for call to function osal_memcpy
    \   000099   75..00       MOV     ?V0 + 6,#0x0
    \   00009C   78..         MOV     R0,#?V0 + 4
@@ -1054,7 +1097,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   0000AF   12....       LCALL   ??osal_memcpy?relay
    \   0000B2   7403         MOV     A,#0x3
    \   0000B4   12....       LCALL   ?DEALLOC_XSTACK8
-    204                  s->data.leftSecCount = delaySec;
+    212                  s->data.leftSecCount = delaySec;
    \   0000B7   EE           MOV     A,R6
    \   0000B8   240B         ADD     A,#0xb
    \   0000BA   F582         MOV     DPL,A
@@ -1063,8 +1106,8 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   0000BF   F583         MOV     DPH,A
    \   0000C1   E5..         MOV     A,?V0 + 3
    \   0000C3   F0           MOVX    @DPTR,A
-    205                  
-    206          	s->next = p->next;
+    213                  
+    214          	s->next = p->next;
    \   0000C4   E5..         MOV     A,?V0 + 0
    \   0000C6   240C         ADD     A,#0xc
    \   0000C8   F8           MOV     R0,A
@@ -1087,7 +1130,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   0000DE   A3           INC     DPTR
    \   0000DF   EB           MOV     A,R3
    \   0000E0   F0           MOVX    @DPTR,A
-    207          	p->next = s;
+    215          	p->next = s;
    \   0000E1   8882         MOV     DPL,R0
    \   0000E3   8983         MOV     DPH,R1
    \   0000E5   EE           MOV     A,R6
@@ -1095,40 +1138,40 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   0000E7   A3           INC     DPTR
    \   0000E8   EF           MOV     A,R7
    \   0000E9   F0           MOVX    @DPTR,A
-    208          
-    209          	return OK;
+    216          
+    217          	return OK;
    \   0000EA   7A01         MOV     R2,#0x1
    \                     ??ListInsert_L_4:
    \   0000EC   7B00         MOV     R3,#0x0
    \                     ??ListInsert_L_6:
    \   0000EE   7F0A         MOV     R7,#0xa
    \   0000F0   02....       LJMP    ?BANKED_LEAVE_XDATA
-    210          }
-    211          
-    212          /*═════╗
-    213          ║ 算法2.10 ║ 
-    214          ╚═════*/
+    218          }
+    219          
+    220          /*═════╗
+    221          ║ 算法2.10 ║ 
+    222          ╚═════*/
 
    \                                 In  segment BANKED_CODE, align 1, keep-with-next
-    215          Status ListDelete_L(LinkList L, int i)
+    223          Status ListDelete_L(LinkList L, int i)
    \                     ListDelete_L:
-    216          {
+    224          {
    \   000000   74F7         MOV     A,#-0x9
    \   000002   12....       LCALL   ?BANKED_ENTER_XDATA
    \   000005                ; Saved register size: 9
    \   000005                ; Auto size: 0
-    217          	LinkList pre, p; 
-    218          	int j;
-    219          
-    220          	pre = L;
-    221          	j = 1; 
+    225          	LinkList pre, p; 
+    226          	int j;
+    227          
+    228          	pre = L;
+    229          	j = 1; 
    \   000005   7801         MOV     R0,#0x1
    \   000007   7900         MOV     R1,#0x0
    \   000009   800F         SJMP    ??ListDelete_L_0
-    222          
-    223          	while(pre->next && j<i)			//寻找第i个结点，并令pre指向其前驱 
-    224          	{
-    225          		pre = pre->next;
+    230          
+    231          	while(pre->next && j<i)			//寻找第i个结点，并令pre指向其前驱 
+    232          	{
+    233          		pre = pre->next;
    \                     ??ListDelete_L_1:
    \   00000B   12....       LCALL   ??Subroutine13_0 & 0xFFFF
    \                     ??CrossCallReturnLabel_19:
@@ -1136,14 +1179,14 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   00000F   A3           INC     DPTR
    \   000010   E0           MOVX    A,@DPTR
    \   000011   FB           MOV     R3,A
-    226          		++j;
+    234          		++j;
    \   000012   E8           MOV     A,R0
    \   000013   2401         ADD     A,#0x1
    \   000015   08           INC     R0
    \   000016   E9           MOV     A,R1
    \   000017   3400         ADDC    A,#0x0
    \   000019   F9           MOV     R1,A
-    227          	}
+    235          	}
    \                     ??ListDelete_L_0:
    \   00001A   12....       LCALL   ??Subroutine16_0 & 0xFFFF
    \                     ??CrossCallReturnLabel_41:
@@ -1159,8 +1202,8 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000029   65D0         XRL     A,PSW
    \   00002B   33           RLC     A
    \   00002C   40DD         JC      ??ListDelete_L_1
-    228          	
-    229          	if(!pre->next || j>i)			//删除位置不合理
+    236          	
+    237          	if(!pre->next || j>i)			//删除位置不合理
    \                     ??ListDelete_L_2:
    \   00002E   EE           MOV     A,R6
    \   00002F   4F           ORL     A,R7
@@ -1174,12 +1217,12 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000039   65D0         XRL     A,PSW
    \   00003B   33           RLC     A
    \   00003C   5004         JNC     ??ListDelete_L_4
-    230          		return ERROR;
+    238          		return ERROR;
    \                     ??ListDelete_L_3:
    \   00003E   7A00         MOV     R2,#0x0
    \   000040   801D         SJMP    ??ListDelete_L_5
-    231          
-    232          	p = pre->next;
+    239          
+    240          	p = pre->next;
    \                     ??ListDelete_L_4:
    \   000042   EA           MOV     A,R2
    \   000043   240C         ADD     A,#0xc
@@ -1188,7 +1231,7 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000047   12....       LCALL   ?Subroutine8 & 0xFFFF
    \                     ??CrossCallReturnLabel_8:
    \   00004A   12....       LCALL   ?Subroutine5 & 0xFFFF
-    233          	pre->next = p->next;
+    241          	pre->next = p->next;
    \                     ??CrossCallReturnLabel_18:
    \   00004D   FC           MOV     R4,A
    \   00004E   A3           INC     DPTR
@@ -1201,16 +1244,16 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000057   A3           INC     DPTR
    \   000058   ED           MOV     A,R5
    \   000059   F0           MOVX    @DPTR,A
-    234          	osal_msg_deallocate((uint8 *)p);
+    242          	osal_msg_deallocate((uint8 *)p);
    \   00005A                ; Setup parameters for call to function osal_msg_deallocate
    \   00005A   12....       LCALL   ??osal_msg_deallocate?relay
-    235          
-    236          	return OK; 
+    243          
+    244          	return OK; 
    \   00005D   7A01         MOV     R2,#0x1
    \                     ??ListDelete_L_5:
    \   00005F   7B00         MOV     R3,#0x0
    \   000061   02....       LJMP    ?Subroutine0 & 0xFFFF
-    237          }
+    245          }
 
    \                                 In  segment BANK_RELAYS, align 1
    \                     ??findEndDeviceShortAddrByMachineid?relay:
@@ -1268,21 +1311,45 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
    \   000003   ......       DC24    ListDelete_L
 
    \                                 In  segment XDATA_ROM_C, align 1
-   \                     `?<Constant {35, 68, 0, 0, 0, 0, 0, 0, 0, 0, 64`:
-   \   000000   23           DB 35
-   \   000001   44           DB 68
-   \   000002   00           DB 0
-   \   000003   00           DB 0
-   \   000004   00           DB 0
-   \   000005   00           DB 0
-   \   000006   00           DB 0
-   \   000007   00           DB 0
-   \   000008   00           DB 0
-   \   000009   00           DB 0
-   \   00000A   40           DB 64
-    238          
-    239          
-    240          #endif 
+   \                     `?<Constant {0}>`:
+   \   000000   00           DB 0
+   \   000001   00000000     DB 0, 0, 0, 0, 0, 0, 0, 0
+   \            00000000
+   \   000009   00000000     DB 0, 0, 0, 0, 0, 0, 0, 0
+   \            00000000
+   \   000011   00000000     DB 0, 0, 0, 0, 0, 0, 0, 0
+   \            00000000
+   \   000019   00000000     DB 0, 0, 0, 0, 0, 0, 0
+   \            000000  
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     `?<Constant {0}>_1`:
+   \   000000   00           DB 0
+   \   000001   00000000     DB 0, 0, 0, 0, 0, 0, 0, 0
+   \            00000000
+   \   000009   00000000     DB 0, 0, 0, 0, 0, 0, 0, 0
+   \            00000000
+   \   000011   00000000     DB 0, 0, 0, 0, 0, 0, 0, 0
+   \            00000000
+   \   000019   00000000     DB 0, 0, 0, 0, 0, 0, 0
+   \            000000  
+
+   \                                 In  segment XDATA_ROM_C, align 1
+   \                     `?<Constant "one end device offlin...">`:
+   \   000000   6F6E6520     DB "one end device offline, machineId = 0x%x\012"
+   \            656E6420
+   \            64657669
+   \            6365206F
+   \            66666C69
+   \            6E652C20
+   \            6D616368
+   \            696E6549
+   \            64203D20
+   \            30782578
+   \            0A00    
+    246          
+    247          
+    248          #endif 
 
    Maximum stack usage in bytes:
 
@@ -1302,9 +1369,10 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
      checkEPIsInListByIEEE              0      0     18
        -> osal_memcmp                   0      0     36
      checkEPIsInListByMachineId         2      0      0
-     decAllListEPLeftSec                2      0     25
-       -> osal_memcpy                   0      0     50
-       -> mySendByteBuf                 0      0     44
+     decAllListEPLeftSec                2      0     79
+       -> encodeData                    0      0    158
+       -> mySendByteBuf                 0      0    150
+       -> myprintf                      0      0    154
      findEndDeviceShortAddrByMachineid
                                         1      0      9
      updateListEleStatus                1      0     12
@@ -1312,57 +1380,59 @@ E:\Github_Repository\zigbee-net-tech\ZStack-2.5.1a\Projects\zstack\Samples\Sampl
 
    Segment part sizes:
 
-     Function/Label                                 Bytes
-     --------------                                 -----
+     Function/Label                            Bytes
+     --------------                            -----
      findEndDeviceShortAddrByMachineid
-                                                      58
-     ?Subroutine0                                      5
-     ?Subroutine3                                     10
-     ?Subroutine12                                     6
-     ?Subroutine7                                      1
-     ??Subroutine14_0                                  5
-     ??Subroutine16_0                                  7
-     InitList_L                                       66
-     ?Subroutine8                                      8
-     DestroyList_L                                    55
-     ?Subroutine1                                      5
-     ?Subroutine5                                      5
-     ??Subroutine13_0                                 10
-     ListLength_L                                     38
-     ?Subroutine2                                      7
-     checkEPIsInListByIEEE                            89
-     ?Subroutine10                                    13
-     ?Subroutine4                                     10
-     ??Subroutine15_0                                  3
-     checkEPIsInListByMachineId                       62
-     ?Subroutine9                                      4
-     updateListEleStatus                              49
-     ?Subroutine11                                    13
-     ?Subroutine6                                      3
-     decAllListEPLeftSec                             139
-     GetElem_L                                        87
-     ListInsert_L                                    243
-     ListDelete_L                                    100
-     ??findEndDeviceShortAddrByMachineid?relay         6
-     ??InitList_L?relay                                6
-     ??DestroyList_L?relay                             6
-     ??ListLength_L?relay                              6
-     ??checkEPIsInListByIEEE?relay                     6
-     ??checkEPIsInListByMachineId?relay                6
-     ??updateListEleStatus?relay                       6
-     ??decAllListEPLeftSec?relay                       6
-     ??GetElem_L?relay                                 6
-     ??ListInsert_L?relay                              6
-     ??ListDelete_L?relay                              6
-     ?<Constant {35, 68, 0, 0, 0, 0, 0, 0, 0, 0, 64   11
+                                                 58
+     ?Subroutine0                                 5
+     ?Subroutine3                                10
+     ?Subroutine12                                6
+     ?Subroutine7                                 1
+     ??Subroutine14_0                             5
+     ??Subroutine16_0                             7
+     InitList_L                                  66
+     ?Subroutine8                                 8
+     DestroyList_L                               58
+     ?Subroutine5                                 5
+     ??Subroutine13_0                            10
+     ?Subroutine1                                 5
+     ListLength_L                                38
+     ?Subroutine2                                 7
+     checkEPIsInListByIEEE                       89
+     ?Subroutine10                               13
+     ?Subroutine4                                10
+     ??Subroutine15_0                             3
+     checkEPIsInListByMachineId                  62
+     ?Subroutine9                                 4
+     updateListEleStatus                         49
+     ?Subroutine11                               13
+     ?Subroutine6                                 3
+     decAllListEPLeftSec                        221
+     GetElem_L                                   86
+     ListInsert_L                               243
+     ListDelete_L                               100
+     ??findEndDeviceShortAddrByMachineid?relay    6
+     ??InitList_L?relay                           6
+     ??DestroyList_L?relay                        6
+     ??ListLength_L?relay                         6
+     ??checkEPIsInListByIEEE?relay                6
+     ??checkEPIsInListByMachineId?relay           6
+     ??updateListEleStatus?relay                  6
+     ??decAllListEPLeftSec?relay                  6
+     ??GetElem_L?relay                            6
+     ??ListInsert_L?relay                         6
+     ??ListDelete_L?relay                         6
+     ?<Constant {0}>                             32
+     ?<Constant {0}>_1                           32
+     ?<Constant "one end device offlin...">      42
 
  
- 1 101 bytes in segment BANKED_CODE
+ 1 185 bytes in segment BANKED_CODE
     66 bytes in segment BANK_RELAYS
-    11 bytes in segment XDATA_ROM_C
+   106 bytes in segment XDATA_ROM_C
  
- 1 167 bytes of CODE  memory
-    11 bytes of CONST memory
+ 1 251 bytes of CODE  memory
+   106 bytes of CONST memory
 
 Errors: none
 Warnings: none

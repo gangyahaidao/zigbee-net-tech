@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        23/Jun/2019  21:24:23 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        24/Jun/2019  16:48:43 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -1273,10 +1273,11 @@ encodeData:
 ??CrossCallReturnLabel_12:
         MOV     A,#0x7e
         MOVX    @DPTR,A
-//   83     *outputLen = tmpOutLen;
+//   83     *outputLen = tmpOutLen+1;
+        MOV     A,#0x1
+        ADD     A,?V0 + 6
         MOV     DPL,?V0 + 2
         MOV     DPH,?V0 + 3
-        MOV     A,?V0 + 6
         MOVX    @DPTR,A
 //   84 }
         MOV     A,#0x20
@@ -1793,11 +1794,11 @@ encodeData:
 
         END
 // 
-// 649 bytes in segment BANKED_CODE
+// 651 bytes in segment BANKED_CODE
 //  18 bytes in segment BANK_RELAYS
 //  32 bytes in segment XDATA_ROM_C
 // 
-// 667 bytes of CODE  memory
+// 669 bytes of CODE  memory
 //  32 bytes of CONST memory
 //
 //Errors: none

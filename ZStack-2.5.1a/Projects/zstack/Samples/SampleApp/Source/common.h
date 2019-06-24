@@ -16,8 +16,10 @@
 
 #define ENDDEVICE_NETWORK_READY 0x80 // 终端入网命令:machineId + addrH + addrL + IEEE8个byte
 #define ENDDEVICE_HEARTBEAT 0x81 // 终端心跳命令：machineId
-#define ENDDEVICE_REPLY_RECVED_COIN 0x82 // 终端回复已经收到金币命令
-#define ENDDEVICE_REPORT_GAME_REWARD 0x83 // 终端上传奖励彩票个数
+#define ENDDEVICE_REPLY_RECVED_COIN 0x82 // 终端回复已经收到金币命令：machineId
+#define ENDDEVICE_REPORT_GAME_REWARD 0x83 // 终端上传奖励彩票个数：machineId + 彩票个数byte
+
+#define COORD_REPORT_OFFLINE_ENDDEVICE 0x90 // 协调器上传掉线终端信息：machineId
 
 uint8* re_replace_data(uint8* buffer, uint8 length, uint8* destArr, uint8* destLengthPtr);
 bool check_xor(uint8* destArr, uint8 length);

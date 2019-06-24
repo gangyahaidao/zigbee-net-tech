@@ -80,5 +80,5 @@ void encodeData(uint8 cmd, uint8* content, uint8 contentLen, uint8* outputBuf, u
         }
     }
     outputBuf[tmpOutLen] = 0x7E;
-    *outputLen = tmpOutLen;
+    *outputLen = tmpOutLen+1;
 }
