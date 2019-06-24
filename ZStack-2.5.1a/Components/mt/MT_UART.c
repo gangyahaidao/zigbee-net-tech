@@ -238,9 +238,8 @@ void MT_MyUartProcessZToolData ( uint8 port, uint8 event )
       bool check = check_xor(outputBuffer, outputLen); // 数据校验
       if(check) {
           uint8 cmd = outputBuffer[1];
-          myprintf("recv cmd = 0x%x\n", cmd);
           if(cmd == TO_PAY_COIN) { // 服务器发送的需要模拟投币命令
-            uint8 machineId = outputBuffer[4]; // 目标终端设备的编号            
+            uint8 machineId = outputBuffer[4]; // 目标终端设备的编号
             uint8 needProduceCoin = outputBuffer[5]; // 需要终端设备投递的金币数
             
             // 协调器根据设备编号遍历终端列表查找短地址

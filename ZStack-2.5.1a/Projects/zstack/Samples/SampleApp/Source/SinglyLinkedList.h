@@ -75,7 +75,7 @@ Status GetElem_L(LinkList L, int i, LElemType_L *e);
 ┃(06)算法2.8：用e接收单链表L中第i个元素┃
 ┗━━━━━━━━━━━━━━━━━━━*/ 
 
-Status ListInsert_L(LinkList L, int i, uint8 addrH, uint8 addrL, uint8* ieeeAddrP, int8 delaySec);
+Status ListInsert_L(LinkList L, int i, uint8 machineId, uint8 addrH, uint8 addrL, uint8* ieeeAddrP, int8 delaySec);
 /*━━━━━━━━━━━━━━━━━━━━━┓
 ┃(10)算法2.9：在单链表L第i个位置之前插入e。┃
 ┗━━━━━━━━━━━━━━━━━━━━━*/

@@ -227,12 +227,14 @@ void SampleApp_Init( uint8 task_id )
   // 初始化串口
   MT_UartInit();                    //串口初始化
   MT_UartRegisterTaskID(task_id);   //注册串口任务
+#ifdef END_DEVICE  
   myprintf("UartInit OK\n");
+#endif  
 
 #ifdef ZDO_COORDINATOR   
   int ret = InitList_L(&LL); // 单链表初始化
   if(ret == OVERFLOW) {
-    myprintf("InitList_L OVERFLOW\n");
+    // myprintf("InitList_L OVERFLOW\n");
   }
 #endif  
 }
@@ -261,7 +263,7 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
           // Action taken when confirmation is received.
           if ( sentStatus != ZSuccess )
           {
-            myprintf("Got ERROR:AF_DATA_CONFIRM_CMD failed\n");
+            //myprintf("Got ERROR:AF_DATA_CONFIRM_CMD failed\n");
           }
           break;
         
@@ -293,7 +295,6 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
           break;
           
         default:        
-          myprintf("unknown pkg-event = 0x%x\n", MSGpkt->hdr.event);      
           break;
       }      
       
@@ -304,8 +305,7 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
     // return unprocessed events
     return (events ^ SYS_EVENT_MSG);
   }
-  
-  //myprintf("events = 0x%x\n", events);
+
   // 接收到一个定时器事件
   if ( events & SAMPLEAPP_SEND_PERIODIC_MSG_EVT )
   {
@@ -391,9 +391,8 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
         if(ret != -1) { // 已经在链表中，更新倒计时
           updateListEleStatus(LL, ret, INIT_LEFT_SEC);       
         } else if(ret == -1) { // 没有在链表中
-          ListInsert_L(LL, ListLength_L(LL)+1, outputBuffer[5], outputBuffer[6], &outputBuffer[7], INIT_LEFT_SEC); // 添加一个线性列表元素到链表尾部 
-          myprintf("Insert new EP in list\n");
-          printAddrInfoHex(outputBuffer+5, 10); // 打印中断的长短地址信息         
+          ListInsert_L(LL, ListLength_L(LL)+1, outputBuffer[4], outputBuffer[5], outputBuffer[6], &outputBuffer[7], INIT_LEFT_SEC); // 添加一个线性列表元素到链表尾部 
+          printAddrInfoHex(outputBuffer+5, 10); // 打印中断的长短地址信息
         }
         // myprintf("length = %d\n", ListLength_L(LL));      
       } else if(cmd == ENDDEVICE_HEARTBEAT) { // 终端心跳
@@ -405,8 +404,6 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
       } else if(cmd == ENDDEVICE_REPLY_RECVED_COIN || cmd == ENDDEVICE_REPORT_GAME_REWARD) { // 将数据转发到树莓派，回复收到投币命令、上报游戏奖励彩票个数
         mySendByteBuf(outputBuffer, outputLen);        
       }          
-    } else {
-      myprintf("coord recv end_device message check failed\n");
     }
 #endif    
     
@@ -460,6 +457,7 @@ void SampleApp_SendHeartBeatMessageCoor(void) {
 */
 void EndDeviceSendHeartBeat(void) {
   EndDeviceSendAfMessageByCmd(ENDDEVICE_HEARTBEAT);
+  HalLedBlink(HAL_LED_1, 1, 50, 500);
   
   if(startRewardInterrupt == 1 && (osal_getClock() - lastRecvRewardSecTime) >= 2) { // 如果触发了奖励中断，且奖励结束距离当前时间大于指定时间则认为是一次奖励结束
     if(rewardCount == 0) {
@@ -572,8 +570,6 @@ void SampleApp_SendPeriodicMessage( int8 key )
                         AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )
     {
       HalLedBlink(HAL_LED_1, 1, 50, 250);
-    } else {
-      myprintf("SampleApp_SendPeriodicMessage() failed\n");
     }
   }
 }

@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        24/Jun/2019  16:48:43 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        24/Jun/2019  18:14:38 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -216,7 +216,7 @@
         LOCFRAME XSTACK, 14, STACK
         PUBLIC myprintf
         FUNCTION myprintf,021203H
-        ARGFRAME XSTACK, 116, STACK
+        ARGFRAME XSTACK, 114, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
         LOCFRAME XSTACK, 272, STACK
@@ -1194,17 +1194,6 @@ MT_MyUartProcessZToolData:
         ARGFRAME XSTACK, 114, STACK
         ARGFRAME IOVERLAY, 0, STATIC
         ARGFRAME DOVERLAY, 0, STATIC
-        FUNCALL MT_MyUartProcessZToolData, myprintf
-        LOCFRAME ISTACK, 0, STACK
-        LOCFRAME PSTACK, 0, STACK
-        LOCFRAME XSTACK, 116, STACK
-        LOCFRAME IOVERLAY, 0, STATIC
-        LOCFRAME DOVERLAY, 0, STATIC
-        ARGFRAME ISTACK, 0, STACK
-        ARGFRAME PSTACK, 0, STACK
-        ARGFRAME XSTACK, 116, STACK
-        ARGFRAME IOVERLAY, 0, STATIC
-        ARGFRAME DOVERLAY, 0, STATIC
         FUNCALL MT_MyUartProcessZToolData, findEndDeviceShortAddrByMachineid
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -1334,60 +1323,59 @@ MT_MyUartProcessZToolData:
 //  238       bool check = check_xor(outputBuffer, outputLen); // 数据校验
 //  239       if(check) {
 //  240           uint8 cmd = outputBuffer[1];
-//  241           myprintf("recv cmd = 0x%x\n", cmd);
-//  242           if(cmd == TO_PAY_COIN) { // 服务器发送的需要模拟投币命令
-//  243             uint8 machineId = outputBuffer[4]; // 目标终端设备的编号            
-//  244             uint8 needProduceCoin = outputBuffer[5]; // 需要终端设备投递的金币数
-//  245             
-//  246             // 协调器根据设备编号遍历终端列表查找短地址
-//  247             uint8 shortAddr[2] = {0};
-//  248             ret = findEndDeviceShortAddrByMachineid(LL, machineId, shortAddr);
-//  249             if(ret == 0) { // 说明终端在协调器列表中
-//  250               uint16 addr = shortAddr[0]; // 终端地址高字节
-//  251               addr = (addr << 8) | shortAddr[1];
-//  252               EndPoint_DstAddr.addr.shortAddr = addr;
-//  253               
-//  254               uint8 contentBuf[1] = {needProduceCoin};
-//  255               uint8 contentBufLen = 1;
-//  256               // 将数据进行协议拼装
-//  257               uint8 outputBuf[SEND_BUF_SIZE] = {0};
-//  258               uint8 outputLen = 0;
-//  259               encodeData(TO_PAY_COIN, contentBuf, contentBufLen, outputBuf, &outputLen);
-//  260               // 将数据发送到终端
-//  261               if ( AF_DataRequest( &EndPoint_DstAddr, // 以单播的形式发送数据到指定的终端，终端收到投币命令之后，会回复一个0x72消息给协调器，协调器将此消息再转发到上位机
-//  262                             &SampleApp_epDesc,
-//  263                             SAMPLEAPP_PERIODIC_CLUSTERID,
-//  264                             outputLen,
-//  265                             outputBuf,
-//  266                             &SampleApp_TransID,
-//  267                             AF_DISCV_ROUTE,
-//  268                             AF_DEFAULT_RADIUS ) != afStatus_SUCCESS )
-//  269               {
-//  270                 myprintf("SendToEPFailed\n");
-//  271               }
-//  272             
-//  273             } else if(ret == -1) { // 说明终端不在协调器列表中
-//  274               // ?????????????????????????????????上报服务器
-//  275               myprintf("end device is not in coor list\n");
-//  276             }                        
-//  277           }                    
-//  278       } else {
-//  279         myprintf("XOR check failed\n");
+//  241           if(cmd == TO_PAY_COIN) { // 服务器发送的需要模拟投币命令
+//  242             uint8 machineId = outputBuffer[4]; // 目标终端设备的编号
+//  243             uint8 needProduceCoin = outputBuffer[5]; // 需要终端设备投递的金币数
+//  244             
+//  245             // 协调器根据设备编号遍历终端列表查找短地址
+//  246             uint8 shortAddr[2] = {0};
+//  247             ret = findEndDeviceShortAddrByMachineid(LL, machineId, shortAddr);
+//  248             if(ret == 0) { // 说明终端在协调器列表中
+//  249               uint16 addr = shortAddr[0]; // 终端地址高字节
+//  250               addr = (addr << 8) | shortAddr[1];
+//  251               EndPoint_DstAddr.addr.shortAddr = addr;
+//  252               
+//  253               uint8 contentBuf[1] = {needProduceCoin};
+//  254               uint8 contentBufLen = 1;
+//  255               // 将数据进行协议拼装
+//  256               uint8 outputBuf[SEND_BUF_SIZE] = {0};
+//  257               uint8 outputLen = 0;
+//  258               encodeData(TO_PAY_COIN, contentBuf, contentBufLen, outputBuf, &outputLen);
+//  259               // 将数据发送到终端
+//  260               if ( AF_DataRequest( &EndPoint_DstAddr, // 以单播的形式发送数据到指定的终端，终端收到投币命令之后，会回复一个0x72消息给协调器，协调器将此消息再转发到上位机
+//  261                             &SampleApp_epDesc,
+//  262                             SAMPLEAPP_PERIODIC_CLUSTERID,
+//  263                             outputLen,
+//  264                             outputBuf,
+//  265                             &SampleApp_TransID,
+//  266                             AF_DISCV_ROUTE,
+//  267                             AF_DEFAULT_RADIUS ) != afStatus_SUCCESS )
+//  268               {
+//  269                 myprintf("SendToEPFailed\n");
+//  270               }
+//  271             
+//  272             } else if(ret == -1) { // 说明终端不在协调器列表中
+//  273               // ?????????????????????????????????上报服务器
+//  274               myprintf("end device is not in coor list\n");
+//  275             }                        
+//  276           }                    
+//  277       } else {
+//  278         myprintf("XOR check failed\n");
 ??MT_MyUartProcessZToolData_1:
         ; Setup parameters for call to function myprintf
         MOV     R2,#`?<Constant "XOR check failed\\n">` & 0xff
         MOV     R3,#(`?<Constant "XOR check failed\\n">` >> 8) & 0xff
 ??MT_MyUartProcessZToolData_2:
         LCALL   ??myprintf?relay
-//  280       }
-//  281       recv_head = false;
+//  279       }
+//  280       recv_head = false;
 ??MT_MyUartProcessZToolData_3:
         MOV     R7,#0x0
-//  282       recv_tail = false;
+//  281       recv_tail = false;
         MOV     ?V0 + 0,R7
-//  283       recvLen = 0;
+//  282       recvLen = 0;
         MOV     R6,#0x0
-//  284       osal_memset( buffer, 0x0, SERIAL_BUFFER_SIZE);
+//  283       osal_memset( buffer, 0x0, SERIAL_BUFFER_SIZE);
         ; Setup parameters for call to function osal_memset
         MOV     R4,#0x20
         MOV     R5,#0x0
@@ -1397,7 +1385,7 @@ MT_MyUartProcessZToolData:
         MOV     R2,DPL
         MOV     R3,DPH
         LCALL   ??osal_memset?relay
-//  285       osal_memset( outputBuffer, 0x0, SERIAL_BUFFER_SIZE);
+//  284       osal_memset( outputBuffer, 0x0, SERIAL_BUFFER_SIZE);
         ; Setup parameters for call to function osal_memset
         MOV     R4,#0x20
         MOV     R5,#0x0
@@ -1504,21 +1492,7 @@ MT_MyUartProcessZToolData:
         MOV     A,#0x7
         LCALL   ?XSTACK_DISP0_8
         MOVX    A,@DPTR
-        MOV     R6,A
-        ; Setup parameters for call to function myprintf
-        MOV     ?V0 + 2,R6
-        MOV     ?V0 + 3,#0x0
-        MOV     R0,#?V0 + 2
-        LCALL   ?PUSH_XSTACK_I_TWO
-        CFI CFA_XSP16 add(XSP16, 116)
-        MOV     R2,#`?<Constant "recv cmd = 0x%x\\n">` & 0xff
-        MOV     R3,#(`?<Constant "recv cmd = 0x%x\\n">` >> 8) & 0xff
-        LCALL   ??myprintf?relay
-        MOV     A,#0x2
-        LCALL   ?DEALLOC_XSTACK8
-        CFI CFA_XSP16 add(XSP16, 114)
-        MOV     A,#0x50
-        XRL     A,R6
+        XRL     A,#0x50
         JZ      $+5
         LJMP    ??MT_MyUartProcessZToolData_3 & 0xFFFF
         MOV     A,#0xb
@@ -1667,9 +1641,9 @@ MT_MyUartProcessZToolData:
         MOV     R2,#`?<Constant "end device is not in ...">` & 0xff
         MOV     R3,#(`?<Constant "end device is not in ...">` >> 8) & 0xff
         LJMP    ??MT_MyUartProcessZToolData_2 & 0xFFFF
-//  286     }        
-//  287   }
-//  288 }
+//  285     }        
+//  286   }
+//  287 }
 ??MT_MyUartProcessZToolData_4:
         MOV     A,#0x66
         LCALL   ?DEALLOC_XSTACK8
@@ -1698,29 +1672,29 @@ MT_MyUartProcessZToolData:
         MOV     R7,#0x4
         LJMP    ?BANKED_LEAVE_XDATA
         CFI EndBlock cfiBlock7
-//  289 /***************************************************************************************************
-//  290  * @fn      MT_UartProcessZToolData
-//  291  *
-//  292  * @brief   | SOP | Data Length  |   CMD   |   Data   |  FCS  |
-//  293  *          |  1  |     1        |    2    |  0-Len   |   1   |
-//  294  *
-//  295  *          Parses the data and determine either is SPI or just simply serial data
-//  296  *          then send the data to correct place (MT or APP)
-//  297  *
-//  298  * @param   port     - UART port
-//  299  *          event    - Event that causes the callback
+//  288 /***************************************************************************************************
+//  289  * @fn      MT_UartProcessZToolData
+//  290  *
+//  291  * @brief   | SOP | Data Length  |   CMD   |   Data   |  FCS  |
+//  292  *          |  1  |     1        |    2    |  0-Len   |   1   |
+//  293  *
+//  294  *          Parses the data and determine either is SPI or just simply serial data
+//  295  *          then send the data to correct place (MT or APP)
+//  296  *
+//  297  * @param   port     - UART port
+//  298  *          event    - Event that causes the callback
+//  299  *
 //  300  *
-//  301  *
-//  302  * @return  None
-//  303  ***************************************************************************************************/
+//  301  * @return  None
+//  302  ***************************************************************************************************/
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  304 void MT_UartProcessZToolData ( uint8 port, uint8 event )
+//  303 void MT_UartProcessZToolData ( uint8 port, uint8 event )
 MT_UartProcessZToolData:
         CFI Block cfiBlock8 Using cfiCommon0
         CFI Function MT_UartProcessZToolData
         CODE
-//  305 {
+//  304 {
         FUNCALL MT_UartProcessZToolData, Hal_UART_RxBufLen
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -1841,42 +1815,42 @@ MT_UartProcessZToolData:
         CFI CFA_XSP16 add(XSP16, 11)
         MOV     A,R1
         MOV     R6,A
-//  306   uint8  ch;
-//  307   uint8  bytesInRxBuffer;
-//  308   
-//  309   (void)event;  // Intentionally unreferenced parameter
+//  305   uint8  ch;
+//  306   uint8  bytesInRxBuffer;
+//  307   
+//  308   (void)event;  // Intentionally unreferenced parameter
         SJMP    ??MT_UartProcessZToolData_0
-//  310 
-//  311   while (Hal_UART_RxBufLen(port))
-//  312   {
-//  313     HalUARTRead (port, &ch, 1);
-//  314     
-//  315     switch (state)
-//  316     {
-//  317       case SOP_STATE:
-//  318         if (ch == MT_UART_SOF)
-//  319           state = LEN_STATE;
-//  320         break;
-//  321 
-//  322       case LEN_STATE:
-//  323         LEN_Token = ch;
-//  324 
-//  325         tempDataLen = 0;
-//  326 
-//  327         /* Allocate memory for the data */
-//  328         pMsg = (mtOSALSerialData_t *)osal_msg_allocate( sizeof ( mtOSALSerialData_t ) +
-//  329                                                         MT_RPC_FRAME_HDR_SZ + LEN_Token );
-//  330 
-//  331         if (pMsg)
-//  332         {
-//  333           /* Fill up what we can */
-//  334           pMsg->hdr.event = CMD_SERIAL_MSG;
+//  309 
+//  310   while (Hal_UART_RxBufLen(port))
+//  311   {
+//  312     HalUARTRead (port, &ch, 1);
+//  313     
+//  314     switch (state)
+//  315     {
+//  316       case SOP_STATE:
+//  317         if (ch == MT_UART_SOF)
+//  318           state = LEN_STATE;
+//  319         break;
+//  320 
+//  321       case LEN_STATE:
+//  322         LEN_Token = ch;
+//  323 
+//  324         tempDataLen = 0;
+//  325 
+//  326         /* Allocate memory for the data */
+//  327         pMsg = (mtOSALSerialData_t *)osal_msg_allocate( sizeof ( mtOSALSerialData_t ) +
+//  328                                                         MT_RPC_FRAME_HDR_SZ + LEN_Token );
+//  329 
+//  330         if (pMsg)
+//  331         {
+//  332           /* Fill up what we can */
+//  333           pMsg->hdr.event = CMD_SERIAL_MSG;
 ??MT_UartProcessZToolData_1:
         LCALL   ??Subroutine16_0 & 0xFFFF
 ??CrossCallReturnLabel_25:
         MOV     A,#0x1
         MOVX    @DPTR,A
-//  335           pMsg->msg = (uint8*)(pMsg+1);
+//  334           pMsg->msg = (uint8*)(pMsg+1);
         MOV     DPTR,#pMsg
         MOVX    A,@DPTR
         ADD     A,#0x4
@@ -1892,7 +1866,7 @@ MT_UartProcessZToolData:
         INC     DPTR
         MOV     A,R1
         LCALL   ?Subroutine4 & 0xFFFF
-//  336           pMsg->msg[MT_RPC_POS_LEN] = LEN_Token;
+//  335           pMsg->msg[MT_RPC_POS_LEN] = LEN_Token;
 ??CrossCallReturnLabel_3:
         PUSH    A
         CFI CFA_SP SP+-1
@@ -1903,18 +1877,18 @@ MT_UartProcessZToolData:
         POP     A
         CFI CFA_SP SP+0
         MOVX    @DPTR,A
-//  337           state = CMD_STATE1;
+//  336           state = CMD_STATE1;
         MOV     DPTR,#state
         MOV     A,#0x1
 ??MT_UartProcessZToolData_2:
         MOVX    @DPTR,A
-//  338         }
-//  339         else
-//  340         {
-//  341           state = SOP_STATE;
-//  342           return;
-//  343         }
-//  344         break;
+//  337         }
+//  338         else
+//  339         {
+//  340           state = SOP_STATE;
+//  341           return;
+//  342         }
+//  343         break;
 ??MT_UartProcessZToolData_0:
         ; Setup parameters for call to function Hal_UART_RxBufLen
         MOV     A,R6
@@ -1997,9 +1971,9 @@ MT_UartProcessZToolData:
 ??MT_UartProcessZToolData_3:
         MOV     A,#0x1
         LJMP    ?Subroutine1 & 0xFFFF
-//  345 
-//  346       case CMD_STATE1:
-//  347         pMsg->msg[MT_RPC_POS_CMD0] = ch;
+//  344 
+//  345       case CMD_STATE1:
+//  346         pMsg->msg[MT_RPC_POS_CMD0] = ch;
 ??MT_UartProcessZToolData_5:
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
@@ -2011,14 +1985,14 @@ MT_UartProcessZToolData:
         POP     A
         CFI CFA_SP SP+0
         MOVX    @DPTR,A
-//  348         state = CMD_STATE2;
+//  347         state = CMD_STATE2;
         MOV     DPTR,#state
         MOV     A,#0x2
         LJMP    ??MT_UartProcessZToolData_2 & 0xFFFF
-//  349         break;
-//  350 
-//  351       case CMD_STATE2:
-//  352         pMsg->msg[MT_RPC_POS_CMD1] = ch;
+//  348         break;
+//  349 
+//  350       case CMD_STATE2:
+//  351         pMsg->msg[MT_RPC_POS_CMD1] = ch;
 ??MT_UartProcessZToolData_6:
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
@@ -2031,27 +2005,27 @@ MT_UartProcessZToolData:
         POP     A
         CFI CFA_SP SP+0
         LCALL   ?Subroutine4 & 0xFFFF
-//  353         /* If there is no data, skip to FCS state */
-//  354         if (LEN_Token)
+//  352         /* If there is no data, skip to FCS state */
+//  353         if (LEN_Token)
 ??CrossCallReturnLabel_5:
         JNZ     $+5
         LJMP    ??MT_UartProcessZToolData_10 & 0xFFFF
-//  355         {
-//  356           state = DATA_STATE;
+//  354         {
+//  355           state = DATA_STATE;
         MOV     DPTR,#state
         MOV     A,#0x4
         LJMP    ??MT_UartProcessZToolData_2 & 0xFFFF
-//  357         }
-//  358         else
-//  359         {
-//  360           state = FCS_STATE;
-//  361         }
-//  362         break;
-//  363 
-//  364       case DATA_STATE:
-//  365 
-//  366         /* Fill in the buffer the first byte of the data */
-//  367         pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen++] = ch;
+//  356         }
+//  357         else
+//  358         {
+//  359           state = FCS_STATE;
+//  360         }
+//  361         break;
+//  362 
+//  363       case DATA_STATE:
+//  364 
+//  365         /* Fill in the buffer the first byte of the data */
+//  366         pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen++] = ch;
 ??MT_UartProcessZToolData_8:
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
@@ -2072,18 +2046,18 @@ MT_UartProcessZToolData:
         MOVX    A,@DPTR
         INC     A
         MOVX    @DPTR,A
-//  368 
-//  369         /* Check number of bytes left in the Rx buffer */
-//  370         bytesInRxBuffer = Hal_UART_RxBufLen(port);
+//  367 
+//  368         /* Check number of bytes left in the Rx buffer */
+//  369         bytesInRxBuffer = Hal_UART_RxBufLen(port);
         ; Setup parameters for call to function Hal_UART_RxBufLen
         MOV     A,R6
         MOV     R1,A
         LCALL   ??Hal_UART_RxBufLen?relay
         MOV     A,R2
         MOV     R7,A
-//  371 
-//  372         /* If the remain of the data is there, read them all, otherwise, just read enough */
-//  373         if (bytesInRxBuffer <= LEN_Token - tempDataLen)
+//  370 
+//  371         /* If the remain of the data is there, read them all, otherwise, just read enough */
+//  372         if (bytesInRxBuffer <= LEN_Token - tempDataLen)
         MOV     DPTR,#LEN_Token
         MOVX    A,@DPTR
         MOV     R0,A
@@ -2106,24 +2080,24 @@ MT_UartProcessZToolData:
         XRL     A,PSW
         RLC     A
         JC      ??MT_UartProcessZToolData_11
-//  374         {
-//  375           HalUARTRead (port, &pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen], bytesInRxBuffer);
+//  373         {
+//  374           HalUARTRead (port, &pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen], bytesInRxBuffer);
         ; Setup parameters for call to function HalUARTRead
         MOV     R4,?V0 + 0
         MOV     R5,#0x0
         MOVX    A,@DPTR
         MOV     R0,A
         LCALL   ?Subroutine5 & 0xFFFF
-//  376           tempDataLen += bytesInRxBuffer;
+//  375           tempDataLen += bytesInRxBuffer;
 ??CrossCallReturnLabel_7:
         MOV     DPTR,#tempDataLen
         MOVX    A,@DPTR
         ADD     A,R7
         SJMP    ??MT_UartProcessZToolData_12
-//  377         }
-//  378         else
-//  379         {
-//  380           HalUARTRead (port, &pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen], LEN_Token - tempDataLen);
+//  376         }
+//  377         else
+//  378         {
+//  379           HalUARTRead (port, &pMsg->msg[MT_RPC_FRAME_HDR_SZ + tempDataLen], LEN_Token - tempDataLen);
 ??MT_UartProcessZToolData_11:
         MOVX    A,@DPTR
         MOV     R0,A
@@ -2136,17 +2110,17 @@ MT_UartProcessZToolData:
         SUBB    A,0xE0 /* A   */
         MOV     R5,A
         LCALL   ?Subroutine5 & 0xFFFF
-//  381           tempDataLen += (LEN_Token - tempDataLen);
+//  380           tempDataLen += (LEN_Token - tempDataLen);
 ??CrossCallReturnLabel_8:
         MOV     DPTR,#LEN_Token
         MOVX    A,@DPTR
         MOV     DPTR,#tempDataLen
 ??MT_UartProcessZToolData_12:
         MOVX    @DPTR,A
-//  382         }
-//  383 
-//  384         /* If number of bytes read is equal to data length, time to move on to FCS */
-//  385         if ( tempDataLen == LEN_Token )
+//  381         }
+//  382 
+//  383         /* If number of bytes read is equal to data length, time to move on to FCS */
+//  384         if ( tempDataLen == LEN_Token )
         MOVX    A,@DPTR
         MOV     R0,A
         MOV     DPTR,#LEN_Token
@@ -2158,22 +2132,22 @@ MT_UartProcessZToolData:
         MOV     DPTR,#state
         MOV     A,#0x5
         LJMP    ??MT_UartProcessZToolData_2 & 0xFFFF
-//  386             state = FCS_STATE;
-//  387 
-//  388         break;
-//  389 
-//  390       case FCS_STATE:
-//  391 
-//  392         FSC_Token = ch;
+//  385             state = FCS_STATE;
+//  386 
+//  387         break;
+//  388 
+//  389       case FCS_STATE:
+//  390 
+//  391         FSC_Token = ch;
 ??MT_UartProcessZToolData_9:
         MOV     DPL,?XSP + 0
         MOV     DPH,?XSP + 1
         MOVX    A,@DPTR
         MOV     DPTR,#FSC_Token
         LCALL   ?Subroutine4 & 0xFFFF
-//  393 
-//  394         /* Make sure it's correct */
-//  395         if ((MT_UartCalcFCS ((uint8*)&pMsg->msg[0], MT_RPC_FRAME_HDR_SZ + LEN_Token) == FSC_Token))
+//  392 
+//  393         /* Make sure it's correct */
+//  394         if ((MT_UartCalcFCS ((uint8*)&pMsg->msg[0], MT_RPC_FRAME_HDR_SZ + LEN_Token) == FSC_Token))
 ??CrossCallReturnLabel_6:
         ADD     A,#0x3
         MOV     R1,A
@@ -2191,8 +2165,8 @@ MT_UartProcessZToolData:
         XRL     A,R0
         MOV     DPTR,#pMsg
         JNZ     ??MT_UartProcessZToolData_13
-//  396         {
-//  397           osal_msg_send( App_TaskID, (byte *)pMsg );
+//  395         {
+//  396           osal_msg_send( App_TaskID, (byte *)pMsg );
         ; Setup parameters for call to function osal_msg_send
         MOVX    A,@DPTR
         MOV     R2,A
@@ -2204,11 +2178,11 @@ MT_UartProcessZToolData:
         MOV     R1,A
         LCALL   ??osal_msg_send?relay
         SJMP    ??MT_UartProcessZToolData_14
-//  398         }
-//  399         else
-//  400         {
-//  401           /* deallocate the msg */
-//  402           osal_msg_deallocate ( (uint8 *)pMsg );
+//  397         }
+//  398         else
+//  399         {
+//  400           /* deallocate the msg */
+//  401           osal_msg_deallocate ( (uint8 *)pMsg );
 ??MT_UartProcessZToolData_13:
         ; Setup parameters for call to function osal_msg_deallocate
         MOVX    A,@DPTR
@@ -2217,23 +2191,23 @@ MT_UartProcessZToolData:
         MOVX    A,@DPTR
         MOV     R3,A
         LCALL   ??osal_msg_deallocate?relay
-//  403         }
-//  404 
-//  405         /* Reset the state, send or discard the buffers at this point */
-//  406         state = SOP_STATE;
+//  402         }
+//  403 
+//  404         /* Reset the state, send or discard the buffers at this point */
+//  405         state = SOP_STATE;
 ??MT_UartProcessZToolData_14:
         MOV     DPTR,#state
         CLR     A
         LJMP    ??MT_UartProcessZToolData_2 & 0xFFFF
         CFI EndBlock cfiBlock8
-//  407 
-//  408         break;
-//  409 
-//  410       default:
-//  411        break;
-//  412     }
-//  413   }
-//  414 }
+//  406 
+//  407         break;
+//  408 
+//  409       default:
+//  410        break;
+//  411     }
+//  412   }
+//  413 }
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ?Subroutine8:
@@ -2978,160 +2952,160 @@ MT_UartProcessZToolData:
         CFI EndBlock cfiCond54
         CFI EndBlock cfiCond55
         CFI EndBlock cfiPicker56
-//  415 
-//  416 #if defined (ZAPP_P1) || defined (ZAPP_P2)
-//  417 /***************************************************************************************************
-//  418  * @fn      MT_UartProcessZAppData
-//  419  *
-//  420  * @brief   | SOP | CMD  |   Data Length   | FSC  |
-//  421  *          |  1  |  2   |       1         |  1   |
-//  422  *
-//  423  *          Parses the data and determine either is SPI or just simply serial data
-//  424  *          then send the data to correct place (MT or APP)
-//  425  *
-//  426  * @param   port    - UART port
-//  427  *          event   - Event that causes the callback
+//  414 
+//  415 #if defined (ZAPP_P1) || defined (ZAPP_P2)
+//  416 /***************************************************************************************************
+//  417  * @fn      MT_UartProcessZAppData
+//  418  *
+//  419  * @brief   | SOP | CMD  |   Data Length   | FSC  |
+//  420  *          |  1  |  2   |       1         |  1   |
+//  421  *
+//  422  *          Parses the data and determine either is SPI or just simply serial data
+//  423  *          then send the data to correct place (MT or APP)
+//  424  *
+//  425  * @param   port    - UART port
+//  426  *          event   - Event that causes the callback
+//  427  *
 //  428  *
-//  429  *
-//  430  * @return  None
-//  431  ***************************************************************************************************/
-//  432 void MT_UartProcessZAppData ( uint8 port, uint8 event )
-//  433 {
-//  434 
-//  435   osal_event_hdr_t  *msg_ptr;
-//  436   uint16 length = 0;
-//  437   uint16 rxBufLen  = Hal_UART_RxBufLen(MT_UART_DEFAULT_PORT);
-//  438 
-//  439   /*
-//  440      If maxZAppBufferLength is 0 or larger than current length
-//  441      the entire length of the current buffer is returned.
-//  442   */
-//  443   if ((MT_UartMaxZAppBufLen != 0) && (MT_UartMaxZAppBufLen <= rxBufLen))
-//  444   {
-//  445     length = MT_UartMaxZAppBufLen;
-//  446   }
-//  447   else
-//  448   {
-//  449     length = rxBufLen;
-//  450   }
-//  451 
-//  452   /* Verify events */
-//  453   if (event == HAL_UART_TX_FULL)
-//  454   {
-//  455     // Do something when TX if full
-//  456     return;
-//  457   }
-//  458 
-//  459   if (event & ( HAL_UART_RX_FULL | HAL_UART_RX_ABOUT_FULL | HAL_UART_RX_TIMEOUT))
-//  460   {
-//  461     if ( App_TaskID )
-//  462     {
-//  463       /*
-//  464          If Application is ready to receive and there is something
-//  465          in the Rx buffer then send it up
-//  466       */
-//  467       if ((MT_UartZAppRxStatus == MT_UART_ZAPP_RX_READY ) && (length != 0))
-//  468       {
-//  469         /* Disable App flow control until it processes the current data */
-//  470          MT_UartAppFlowControl (MT_UART_ZAPP_RX_NOT_READY);
-//  471 
-//  472         /* 2 more bytes are added, 1 for CMD type, other for length */
-//  473         msg_ptr = (osal_event_hdr_t *)osal_msg_allocate( length + sizeof(osal_event_hdr_t) );
-//  474         if ( msg_ptr )
-//  475         {
-//  476           msg_ptr->event = SPI_INCOMING_ZAPP_DATA;
-//  477           msg_ptr->status = length;
-//  478 
-//  479           /* Read the data of Rx buffer */
-//  480           HalUARTRead( MT_UART_DEFAULT_PORT, (uint8 *)(msg_ptr + 1), length );
-//  481 
-//  482           /* Send the raw data to application...or where ever */
-//  483           osal_msg_send( App_TaskID, (uint8 *)msg_ptr );
-//  484         }
-//  485       }
-//  486     }
-//  487   }
-//  488 }
-//  489 
-//  490 /***************************************************************************************************
-//  491  * @fn      SPIMgr_ZAppBufferLengthRegister
-//  492  *
-//  493  * @brief
-//  494  *
-//  495  * @param   maxLen - Max Length that the application wants at a time
-//  496  *
-//  497  * @return  None
-//  498  *
-//  499  ***************************************************************************************************/
-//  500 void MT_UartZAppBufferLengthRegister ( uint16 maxLen )
-//  501 {
-//  502   /* If the maxLen is larger than the RX buff, something is not right */
-//  503   if (maxLen <= MT_UART_DEFAULT_MAX_RX_BUFF)
-//  504     MT_UartMaxZAppBufLen = maxLen;
-//  505   else
-//  506     MT_UartMaxZAppBufLen = 1; /* default is 1 byte */
-//  507 }
-//  508 
-//  509 /***************************************************************************************************
-//  510  * @fn      SPIMgr_AppFlowControl
-//  511  *
-//  512  * @brief
-//  513  *
-//  514  * @param   status - ready to send or not
-//  515  *
-//  516  * @return  None
-//  517  *
-//  518  ***************************************************************************************************/
-//  519 void MT_UartAppFlowControl ( bool status )
-//  520 {
-//  521 
-//  522   /* Make sure only update if needed */
-//  523   if (status != MT_UartZAppRxStatus )
-//  524   {
-//  525     MT_UartZAppRxStatus = status;
-//  526   }
-//  527 
-//  528   /* App is ready to read again, ProcessZAppData have to be triggered too */
-//  529   if (status == MT_UART_ZAPP_RX_READY)
-//  530   {
-//  531     MT_UartProcessZAppData (MT_UART_DEFAULT_PORT, HAL_UART_RX_TIMEOUT );
-//  532   }
-//  533 
-//  534 }
-//  535 
-//  536 #endif //ZAPP
-//  537 
-//  538 /**
-//  539   static类型只在本文件内有效
-//  540 */
-//  541 static void _itoa(uint16 num, uint8 *buf, uint8 radix)
-//  542 {
-//  543   char c,i;
-//  544   uint8 *p, rst[5];
-//  545  
-//  546   p = rst;
-//  547   for ( i=0; i<5; i++,p++ )
-//  548   {
-//  549     c = num % radix;  // Isolate a digit
-//  550     *p = c + (( c < 10 ) ? '0' : '7');  // Convert to Ascii
-//  551     num /= radix;
-//  552     if ( !num )
-//  553       break;
-//  554   }
-//  555  
-//  556   for ( c=0 ; c<=i; c++ )
-//  557     *buf++ = *p--;  // Reverse character order
-//  558  
-//  559   *buf = '\0';
-//  560 }
+//  429  * @return  None
+//  430  ***************************************************************************************************/
+//  431 void MT_UartProcessZAppData ( uint8 port, uint8 event )
+//  432 {
+//  433 
+//  434   osal_event_hdr_t  *msg_ptr;
+//  435   uint16 length = 0;
+//  436   uint16 rxBufLen  = Hal_UART_RxBufLen(MT_UART_DEFAULT_PORT);
+//  437 
+//  438   /*
+//  439      If maxZAppBufferLength is 0 or larger than current length
+//  440      the entire length of the current buffer is returned.
+//  441   */
+//  442   if ((MT_UartMaxZAppBufLen != 0) && (MT_UartMaxZAppBufLen <= rxBufLen))
+//  443   {
+//  444     length = MT_UartMaxZAppBufLen;
+//  445   }
+//  446   else
+//  447   {
+//  448     length = rxBufLen;
+//  449   }
+//  450 
+//  451   /* Verify events */
+//  452   if (event == HAL_UART_TX_FULL)
+//  453   {
+//  454     // Do something when TX if full
+//  455     return;
+//  456   }
+//  457 
+//  458   if (event & ( HAL_UART_RX_FULL | HAL_UART_RX_ABOUT_FULL | HAL_UART_RX_TIMEOUT))
+//  459   {
+//  460     if ( App_TaskID )
+//  461     {
+//  462       /*
+//  463          If Application is ready to receive and there is something
+//  464          in the Rx buffer then send it up
+//  465       */
+//  466       if ((MT_UartZAppRxStatus == MT_UART_ZAPP_RX_READY ) && (length != 0))
+//  467       {
+//  468         /* Disable App flow control until it processes the current data */
+//  469          MT_UartAppFlowControl (MT_UART_ZAPP_RX_NOT_READY);
+//  470 
+//  471         /* 2 more bytes are added, 1 for CMD type, other for length */
+//  472         msg_ptr = (osal_event_hdr_t *)osal_msg_allocate( length + sizeof(osal_event_hdr_t) );
+//  473         if ( msg_ptr )
+//  474         {
+//  475           msg_ptr->event = SPI_INCOMING_ZAPP_DATA;
+//  476           msg_ptr->status = length;
+//  477 
+//  478           /* Read the data of Rx buffer */
+//  479           HalUARTRead( MT_UART_DEFAULT_PORT, (uint8 *)(msg_ptr + 1), length );
+//  480 
+//  481           /* Send the raw data to application...or where ever */
+//  482           osal_msg_send( App_TaskID, (uint8 *)msg_ptr );
+//  483         }
+//  484       }
+//  485     }
+//  486   }
+//  487 }
+//  488 
+//  489 /***************************************************************************************************
+//  490  * @fn      SPIMgr_ZAppBufferLengthRegister
+//  491  *
+//  492  * @brief
+//  493  *
+//  494  * @param   maxLen - Max Length that the application wants at a time
+//  495  *
+//  496  * @return  None
+//  497  *
+//  498  ***************************************************************************************************/
+//  499 void MT_UartZAppBufferLengthRegister ( uint16 maxLen )
+//  500 {
+//  501   /* If the maxLen is larger than the RX buff, something is not right */
+//  502   if (maxLen <= MT_UART_DEFAULT_MAX_RX_BUFF)
+//  503     MT_UartMaxZAppBufLen = maxLen;
+//  504   else
+//  505     MT_UartMaxZAppBufLen = 1; /* default is 1 byte */
+//  506 }
+//  507 
+//  508 /***************************************************************************************************
+//  509  * @fn      SPIMgr_AppFlowControl
+//  510  *
+//  511  * @brief
+//  512  *
+//  513  * @param   status - ready to send or not
+//  514  *
+//  515  * @return  None
+//  516  *
+//  517  ***************************************************************************************************/
+//  518 void MT_UartAppFlowControl ( bool status )
+//  519 {
+//  520 
+//  521   /* Make sure only update if needed */
+//  522   if (status != MT_UartZAppRxStatus )
+//  523   {
+//  524     MT_UartZAppRxStatus = status;
+//  525   }
+//  526 
+//  527   /* App is ready to read again, ProcessZAppData have to be triggered too */
+//  528   if (status == MT_UART_ZAPP_RX_READY)
+//  529   {
+//  530     MT_UartProcessZAppData (MT_UART_DEFAULT_PORT, HAL_UART_RX_TIMEOUT );
+//  531   }
+//  532 
+//  533 }
+//  534 
+//  535 #endif //ZAPP
+//  536 
+//  537 /**
+//  538   static类型只在本文件内有效
+//  539 */
+//  540 static void _itoa(uint16 num, uint8 *buf, uint8 radix)
+//  541 {
+//  542   char c,i;
+//  543   uint8 *p, rst[5];
+//  544  
+//  545   p = rst;
+//  546   for ( i=0; i<5; i++,p++ )
+//  547   {
+//  548     c = num % radix;  // Isolate a digit
+//  549     *p = c + (( c < 10 ) ? '0' : '7');  // Convert to Ascii
+//  550     num /= radix;
+//  551     if ( !num )
+//  552       break;
+//  553   }
+//  554  
+//  555   for ( c=0 ; c<=i; c++ )
+//  556     *buf++ = *p--;  // Reverse character order
+//  557  
+//  558   *buf = '\0';
+//  559 }
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  561 static int vsprintf(char *buf, const char *fmt, va_list args) 
+//  560 static int vsprintf(char *buf, const char *fmt, va_list args) 
 vsprintf:
         CFI Block cfiBlock57 Using cfiCommon0
         CFI Function vsprintf
         CODE
-//  562 { 
+//  561 { 
         FUNCALL vsprintf, strncpy
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -3229,55 +3203,55 @@ vsprintf:
         INC     DPTR
         MOVX    A,@DPTR
         MOV     ?V0 + 5,A
-//  563     char* p;
-//  564     uint8 radix = 0;
-//  565     int num = 0;
-//  566  
-//  567     for (p = buf; *fmt; fmt++)
+//  562     char* p;
+//  563     uint8 radix = 0;
+//  564     int num = 0;
+//  565  
+//  566     for (p = buf; *fmt; fmt++)
         MOV     R6,?V0 + 12
         MOV     R7,?V0 + 13
         SJMP    ??vsprintf_0
-//  568     {
-//  569         if (*fmt != '%')
-//  570         {
-//  571             if (*fmt == '\n')
-//  572             {
-//  573                 *p++ = '\r';
-//  574             }
-//  575             *p++ = *fmt;
-//  576             continue;
-//  577         }
-//  578  
-//  579         fmt++;
-//  580         radix = 0;
-//  581         switch (*fmt)
-//  582         {
-//  583             case 'x':
-//  584                 radix += 6;
-//  585             case 'd':
-//  586                 radix += 2;
-//  587             case 'o':
-//  588                 {
-//  589                     char tmp[10];
-//  590                     radix += 8;
-//  591                     num = va_arg(args, int);
-//  592                     _itoa(num, (uint8 *)tmp, radix);
-//  593                     num = strlen(tmp);
-//  594                     strncpy(p, tmp, num);
-//  595                     p += num;
-//  596                 }
-//  597                 break;
-//  598             case 's':
-//  599                 {
-//  600                     char *s = va_arg(args, char *);
-//  601                     num = strlen(s);
-//  602                     strncpy(p, s, num);
-//  603                     p += num;
-//  604                 }
-//  605                 break;
-//  606             default:
-//  607                 ///unsupport
-//  608                 va_arg(args, char *);
+//  567     {
+//  568         if (*fmt != '%')
+//  569         {
+//  570             if (*fmt == '\n')
+//  571             {
+//  572                 *p++ = '\r';
+//  573             }
+//  574             *p++ = *fmt;
+//  575             continue;
+//  576         }
+//  577  
+//  578         fmt++;
+//  579         radix = 0;
+//  580         switch (*fmt)
+//  581         {
+//  582             case 'x':
+//  583                 radix += 6;
+//  584             case 'd':
+//  585                 radix += 2;
+//  586             case 'o':
+//  587                 {
+//  588                     char tmp[10];
+//  589                     radix += 8;
+//  590                     num = va_arg(args, int);
+//  591                     _itoa(num, (uint8 *)tmp, radix);
+//  592                     num = strlen(tmp);
+//  593                     strncpy(p, tmp, num);
+//  594                     p += num;
+//  595                 }
+//  596                 break;
+//  597             case 's':
+//  598                 {
+//  599                     char *s = va_arg(args, char *);
+//  600                     num = strlen(s);
+//  601                     strncpy(p, s, num);
+//  602                     p += num;
+//  603                 }
+//  604                 break;
+//  605             default:
+//  606                 ///unsupport
+//  607                 va_arg(args, char *);
 ??vsprintf_1:
         MOV     DPL,?V0 + 4
         MOV     DPH,?V0 + 5
@@ -3287,8 +3261,8 @@ vsprintf:
         INC     DPTR
         MOVX    A,@DPTR
         LCALL   ??Subroutine17_0 & 0xFFFF
-//  609                 num = strlen(" unknow type %  ");
-//  610                 strncpy(p, " unknow type %  ", num);
+//  608                 num = strlen(" unknow type %  ");
+//  609                 strncpy(p, " unknow type %  ", num);
 ??CrossCallReturnLabel_29:
         ; Setup parameters for call to function strncpy
         MOV     ?V0 + 2,#0x10
@@ -3306,14 +3280,14 @@ vsprintf:
         MOV     A,#0x2
         LCALL   ?DEALLOC_XSTACK8
         CFI CFA_XSP16 add(XSP16, 37)
-//  611                 p += num;
+//  610                 p += num;
         MOV     A,R6
         ADD     A,#0x10
         MOV     R6,A
         MOV     A,R7
         ADDC    A,#0x0
         MOV     R7,A
-//  612                 *(p - 2) = *fmt;
+//  611                 *(p - 2) = *fmt;
         MOV     DPL,?V0 + 0
         MOV     DPH,?V0 + 1
         MOVX    A,@DPTR
@@ -3328,7 +3302,7 @@ vsprintf:
         POP     A
         CFI CFA_SP SP+0
         MOVX    @DPTR,A
-//  613                 break;
+//  612                 break;
 ??vsprintf_2:
         MOV     DPL,?V0 + 0
         MOV     DPH,?V0 + 1
@@ -3517,8 +3491,8 @@ vsprintf:
         MOV     R2,?V0 + 6
         MOV     R3,?V0 + 7
         LCALL   ?Subroutine11 & 0xFFFF
-//  614         }
-//  615     }
+//  613         }
+//  614     }
 ??CrossCallReturnLabel_18:
         LCALL   ?PUSH_XSTACK_I_TWO
         CFI CFA_XSP16 add(XSP16, 39)
@@ -3526,8 +3500,8 @@ vsprintf:
         MOV     R5,?V0 + 7
         SJMP    ??vsprintf_14
         CFI CFA_XSP16 add(XSP16, 37)
-//  616  
-//  617     return (p - buf);
+//  615  
+//  616     return (p - buf);
 ??vsprintf_3:
         MOV     A,R6
         CLR     C
@@ -3542,7 +3516,7 @@ vsprintf:
         MOV     R7,#0xe
         LJMP    ?BANKED_LEAVE_XDATA
         CFI EndBlock cfiBlock57
-//  618 }
+//  617 }
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
 ?Subroutine11:
@@ -3858,18 +3832,18 @@ vsprintf:
         CFI EndBlock cfiCond68
         CFI EndBlock cfiCond69
         CFI EndBlock cfiPicker70
-//  619 
-//  620 /**
-//  621   自定义串口打印函数
-//  622 */
+//  618 
+//  619 /**
+//  620   自定义串口打印函数
+//  621 */
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  623 void myprintf(char*fmt, ...)
+//  622 void myprintf(char*fmt, ...)
 myprintf:
         CFI Block cfiBlock71 Using cfiCommon0
         CFI Function myprintf
         CODE
-//  624 {
+//  623 {
         FUNCALL myprintf, vsprintf
         LOCFRAME ISTACK, 0, STACK
         LOCFRAME PSTACK, 0, STACK
@@ -3936,15 +3910,15 @@ myprintf:
         MOV     DPH,#-0x2
         LCALL   ?ADD_XSTACK_DISP0_16
         CFI CFA_XSP16 add(XSP16, 270)
-//  625    char buf[256];
-//  626    va_list arg;
-//  627    int len = 0;
-//  628    int wr = 0;
-//  629    int off = 0;
+//  624    char buf[256];
+//  625    va_list arg;
+//  626    int len = 0;
+//  627    int wr = 0;
+//  628    int off = 0;
         MOV     ?V0 + 0,#0x0
         MOV     ?V0 + 1,#0x0
-//  630    
-//  631    va_start(arg, fmt);
+//  629    
+//  630    va_start(arg, fmt);
         MOV     DPL,#0xe
         MOV     DPH,#0x1
         LCALL   ?XSTACK_DISP0_16
@@ -3957,7 +3931,7 @@ myprintf:
         INC     DPTR
         MOV     A,R1
         LCALL   ?Subroutine3 & 0xFFFF
-//  632    len = vsprintf(buf, fmt, arg); 
+//  631    len = vsprintf(buf, fmt, arg); 
 ??CrossCallReturnLabel_2:
         MOV     ?V0 + 2,DPL
         MOV     ?V0 + 3,DPH
@@ -3980,20 +3954,20 @@ myprintf:
         MOV     ?V0 + 3,R3
         MOV     R6,?V0 + 2
         MOV     R7,?V0 + 3
-//  633    va_end(arg);
+//  632    va_end(arg);
         SJMP    ??myprintf_0
-//  634   
-//  635    while (len)
-//  636    {
-//  637   #if (HAL_UART_DMA)
-//  638       if (len >= 128)
-//  639       {
-//  640           wr =  HalUARTWrite(0, (uint8 *)buf + off, 64);
-//  641       }
-//  642       else
-//  643   #endif
-//  644       {
-//  645           wr =  HalUARTWrite(0, (uint8 *)buf + off, len);
+//  633   
+//  634    while (len)
+//  635    {
+//  636   #if (HAL_UART_DMA)
+//  637       if (len >= 128)
+//  638       {
+//  639           wr =  HalUARTWrite(0, (uint8 *)buf + off, 64);
+//  640       }
+//  641       else
+//  642   #endif
+//  643       {
+//  644           wr =  HalUARTWrite(0, (uint8 *)buf + off, len);
 ??myprintf_1:
         ; Setup parameters for call to function HalUARTWrite
         MOV     A,R6
@@ -4015,9 +3989,9 @@ myprintf:
         MOV     ?V0 + 3,R3
         MOV     R0,?V0 + 2
         MOV     R1,?V0 + 3
-//  646       }
-//  647   
-//  648       len -= wr;
+//  645       }
+//  646   
+//  647       len -= wr;
         CLR     C
         MOV     A,R6
         SUBB    A,R0
@@ -4025,22 +3999,22 @@ myprintf:
         MOV     A,R7
         SUBB    A,R1
         MOV     R7,A
-//  649       off += wr;
+//  648       off += wr;
         MOV     A,?V0 + 0
         ADD     A,R0
         MOV     ?V0 + 0,A
         MOV     A,?V0 + 1
         ADDC    A,R1
         MOV     ?V0 + 1,A
-//  650       if (!wr)
+//  649       if (!wr)
         MOV     A,R0
         ORL     A,R1
         JNZ     ??myprintf_0
-//  651       {
-//  652           HalUARTPoll();
+//  650       {
+//  651           HalUARTPoll();
         ; Setup parameters for call to function HalUARTPoll
         LCALL   ??HalUARTPoll?relay
-//  653       }
+//  652       }
 ??myprintf_0:
         MOV     A,R6
         ORL     A,R7
@@ -4058,8 +4032,8 @@ myprintf:
         MOV     R4,#0x40
         MOV     R5,#0x0
         SJMP    ??myprintf_2
-//  654    }
-//  655 }
+//  653    }
+//  654 }
 ??myprintf_3:
         MOV     DPL,#0x2
         MOV     DPH,#0x1
@@ -4114,13 +4088,13 @@ myprintf:
         CFI EndBlock cfiCond73
         CFI EndBlock cfiCond74
         CFI EndBlock cfiPicker75
-//  656 
-//  657 /**
-//  658   自定义发送指定字节数组函数
-//  659 */
+//  655 
+//  656 /**
+//  657   自定义发送指定字节数组函数
+//  658 */
 
         RSEG BANKED_CODE:CODE:NOROOT(0)
-//  660 void mySendByteBuf(uint8* buf, int len) {
+//  659 void mySendByteBuf(uint8* buf, int len) {
 mySendByteBuf:
         CFI Block cfiBlock76 Using cfiCommon0
         CFI Function mySendByteBuf
@@ -4171,15 +4145,15 @@ mySendByteBuf:
         MOV     ?V0 + 3,R3
         MOV     ?V0 + 0,R4
         MOV     ?V0 + 1,R5
-//  661    int wr = 0;
-//  662    int off = 0;
+//  660    int wr = 0;
+//  661    int off = 0;
         MOV     R6,#0x0
         MOV     R7,#0x0
         SJMP    ??mySendByteBuf_0
-//  663    
-//  664    while (len)
-//  665    {
-//  666       wr =  HalUARTWrite(0, (uint8 *)buf + off, len);
+//  662    
+//  663    while (len)
+//  664    {
+//  665       wr =  HalUARTWrite(0, (uint8 *)buf + off, len);
 ??mySendByteBuf_1:
         ; Setup parameters for call to function HalUARTWrite
         MOV     R4,?V0 + 0
@@ -4196,7 +4170,7 @@ mySendByteBuf:
         MOV     ?V0 + 5,R3
         MOV     R0,?V0 + 4
         MOV     R1,?V0 + 5
-//  667       len -= wr;
+//  666       len -= wr;
         CLR     C
         MOV     A,?V0 + 0
         SUBB    A,R0
@@ -4204,28 +4178,28 @@ mySendByteBuf:
         MOV     A,?V0 + 1
         SUBB    A,R1
         MOV     ?V0 + 1,A
-//  668       off += wr;
+//  667       off += wr;
         MOV     A,R6
         ADD     A,R0
         MOV     R6,A
         MOV     A,R7
         ADDC    A,R1
         MOV     R7,A
-//  669       if (!wr)
+//  668       if (!wr)
         MOV     A,R0
         ORL     A,R1
         JNZ     ??mySendByteBuf_0
-//  670       {
-//  671           HalUARTPoll();
+//  669       {
+//  670           HalUARTPoll();
         ; Setup parameters for call to function HalUARTPoll
         LCALL   ??HalUARTPoll?relay
-//  672       }
-//  673    }
+//  671       }
+//  672    }
 ??mySendByteBuf_0:
         MOV     A,?V0 + 0
         ORL     A,?V0 + 1
         JNZ     ??mySendByteBuf_1
-//  674 }
+//  673 }
         MOV     R7,#0x6
         LJMP    ?BANKED_LEAVE_XDATA
         CFI EndBlock cfiBlock76
@@ -4303,11 +4277,6 @@ mySendByteBuf:
         DB 0, 0, 0, 0, 0, 0, 0
 
         RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
-        DATA8
-`?<Constant "recv cmd = 0x%x\\n">`:
-        DB "recv cmd = 0x%x\012"
-
-        RSEG XDATA_ROM_C:CONST:REORDER:NOROOT(0)
         DATA16
 `?<Constant {0}>_2`:
         DATA8
@@ -4344,17 +4313,17 @@ mySendByteBuf:
         DB " unknow type %  "
 
         END
-//  675 
-//  676 /***************************************************************************************************
-//  677 ***************************************************************************************************/
+//  674 
+//  675 /***************************************************************************************************
+//  676 ***************************************************************************************************/
 // 
-// 2 143 bytes in segment BANKED_CODE
+// 2 119 bytes in segment BANKED_CODE
 //    54 bytes in segment BANK_RELAYS
-//   198 bytes in segment XDATA_ROM_C
+//   181 bytes in segment XDATA_ROM_C
 //    14 bytes in segment XDATA_Z
 // 
-// 2 197 bytes of CODE  memory
-//   198 bytes of CONST memory
+// 2 173 bytes of CODE  memory
+//   181 bytes of CONST memory
 //    14 bytes of XDATA memory
 //
 //Errors: none

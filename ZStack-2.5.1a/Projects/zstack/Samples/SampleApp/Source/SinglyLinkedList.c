@@ -20,13 +20,11 @@
 不存在：-1
 */
 int findEndDeviceShortAddrByMachineid(LinkList L, uint8 machineId, uint8* addr) {
-  int i = 0;
   LinkList p = L->next;
   while(p) {
-    i++;
     if(p->data.machineId == machineId) {
       addr[0] = p->data.shortAddrH;
-      addr[0] = p->data.shortAddrL;
+      addr[1] = p->data.shortAddrL;
       return 0;
     }
     p = p->next;
@@ -129,25 +127,14 @@ void updateListEleStatus(LinkList L, int i, int initLeftSec) {
 /**
   遍历终端列表，将所有节点剩余时间-1，如果小于0，则置0
 */
-void  decAllListEPLeftSec(LinkList L) {
-  uint8 strBuf[SEND_BUF_SIZE] = {0};
-  uint8 strBufLen = 0;
-  uint8 outputBuf[SEND_BUF_SIZE] = {0};
-  uint8 outputBufLen = 0;
-  
+void  decAllListEPLeftSec(LinkList L) {  
   LinkList p = L->next;
   int i = 0;
   while(p) {
     i++;
     p->data.leftSecCount -= 1;
     if(p->data.leftSecCount < 0) {
-      p->data.leftSecCount = 0;
-      
-      strBuf[0] = p->data.machineId;  
-      strBufLen = 0x1;
-      encodeData(COORD_REPORT_OFFLINE_ENDDEVICE, strBuf, strBufLen, outputBuf, &outputBufLen);
-      mySendByteBuf(outputBuf, outputBufLen); // 将终端掉线信息发送到树莓派
-      myprintf("one end device offline, machineId = 0x%x\n", p->data.machineId);
+      p->data.leftSecCount = 0;      
     }
     // myprintf("i = %d, leftSecCount = %d\n", i, p->data.leftSecCount);
     p = p->next;
@@ -185,7 +172,7 @@ Status GetElem_L(LinkList L, int i, LElemType_L *e)
     ieee地址8个字节
     心跳检测的次数，协调器检查每次减1，终端上传每次加1
 */
-Status ListInsert_L(LinkList L, int i, uint8 addrH, uint8 addrL, uint8* ieeeAddrP, int8 delaySec)
+Status ListInsert_L(LinkList L, int i, uint8 machineId, uint8 addrH, uint8 addrL, uint8* ieeeAddrP, int8 delaySec)
 {
 	LinkList p, s;
 	int j = 0;	
@@ -204,8 +191,9 @@ Status ListInsert_L(LinkList L, int i, uint8 addrH, uint8 addrL, uint8* ieeeAddr
 	s = (LinkList)osal_msg_allocate(sizeof(LNode));
 	if(!s)
         {
-		return (OVERFLOW);
+		return OVERFLOW;
         }
+        s->data.machineId = machineId;
 	s->data.shortAddrH = addrH;
         s->data.shortAddrL = addrL;
         osal_memcpy(s->data.IEEEArr, ieeeAddrP, 8);
